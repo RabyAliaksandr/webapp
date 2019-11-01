@@ -1,0 +1,5 @@
+
+V
+squid:S106"9Replace this use of System.out or System.err by a logger.(Ϊτίο8‡μ”Θα-
+gsquid:S2147$"DCombine this catch with the one at line 33, which has the same body.(Ω£­—ÿÿÿÿÿ8‡μ”Θα-
+msquid:S2095"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ΰμ€²8‡μ”Θα-

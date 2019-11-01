@@ -1,0 +1,15 @@
+
+U
+squid:S106"9Replace this use of System.out or System.err by a logger.(çä¢8ÖÀèà-
+Ksquid:S1989"-Add a "try/catch" block for "processRequest".(‘ŸÑ8˜İìïà-
+isquid:S1192"LDefine a constant instead of duplicating this literal "old version" 3 times.(çä¢8ÖÀèà-
+xsquid:S4144""UUpdate this method so that its implementation is not identical to "doGet" on line 22.(ş³‚”ûÿÿÿÿ8ñíïà-
+U
+squid:S106$"9Replace this use of System.out or System.err by a logger.(çä¢8ÖÀèà-
+Ksquid:S1989&"-Add a "try/catch" block for "processRequest".(‘ŸÑ8ñíïà-
+Ksquid:S1989"-Add a "try/catch" block for "processRequest".(‘ŸÑ8˜İìïà-
+Ksquid:S1989&"-Add a "try/catch" block for "processRequest".(‘ŸÑ8ñíïà-
+U
+squid:S106-"9Replace this use of System.out or System.err by a logger.(çä¢8ÖÀèà-
+V
+squid:S1062"9Replace this use of System.out or System.err by a logger.(Ô÷è8ÖÀèà-
