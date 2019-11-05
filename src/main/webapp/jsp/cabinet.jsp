@@ -12,16 +12,16 @@
     <% User user = (User) session.getAttribute("user");
     if (user.getType().equals("admin")) {
       %>
-    <jsp:forward page="adminPage.jsp"></jsp:forward>
+    <jsp:forward page="adminCabinet.jsp"></jsp:forward>
     <%
     }
     if (user.getType().equals("student")) {
     %>
-    <jsp:forward page="studentPage.jsp"></jsp:forward>
+    <jsp:forward page="studentCabinet.jsp"></jsp:forward>
     <% } %>
     <%
         if (user.getType().equals("mentor"))  {
-    %>  <jsp:forward page="mentorPage.jsp"></jsp:forward>
+    %>  <jsp:forward page="mentorCabinet.jsp"></jsp:forward>
     <% } %>
 
 </head>

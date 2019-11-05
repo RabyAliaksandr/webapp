@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 
 public class LogOutCommand implements Command {
 
+  private static final String INDEX_PAGE = "path.page.index";
+
   @Override
   public String execute(HttpServletRequest request) {
-    String page = ConfigurationManager.getProperty("path.page.index");
+    String page = ConfigurationManager.getProperty(INDEX_PAGE);
     request.getSession().invalidate();
     return page;
   }

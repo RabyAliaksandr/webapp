@@ -20,11 +20,11 @@ public class RegistrationUserCommand implements Command {
   private static final String PASSWORD = "password";
   private static final String TYPE = "type";
   private static final String USER = "user";
+  private static final String MAIN_PAGE = "path.page.main";
 
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
-    String page=null;
     try {
       User user = UserService.checkRegistrationField(request.getParameter(LOGIN), request.getParameter(PASSWORD),
               request.getParameter(NAME), request.getParameter(SURNAME), request.getParameter(EMAIL),
@@ -39,7 +39,7 @@ public class RegistrationUserCommand implements Command {
       throw new CommandException(e);
     }
 
-    return  ConfigurationManager.getProperty("path.page.main");
+    return  ConfigurationManager.getProperty(MAIN_PAGE);
   }
 
 }

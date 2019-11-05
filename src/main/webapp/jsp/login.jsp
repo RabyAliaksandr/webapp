@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.webapp.entity.Student" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.io.PrintWriter" %><%--&lt;%&ndash;--%>
@@ -38,12 +39,11 @@
 <%--&lt;%&ndash;<c:import url="footer.jsp"/>&ndash;%&gt;--%>
 <%--</body>--%>
 <%--</html>--%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html><head><title>Login</title></head>
 <body>
 <form name="loginForm" method="POST" action="controller">
-    <input type="hidden" name="command" value="login" />
+    <input type="hidden" name="command" value="log_in" />
     Login:<br/>
     <input type="text" name="login" value=""/>
     <br/>Password:<br/>
@@ -56,16 +56,13 @@
     ${nullPage}
     <br/>
     <input type="submit" value="Log in"/>
-
     <br/>
 </form><hr/>
 <form name="redirectToRegister" method="POST" action="controller">
-    <input type="hidden" name="command" value="toregistration" />
+    <input type="hidden" name="command" value="registration_page" />
     <input type="submit" value="Sign Up"/>
     <br/>
 </form><hr/>
-
+<c:import url="mainButtons.jsp"/>
 </body></html>
-
-
     </body></html>

@@ -1,13 +1,9 @@
 package com.epam.webapp.controller;
-
-
-
 import com.epam.webapp.command.Command;
 import com.epam.webapp.command.CommandFactory;
 import com.epam.webapp.command.exception.CommandException;
 import com.epam.webapp.manager.ConfigurationManager;
 import com.epam.webapp.manager.MessageManager;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +18,6 @@ public class Controller extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
           throws ServletException, IOException {
-    System.out.println("old version");
     try {
       processRequest(request, response);
     } catch (CommandException e) {
@@ -33,7 +28,6 @@ public class Controller extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-    System.out.println("old version");
     try {
       processRequest(request, response);
     } catch (CommandException e) {
@@ -42,12 +36,10 @@ public class Controller extends HttpServlet {
   }
 
   private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, CommandException {
-    System.out.println("old version");
-    String page = null;
+    String page;
     CommandFactory client = new CommandFactory();
     Command command = client.defineCommand(request);
     page = command.execute(request);
-    System.out.println(page);
     if (page != null) {
       RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
       dispatcher.forward(request, response);

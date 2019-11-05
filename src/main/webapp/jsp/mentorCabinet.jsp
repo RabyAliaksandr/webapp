@@ -17,26 +17,19 @@
     </head>
     <body>
     <c:set var="user" value="${sessionScope.user}"/>
-
-    <c:import url="main.jsp"/>
-
+    <c:out value="${user.name}"/>
+    <c:import url="mainButtons.jsp"/>
     <c:set var="count" value="1"/>
     <table border="2">
-
-        <c:forEach var="allStudents" items="${data.getTrainingForMentor(user.id)}">
+    <c:forEach var="allStudents" items="${data.getTrainingForMentor(user.id)}">
         <tr>
             <td>
                 <c:out value="${count}"/>
             </td>
             <td>
-                <form name="informationAboutTraining" method="post" action="controller" >
-                    <c:set var="trainingid" value="${allStudents.id}" scope="request"/>
-                    <input type="hidden" name="command" value="trainingpageformentor"/>
-                    <input type="hidden" name="trainingid" value="${allStudents.id}"/>
-                    <input type="submit" value="сделатьНЕкнопкой"/>
-                </form>
-<%-- это не работает почему не знаю. --%>
-<%--               ё <a href="jsp/trainingformentor.jsp?trainingid=${allStudents.id}"><c:out value="${allStudents.name}"/></a>--%>
+                <a href="controller?command=trainings_information_page&trainingId=${allStudents.id}">
+                    ${allStudents.name}
+                </a>
             </td>
             <c:set var="count" value="${count + 1}"/>
             </c:forEach>

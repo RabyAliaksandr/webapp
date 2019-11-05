@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: alex
@@ -30,7 +31,7 @@
     <input type="text" name="password" value=""/><br/>
 <br/>
     Type:
-    <input type="text" name="type" value="stufent"/>
+    <input type="text" name="type" value="student"/>
 <br/>
     <br/>
     <input type="submit" value="Sign Up"/>
@@ -44,5 +45,6 @@
 
 </form>
 </form>
+<c:import url="mainButtons.jsp"/>
 </body>
 </html>

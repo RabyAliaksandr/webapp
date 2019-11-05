@@ -6,12 +6,14 @@ import com.epam.webapp.manager.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ToRegistrationCommand implements Command {
+public class RegistrationPageCommand implements Command {
 
+
+  private static final String REGISTRATION_PAGE = "path.page.registration";
 
   @Override
   public String execute(HttpServletRequest request) {
-    String page = ConfigurationManager.getProperty("path.page.registration");
-    return page;
+    return ConfigurationManager.getProperty(REGISTRATION_PAGE);
+
   }
 }

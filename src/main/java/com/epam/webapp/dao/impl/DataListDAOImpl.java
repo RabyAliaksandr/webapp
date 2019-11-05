@@ -22,12 +22,11 @@ public class DataListDAOImpl implements DataListsDAO {
   private final static String SQL_ALL_TRAININGS = "SELECT * FROM trainings";//TODO
   private static final String SQL_TRAINING_ID = "trainingid";
   private final static String SQL_TRAININGS_BY_STUDENT_ID ="SELECT * FROM trainings JOIN trainingbystudents USING (trainingid) where userid=?";
-  private final static String SQL_STUDENTS_BY_ID_TRAINING = "SELECT userid, name, surname, grade_for_training FROM users join trainingbystudents USING (userid) WHERE trainingid = ?";
+  private final static String SQL_STUDENTS_BY_ID_TRAINING = "SELECT userid, name, surname, grade_for_training FROM users join trainingbystudents USING (userid) WHERE (trainingid =? and grade_for_training is null )";
   private final static String SQL_NAME = "name";
   private final static String SQL_SURNAME = "surname";
   private final static String STUDENT_ID = "userid";
-  private static final String SQL_COMPLETED_TRAININGS_FOR_STUDENTS = "SELECT * FROM trainings  join trainingbystudents using (trainingid) where (trainingbystudents.userid = ? and\n" +
-          "                                                             trainingbystudents.grade_for_training is not null)";
+  private static final String SQL_COMPLETED_TRAININGS_FOR_STUDENTS = "SELECT * FROM trainings  join trainingbystudents using (trainingid) where (trainingbystudents.userid = ? and trainingbystudents.grade_for_training is not null)";
   private final static Logger logger = LogManager.getLogger(UserDAO.class);
   private static final String SQL_MENTOR_ID = "idmentor";
   private static final String SQL_GRADE_FOR_TRAINING = "grade_for_training";
@@ -212,7 +211,6 @@ public class DataListDAOImpl implements DataListsDAO {
 
   @Override
   public List<Training> getTraining() throws ConnectionPoolException {
-    System.out.println("этот метод");
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -223,9 +221,9 @@ public class DataListDAOImpl implements DataListsDAO {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_ALL_TRAININGS);
       rs = preparedStatement.executeQuery();
-      System.out.println("i am here !!!!!!!!");
       while (rs.next()) {
         Training training = new Training();
+        training.setId(rs.getInt(SQL_TRAINING_ID));
         training.setName(rs.getString(SQL_NAME));
         trainings.add(training);
       }

@@ -6,10 +6,12 @@ import com.epam.webapp.manager.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class TrainingsCommand implements Command {
+public class LogInPageCommand implements Command {
+
+  private static final String toLogInPage = "path.page.login";
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException, CommandException {
-    return ConfigurationManager.getProperty("path.page.trainings");
+    return ConfigurationManager.getProperty(toLogInPage);
   }
 }

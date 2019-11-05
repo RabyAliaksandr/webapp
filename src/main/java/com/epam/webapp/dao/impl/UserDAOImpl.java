@@ -30,7 +30,6 @@ public class UserDAOImpl implements UserDAO {
 
   @Override
   public User authorization(User user) throws ConnectionPoolException, DAOException {
-    System.out.println("вызов авторизации");
     ConnectionPool pool = ConnectionPool.getInstance();
     pool.initPool();
     Connection connection = null;
@@ -38,28 +37,20 @@ public class UserDAOImpl implements UserDAO {
     ResultSet resultSet = null;
 
     try {
-      System.out.println("берем соединение");
       connection = pool.takeConnection();
-      System.out.println("буду делать запрос");
       preparedStatement = connection.prepareStatement(SQL_GET_USER);
-      System.out.println("сделали запрос");
       preparedStatement.setString(1, user.getLogin());
       preparedStatement.setString(2, user.getPassword());
       resultSet = preparedStatement.executeQuery();
-      System.out.println("мы тут");
 
       while (resultSet.next()) {
-        System.out.println("мы тут");
-
         user.setId(resultSet.getInt(SQL_USER_ID));
         user.setName(resultSet.getString(SQL_USER_NAME));
         user.setSurname(resultSet.getString(SQL_USER_SURNAME));
         user.setEmail(resultSet.getString(SQL_USER_EMAIL));
         user.setType(resultSet.getString(SQL_USER_TYPE));
-        System.out.println("возвращаем" + user.getLogin());
         return user;
       }
-      System.out.println("возвращаем нал?");
       return null; // TODO return ?????????????????????????????
 
     } catch (ConnectionPoolException e) {

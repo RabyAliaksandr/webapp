@@ -23,16 +23,16 @@
     <br/>
     <br/>
     <form name="redirectToMainPage" method="POST" action="controller">
-        <input type="hidden" name="command" value="tomain"/>
+        <input type="hidden" name="command" value="main_page"/>
         <input type="submit" value=<fmt:message key="tomain"></fmt:message>>
     </form>
     <form name="alltrainings" method="post" action="controller">
-        <input type="hidden" name="command" value="trainings"/>
+        <input type="hidden" name="command" value="trainings_page"/>
         <input type="submit" value="All training"/>
     </form>
     <body>
     <form name="Logout" method="POST" action="controller">
-        <input type="hidden" name="command" value="logout"/>
+        <input type="hidden" name="command" value="log_out"/>
         <input type="submit" value=<fmt:message key="logout"></fmt:message>>
     </form>
 

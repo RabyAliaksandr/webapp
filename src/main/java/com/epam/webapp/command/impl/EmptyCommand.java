@@ -7,9 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 
 public class EmptyCommand implements Command {
 
+  private static final String LOGIN_PAGE = "path.page.login";
+
   @Override
   public String execute(HttpServletRequest request) {
-    String page = ConfigurationManager.getProperty("path.page.login");
-    return page;
+    return ConfigurationManager.getProperty(LOGIN_PAGE);
   }
 }

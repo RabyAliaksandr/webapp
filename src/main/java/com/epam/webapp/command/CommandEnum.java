@@ -4,12 +4,12 @@ package com.epam.webapp.command;
 import com.epam.webapp.command.impl.*;
 
 public enum CommandEnum {
-  LOGIN {
+  LOG_IN {
     {
       this.command = new AuthorizationCommand();
     }
   },
-  LOGOUT {
+  LOG_OUT {
     {
       this.command = new LogOutCommand();
     }
@@ -19,24 +19,29 @@ public enum CommandEnum {
       this.command = new RegistrationUserCommand();
     }
   },
-  TOREGISTRATION{
+  REGISTRATION_PAGE{
     {
-      this.command = new ToRegistrationCommand();
+      this.command = new RegistrationPageCommand();
     }
   },
-  TRAININGS {
+  TRAININGS_PAGE {
     {
-      this.command = new TrainingsCommand();
+      this.command = new TrainingsPageCommand();
     }
   },
-  TOMAIN {
+  MAIN_PAGE {
     {
-      this.command = new ToMainCommand();
+      this.command = new MainPageCommand();
     }
   },
-  TRAININGPAGEFORMENTOR { //TODO _______!!!!!!!!!!!!!
+  TRAININGS_INFORMATION_PAGE { //TODO _______!!!!!!!!!!!!!
     {
-      this.command = new TrainingPageForMentor();
+      this.command = new TrainingsInformationPageCommand();
+    }
+  },
+  LOG_IN_PAGE {
+    {
+      this.command = new LogInPageCommand();
     }
   };
   Command command;
