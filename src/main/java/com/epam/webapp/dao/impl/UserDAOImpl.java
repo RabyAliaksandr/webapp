@@ -20,6 +20,8 @@ public class UserDAOImpl implements UserDAO {
   private final static String SQL_USER_EMAIL = "email";
   private final static String SQL_USER_TYPE = "type";
   private final static Logger logger = LogManager.getLogger(UserDAO.class);
+  private static final String SQL_GRADE = "UPDATE trainingbystudents SET grade_for_training = ? WHERE (userid = ? and trainingid = ?)";
+  private static final String SQL_ADD_TRAINING_TO_STUDENT = "INSERT INTO trainingbystudents (userid, trainingid) VALUES (?, ?)";
 
   /**
    * check if user is in database - take information about him
@@ -111,5 +113,44 @@ public class UserDAOImpl implements UserDAO {
   @Override
   public void updateUser(User user) throws DAOException, ConnectionPoolException {
 
+  }
+
+  @Override
+  public void grade(int assessment, int userId, int trainingId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    connectionPool.initPool();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_GRADE);
+      preparedStatement.setInt(1, assessment);
+      preparedStatement.setInt(2, userId);
+      preparedStatement.setInt(3, trainingId);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement);
+    }
+  }
+
+  @Override
+  public void addTrainingToStudent(int userId, int trainingId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    connectionPool.initPool();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_ADD_TRAINING_TO_STUDENT);
+      preparedStatement.setInt(1, userId);
+      preparedStatement.setInt(2, trainingId);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement);
+    }
   }
 }

@@ -24,7 +24,7 @@
     <br/>
     <form name="redirectToMainPage" method="POST" action="controller">
         <input type="hidden" name="command" value="main_page"/>
-        <input type="submit" value=<fmt:message key="tomain"></fmt:message>>
+        <input type="submit" value=<fmt:message key="mainPage"></fmt:message>>
     </form>
     <form name="alltrainings" method="post" action="controller">
         <input type="hidden" name="command" value="trainings_page"/>

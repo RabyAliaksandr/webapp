@@ -11,11 +11,8 @@ public class DAOFactory {
   private static TrainingsOperationDAO operationDAO = new TrainingsOperationDAOImpl();
 
   public static DataListsDAO getDataListsDAO() {return dataListsDAO;}
-
-
   public static UserDAO getUserDAO() {
     return userDAO;
   }
   public static TrainingsOperationDAO getOperationDAO() {return operationDAO;}
-
 }

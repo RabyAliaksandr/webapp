@@ -31,11 +31,22 @@
         </table>
         <br/>
         <c:choose>
+            <c:when test="${sessionScope.user.type == 'student'}">
+                <form name="addTrainingToStudent" method="POST" action="controller">
+                    <input type="hidden" name="command" value="add_training_to_student"/>
+                    <input type="hidden" name="userId" value="${user.id}"/>
+                    <input type="hidden" name="trainingId" value="${trainingId}"/>
+                    <c:out value="${user.id}  it is here"/>
+                    <c:out value="${trainingId} it is trainingid"/>
+                    <input type="submit" value=<fmt:message key="addTraining"></fmt:message>>
+                </form>            </c:when>
+        </c:choose>
+        <c:choose>
             <c:when test="${sessionScope.user.type == 'mentor'}">
                 <fmt:message key="trainedStudents"/>
-                <jsp:useBean id="stedentList" class="com.epam.webapp.service.TrainingsService"/>
+                <jsp:useBean id="studentList" class="com.epam.webapp.service.TrainingsService"/>
                 <table border="3">
-                    <c:forEach var="student" items="${stedentList.getStudentsByIdTraining(trainingId)}">
+                    <c:forEach var="student" items="${studentList.getStudentsByIdTraining(trainingId)}">
                         <tr>
                             <td>
                                 <c:out value="${student.name}"/>
@@ -44,11 +55,13 @@
                                 <c:out value="${student.surname}"/>
                             </td>
                             <td>
-                                <c:out value="${student.grade}"/>
-                                <form name="allTrainings" method="post" action="controller">
-                                    <input type="hidden" name="command" value="trainings_page"/>
-                                    <input type="text" value=""/>
-                                    <input type="submit" value=<fmt:message key="rate"></fmt:message>/>
+                                <form name="GradeForTraining" method="post" action="controller">
+                                    <input type="hidden" name="command" value="grade"/>
+                                    <input type="text" name="grade" value=""/>
+                                    <input type="hidden" name="trainingId" value="${trainingId}"/>
+                                    <input type="hidden" name="userId" value="${student.id}"/>
+                                    <c:out value="${trainingId}"/>
+                                    <input type="submit" value=<fmt:message key="grade"></fmt:message>/>
                                 </form>
                             </td>
                         </tr>

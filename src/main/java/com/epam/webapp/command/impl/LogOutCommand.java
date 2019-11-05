@@ -11,8 +11,8 @@ public class LogOutCommand implements Command {
 
   @Override
   public String execute(HttpServletRequest request) {
-    String page = ConfigurationManager.getProperty(INDEX_PAGE);
+
     request.getSession().invalidate();
-    return page;
+    return ConfigurationManager.getProperty(INDEX_PAGE);
   }
 }

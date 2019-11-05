@@ -21,14 +21,14 @@
     <c:import url="mainButtons.jsp"/>
     <c:set var="count" value="1"/>
     <table border="2">
-    <c:forEach var="allStudents" items="${data.getTrainingForMentor(user.id)}">
+    <c:forEach var="training" items="${data.getTrainingForMentor(user.id)}">
         <tr>
             <td>
                 <c:out value="${count}"/>
             </td>
             <td>
-                <a href="controller?command=trainings_information_page&trainingId=${allStudents.id}">
-                    ${allStudents.name}
+                <a href="controller?command=trainings_information_page&trainingId=${training.id}">
+                    ${training.name}
                 </a>
             </td>
             <c:set var="count" value="${count + 1}"/>

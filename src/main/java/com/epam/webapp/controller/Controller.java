@@ -2,6 +2,7 @@ package com.epam.webapp.controller;
 import com.epam.webapp.command.Command;
 import com.epam.webapp.command.CommandFactory;
 import com.epam.webapp.command.exception.CommandException;
+import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
 import com.epam.webapp.manager.ConfigurationManager;
 import com.epam.webapp.manager.MessageManager;
 import javax.servlet.RequestDispatcher;
@@ -20,7 +21,7 @@ public class Controller extends HttpServlet {
           throws ServletException, IOException {
     try {
       processRequest(request, response);
-    } catch (CommandException e) {
+    } catch (CommandException | ConnectionPoolException e) {
       e.printStackTrace();
     }
   }
@@ -30,12 +31,12 @@ public class Controller extends HttpServlet {
           throws ServletException, IOException {
     try {
       processRequest(request, response);
-    } catch (CommandException e) {
+    } catch (CommandException | ConnectionPoolException e) {
       e.printStackTrace();
     }
   }
 
-  private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, CommandException {
+  private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, CommandException, ConnectionPoolException {
     String page;
     CommandFactory client = new CommandFactory();
     Command command = client.defineCommand(request);

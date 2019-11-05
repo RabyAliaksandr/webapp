@@ -4,6 +4,7 @@ import com.epam.webapp.dao.DAOFactory;
 import com.epam.webapp.dao.UserDAO;
 import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
 import com.epam.webapp.dao.exception.DAOException;
+import com.epam.webapp.dao.impl.UserDAOImpl;
 import com.epam.webapp.entity.User;
 import com.google.protobuf.ServiceException;
 
@@ -39,10 +40,8 @@ public class UserService {
     user.setName(name);
     user.setSurname(surname);
     UserDAO authorizationUserDAOImpl = DAOFactory.getUserDAO();
-    System.out.println("here is god");
     try {
       user = authorizationUserDAOImpl.registration(user);
-      System.out.println("afte  registration all is good");
       if (user != null) {
         return user;
       } else {
@@ -54,4 +53,12 @@ public class UserService {
     }
   }
 
+  public final void grade(int assessment, int userId, int trainingId) throws ConnectionPoolException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    userDAO.grade(assessment, userId, trainingId);
+  }
+  public final  void addTrainingToStudent(int userId, int trainingId) throws ConnectionPoolException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    userDAO.addTrainingToStudent(userId, trainingId);
+  }
 }

@@ -9,4 +9,6 @@ public interface UserDAO {
    User authorization(User user) throws ConnectionPoolException, DAOException;
    User registration(User user) throws DAOException, ConnectionPoolException;
    void updateUser(User user) throws DAOException, ConnectionPoolException;
+   void grade(int assessment, int userId, int trainingId) throws ConnectionPoolException;
+   void addTrainingToStudent(int userId, int trainingId) throws ConnectionPoolException;
 }

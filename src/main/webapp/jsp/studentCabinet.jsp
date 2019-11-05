@@ -19,12 +19,15 @@
 
     <table border="3">
         <fmt:message key="studentstrainings"/>
-        <c:forEach var="alltrainings" items="${gettrainings.getCompletedTrainingForStudent(user.id)}">
+        <c:forEach var="allTrainings" items="${gettrainings.getCompletedTrainingForStudent(user.id)}">
             <c:choose>
-                <c:when test="${alltrainings.grade == 0}">
+                <c:when test="${allTrainings.grade == 0}">
                     <tr>
                         <td><c:out value="${count}"></c:out></td>
-                        <td><c:out value="${alltrainings.name}"/></td>
+                        <td><c:out value="${allTrainings.name}"/></td>
+
+
+
                     </tr>
                     <c:set var="count" value="${count + 1}" scope="page"/>
                 </c:when>
@@ -35,12 +38,12 @@
     <table border="2"/>
     <fmt:message key="completedTraining"/>
     <c:set var="count" value="1" scope="page"/>
-    <c:forEach var="alltrainings" items="${getCompletedTrinings.getCompletedTrainingForStudent(user.id)}">
+    <c:forEach var="allTrainings" items="${getCompletedTrinings.getCompletedTrainingForStudent(user.id)}">
         <c:choose>
-            <c:when test="${alltrainings.grade !=0}">
+            <c:when test="${allTrainings.grade !=0}">
                 <tr>
                     <td><c:out value="${count}"></c:out></td>
-                    <td><c:out value="${alltrainings.name}"/></td>
+                    <td><c:out value="${allTrainings.name}"/></td>
                     <td><c:out value="${alltrainings.grade}"/></td>
                 </tr>
                 <c:set var="count" value="${count + 1}" scope="page"/>
