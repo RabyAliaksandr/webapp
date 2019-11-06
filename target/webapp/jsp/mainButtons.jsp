@@ -26,7 +26,7 @@
         <input type="hidden" name="command" value="main_page"/>
         <input type="submit" value=<fmt:message key="mainPage"></fmt:message>>
     </form>
-    <form name="alltrainings" method="post" action="controller">
+    <form name="allTrainings" method="post" action="controller">
         <input type="hidden" name="command" value="trainings_page"/>
         <input type="submit" value="All training"/>
     </form>
@@ -35,5 +35,11 @@
         <input type="hidden" name="command" value="log_out"/>
         <input type="submit" value=<fmt:message key="logout"></fmt:message>>
     </form>
+
+    <form name="Cabinet" method="POST" action="controller">
+        <input type="hidden" name="command" value="cabinet"/>
+        <input type="submit" value=<fmt:message key="cabinet"></fmt:message>>
+    </form>
+
 
 </fmt:bundle>

@@ -9,6 +9,7 @@ import com.epam.webapp.entity.Student;
 import com.epam.webapp.entity.Training;
 
 import java.util.List;
+import java.util.Map;
 
 public class TrainingsService {
 
@@ -49,5 +50,15 @@ public class TrainingsService {
   public final List<Training> getTrainingForMentor(int mentorId) throws ConnectionPoolException {
     DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
     return dataListsDAO.getTrainingForMentor(mentorId);
+  }
+
+  public final Map<String, String> getTopicsForTraining(int trainingId) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.getTopicsForTraining(trainingId);
+  }
+
+  public final String getTopic(int trainingId, String topicName) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.getTopic(trainingId, topicName);
   }
 }

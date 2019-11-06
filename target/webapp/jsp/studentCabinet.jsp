@@ -17,39 +17,50 @@
     <c:set var="count" value="1" scope="page"/>
     <c:import url="mainButtons.jsp"/>
 
-    <table border="3">
+    <table border="1">
         <fmt:message key="studentstrainings"/>
-        <c:forEach var="allTrainings" items="${gettrainings.getCompletedTrainingForStudent(user.id)}">
+        <c:forEach var="training" items="${gettrainings.getCompletedTrainingForStudent(user.id)}">
             <c:choose>
-                <c:when test="${allTrainings.grade == 0}">
+                <c:when test="${training.grade == 0 }">
                     <tr>
                         <td><c:out value="${count}"></c:out></td>
-                        <td><c:out value="${allTrainings.name}"/></td>
-
-
-
+                        <td><c:out value="${training.name}"/></td>
                     </tr>
                     <c:set var="count" value="${count + 1}" scope="page"/>
                 </c:when>
             </c:choose>
         </c:forEach>
+        <c:if test="${count == 1 }">
+            <tr>
+                <td>
+                    <fmt:message key="noEnrolledTraining"/>
+                </td>
+            </tr>
+        </c:if>
     </table>
     <br/>
-    <table border="2"/>
+    <table border="1"/>
     <fmt:message key="completedTraining"/>
     <c:set var="count" value="1" scope="page"/>
-    <c:forEach var="allTrainings" items="${getCompletedTrinings.getCompletedTrainingForStudent(user.id)}">
+    <c:forEach var="training" items="${getCompletedTrinings.getCompletedTrainingForStudent(user.id)}">
         <c:choose>
-            <c:when test="${allTrainings.grade !=0}">
+            <c:when test="${training.grade > 0}">
                 <tr>
                     <td><c:out value="${count}"></c:out></td>
-                    <td><c:out value="${allTrainings.name}"/></td>
-                    <td><c:out value="${alltrainings.grade}"/></td>
+                    <td><c:out value="${training.name}"/></td>
+                    <td><c:out value="${training.grade}"/></td>
                 </tr>
                 <c:set var="count" value="${count + 1}" scope="page"/>
             </c:when>
         </c:choose>
     </c:forEach>
+    <c:if test="${count == 1 }">
+        <tr>
+            <td>
+                <fmt:message key="noCompletedTraining"/>
+            </td>
+        </tr>
+    </c:if>
     </table>
     <br/>
     <c:import url="footer.jsp"/></body>

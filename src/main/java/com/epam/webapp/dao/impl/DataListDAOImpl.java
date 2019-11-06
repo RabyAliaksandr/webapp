@@ -15,18 +15,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DataListDAOImpl implements DataListsDAO {
 
   private final static String SQL_ALL_TRAININGS = "SELECT * FROM trainings";//TODO
   private static final String SQL_TRAINING_ID = "trainingid";
   private final static String SQL_TRAININGS_BY_STUDENT_ID ="SELECT * FROM trainings JOIN trainingbystudents USING (trainingid) where userid=?";
-  private final static String SQL_STUDENTS_BY_ID_TRAINING = "SELECT userid, name, surname, grade_for_training FROM users join trainingbystudents USING (userid) WHERE (trainingid =? and grade_for_training is null )";
+  private final static String SQL_STUDENTS_BY_ID_TRAINING = "SELECT userid, name, surname, grade_for_training FROM users join trainingbystudents USING (userid) WHERE (trainingid =? and grade_for_training = 0)";
   private final static String SQL_NAME = "name";
   private final static String SQL_SURNAME = "surname";
   private final static String STUDENT_ID = "userid";
-  private static final String SQL_COMPLETED_TRAININGS_FOR_STUDENTS = "SELECT * FROM trainings  join trainingbystudents using (trainingid) where (trainingbystudents.userid = ? and trainingbystudents.grade_for_training is not null)";
+  private static final String SQL_COMPLETED_TRAININGS_FOR_STUDENTS = "SELECT * FROM trainings  join trainingbystudents using (trainingid) where (trainingbystudents.userid = ? and trainingbystudents.grade_for_training = 0)";
   private final static Logger logger = LogManager.getLogger(UserDAO.class);
   private static final String SQL_MENTOR_ID = "idmentor";
   private static final String SQL_GRADE_FOR_TRAINING = "grade_for_training";
@@ -34,6 +36,10 @@ public class DataListDAOImpl implements DataListsDAO {
   private static final String SQL_ALL_TRAININGS_BY_TRAINING_ID = "SELECT * FROM trainings WHERE trainingid = ?";
   private static final String SQL_TRAINING_INFORMATION = "information";
   private static final String SQL_STUDENT_GRADE = "grade_for_training";
+  private static final String SQL_TOPICS_FOR_TRAINING = "SELECT name_topic, topic FROM topics_for_study WHERE training_id = ?";
+  private static final String SQL_NAME_TOPIC = "name_topic";
+  private static final String SQL_TOPIC = "topic";
+  private static final String SQL_TOPIC_BY_NAME_TOPIC_AND_TRAINING_ID = "SELECT topic FROM topics_for_study WHERE (training_id = ? AND name_topic= ?)";
 
 
   @Override
@@ -130,7 +136,8 @@ public class DataListDAOImpl implements DataListsDAO {
     connectionPool.initPool();
     try {
       connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_COMPLETED_TRAININGS_FOR_STUDENTS);
+//      preparedStatement = connection.prepareStatement(SQL_COMPLETED_TRAININGS_FOR_STUDENTS);
+      preparedStatement = connection.prepareStatement(SQL_TRAININGS_BY_STUDENT_ID);
       preparedStatement.setInt( 1, studentId);
       rs = preparedStatement.executeQuery();
       while (rs.next()) {
@@ -200,6 +207,61 @@ public class DataListDAOImpl implements DataListsDAO {
         training.setInformation(rs.getString(SQL_TRAINING_INFORMATION));
       }
       return training;
+    } catch (SQLException | ConnectionPoolException e) {
+
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, rs);
+    }
+    return null;
+  }
+
+  @Override
+  public Map<String, String> getTopicsForTraining(int trainingId) throws ConnectionPoolException {
+
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet rs = null;
+    connectionPool.initPool();
+    Training training = new Training();
+
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_TOPICS_FOR_TRAINING);
+      preparedStatement.setInt(1, trainingId);
+      rs = preparedStatement.executeQuery();
+      Map<String, String> map = new HashMap<>();
+      while (rs.next()) {
+        map.put(rs.getString(SQL_NAME_TOPIC), rs.getString(SQL_TOPIC));
+      }
+      return map;
+    } catch (SQLException | ConnectionPoolException e) {
+
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, rs);
+    }
+    return null;
+    
+  }
+
+  @Override
+  public String getTopic(int trainingId, String topicName) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet rs = null;
+    String topic = null;
+    connectionPool.initPool();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_TOPIC_BY_NAME_TOPIC_AND_TRAINING_ID);
+      preparedStatement.setInt(1, trainingId);
+      preparedStatement.setString(2, topicName);
+      rs = preparedStatement.executeQuery();
+      while (rs.next()) {
+      topic = rs.getString(SQL_TOPIC);
+      }
+      return topic;
     } catch (SQLException | ConnectionPoolException e) {
 
     } finally {

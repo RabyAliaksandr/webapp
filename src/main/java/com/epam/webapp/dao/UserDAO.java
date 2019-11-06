@@ -11,4 +11,5 @@ public interface UserDAO {
    void updateUser(User user) throws DAOException, ConnectionPoolException;
    void grade(int assessment, int userId, int trainingId) throws ConnectionPoolException;
    void addTrainingToStudent(int userId, int trainingId) throws ConnectionPoolException;
+   boolean checkEnrolled(int userId, int trainingId) throws ConnectionPoolException;
 }

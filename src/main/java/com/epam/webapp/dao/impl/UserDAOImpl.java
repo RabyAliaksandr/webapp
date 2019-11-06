@@ -22,6 +22,8 @@ public class UserDAOImpl implements UserDAO {
   private final static Logger logger = LogManager.getLogger(UserDAO.class);
   private static final String SQL_GRADE = "UPDATE trainingbystudents SET grade_for_training = ? WHERE (userid = ? and trainingid = ?)";
   private static final String SQL_ADD_TRAINING_TO_STUDENT = "INSERT INTO trainingbystudents (userid, trainingid) VALUES (?, ?)";
+  private static final String SQL_CHECK_ENROLLED = "SELECT EXISTS(SELECT training.trainingbystudents.userid FROM trainingbystudents WHERE (userid = ? and\n" +
+          "                                                                                       trainingid =?))";
 
   /**
    * check if user is in database - take information about him
@@ -152,5 +154,32 @@ public class UserDAOImpl implements UserDAO {
     } finally {
       connectionPool.closeConnection(connection, preparedStatement);
     }
+  }
+
+  @Override
+  public boolean checkEnrolled(int userId, int trainingId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    connectionPool.initPool();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_CHECK_ENROLLED);
+      System.out.println(userId + "userId in DAO");
+      System.out.println(trainingId + "trainingId in DAO");
+      preparedStatement.setInt(1, userId);
+      preparedStatement.setInt(2, trainingId);
+      resultSet = preparedStatement.executeQuery();
+
+      while (resultSet.next()) {
+        return resultSet.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement);
+    }
+    return false;
   }
 }

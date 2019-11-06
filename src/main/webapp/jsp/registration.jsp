@@ -16,19 +16,19 @@
     <input type="hidden" name="command" value="registration"/>
 
     First Name:<br/>
-    <input type="text" name="name" value=""/><br/>
+    <input type="text" name="name" value="" required maxlength="50"/><br/>
     <br/>
     Last Name:<br/>
-    <input type="text" name="surname" value=""/><br/>
+    <input type="text" name="surname" value="" required/><br/>
     <br/>
     Email:
-    <input type="text" name="email" value=""/><br/>
+    <input type="email" name="email" value="" required maxlength="50" /><br/>
     <br/>
     Login:
-    <input type="text" name="login" value=""/><br/>
+    <input type="number" name="login" value="" min="1" max="10"/><br/>
     <br/>
     Password:
-    <input type="text" name="password" value=""/><br/>
+    <input type="password" name="password" value=""  pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"/><br/>
 <br/>
     Type:
     <input type="text" name="type" value="student"/>

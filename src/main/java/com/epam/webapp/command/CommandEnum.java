@@ -53,6 +53,16 @@ public enum CommandEnum {
     {
       this.command = new GradeCommand();
     }
+  },
+  CABINET {
+    {
+      this.command = new CabinetPageCommand();
+    }
+  },
+  TOPIC_PAGE {
+    {
+      this.command = new TopicPageCommand();
+    }
   };
   Command command;
 

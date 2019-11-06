@@ -27,11 +27,11 @@
     <c:set var="count" value="1"/>
 
     <table border="3">
-    <c:forEach var="allTrainings" items="${gettrainings.allTrainings}">
+    <c:forEach var="training" items="${gettrainings.allTrainings}">
         <tr>
         <td> <c:out value="${count}"/> </td>
             <td>
-            <a href="controller?command=trainings_information_page&trainingId=${allTrainings.id}">${allTrainings.name}</a>
+            <a href="controller?command=trainings_information_page&trainingId=${training.id}">${training.name}</a>
             </td>
 <%--    <c:out value="${alltrainings.name}"/> </td>--%>
     </tr>

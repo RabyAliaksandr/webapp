@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 
 public class AuthorizationCommand implements Command {
 
-  private static final String WELCOME_PAGE = "path.page.cabinet";
-  private static final String LOGIN_ERROR_PAGE = "message.loginError";
+  private static final String CABINET_PAGE = "path.page.cabinet";
+  private static final String ERROR_MESSAGE = "message.loginError";
   private static final String LOGIN_PAGE = "path.page.login";
   private static final String LOGIN = "login";
   private static final String PASSWORD = "password";
   private static final String USER = "user";
-  private static final String ERROR_LOGIN_MESSAGE = "errorLoginPassMessage";
+  private static final String NAME_ERROR_MESSAGE = "errorLoginPassMessage";
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
@@ -29,9 +29,9 @@ public class AuthorizationCommand implements Command {
       request.setAttribute(USER, user);
 
       if (user != null) {
-        page = ConfigurationManager.getProperty(WELCOME_PAGE);
+        page = ConfigurationManager.getProperty(CABINET_PAGE);
       } else {
-        request.setAttribute(ERROR_LOGIN_MESSAGE, MessageManager.getProperty(LOGIN_ERROR_PAGE));
+        request.setAttribute(NAME_ERROR_MESSAGE, MessageManager.getProperty(ERROR_MESSAGE));
         page = ConfigurationManager.getProperty(LOGIN_PAGE);
       }
     } catch (ServiceException e) {

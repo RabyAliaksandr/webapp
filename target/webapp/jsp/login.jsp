@@ -47,7 +47,7 @@
     Login:<br/>
     <input type="text" name="login" value=""/>
     <br/>Password:<br/>
-    <input type="password" name="password" value=""/>
+    <input type="password" name="password" value="" />
     <br/>
     ${errorLoginPassMessage}
     <br/>

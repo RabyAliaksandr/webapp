@@ -57,8 +57,14 @@ public class UserService {
     UserDAO userDAO = DAOFactory.getUserDAO();
     userDAO.grade(assessment, userId, trainingId);
   }
+
   public final  void addTrainingToStudent(int userId, int trainingId) throws ConnectionPoolException {
     UserDAO userDAO = DAOFactory.getUserDAO();
     userDAO.addTrainingToStudent(userId, trainingId);
+  }
+
+  public final boolean checkEnrolled(int userId, int trainingId) throws ConnectionPoolException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    return userDAO.checkEnrolled(userId, trainingId);
   }
 }
