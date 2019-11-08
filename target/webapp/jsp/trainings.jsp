@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<link href="${pageContext.request.contextPath}/style/main.css" rel="stylesheet">
 <%@ page import="com.epam.webapp.entity.User" %>
 <%--
   Created by IntelliJ IDEA.
@@ -12,20 +13,32 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="ru" scope="session" />
 <jsp:useBean id="add" class="com.epam.webapp.service.TrainingsService"/>
-<html>
-<head>
-    <title>Trainings</title>
-</head>
-<body>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <html><head><title>Trainings</title></head>
+        </head>
+        <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="controller?command=main_page">Trainings Center</a>
+                </div>
+                <c:if test="${user.type != null}">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
+                </ul>
+                </c:if>
+            </div>
+        </nav>
+        <br/>
 
     <span>${sessionScope.user.surname} ${sessionScope.user.name}</span>
     <c:set var="idUser" value="${sessionScope.user.id}"/>
     <br/>
     <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
-    <c:import url="mainButtons.jsp"/>
     <fmt:message key="currentTrainings"/>
     <c:set var="count" value="1"/>
-
     <table border="3">
     <c:forEach var="training" items="${gettrainings.allTrainings}">
         <tr>

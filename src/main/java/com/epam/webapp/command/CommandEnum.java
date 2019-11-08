@@ -63,8 +63,20 @@ public enum CommandEnum {
     {
       this.command = new TopicPageCommand();
     }
+  },
+
+  GET_TEXT {
+    {
+      this.command = new GetTextTopicCommand();
+    }
+  },
+  CREATE_TEXT {
+    {
+      this.command = new CreateTextCommand();
+    }
   };
   Command command;
+
 
   public Command getCurrentCommand() {
     return command;

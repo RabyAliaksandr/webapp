@@ -118,7 +118,7 @@ public class UserDAOImpl implements UserDAO {
   }
 
   @Override
-  public void grade(int assessment, int userId, int trainingId) throws ConnectionPoolException {
+    public void grade(int assessment, int userId, int trainingId) throws ConnectionPoolException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;

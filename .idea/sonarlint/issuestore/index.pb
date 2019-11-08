@@ -68,8 +68,6 @@ t
 Dsrc/main/java/com/epam/webapp/command/impl/AuthorizationCommand.java,8\5\852ff286c115996b90e1170155e930dd0f5109f2
 k
 ;src/main/java/com/epam/webapp/dao/impl/DataListDAOImpl.java,9\a\9a3e630c89bee74e53312f99567cf6f81c3f6a05
-R
-"src/main/webapp/jsp/MentorPage.jsp,4\9\491a9c5766a0fae2de62939bb596d73de7252f27
 ^
 .src/main/java/com/epam/webapp/entity/User.java,f\8\f8a844db9bbafa0f761d0cd670105b5610d3f1ae
 a
@@ -78,34 +76,16 @@ a
 0src/main/java/com/epam/webapp/entity/Mentor.java,4\4\44fa98ec7fa5cdd7a24bbe1819d6ac83912c6f1c
 b
 2src/main/java/com/epam/webapp/entity/Training.java,e\6\e64f552f0d1615fd93666873d5f1f6df3368e281
-S
-#src/main/webapp/jsp/studentPage.jsp,0\4\04bf063f5d7fec6bd6ce0159b3ffb2dca12b6a25
-Q
-!src/main/webapp/jsp/adminPage.jsp,c\4\c4c6519901994469da4ac172a02a71906247a31d
-u
-Esrc/main/java/com/epam/webapp/command/impl/ToRegistrationCommand.java,d\e\decbe7b2f0cd02471373f364d5a26e5d3ad64edc
-p
-@src/main/java/com/epam/webapp/command/impl/TrainingsCommand.java,e\f\ef025f83b90785a67c251617a8dc68587ea573d0
 c
 3src/main/java/com/epam/webapp/dao/DataListsDAO.java,0\e\0e7b9f2712c390c46f0726422c75a069a8c00282
 Q
 !src/main/webapp/jsp/trainings.jsp,8\0\8044df610a307beb3a4b1c7b7c71065d2ce6e46e
-O
-src/main/webapp/jsp/welcome.jsp,d\7\d71cf94fcd0e8f7402192b9c38b0a4cd6bbe8609
 ƒ
 Ssrc/main/java/com/epam/webapp/connectionpool/exception/ConnectionPoolException.java,9\a\9a9254ac64c4d1401b3b96fb66e91399513e7f2d
 p
 @src/main/java/com/epam/webapp/connectionpool/ConnectionPool.java,6\8\68a04fdb895d5655c9a7710aacc6eb825beb9e80
-R
-"src/main/webapp/jsp/mentorPage.jsp,a\9\a9b313432158bf03dcad681ce29ef1349afdbf27
 {
 Ksrc/main/java/com/epam/webapp/command/impl/AddTrainingToStudentCommand.java,9\e\9ed28ded22a37b1d375e1117162d62f4f516707d
-m
-=src/main/java/com/epam/webapp/command/impl/ToMainCommand.java,a\d\ad468b5cae34a3634cbf147f380e76c6316fdbd3
-n
->src/main/java/com/epam/webapp/command/impl/UnknownCommand.java,e\4\e48d40f34edf8e9c36e083a3d6c6cca9a6c15d86
-Q
-!src/main/webapp/jsp/setbundle.jsp,0\5\05f58657368721555da0f60e0d3b637b245df1b8
 S
 #src/main/webapp/jsp/mainButtons.jsp,5\6\56f4bf9a2c8ba3b2fb3ef036355aaec58b5063fc
 k
@@ -118,12 +98,8 @@ Esrc/main/java/com/epam/webapp/dao/impl/TrainingsOperationDAOImpl.java,6\4\64ab
 ,src/main/java/com/epam/webapp/style/main.css,7\3\7346463b384e33f2fc8ac0e22ba12c5151f0f20f
 O
 src/main/webapp/tld/buttons.tld,b\8\b8362011f9193deff798c3973cc43ef2cf0605f1
-Y
-)src/main/webapp/jsp/trainingformentor.jsp,1\5\15ee5d36c34d9b2454fa6c3b2dbdf2aec29e2e31
 U
 %src/main/webapp/jsp/consultations.jsp,0\a\0a6a98484357432ae30a62635924dcbaddd9e52c
-u
-Esrc/main/java/com/epam/webapp/command/impl/TrainingPageForMentor.java,6\6\668db4d0aad81a9dfd3ea2a9bc88aae2f68b09ec
 L
 .idea/codeStyles/Project.xml,6\e\6ecd6000a7b6f4a2884412ff19f74193ed089648
 W
@@ -154,8 +130,6 @@ I
 target/classes/log4j2.xml,3\5\3505ec16e66091483fa7354502e2a23a445a0392
 R
 "target/classes/messages.properties,f\9\f9dfddf4176d85422536559d77d3157380ec6ddf
-O
-target/webapp/jsp/adminPage.jsp,b\1\b16422d8a8b641e6a184213ecacb373ca773fc3f
 L
 target/webapp/jsp/bundle.jsp,4\8\48e78bcf12169606c4e8ddb98843e068a69201a7
 S
@@ -174,20 +148,10 @@ J
 target/webapp/jsp/main.jsp,a\4\a4da6ad8b03e96dd718b62dfc7ddea9141141ba8
 Q
 !target/webapp/jsp/mainButtons.jsp,9\b\9bad214e677191f7de607b053c66e71b6d5416f1
-P
- target/webapp/jsp/mentorPage.jsp,f\8\f8c5f4d236a145df4f94923e051b6bbe80816f20
 R
 "target/webapp/jsp/registration.jsp,b\1\b1b5e8dcada82751c6b8242a9b4f3a12c81244d8
 O
-target/webapp/jsp/setbundle.jsp,6\f\6fc18f38c3468a4164d11a12fb29a612835c2056
-Q
-!target/webapp/jsp/studentPage.jsp,2\2\229df3d50cee3d55866ab3865a80cf8aae6331a9
-W
-'target/webapp/jsp/trainingformentor.jsp,f\1\f17e6806bdbabe82979f279f64fbddc617545110
-O
 target/webapp/jsp/trainings.jsp,b\5\b54153bd10c2e4a52adef902ce632e51ee4bcd53
-M
-target/webapp/jsp/welcome.jsp,3\9\39f5a8dcbd8322a8eda7ec90eec2683f4f4b52b6
 R
 "target/webapp/META-INF/MANIFEST.MF,9\6\9680385cb2f9025e097fa9ac9ab2190199f4812f
 M
@@ -208,3 +172,49 @@ M
 target/webapp/WEB-INF/web.xml,a\2\a211a14fb1ac13fe57dd7f8a8a31c61a9bee820e
 G
 target/webapp/index.jsp,8\d\8dfc48b70726561684b89d6df5b8906d287a59ae
+T
+$src/main/webapp/jsp/adminCabinet.jsp,9\a\9ae3c21e235c24020e5108e040df57c116e5b7fd
+O
+src/main/webapp/jsp/cabinet.jsp,e\0\e0126a28afaf1cb9e52df76e7614faff93184407
+R
+"src/main/webapp/temp/setbundle.jsp,a\b\aba79c15be354b9423f953cefd966e0902e1a713
+R
+"target/webapp/jsp/adminCabinet.jsp,1\c\1c31aa3848bcd8d39fdbd43bed76dd2e1d4610bf
+M
+target/webapp/jsp/cabinet.jsp,1\1\118b5ed6ff83e883932a1958d2f1e63d99ddf7c2
+P
+ target/webapp/temp/setbundle.jsp,0\a\0a77b5e3ec4f66833b991035b4b9bae88495065f
+o
+?src/main/java/com/epam/webapp/command/impl/MainPageCommand.java,a\9\a9c00e09858094eacc6e45ea94143a4ec3adeb21
+w
+Gsrc/main/java/com/epam/webapp/command/impl/RegistrationPageCommand.java,5\2\52b626f0e976ed6ca4a2c28b58565c4166c3ef36
+p
+@src/main/java/com/epam/webapp/command/impl/LogInPageCommand.java,b\9\b9d91e86a1b7d0934ecb76dbb799765e8865a1bf
+S
+#target/webapp/jsp/mentorCabinet.jsp,b\a\bac99915b7219f253cb83644e6e073d22a7d7b9d
+l
+<src/main/java/com/epam/webapp/command/impl/GradeCommand.java,6\8\682a3653755e4cc7c52a26b42435f51fecbed7bd
+t
+Dsrc/main/java/com/epam/webapp/command/impl/TrainingsPageCommand.java,0\a\0a8a06aa016a48acd08d7010a2ba87f57b0c70bc
+U
+%src/main/webapp/jsp/mentorCabinet.jsp,d\9\d94754005add77ecdb2121daaf2b96a8e182e889
+
+Osrc/main/java/com/epam/webapp/command/impl/TrainingsInformationPageCommand.java,6\0\6057a0a90214401ad4a6db181c6437de6e396d29
+r
+Bsrc/main/java/com/epam/webapp/command/impl/CabinetPageCommand.java,d\c\dc65203ede8e987c55c04256b500e513b2631c5b
+p
+@src/main/java/com/epam/webapp/command/impl/TopicPageCommand.java,a\4\a40fbb2c8c1d6dc3a47c91d32a252d7c3fa548db
+a
+1src/main/java/com/epam/webapp/tag/ButtonsTag.java,9\b\9baec32484ab104d7288c6c000ba618582d7c49d
+V
+&src/main/webapp/jsp/studentCabinet.jsp,9\a\9a5744e6e736ffadc7a6455e3336740a0f8c8546
+U
+%src/main/webapp/jsp/topicForStudy.jsp,f\f\ff55665ca1626aa676205be75ea0a0145a0818fe
+T
+$target/webapp/jsp/studentCabinet.jsp,e\0\e0a937e6b5b8a0f86d9dee9b8e846808a0db9609
+Z
+*target/webapp/jsp/trainingsInformation.jsp,b\9\b919d7ecd52a4c85eb915d81d2a36a74db39b39a
+\
+,src/main/webapp/jsp/trainingsInformation.jsp,c\0\c05d17207ef8db1e86aeeed4e7f3ee79121b0244
+N
+src/main/webapp/style/main.css,e\a\eab62751a19f8137f1752d956a7e8962c5f55387

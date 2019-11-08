@@ -260,6 +260,7 @@ public class DataListDAOImpl implements DataListsDAO {
       rs = preparedStatement.executeQuery();
       while (rs.next()) {
       topic = rs.getString(SQL_TOPIC);
+      topic.replaceAll("\t\n","<br/>");
       }
       return topic;
     } catch (SQLException | ConnectionPoolException e) {
