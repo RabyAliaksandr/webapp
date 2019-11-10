@@ -9,6 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -24,6 +26,7 @@ public class UserDAOImpl implements UserDAO {
   private static final String SQL_ADD_TRAINING_TO_STUDENT = "INSERT INTO trainingbystudents (userid, trainingid) VALUES (?, ?)";
   private static final String SQL_CHECK_ENROLLED = "SELECT EXISTS(SELECT training.trainingbystudents.userid FROM trainingbystudents WHERE (userid = ? and\n" +
           "                                                                                       trainingid =?))";
+  private static final String SQL_ALL_MENTORS = "SELECT userid, name, surname FROM users WHERE type = 'mentor'";
 
   /**
    * check if user is in database - take information about him
@@ -181,5 +184,34 @@ public class UserDAOImpl implements UserDAO {
       connectionPool.closeConnection(connection, preparedStatement);
     }
     return false;
+  }
+
+  @Override
+  public List<User> getAllMentors() throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    connectionPool.initPool();
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    List<User> users = new ArrayList<>();
+
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_ALL_MENTORS);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        User user = new User();
+        user.setId(resultSet.getInt(SQL_USER_ID));
+        user.setName(resultSet.getString(SQL_USER_NAME));
+        user.setSurname(resultSet.getString(SQL_USER_SURNAME));
+        users.add(user);
+      }
+      return users;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+    }
+    return users;
   }
 }

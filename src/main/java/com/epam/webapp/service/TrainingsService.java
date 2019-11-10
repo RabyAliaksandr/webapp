@@ -8,6 +8,8 @@ import com.epam.webapp.dao.exception.DAOException;
 import com.epam.webapp.entity.Student;
 import com.epam.webapp.entity.Training;
 
+import javax.xml.crypto.Data;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +30,13 @@ public class TrainingsService {
     DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
     return dataListsDAO.getTrainingsForStudent(studentId);
   }
-  public final  List<Training> getAllTrainings() throws ConnectionPoolException {// FIXME: 29.10.2019 make  static
+
+  public final List<Training> getAllTrainings() throws ConnectionPoolException {// FIXME: 29.10.2019 make  static
     DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
     return dataListsDAO.getTraining();
   }
 
-  public final  void addTrainingToStudent(int idStudent, int idTraining) {
+  public final void addTrainingToStudent(int idStudent, int idTraining) {
     TrainingsOperationDAO operationDAO = DAOFactory.getOperationDAO();
     try {
       operationDAO.addTrainingsToStudent(idStudent, idTraining);
@@ -60,5 +63,37 @@ public class TrainingsService {
   public final String getTopic(int trainingId, String topicName) throws ConnectionPoolException {
     DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
     return dataListsDAO.getTopic(trainingId, topicName);
+  }
+
+  public boolean updateTrainingsInformation(int trainingId, String information) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.updateTrainingsInformation(trainingId, information);
+  }
+
+  public final boolean addTopicForTraining(int trainingId, String topicsName, String topicsText) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.addTopicForTraining(trainingId, topicsName, topicsText);
+  }
+
+  public final boolean addTaskForTraining(int trainingId, String taskName, String taskText) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.addTaskForTraining(trainingId, taskName, taskText);
+  }
+
+  public final Map<String, String> getTasksListForTraining(int trainingId) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    Map<String, String> tasks = new HashMap<>();
+    tasks = dataListsDAO.getTasksListForTraining(trainingId);
+    return tasks;
+  }
+
+  public final boolean createTraining(String trainingName, int mentorId, String trainingDescription) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.createTraining(trainingName, mentorId, trainingDescription);
+  }
+
+  public final boolean updateTrainingsTopic(String topicName, String topicNewName, String topic, int trainingId) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.updateTrainingsTopic(topicName, topicNewName, topic, trainingId);
   }
 }

@@ -27,30 +27,42 @@
                 <c:if test="${user.type != null}">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
+                    <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
                 </ul>
                 </c:if>
             </div>
         </nav>
         <br/>
 
-    <span>${sessionScope.user.surname} ${sessionScope.user.name}</span>
     <c:set var="idUser" value="${sessionScope.user.id}"/>
     <br/>
-    <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
-    <fmt:message key="currentTrainings"/>
-    <c:set var="count" value="1"/>
-    <table border="3">
-    <c:forEach var="training" items="${gettrainings.allTrainings}">
-        <tr>
-        <td> <c:out value="${count}"/> </td>
-            <td>
-            <a href="controller?command=trainings_information_page&trainingId=${training.id}">${training.name}</a>
-            </td>
-<%--    <c:out value="${alltrainings.name}"/> </td>--%>
-    </tr>
-        <c:set var="count" value="${count + 1}" scope="page"/>
-    </c:forEach>
-    </table>
+        <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
+        <c:set var="count" value="1"/>
+        <div class="container">
+            <h2><fmt:message key="currentTrainings"/></h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Trainings name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="training" items="${gettrainings.allTrainings}">
+                    <tr>
+                        <td><c:out value="${count}"/></td>
+                        <td>
+                            <a href="controller?command=trainings_information_page&trainingId=${training.id}">
+                                    ${training.name}
+                            </a>
+                        </td>
+                            <%--    <c:out value="${alltrainings.name}"/> </td>--%>
+                    </tr>
+                    <c:set var="count" value="${count + 1}" scope="page"/>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
 </body>
 </html>
 </fmt:bundle>

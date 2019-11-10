@@ -64,7 +64,6 @@ public enum CommandEnum {
       this.command = new TopicPageCommand();
     }
   },
-
   GET_TEXT {
     {
       this.command = new GetTextTopicCommand();
@@ -73,6 +72,36 @@ public enum CommandEnum {
   CREATE_TEXT {
     {
       this.command = new CreateTextCommand();
+    }
+  },
+  UPDATE_INFORMATION_ABOUT_TRAINING {
+    {
+      this.command = new UpdateInformationAboutTrainingCommand();
+    }
+  },
+  ADD_TOPIC_FOR_TRAINING {
+    {
+      this.command = new AddTopicForTrainingCommand();
+    }
+  },
+  ADD_TASK_FOR_TRAINING {
+    {
+      this.command = new AddTaskForTraining();
+    }
+  },
+  MANAGEMENT_PAGE {
+    {
+      this.command = new ManagementPageCommand();
+    }
+  },
+  CREATE_TRAINING {
+    {
+      this.command = new CreateTrainingCommand();
+    }
+  },
+  UPDATE_TRAININGS_TOPIC {
+    {
+      this.command = new UpdateTrainingsTopicCommand();
     }
   };
   Command command;

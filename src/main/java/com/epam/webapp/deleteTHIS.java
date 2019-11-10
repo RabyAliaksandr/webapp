@@ -15,8 +15,8 @@ import java.util.Map;
 public class deleteTHIS {
 
   public static void main(String[] args) throws ConnectionPoolException {
-    UserDAOImpl userDAO = new UserDAOImpl();
-    System.out.println(userDAO.checkEnrolled(1, 4));
+    TrainingsService tr = new TrainingsService();
+    tr.updateTrainingsInformation(1, "null it is not null");
 
   }
 }

@@ -7,14 +7,14 @@ import com.epam.webapp.manager.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class CreateTextCommand implements Command {
-  private static final String CREATE_TEXT_PAGE = "path.page.create_page";
+public class ManagementPageCommand implements Command {
+  private static final String MANAGEMENT_PAGE = "path.page.management";
   private static final String TYPE_OPERATION = "typeOperation";
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException, CommandException, ConnectionPoolException {
     String typeOperation = request.getParameter(TYPE_OPERATION);
     request.getSession().setAttribute(TYPE_OPERATION, typeOperation);
-    return ConfigurationManager.getProperty(CREATE_TEXT_PAGE);
+    return ConfigurationManager.getProperty(MANAGEMENT_PAGE);
   }
 }

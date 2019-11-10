@@ -24,27 +24,58 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
+                <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
             </ul>
         </div>
     </nav>
     <br/>
     <c:set var="user" value="${sessionScope.user}"/>
     <c:set var="count" value="1"/>
-    <table border="2">
-    <c:forEach var="training" items="${data.getTrainingForMentor(user.id)}">
-        <tr>
-            <td>
-                <c:out value="${count}"/>
-            </td>
-            <td>
-                <a href="controller?command=trainings_information_page&trainingId=${training.id}">
-                    ${training.name}
-                </a>
-            </td>
-            <c:set var="count" value="${count + 1}"/>
-            </c:forEach>
-        </tr>
-    </table>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <fmt:message key="trainingManagement"/>
+        </div>
+
+       <div class="table-bordered">
+           <table class="table-striped">
+               <thead >
+               <tr>
+                   <th scope="col">#</th>
+                   <th scope="col"><fmt:message key="name"/></th>
+               </tr>
+               </thead>
+               <tbody>
+               <c:forEach var="training" items="${data.getTrainingForMentor(user.id)}">
+                   <tr>
+                       <th scope="row">${count}</th>
+                       <td>
+                           <a href="controller?command=trainings_information_page&trainingId=${training.id}">
+                                   ${training.name}
+                           </a>
+                       </td>
+                   </tr>
+                   <c:set var="count" value="${count + 1}"/>
+               </c:forEach>
+               </tbody>
+
+           </table>
+       </div>
+<%--        <table border="2">--%>
+<%--            <c:forEach var="training" items="${data.getTrainingForMentor(user.id)}">--%>
+<%--            <tr>--%>
+<%--                <td>--%>
+<%--                    <c:out value="${count}"/>--%>
+<%--                </td>--%>
+<%--                <td>--%>
+<%--                    <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">--%>
+<%--                            ${training.name}--%>
+<%--                    </a>--%>
+<%--                </td>--%>
+<%--                <c:set var="count" value="${count + 1}"/>--%>
+<%--                </c:forEach>--%>
+<%--            </tr>--%>
+<%--        </table>--%>
+    </div>
     <c:import url="footer.jsp"/></body>
     </html>
 </fmt:bundle>

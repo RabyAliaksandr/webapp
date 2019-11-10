@@ -17,6 +17,7 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
                 <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
+                <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
             </ul>
         </div>
     </nav>
@@ -28,53 +29,73 @@
     <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
     <jsp:useBean id="getCompletedTrinings" class="com.epam.webapp.service.TrainingsService"/>
     <c:set var="count" value="1" scope="page"/>
-    <c:import url="mainButtons.jsp"/>
-
-    <table border="1">
-        <fmt:message key="studentstrainings"/>
-        <c:forEach var="training" items="${gettrainings.getCompletedTrainingForStudent(user.id)}">
-            <c:choose>
-                <c:when test="${training.grade == 0 }">
-                    <tr>
-                        <td><c:out value="${count}"></c:out></td>
-                        <td><c:out value="${training.name}"/></td>
-                    </tr>
-                    <c:set var="count" value="${count + 1}" scope="page"/>
-                </c:when>
-            </c:choose>
-        </c:forEach>
-        <c:if test="${count == 1 }">
+    <div class="container">
+        <h1><fmt:message key="studentstrainings"/></h1>
+        <table class="table">
+            <thead>
             <tr>
-                <td>
-                    <fmt:message key="noEnrolledTraining"/>
-                </td>
+                <th>No</th>
+                <th><fmt:message key="name"/></th>
             </tr>
-        </c:if>
-    </table>
-    <br/>
-    <table border="1"/>
-    <fmt:message key="completedTraining"/>
-    <c:set var="count" value="1" scope="page"/>
-    <c:forEach var="training" items="${getCompletedTrinings.getCompletedTrainingForStudent(user.id)}">
-        <c:choose>
-            <c:when test="${training.grade > 0}">
+            </thead>
+            <tbody>
+            <c:forEach var="training" items="${gettrainings.getCompletedTrainingForStudent(user.id)}">
+                <c:choose>
+                    <c:when test="${training.grade == 0 }">
+                        <tr>
+                            <td>${count}</td>
+                            <td>${training.name}</td>
+                        </tr>
+                        <c:set var="count" value="${count + 1}" scope="page"/>
+                    </c:when>
+                </c:choose>
+            </c:forEach>
+            <c:if test="${count == 1 }">
                 <tr>
-                    <td><c:out value="${count}"></c:out></td>
-                    <td><c:out value="${training.name}"/></td>
-                    <td><c:out value="${training.grade}"/></td>
+                    <td>
+                        <fmt:message key="noEnrolledTraining"/>
+                    </td>
                 </tr>
-                <c:set var="count" value="${count + 1}" scope="page"/>
-            </c:when>
-        </c:choose>
-    </c:forEach>
-    <c:if test="${count == 1 }">
-        <tr>
-            <td>
-                <fmt:message key="noCompletedTraining"/>
-            </td>
-        </tr>
-    </c:if>
-    </table>
+            </c:if>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <c:set var="count" value="1"/>
+        <h1><fmt:message key="completedTraining"/></h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th><fmt:message key="name"/></th>
+                <th><fmt:message key="assessment"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="training" items="${gettrainings.getCompletedTrainingForStudent(user.id)}">
+                <c:choose>
+                    <c:when test="${training.grade > 0 }">
+                        <tr>
+                            <td>${count}"</td>
+                            <td>${training.name}</td>
+                            <td>${training.grade}</td>
+                        </tr>
+                        <c:set var="count" value="${count + 1}" scope="page"/>
+                    </c:when>
+                </c:choose>
+            </c:forEach>
+            <c:if test="${count == 1 }">
+                <tr>
+                    <td>
+                        <fmt:message key="noCompletedTraining"/>
+                    </td>
+                </tr>
+            </c:if>
+            </tbody>
+        </table>
+    </div>
+
     <br/>
     <c:import url="footer.jsp"/></body>
     </html>

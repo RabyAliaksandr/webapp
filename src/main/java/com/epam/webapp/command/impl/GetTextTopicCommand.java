@@ -12,6 +12,7 @@ public class GetTextTopicCommand implements Command {
 
     String string =  request.getParameter("text_topic");
     System.out.println(string);
+
     return null;
   }
 }

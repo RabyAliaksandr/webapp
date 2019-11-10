@@ -8,7 +8,15 @@ import com.epam.webapp.dao.impl.UserDAOImpl;
 import com.epam.webapp.entity.User;
 import com.google.protobuf.ServiceException;
 
+import java.util.List;
+
 public class UserService {
+
+  public final List<User> getAllMentors() throws ConnectionPoolException {
+      UserDAO userDAO = DAOFactory.getUserDAO();
+      return userDAO.getAllMentors();
+  }
+
   public final static User checkLogin(String login, String password) throws ServiceException {
     User user = new User();
     user.setLogin(login);
