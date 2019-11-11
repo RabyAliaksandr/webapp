@@ -1,5 +1,3 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: alex
@@ -7,8 +5,11 @@
   Time: 23:05
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:bundle basename="local" prefix="label.">
+
     <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -28,25 +29,70 @@
                     <li class="active"><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
                     <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
                 </c:if>
-                <c:if test="${user.type == 'admin'}">
+                <c:if test="${user.type == 'ADMIN' && editor == true}">
                     <li><a href="controller?command=create_text&typeOperation=editTopic&trainingId=${trainingId}&
-                            topicName=${topicName}"><fmt:message key="button.editDescription"/></a></li>
+                            topicId=${topicId}"><fmt:message key="button.editDescription"/></a></li>
                 </c:if>
             </ul>
         </div>
     </nav>
     <br/>
+        <%--            message about edit changes --%>
+
+    <c:if test="${changesSavedMessage != null}">
+        <div class="alert alert-danger" role="alert">
+                ${changesSavedMessage}
+            <c:set var="changesSavedMessage" value="${null}"/>
+        </div>
+    </c:if>
+
+
     <div class="container-fluid">
-            <c:if test="${changesSavedMessage != null}">
+        <c:set var="topic" value="${trainingService.getTopic(topicId)}"/>
+
+
+        <h1>${topic.name}</h1>
+        <br/>
+        <p>${topic.topic}</p>
+    </div>
+    <c:out value="${topicId} its topicId"/>
+    <c:out value="${user.id} its userId"/>
+<%--    button learned topic--%>
+        <c:if test="${user.type == 'STUDENT'}">
+<%--            message about done mark learned topic--%>
+            <c:if test="${markDoneMessage != null}">
                 <div class="alert alert-danger" role="alert">
-                        ${changesSavedMessage}
-                    <c:set var="changesSavedMessage" value="${null}"/>
+                        ${markDoneMessage}
                 </div>
             </c:if>
-        <h1>${topicName}</h1>
-        <br/>
-        <p> ${trainingService.getTopic(trainingId, topicName)}</p>
-    </div>
+
+            <c:set var="check" value="${trainingService.checkTopicStatus(user.id, topicId)}"/>
+
+          <c:choose>
+              <c:when test="${check == false}">
+                  <div class="container-fluid">
+                      <form class="form-inline" method="post" action="controller">
+                          <input type="hidden" name="userId" value="${user.id}"/>
+                          <input type="hidden" name="topicId" value="${topicId}"/>
+                          <input type="hidden" name="command" value="mark_topic"/>
+                          <button type="submit" class="btn btn-danger btn-lg btn-block" style="width: 95%;margin: 5px auto;">
+                              <fmt:message key="learned"/>
+                          </button>
+                      </form>
+                  </div>
+              </c:when>
+
+              <c:when test="${check == true && markDoneMessage == null}">
+                  <div class="alert alert-danger" role="alert">
+                      <fmt:bundle basename="local" prefix="message.">
+                          <fmt:message key="markDone"/>
+                      </fmt:bundle>
+                      <c:set var="markDoneMessage" value="${null}"/>
+                  </div>
+
+              </c:when>
+          </c:choose>
+        </c:if>
     </body>
     </html>
 </fmt:bundle>

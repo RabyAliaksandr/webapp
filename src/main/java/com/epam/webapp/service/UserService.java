@@ -4,10 +4,13 @@ import com.epam.webapp.dao.DAOFactory;
 import com.epam.webapp.dao.UserDAO;
 import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
 import com.epam.webapp.dao.exception.DAOException;
-import com.epam.webapp.dao.impl.UserDAOImpl;
 import com.epam.webapp.entity.User;
+import com.epam.webapp.entity.UserStatus;
+import com.epam.webapp.entity.UserTypes;
 import com.google.protobuf.ServiceException;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -43,7 +46,7 @@ public class UserService {
     User user = new User();
     user.setLogin(login);
     user.setPassword(password);
-    user.setType(type);
+    user.setType(UserTypes.getUserType(type));
     user.setEmail(email);
     user.setName(name);
     user.setSurname(surname);
@@ -75,4 +78,25 @@ public class UserService {
     UserDAO userDAO = DAOFactory.getUserDAO();
     return userDAO.checkEnrolled(userId, trainingId);
   }
+
+  public final List<User> getAllUser() throws ConnectionPoolException, SQLException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    List<User> users = new ArrayList<>();
+    users = userDAO.getAllUser();
+    return users;
+  }
+  public final UserTypes[] usersType(){
+    return UserTypes.values();
+  }
+
+  public final UserStatus[] userStatuses() {
+    return UserStatus.values();
+  }
+
+  public final boolean updateUserType(int userId, UserTypes type, UserStatus status) throws ConnectionPoolException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    return userDAO.updateUserType(userId, type, status);
+  }
+
+
 }

@@ -28,20 +28,16 @@
                 <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
                 <li><a href="controller?command=management_page&typeOperation=trainingManagement"><fmt:message
                         key="trainingManagement"/></a></li>
-                <li><a href="controller?command=management_page"><fmt:message key="mentorManagement"/></a></li>
+                <li><a href="controller?command=management_page&typeOperation=usersManagement"><fmt:message key="usersManagement"/></a></li>
                 <li><a href="controller?command=management_page"><fmt:message key="consultationManagement"/></a></li>
                 <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
             </ul>
         </div>
     </nav>
     <br/>
-
-
-
     <fmt:bundle basename="local" prefix="footer.">
         <fmt:message key="copyright"/>
     </fmt:bundle>
     </body>
     </html>
 </fmt:bundle>
-

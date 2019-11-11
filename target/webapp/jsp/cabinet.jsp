@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.webapp.entity.User" %><%--
   Created by IntelliJ IDEA.
   User: alex
@@ -9,23 +10,19 @@
 <html>
 <head>
     <title>Welcome</title>
-    <% User user = (User) session.getAttribute("user");
-    if (user.getType().equals("admin")) {
-      %>
-    <jsp:forward page="adminCabinet.jsp"></jsp:forward>
-    <%
-    }
-    if (user.getType().equals("student")) {
-    %>
-    <jsp:forward page="studentCabinet.jsp"></jsp:forward>
-    <% } %>
-    <%
-        if (user.getType().equals("mentor"))  {
-    %>  <jsp:forward page="mentorCabinet.jsp"></jsp:forward>
-    <% } %>
-
 </head>
-<body>
 
+<body>
+<c:choose>
+    <c:when test="${user.type == 'ADMIN'}">
+        <jsp:forward page="adminCabinet.jsp"></jsp:forward>
+    </c:when>
+    <c:when test="${user.type == 'STUDENT'}">
+        <jsp:forward page="studentCabinet.jsp"></jsp:forward>
+    </c:when>
+    <c:when test="${user.type == 'MENTOR'}">
+        <jsp:forward page="mentorCabinet.jsp"></jsp:forward>
+    </c:when>
+</c:choose>
 </body>
 </html>

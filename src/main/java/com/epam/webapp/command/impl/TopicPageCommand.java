@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class TopicPageCommand implements Command {
   private static final String TOPIC_PAGE = "path.page.topicForStudy";
-  private static final String TOPIC = "topicName";
+  private static final String TOPIC = "topicId";
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException, CommandException, ConnectionPoolException {

@@ -40,6 +40,13 @@
         <c:set var="count" value="1"/>
         <div class="container">
             <h2><fmt:message key="currentTrainings"/></h2>
+<%--            message about edit changes --%>
+            <c:if test="${changesSavedMessage != null}">
+            <div class="alert alert-danger" role="alert">
+                    ${changesSavedMessage}
+                <c:set var="changesSavedMessage" value="${null}"/>
+            </div>
+            </c:if>
             <table class="table">
                 <thead>
                 <tr>

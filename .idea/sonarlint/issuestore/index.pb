@@ -13,8 +13,6 @@ L
 src/main/webapp/jsp/main.jsp,7\8\7875f91c86fc46c8818406d9dc52feadbfd7ff13
 O
 src/resources/config.properties,7\e\7eab24a6dae8dbc7eec9daca86177dc3309d4771
-Q
-!src/resources/messages.properties,7\2\72b0b4d162ed931c3f5f2c0fe9ba26d819d5d057
 O
 src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
 8
@@ -128,8 +126,6 @@ R
 "target/classes/local_ru.properties,a\2\a2ba4a974d038a0528cdec14dafd5c610891c3ad
 I
 target/classes/log4j2.xml,3\5\3505ec16e66091483fa7354502e2a23a445a0392
-R
-"target/classes/messages.properties,f\9\f9dfddf4176d85422536559d77d3157380ec6ddf
 L
 target/webapp/jsp/bundle.jsp,4\8\48e78bcf12169606c4e8ddb98843e068a69201a7
 S
@@ -166,8 +162,6 @@ a
 1target/webapp/WEB-INF/classes/local_ru.properties,7\9\793e985730e59c884a661a72eab167e29eef95af
 X
 (target/webapp/WEB-INF/classes/log4j2.xml,e\8\e840cc9f4c68006a0e9d50073841d26cda9d7a09
-a
-1target/webapp/WEB-INF/classes/messages.properties,3\6\36ec591cd1d893ee1f84dbbc9ecfea9dbf26d601
 M
 target/webapp/WEB-INF/web.xml,a\2\a211a14fb1ac13fe57dd7f8a8a31c61a9bee820e
 G
@@ -218,3 +212,39 @@ Z
 ,src/main/webapp/jsp/trainingsInformation.jsp,c\0\c05d17207ef8db1e86aeeed4e7f3ee79121b0244
 N
 src/main/webapp/style/main.css,e\a\eab62751a19f8137f1752d956a7e8962c5f55387
+Y
+)src/main/webapp/style/bootstrap-theme.css,9\9\99b50cd73186ec5dec8fb4a0796cbba01610c1ec
+S
+#src/main/webapp/style/bootstrap.css,e\8\e8fe369e639ce1920ec9f0016a2a754c6b0a6080
+r
+Bsrc/main/java/com/epam/webapp/command/impl/AddTaskForTraining.java,d\a\da09939cf77dad1d425387b463d777003e1a6419
+z
+Jsrc/main/java/com/epam/webapp/command/impl/AddTopicForTrainingCommand.java,b\5\b5a43ba8304816dae33688c11457e4cc509b28f6
+q
+Asrc/main/java/com/epam/webapp/command/impl/CreateTextCommand.java,b\b\bbcf95f0b6f6ec6bd34698982e3e7ccbf5c7021a
+u
+Esrc/main/java/com/epam/webapp/command/impl/CreateTrainingCommand.java,4\9\49195cd1ee7195605bae0a0382697384d5164417
+s
+Csrc/main/java/com/epam/webapp/command/impl/GetTextTopicCommand.java,b\1\b134a0a2d2fad636127fb0e844582e023251667c
+u
+Esrc/main/java/com/epam/webapp/command/impl/ManagementPageCommand.java,b\5\b5d7fb2870a94fb04f89e1dc3fff454ef8d60941
+…
+Usrc/main/java/com/epam/webapp/command/impl/UpdateInformationAboutTrainingCommand.java,5\7\575c03873316c2400c6a99a2d8940c7bed42b0d9
+X
+(src/main/webapp/jsp/adminsManagement.jsp,c\b\cb3b3d82504596fdcf3f1d304dd4d96307109666
+Y
+)src/main/webapp/jsp/createTopicOrTask.jsp,b\f\bfd57851870e23236f2daac161e04c53e8b83c15
+N
+src/main/webapp/jsp/editor.jsp,9\6\967fdf5b6853f790b888448611ae4dc16c9db45b
+{
+Ksrc/main/java/com/epam/webapp/command/impl/UpdateTrainingsTopicCommand.java,4\b\4b60f45b40f2d54031dda88501daf0a48ebb5846
+c
+3src/main/java/com/epam/webapp/entity/UserTypes.java,1\7\17c34a0edfbb5df5d301ff4495ae7abc07693254
+d
+4src/main/java/com/epam/webapp/entity/UserStatus.java,7\4\74dda09986cdf4a6263191a5d769918488f4849c
+u
+Esrc/main/java/com/epam/webapp/command/impl/UpdateUserTypeCommand.java,e\a\ea934cbdb03472a02d0d668a0098b563233231bc
+_
+/src/main/java/com/epam/webapp/entity/Topic.java,4\c\4c1eeabd45f8db84e4a22ee60e6c2f4fe74a49bc
+^
+.src/main/java/com/epam/webapp/entity/Task.java,e\b\eb123683726de8d2f0958d63f982c74fb58985f7

@@ -1,47 +1,51 @@
 
-Fsquid:S00108")Either remove or fill this block of code.(ı¸Íè8†¾ò—ä-
-T
-squid:S106"9Replace this use of System.out or System.err by a logger.(§ˆ®8†¾ò—ä-
-Fsquid:S00108")Either remove or fill this block of code.(ı¸Íè8†¾ò—ä-
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8†¾ò—ä-
-Fsquid:S00108")Either remove or fill this block of code.(ı¸Íè8†¾ò—ä-
-Fsquid:S1068"*Remove this unused "logger" private field.(ö›¡­8²½—á-
-Y
-squid:S106"9Replace this use of System.out or System.err by a logger.(Ş¨‡ˆüÿÿÿÿ8†¾ò—ä-
-rsquid:S1192"VDefine a constant instead of duplicating this literal "my id ===============" 3 times.(§ˆ®8†¾ò—ä-
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8†¾ò—ä-
-dsquid:S1068"HRemove this unused "SQL_COMPLETED_TRAININGS_FOR_STUDENTS" private field.(§ÄÈ®8¿Ç´Œä-
-T
-squid:S106"9Replace this use of System.out or System.err by a logger.(Çœİ8†¾ò—ä-
-Fsquid:S00108")Either remove or fill this block of code.(ı¸Íè8†¾ò—ä-
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8†¾ò—ä-
-T
-squid:S106"9Replace this use of System.out or System.err by a logger.(æÑ–ê8†¾ò—ä-
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8†¾ò—ä-
-Isquid:S1481"-Remove this unused "training" local variable.(˜º–¢8†¾ò—ä-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Õ¾8œ¯…Éá-
-Nsquid:S3416"2Update this logger to use "DataListDAOImpl.class".(ö›¡­8²½—á-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ö›¡­8²½—á-
-S
-squid:S106"9Replace this use of System.out or System.err by a logger.(Èí›8†¾ò—ä-
-Fsquid:S00108")Either remove or fill this block of code.(ı¸Íè8†¾ò—ä-
-Y
-squid:S106"9Replace this use of System.out or System.err by a logger.(¼‡Éİşÿÿÿÿ8†¾ò—ä-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(÷ºşÌ8Ö´Œ£á-
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¼™º‡şÿÿÿÿ8œ¼´Èá-
-T
-squid:S106"9Replace this use of System.out or System.err by a logger.(ñøº8†¾ò—ä-
-T
-squid:S106"9Replace this use of System.out or System.err by a logger.(§ˆ®8†¾ò—ä-
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8†¾ò—ä-
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8†¾ò—ä-
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Î§¸šıÿÿÿÿ8àí¡á-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(œÆ‹‹8œ¼´Èá-
-Fsquid:S00108")Either remove or fill this block of code.(ı¸Íè8†¾ò—ä-
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8†¾ò—ä-
-Fsquid:S00108")Either remove or fill this block of code.(ı¸Íè8†¾ò—ä-
-Y
-squid:S106"9Replace this use of System.out or System.err by a logger.(£¦ãÿÿÿÿÿ8†¾ò—ä-
-Fsquid:S00108")Either remove or fill this block of code.(ı¸Íè8†¾ò—ä-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(«Ãëê8²½—á-
-Nsquid:S1135"2Complete the task associated to this TODO comment.(«Ãëê8²½—á-
+Isquid:S00108À")Either remove or fill this block of code.(ı¸Íè8ïò¸å-
+Isquid:S00108–")Either remove or fill this block of code.(ı¸Íè8ïò¸å-
+Jsquid:S1168á"+Return an empty collection instead of null.(¥¹ï8ïò¸å-
+vsquid:ModifiersOrderCheck#"EReorder the modifiers to comply with the Java Language Specification.(¼™º‡şÿÿÿÿ8ïş‹å-
+isquid:S2147§"ECombine this catch with the one at line 421, which has the same body.(Ù£­—ÿÿÿÿÿ8ïò¸å-
+[
+squid:S106P"9Replace this use of System.out or System.err by a logger.(£¦ãÿÿÿÿÿ8ïò¸å-
+qsquid:ModifiersOrderCheck$"EReorder the modifiers to comply with the Java Language Specification.(œÆ‹‹8™İŒå-
+V
+squid:S106p"9Replace this use of System.out or System.err by a logger.(Çœİ8ïò¸å-
+U
+squid:S106t"9Replace this use of System.out or System.err by a logger.(Èí›8ïò¸å-
+[
+squid:S106"9Replace this use of System.out or System.err by a logger.(Ş¨‡ˆüÿÿÿÿ8ïò¸å-
+Isquid:S00108Ü")Either remove or fill this block of code.(ı¸Íè8ïò¸å-
+fsquid:S1068%"HRemove this unused "SQL_COMPLETED_TRAININGS_FOR_STUDENTS" private field.(§ÄÈ®8™İŒå-
+Jsquid:S1168©"+Return an empty collection instead of null.(¥¹ï8ïò¸å-
+Jsquid:S1168ü"+Return an empty collection instead of null.(¥¹ï8ßÍ›¹å-
+vsquid:ModifiersOrderCheck""EReorder the modifiers to comply with the Java Language Specification.(Î§¸šıÿÿÿÿ8àí¡á-
+Hsquid:S00108W")Either remove or fill this block of code.(ı¸Íè8ïò¸å-
+qsquid:ModifiersOrderCheck!"EReorder the modifiers to comply with the Java Language Specification.(Õ¾8œ¯…Éá-
+Isquid:S1168\"+Return an empty collection instead of null.(¥¹ï8ïò¸å-
+Isquid:S00108ú")Either remove or fill this block of code.(ı¸Íè8ïò¸å-
+Psquid:S3416"2Update this logger to use "DataListDAOImpl.class".(ö›¡­8ïş‹å-
+qsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ö›¡­8œ¼´Èá-
+Isquid:S00108ƒ")Either remove or fill this block of code.(ı¸Íè8ïò¸å-
+V
+squid:S106x"9Replace this use of System.out or System.err by a logger.(æÑ–ê8ïò¸å-
+V
+squid:S106N"9Replace this use of System.out or System.err by a logger.(§ˆ®8ïò¸å-
+Isquid:S11689"+Return an empty collection instead of null.(¥¹ï8ïò¸å-
+Jsquid:S1168Å"+Return an empty collection instead of null.(¥¹ï8ïò¸å-
+Zsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8Ó”¸¹å-
+Isquid:S00108Ü")Either remove or fill this block of code.(ı¸Íè8ïò¸å-
+^squid:UselessImportCheck".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8Ó”¸¹å-
+Jsquid:S1168ÿ"+Return an empty collection instead of null.(¥¹ï8Õ¦¶¹å-
+Jsquid:S1168ˆ"+Return an empty collection instead of null.(¥¹ï8ïò¸å-
+qsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(«Ãëê8²½—á-
+Isquid:S1168>"+Return an empty collection instead of null.(¥¹ï8ïò¸å-
+V
+squid:S106C"9Replace this use of System.out or System.err by a logger.(§ˆ®8ïò¸å-
+Isquid:S00108¤")Either remove or fill this block of code.(ı¸Íè8ïò¸å-
+Hsquid:S1068"*Remove this unused "logger" private field.(ö›¡­8ïş‹å-
+V
+squid:S106a"9Replace this use of System.out or System.err by a logger.(ñøº8ïò¸å-
+[
+squid:S106|"9Replace this use of System.out or System.err by a logger.(¼‡Éİşÿÿÿÿ8ïò¸å-
+Rsquid:S2201“".The return value of "replaceAll" must be used.(Ï¦“™úÿÿÿÿ8ïò¸å-
+tsquid:S1192C"VDefine a constant instead of duplicating this literal "my id ===============" 3 times.(§ˆ®8ïò¸å-
+qsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(÷ºşÌ8Ö´Œ£á-

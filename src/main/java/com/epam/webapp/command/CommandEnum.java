@@ -103,6 +103,16 @@ public enum CommandEnum {
     {
       this.command = new UpdateTrainingsTopicCommand();
     }
+  },
+  UPDATE_USER_TYPE {
+    {
+      this.command = new UpdateUserTypeCommand();
+    }
+  },
+  MARK_TOPIC {
+    {
+      this.command = new MarkTopicCommand();
+    }
   };
   Command command;
 

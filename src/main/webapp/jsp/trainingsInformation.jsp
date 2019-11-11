@@ -31,9 +31,15 @@
                 </c:if>
                 <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
                 <c:if test="${editor == true}">
-                    <li><a href="controller?command=create_text&typeOperation=edit&trainingId=${trainingId}"><fmt:message key="button.editDescription"/></a></li>
-                    <li><a href="controller?command=create_text&typeOperation=addTopic&trainingId=${trainingId}"><fmt:message key="button.addTopic"/></a></li>
-                    <li><a href="controller?command=create_text&typeOperation=addTask&trainingId=${trainingId}"><fmt:message key="button.addTask"/></a></li>
+                    <li>
+                        <a href="controller?command=create_text&typeOperation=edit&trainingId=${trainingId}"><fmt:message
+                                key="button.editDescription"/></a></li>
+                    <li>
+                        <a href="controller?command=create_text&typeOperation=addTopic&trainingId=${trainingId}"><fmt:message
+                                key="button.addTopic"/></a></li>
+                    <li>
+                        <a href="controller?command=create_text&typeOperation=addTask&trainingId=${trainingId}"><fmt:message
+                                key="button.addTask"/></a></li>
                 </c:if>
                 <c:if test="${user.type != null}">
                     <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
@@ -50,93 +56,101 @@
         <div class="container-fluid">
             <h1><fmt:message key="informationAboutTraining"/></h1>
             <br/>
-            ${training.information}
-        <br/>
+                ${training.information}
             <br/>
-        <c:if test="${sessionScope.user.type == 'student'}">
-               <c:if test="${userService.checkEnrolled(user.id, trainingId) == false}">
-                <form name="addTrainingToStudent" method="POST" action="controller">
-                    <input type="hidden" name="command" value="add_training_to_student"/>
-                    <input type="hidden" name="userId" value="${user.id}"/>
-                    <input type="hidden" name="trainingId" value="${trainingId}"/>
-                    <input type="submit" value=<fmt:message key="addTraining"></fmt:message>/>
-                </form>
-               </c:if>
+            <br/>
+            <c:if test="${sessionScope.user.type == 'STUDENT'}">
+                <c:if test="${userService.checkEnrolled(user.id, trainingId) == false}">
+                    <form name="addTrainingToStudent" method="POST" action="controller">
+                        <input type="hidden" name="command" value="add_training_to_student"/>
+                        <input type="hidden" name="userId" value="${user.id}"/>
+                        <input type="hidden" name="trainingId" value="${trainingId}"/>
+                        <input type="submit" value=<fmt:message key="addTraining"></fmt:message>/>
+                    </form>
+                </c:if>
                 <c:if test="${userService.checkEnrolled(user.id, trainingId) == true}">
                     <fmt:message key="enrolledTraining"/>
                 </c:if>
-        </c:if>
+            </c:if>
         </div>
     </section>
     <br/>
-<section class="b">
-    <div class="col-lg-6 col-md-6">
-        <div class="container-fluid">
-            <h3>
-            <fmt:message key="listTopics"/>
-            </h3>
-            <br/>
+    <section class="b">
+        <div class="col-lg-6 col-md-6">
+            <div class="container-fluid">
+
+                <c:set var="check" value="${trainingService.checkTrainingStatusForStudent(user.id, trainingId)}"/>
+                    <%--        if student on training or admin or mentor--%>
+                <c:if test="${check == true || user.type == 'ADMIN' || user.type == 'MENTOR'}">
+                <h3>
+                    <fmt:message key="listTopics"/>
+                </h3>
+                <br/>
+
+                    <%--table topics for training--%>
 
 
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th><fmt:message key="topicsName"/></th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:set var="count" value="1"/>
-                <c:forEach var="mapTopics" items="${trainingService.getTopicsForTraining(trainingId)}">
-                    <tr>
-                        <td>${count}</td>
-                        <td>
-                            <a href="controller?command=topic_page&trainingId=${trainingId}&topicName=${mapTopics.key}">${mapTopics.key}</a>
-                        </td>
-                    </tr>
-                    <c:set var="count" value="${count + 1}"/>
-                </c:forEach>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th><fmt:message key="topicsName"/></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:set var="count" value="1"/>
+                        <c:forEach var="topic" items="${trainingService.getTopicsForTraining(trainingId)}">
+                            <tr>
+                                <td>${count}</td>
+                                <td>
+                                    <a href="controller?command=topic_page&trainingId=${trainingId}&topicId=${topic.id}">${topic.name}</a>
+                                </td>
+                            </tr>
+                            <c:set var="count" value="${count + 1}"/>
+                        </c:forEach>
 
-                </tbody>
-            </table>
-        </div>
-
-        </div>
-    </div>
-
-    <div class="col-lg-6 col-md-6">
-        <div class="container-fluid">
-            <h3>
-            <fmt:message key="listTask"/>
-            </h3>
-            <br/>
-
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th><fmt:message key="tasksName"/></th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:set var="count" value="1"/>
-                <c:forEach var="mapTopics" items="${trainingService.getTasksListForTraining(trainingId)}">
-                    <tr>
-                        <td>${count}</td>
-                        <td>
-                            <a href="controller?command=topic_page&trainingId=${trainingId}&topicName=${mapTopics.key}">${mapTopics.key}</a>
-                        </td>
-                    </tr>
-                    <c:set var="count" value="${count + 1}"/>
-                </c:forEach>
-
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </c:if>
+            </div>
         </div>
         </div>
-    </div>
-</section>
+
+<%--        if student on training or admin or mentor--%>
+        <c:if test="${check == true || user.type == 'ADMIN' || user.type == 'MENTOR'}">
+        <div class="col-lg-6 col-md-6">
+            <div class="container-fluid">
+                <h3>
+                    <fmt:message key="listTask"/>
+                </h3>
+                <br/>
+                    <%--table taks for training--%>
+                   <table class="table">
+                       <thead>
+                       <tr>
+                           <th>No</th>
+                           <th><fmt:message key="tasksName"/></th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                       <c:set var="count" value="1"/>
+                       <c:forEach var="task" items="${trainingService.getTasksListForTraining(trainingId)}">
+                           <tr>
+                               <td>${count}</td>
+                               <td>
+                                   <a href="controller?command=topic_page&trainingId=${trainingId}&taskId=${task.id}">${task.name}</a>
+                               </td>
+                           </tr>
+                           <c:set var="count" value="${count + 1}"/>
+                       </c:forEach>
+
+                       </tbody>
+                   </table>
+               </c:if>
+            </div>
+        </div>
+        </div>
+    </section>
     </head>
     </body>
     </html>

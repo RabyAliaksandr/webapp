@@ -34,7 +34,7 @@
     </nav>
     <br/>
     <hr/>
-        <%--form for edit escription training--%>
+        <%--form for edit description training--%>
     <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
     <c:if test="${typeOperation == 'edit'}">
         <c:set var="training" value="${trainingService.getTrainingByIdTraining(trainingId)}" scope="session"/>
@@ -125,9 +125,7 @@
                 <div class="col-sm-6 col-md-4">
 
                     <select id="company" class="form-control" name="mentorId">
-                            <%--                            <option>1</option>--%>
                         <c:forEach var="user" items="${userService.allMentors}">
-                            <%--                            <option>2</option>--%>
                             <option value=${user.id}>${user.name} ${user.surname}</option>
                         </c:forEach>
                     </select>
@@ -150,19 +148,20 @@
 <%--    edit trainings topic --%>
 
     <c:if test="${typeOperation == 'editTopic'}">
+        <c:set var="topic" value="${trainingService.getTopic(topicId)}"/>
         <hr/>
         <form id="editTopic" method="post" action="controller">
             <div class="form-group">
                 <label><fmt:message key="topicsName"/></label>
-                <input type="text" class="form-control" name="topicNewName" maxlength="70" value="${topicName}">
-                <input type="hidden" name="topicName" value="${topicName}"/>
+                <input type="text" class="form-control" name="topicNewName" maxlength="70" value="${topic.name}">
+                <input type="hidden" name="topicName" value="${topic.name}"/>
             </div>
             <input type="hidden" name="command" value="update_trainings_topic"/>
             <input type="hidden" name="trainingId" value="${trainingId}"/>
             <textarea id="editor4" form="editTopic" name="topic" maxlength="10000">
-                    ${trainingService.getTopic(trainingId, topicName)}
+                    ${topic.topic}
             </textarea>
-            <input type="submit" onclick="goBack()" value=<fmt:message key="send"/>>
+            <input type="submit"  value=<fmt:message key="send"/>>
         </form>
     </c:if>
     <script type="text/javascript">

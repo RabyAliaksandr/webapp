@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <fmt:bundle basename="local" prefix="label.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -34,35 +35,120 @@
     </nav>
     <br/>
     <div class="row">
-        <div class="col-xs-1">
-            <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
-            <c:set var="count" value="1"/>
-            <div class="container">
-                <h2><fmt:message key="currentTrainings"/></h2>
+
+            <%--        block Traininngs Management--%>
+
+        <c:if test="${typeOperation == 'trainingManagement'}">
+            <div class="col-xs-1">
+                <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
+                <c:set var="count" value="1"/>
+                <div class="container">
+                    <h2><fmt:message key="currentTrainings"/></h2>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th><fmt:message key="name"/></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="training" items="${gettrainings.allTrainings}">
+                            <tr>
+                                <td>${count}</td>
+                                <td>
+                                    <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">
+                                            ${training.name}
+                                    </a>
+                                </td>
+                            </tr>
+                            <c:set var="count" value="${count + 1}" scope="page"/>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </c:if>
+            <%--        block Users Management--%>
+        <c:if test="${typeOperation == 'usersManagement'}">
+            <div class="container-fluid">
+                <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
+                <h1><fmt:message key="usersManagement"/></h1>
+                    <%--Message about saved changes--%>
+                <c:if test="${changesSavedMessage != null}">
+                    <div class="alert alert-danger" role="alert">
+                            ${changesSavedMessage}
+                        <c:set var="changesSavedMessage" value="${null}"/>
+                    </div>
+                </c:if>
+                    <%--users table--%>
                 <table class="table">
                     <thead>
                     <tr>
                         <th>No</th>
-                        <th><fmt:message key="name"/> </th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Login</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th></th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="training" items="${gettrainings.allTrainings}">
+                    <c:set var="count" value="${1}"/>
+                    <c:forEach var="user" items="${userService.allUser}">
                         <tr>
                             <td>${count}</td>
+                            <td>${user.name}</td>
+                            <td>${user.surname}</td>
+                            <td>${user.login}</td>
+                            <td>${user.email}</td>
+                            <td>${fn:toLowerCase(user.type)}</td>
+                                <%--form for changing users type--%>
                             <td>
-                                <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">
-                                        ${training.name}
-                                </a>
+                                <form class="form-inline" method="post" action="controller">
+                                    <input type="hidden" name="command" value="update_user_type"/>
+                                    <input type="hidden" name="userId" value="${user.id}"/>
+                                    <div class="form-group">
+                                        <select id="company" class="form-control" name="type">
+                                            <option>${fn:toLowerCase(user.type)}</option>
+                                            <c:forEach var="type" items="${userService.usersType()}">
+                                                <option>${fn:toLowerCase(type)}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                        <%--                block change user status             --%>
+                            </td>
+                            <td>${user.status}</td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="changeType" class="form-control" name="status">
+                                        <option>${user.status}</option>
+                                        <c:forEach var="status" items="${userService.userStatuses()}">
+                                            <option>${fn:toLowerCase(status)}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            <td>
+                                <button type="submit" class="btn btn-warning"><fmt:message key="change"/></button>
+                            </td>
+                            </form>
                             </td>
                         </tr>
-                        <c:set var="count" value="${count + 1}" scope="page"/>
+                        <c:set var="count" value="${count + 1}"/>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
-
-        </div>
+        </c:if>
+        <script>
+            $('#toggleState').on('click', function () {
+                var toggleBtn = $('#toggle');
+                toggleBtn.button('toggle');
+                toggleBtn.hasClass('active') ? toggleBtn.text('Включено') : toggleBtn.text('Выключено');
+            });
+        </script>
     </div>
     <fmt:bundle basename="local" prefix="footer.">
         <fmt:message key="copyright"/>

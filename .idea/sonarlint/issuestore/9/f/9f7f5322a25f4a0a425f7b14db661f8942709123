@@ -1,11 +1,8 @@
 
-Gsquid:S1481")Remove this unused "item" local variable.(§¾Ä„8ÑÆ²Áä-
-V
-squid:S106"9Replace this use of System.out or System.err by a logger.(ÅÄ…æ8ÑÆ²Áä-
-[squid:UselessImportCheck
-"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ÑÆ²Áä-
-[squid:UselessImportCheck"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ÑÆ²Áä-
-fsquid:UselessImportCheck";Remove this unused import 'com.epam.webapp.entity.Student'.(¤ÿá8ÑÆ²Áä-
-ksquid:UselessImportCheck"@Remove this unused import 'com.epam.webapp.service.UserService'.(ÒÿÀ8ÑÆ²Áä-
-lsquid:UselessImportCheck"<Remove this unused import 'com.epam.webapp.entity.Training'.(ö ²üÿÿÿÿ8ÑÆ²Áä-
 qsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¯Œüùÿÿÿÿ8ÑÆ²Áä-
+V
+squid:S106"9Replace this use of System.out or System.err by a logger.(¡×Â‘8ì¤‹´å-
+psquid:UselessImportCheck"ERemove this unused import 'com.epam.webapp.service.TrainingsService'.(€ÏÈ8¶Å“«å-
+ksquid:UselessImportCheck"@Remove this unused import 'com.epam.webapp.service.UserService'.(ÒÿÀ8ÑÆ²Áä-
+Wsquid:S1854"9Remove this useless assignment to local variable "users".(Ğ÷¤¤8º¼Œ´å-
+Zsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8Ô˜®çä-

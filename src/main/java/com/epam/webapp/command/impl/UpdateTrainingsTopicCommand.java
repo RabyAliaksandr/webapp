@@ -31,6 +31,7 @@ public class UpdateTrainingsTopicCommand implements Command {
     boolean done = trainingsService.updateTrainingsTopic(topicName, topicNewName, topic, trainingId);
     if (done) {
       request.getSession().setAttribute(MESSAGE_ABOUT_CHANGES, MessageManager.getProperty(MESSAGE_CHANGES_SAVED));
+      request.getSession().setAttribute(TOPIC_NAME, topicNewName);
       return ConfigurationManager.getProperty(TOPIC_PAGE);
     }
     request.getSession().setAttribute(MESSAGE_ABOUT_CHANGES, MessageManager.getProperty(MESSAGE_CHANGES_ERROR));

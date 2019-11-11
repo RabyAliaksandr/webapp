@@ -5,6 +5,8 @@ import com.epam.webapp.connectionpool.ConnectionPool;
 import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
 import com.epam.webapp.dao.exception.DAOException;
 import com.epam.webapp.entity.User;
+import com.epam.webapp.entity.UserStatus;
+import com.epam.webapp.entity.UserTypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
 
   private final static String SQL_NEW_USER = "INSERT INTO users (name, surname, email, login, password, type) values (?, ?, ?, ?, ?, ?)";
-  private final static String SQL_GET_USER = "SELECT userid, name, surname, email, type FROM users WHERE login=? AND password=?";
+  private final static String SQL_GET_USER = "SELECT userid, name, surname, email, user_status, type FROM users WHERE login=? AND password=?";
   private final static String SQL_USER_ID = "userid";
   private final static String SQL_USER_NAME = "name";
   private final static String SQL_USER_SURNAME = "surname";
@@ -27,6 +29,10 @@ public class UserDAOImpl implements UserDAO {
   private static final String SQL_CHECK_ENROLLED = "SELECT EXISTS(SELECT training.trainingbystudents.userid FROM trainingbystudents WHERE (userid = ? and\n" +
           "                                                                                       trainingid =?))";
   private static final String SQL_ALL_MENTORS = "SELECT userid, name, surname FROM users WHERE type = 'mentor'";
+  private static final String SQL_ALL_USERS = "SELECT userid, name, surname, login, email, user_status, type FROM users";
+  private static final String SQL_USER_LOGIN = "login";
+  private static final String SQL_UPDATE_USER_TYPE = "UPDATE users SET type = ?, user_status = ? WHERE userid = ?";
+  private static final String SQL_USER_STATUS = "user_status";
 
   /**
    * check if user is in database - take information about him
@@ -55,7 +61,8 @@ public class UserDAOImpl implements UserDAO {
         user.setName(resultSet.getString(SQL_USER_NAME));
         user.setSurname(resultSet.getString(SQL_USER_SURNAME));
         user.setEmail(resultSet.getString(SQL_USER_EMAIL));
-        user.setType(resultSet.getString(SQL_USER_TYPE));
+        user.setStatus(UserStatus.getUserType(resultSet.getString(SQL_USER_STATUS)));
+        user.setType(UserTypes.getUserType(resultSet.getString(SQL_USER_TYPE)));
         return user;
       }
       return null; // TODO return ?????????????????????????????
@@ -86,18 +93,14 @@ public class UserDAOImpl implements UserDAO {
     connectionPool.initPool();
     try {
       connection = connectionPool.takeConnection();
-      System.out.println("готовим запрос");
       preparedStatement = connection.prepareStatement(SQL_NEW_USER);
       preparedStatement.setString(1, user.getLogin());
       preparedStatement.setString(2, user.getPassword());
-      preparedStatement.setString(3, user.getType());
+      preparedStatement.setString(3, user.getType().toString());
       preparedStatement.setString(4, user.getName());
       preparedStatement.setString(5, user.getSurname());
       preparedStatement.setString(6, user.getEmail());
-      System.out.println("будем делать запрос");
      preparedStatement.executeUpdate();
-      System.out.println("добавили данные");
-
       return user;
 
 
@@ -213,5 +216,59 @@ public class UserDAOImpl implements UserDAO {
       connectionPool.closeConnection(connection, preparedStatement, resultSet);
     }
     return users;
+  }
+
+  @Override
+  public List<User> getAllUser() throws ConnectionPoolException{
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    connectionPool.initPool();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    List<User> users = new ArrayList<>();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_ALL_USERS);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        User user = new User();
+        user.setName(resultSet.getString(SQL_USER_NAME));
+        user.setSurname(resultSet.getString(SQL_USER_SURNAME));
+        user.setLogin(resultSet.getString(SQL_USER_LOGIN));
+        user.setEmail(resultSet.getString(SQL_USER_EMAIL));
+        user.setType(UserTypes.getUserType(resultSet.getString(SQL_USER_TYPE)));
+        user.setId(resultSet.getInt(SQL_USER_ID));
+        user.setStatus(UserStatus.getUserType(resultSet.getString(SQL_USER_STATUS)));
+        users.add(user);
+      }
+      return users;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+    }
+    return users;
+  }
+
+  @Override
+  public boolean updateUserType(int userId, UserTypes type, UserStatus status) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    connectionPool.initPool();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_UPDATE_USER_TYPE);
+      preparedStatement.setString(1, type.name());
+      preparedStatement.setString(2, status.name());
+      preparedStatement.setInt(3, userId);
+      preparedStatement.executeUpdate();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement);
+    }
+    return false;
   }
 }

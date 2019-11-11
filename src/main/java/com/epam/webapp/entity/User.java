@@ -8,10 +8,19 @@ public class User {
   private int id;
   private String login;
   private String password;
-  private String type;
+  private UserTypes type;
   private String name;
   private String surname;
   private String email;
+  private UserStatus status;
+
+  public UserStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(UserStatus status) {
+    this.status = status;
+  }
 
   public int getId() {
     return id;
@@ -37,11 +46,11 @@ public class User {
     this.password = password;
   }
 
-  public String getType() {
+  public UserTypes getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(UserTypes type) {
     this.type = type;
   }
 
