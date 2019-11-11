@@ -29,8 +29,9 @@
                     <li class="active"><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
                     <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
                 </c:if>
-                <c:if test="${user.type == 'ADMIN' && editor == true}">
-                    <li><a href="controller?command=create_text&typeOperation=editTopic&trainingId=${trainingId}&
+                    <%--                is user is admin or mentor, then he can edit topic and task--%>
+                <c:if test="${(user.type == 'ADMIN' && editor == true) || (user.type == 'MENTOR' && editor == true)}">
+                    <li><a href="controller?command=create_text&typeOperation=editTopic&
                             topicId=${topicId}"><fmt:message key="button.editDescription"/></a></li>
                 </c:if>
             </ul>
@@ -55,8 +56,6 @@
         <br/>
         <p>${topic.topic}</p>
     </div>
-    <c:out value="${topicId} its topicId"/>
-    <c:out value="${user.id} its userId"/>
 <%--    button learned topic--%>
         <c:if test="${user.type == 'STUDENT'}">
 <%--            message about done mark learned topic--%>
@@ -65,7 +64,7 @@
                         ${markDoneMessage}
                 </div>
             </c:if>
-
+<%--check status topic--%>
             <c:set var="check" value="${trainingService.checkTopicStatus(user.id, topicId)}"/>
 
           <c:choose>

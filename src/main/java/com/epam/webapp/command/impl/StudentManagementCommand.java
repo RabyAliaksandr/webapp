@@ -7,14 +7,12 @@ import com.epam.webapp.manager.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class TopicPageCommand implements Command {
-  private static final String TOPIC_PAGE = "path.page.topicForStudy";
-  private static final String TOPIC = "topicId";
+public class StudentManagementCommand implements Command {
+
+  private static final String STUDENT_MANAGEMENT_PAGE = "path.page.studentManagement";
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException, CommandException, ConnectionPoolException {
-    int topic = Integer.parseInt(request.getParameter(TOPIC));
-    request.getSession().setAttribute(TOPIC, topic);
-    return ConfigurationManager.getProperty(TOPIC_PAGE);
+    return ConfigurationManager.getProperty(STUDENT_MANAGEMENT_PAGE);
   }
 }

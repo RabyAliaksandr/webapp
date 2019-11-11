@@ -9,29 +9,29 @@ import com.epam.webapp.service.TrainingsService;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UpdateTrainingsTopicCommand implements Command {
+public class UpdateTrainingsTaskCommand implements Command {
 
-  private static final String TOPIC_NAME = "topicName";
-  private static final String TOPIC = "topic";
-  private static final String TOPIC_ID = "topicId";
-  private static final String TOPIC_PAGE = "path.page.topicForStudy";
+  private static final String TASK_ID =  "taskId";
+  private static final String TASK_NAME = "taskName";
+  private static final String TASK = "task";
+  private static final String TASK_PAGE = "path.page.taskPage";
   private static final String MESSAGE_ABOUT_CHANGES = "changesSavedMessage";
   private static final String MESSAGE_CHANGES_SAVED = "message.changesSaved";
   private static final String MESSAGE_CHANGES_ERROR = "message.changesError";
 
-
   @Override
   public String execute(HttpServletRequest request) throws CommandException, CommandException, ConnectionPoolException {
+
     TrainingsService trainingsService = new TrainingsService();
-    String topicName = request.getParameter(TOPIC_NAME);
-    String topic = request.getParameter(TOPIC);
-    int topicId = Integer.parseInt(request.getParameter(TOPIC_ID));
-    boolean done = trainingsService.updateTrainingsTopic(topicId, topicName, topic);
+    int taskId = Integer.parseInt(request.getParameter(TASK_ID));
+    String taskName = request.getParameter(TASK_NAME);
+    String task = request.getParameter(TASK);
+    boolean done = trainingsService.updateTask(taskId, taskName, task);
     if (done) {
       request.getSession().setAttribute(MESSAGE_ABOUT_CHANGES, MessageManager.getProperty(MESSAGE_CHANGES_SAVED));
-      return ConfigurationManager.getProperty(TOPIC_PAGE);
+      return ConfigurationManager.getProperty(TASK_PAGE);
     }
     request.getSession().setAttribute(MESSAGE_ABOUT_CHANGES, MessageManager.getProperty(MESSAGE_CHANGES_ERROR));
-    return ConfigurationManager.getProperty(TOPIC_PAGE);
+    return ConfigurationManager.getProperty(TASK_PAGE);
   }
 }

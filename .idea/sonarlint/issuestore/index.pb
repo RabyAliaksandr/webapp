@@ -248,3 +248,17 @@ _
 /src/main/java/com/epam/webapp/entity/Topic.java,4\c\4c1eeabd45f8db84e4a22ee60e6c2f4fe74a49bc
 ^
 .src/main/java/com/epam/webapp/entity/Task.java,e\b\eb123683726de8d2f0958d63f982c74fb58985f7
+p
+@src/main/java/com/epam/webapp/command/impl/MarkTopicCommand.java,0\0\0023068b3e1cc99adb9dbebd4e7f1ce1367999e8
+o
+?src/main/java/com/epam/webapp/command/impl/TaskPageCommand.java,3\c\3c7efd8e4d669b9981df8d1c3ca072c74b89ff13
+z
+Jsrc/main/java/com/epam/webapp/command/impl/UpdateTrainingsTaskCommand.java,1\2\121e9964ebd76b8872d8dca8b6352354cbdc3a7e
+T
+$src/main/webapp/jsp/taskForStudy.jsp,c\8\c8a4ae9cc10c703879bdc356de1ac1c5ffff02f9
+s
+Csrc/main/java/com/epam/webapp/command/impl/SendSolutionCommand.java,4\4\44cebfea45e1a1ef1e5e2c7f859c875e545babc6
+x
+Hsrc/main/java/com/epam/webapp/command/impl/StudentManagementCommand.java,7\4\74bbc30d85e906e643f0bff8e44cc38f0f611233
+Y
+)src/main/webapp/jsp/studentManagement.jsp,2\c\2cde93bcf44986ebdf22a33663a85e72db510e17

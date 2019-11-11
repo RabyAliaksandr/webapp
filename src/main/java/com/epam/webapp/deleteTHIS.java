@@ -16,8 +16,7 @@ public class deleteTHIS {
 
   public static void main(String[] args) throws ConnectionPoolException {
     DataListDAOImpl dataListDAO = new DataListDAOImpl();
-    boolean b = false;
-    b = dataListDAO.checkTrainingStatusForStudent(1321321, 1);
-    System.out.println(b);
+    System.out.println(dataListDAO.getTrainingForMentor(1));
+
   }
 }

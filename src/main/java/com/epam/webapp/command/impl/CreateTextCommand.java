@@ -8,7 +8,7 @@ import com.epam.webapp.manager.ConfigurationManager;
 import javax.servlet.http.HttpServletRequest;
 
 public class CreateTextCommand implements Command {
-  private static final String CREATE_TEXT_PAGE = "path.page.create_page";
+  private static final String CREATE_TEXT_PAGE = "path.page.createPage";
   private static final String TYPE_OPERATION = "typeOperation";
 
   @Override

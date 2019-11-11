@@ -96,9 +96,9 @@ public class TrainingsService {
     return dataListsDAO.createTraining(trainingName, mentorId, trainingDescription);
   }
 
-  public final boolean updateTrainingsTopic(String topicName, String topicNewName, String topic, int trainingId) throws ConnectionPoolException {
+  public final boolean updateTrainingsTopic(int topicId, String topicName, String topic) throws ConnectionPoolException {
     DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
-    return dataListsDAO.updateTrainingsTopic(topicName, topicNewName, topic, trainingId);
+    return dataListsDAO.updateTrainingsTopic(topicId, topicName, topic);
   }
 
   public final boolean checkTopicStatus(int userId, int topicId) throws ConnectionPoolException {
@@ -115,5 +115,27 @@ public class TrainingsService {
   public final boolean checkTrainingStatusForStudent(int userId, int trainingId) throws ConnectionPoolException {
     DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
     return dataListsDAO.checkTrainingStatusForStudent(userId, trainingId);
+  }
+
+  public final Task getTask(int taskId) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    Task task = new Task();
+    task = dataListsDAO.getTask(taskId);
+    return task;
+  }
+
+  public final boolean updateTask(int taskId, String taskName, String task) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.updateTask(taskId, taskName, task);
+  }
+
+  public final boolean checkTaskStatus(int userId, int taskId) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.checkTaskStatus(userId, taskId);
+  }
+
+  public final boolean sendSolution(int userId, int taskId, String answer) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.sendSolution(userId, taskId, answer);
   }
 }

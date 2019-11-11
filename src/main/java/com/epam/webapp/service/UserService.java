@@ -4,9 +4,7 @@ import com.epam.webapp.dao.DAOFactory;
 import com.epam.webapp.dao.UserDAO;
 import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
 import com.epam.webapp.dao.exception.DAOException;
-import com.epam.webapp.entity.User;
-import com.epam.webapp.entity.UserStatus;
-import com.epam.webapp.entity.UserTypes;
+import com.epam.webapp.entity.*;
 import com.google.protobuf.ServiceException;
 
 import java.sql.SQLException;
@@ -16,8 +14,8 @@ import java.util.List;
 public class UserService {
 
   public final List<User> getAllMentors() throws ConnectionPoolException {
-      UserDAO userDAO = DAOFactory.getUserDAO();
-      return userDAO.getAllMentors();
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    return userDAO.getAllMentors();
   }
 
   public final static User checkLogin(String login, String password) throws ServiceException {
@@ -69,7 +67,7 @@ public class UserService {
     userDAO.grade(assessment, userId, trainingId);
   }
 
-  public final  void addTrainingToStudent(int userId, int trainingId) throws ConnectionPoolException {
+  public final void addTrainingToStudent(int userId, int trainingId) throws ConnectionPoolException {
     UserDAO userDAO = DAOFactory.getUserDAO();
     userDAO.addTrainingToStudent(userId, trainingId);
   }
@@ -85,7 +83,8 @@ public class UserService {
     users = userDAO.getAllUser();
     return users;
   }
-  public final UserTypes[] usersType(){
+
+  public final UserTypes[] usersType() {
     return UserTypes.values();
   }
 
@@ -98,5 +97,16 @@ public class UserService {
     return userDAO.updateUserType(userId, type, status);
   }
 
+  public final List<Student> getStudentsForTraining(int trainingId) throws ConnectionPoolException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    List<Student> students = new ArrayList<>();
+    students = userDAO.getStudentsForTraining(trainingId);
+    return students;
+  }
 
+  public final List<Task> getTaskByStudentId(int studentId) {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    List<Task> tasks = new ArrayList<>();
+    tasks = userDAO
+  }
 }

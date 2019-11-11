@@ -4,9 +4,7 @@ import com.epam.webapp.dao.UserDAO;
 import com.epam.webapp.connectionpool.ConnectionPool;
 import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
 import com.epam.webapp.dao.exception.DAOException;
-import com.epam.webapp.entity.User;
-import com.epam.webapp.entity.UserStatus;
-import com.epam.webapp.entity.UserTypes;
+import com.epam.webapp.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,22 +15,23 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
 
   private final static String SQL_NEW_USER = "INSERT INTO users (name, surname, email, login, password, type) values (?, ?, ?, ?, ?, ?)";
-  private final static String SQL_GET_USER = "SELECT userid, name, surname, email, user_status, type FROM users WHERE login=? AND password=?";
-  private final static String SQL_USER_ID = "userid";
+  private final static String SQL_GET_USER = "SELECT user_id, name, surname, email, user_status, type FROM users WHERE login=? AND password=?";
+  private final static String SQL_USER_ID = "user_id";
   private final static String SQL_USER_NAME = "name";
   private final static String SQL_USER_SURNAME = "surname";
   private final static String SQL_USER_EMAIL = "email";
   private final static String SQL_USER_TYPE = "type";
   private final static Logger logger = LogManager.getLogger(UserDAO.class);
-  private static final String SQL_GRADE = "UPDATE trainingbystudents SET grade_for_training = ? WHERE (userid = ? and trainingid = ?)";
-  private static final String SQL_ADD_TRAINING_TO_STUDENT = "INSERT INTO trainingbystudents (userid, trainingid) VALUES (?, ?)";
-  private static final String SQL_CHECK_ENROLLED = "SELECT EXISTS(SELECT training.trainingbystudents.userid FROM trainingbystudents WHERE (userid = ? and\n" +
-          "                                                                                       trainingid =?))";
-  private static final String SQL_ALL_MENTORS = "SELECT userid, name, surname FROM users WHERE type = 'mentor'";
-  private static final String SQL_ALL_USERS = "SELECT userid, name, surname, login, email, user_status, type FROM users";
+  private static final String SQL_GRADE = "UPDATE trainingbystudents SET grade_for_training = ? WHERE (user_id = ? and training_id = ?)";
+  private static final String SQL_ADD_TRAINING_TO_STUDENT = "INSERT INTO trainingbystudents (user_id, training_id) VALUES (?, ?)";
+  private static final String SQL_CHECK_ENROLLED = "SELECT EXISTS(SELECT training.training_by_students.user_id FROM trainingbystudents WHERE (user_id = ? and\n" +
+          "                                                                                       training_id =?))";
+  private static final String SQL_ALL_MENTORS = "SELECT user_id, name, surname FROM users WHERE type = 'mentor'";
+  private static final String SQL_ALL_USERS = "SELECT user_id, name, surname, login, email, user_status, type FROM users";
   private static final String SQL_USER_LOGIN = "login";
   private static final String SQL_UPDATE_USER_TYPE = "UPDATE users SET type = ?, user_status = ? WHERE userid = ?";
   private static final String SQL_USER_STATUS = "user_status";
+  private static final String SQL_STUDENT_FOR_TRAINIG = "SELECT * FROM users  JOIN training_by_students USING(user_id) WHERE (training_id = ? AND type = 'student')";
 
   /**
    * check if user is in database - take information about him
@@ -271,4 +270,65 @@ public class UserDAOImpl implements UserDAO {
     }
     return false;
   }
+
+  @Override
+  public List<Student> getStudentsForTraining(int trainingId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    connectionPool.initPool();
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    List<Student> students = new ArrayList<>();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_STUDENT_FOR_TRAINIG);
+      preparedStatement.setInt(1,trainingId);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        Student student = new Student();
+        student.setId(resultSet.getInt(SQL_USER_ID));
+        student.setName(resultSet.getString(SQL_USER_NAME));
+        student.setSurname(resultSet.getString(SQL_USER_SURNAME));
+        student.setEmail(resultSet.getString(SQL_USER_EMAIL));
+        student.setLogin(resultSet.getString(SQL_USER_LOGIN));
+        students.add(student);
+      }
+      return students;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement);
+    }
+    return students;
+  }
+
+  @Override
+  public List<Task> getTaskByStudentId(int studentId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    connectionPool.initPool();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    List<Task> tasks = new ArrayList<>();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_TASKS_BY_STUDENT_ID);
+      preparedStatement.setInt(1, studentId);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        Task task = new Task();
+        task.setName(resultSet.getString(SQL_TASK_NAME));
+        task.setTask(resultSet.getString(SQL_TASK));
+        task.setId(resultSet.getInt(SQL_TASK_ID));
+        tasks.add(task);
+      }
+      return tasks;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+    }
+    return tasks;
+  }
+
 }

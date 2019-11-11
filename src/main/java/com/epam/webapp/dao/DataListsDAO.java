@@ -23,8 +23,12 @@ public interface DataListsDAO {
   boolean addTaskForTraining(int trainingId, String taskName, String taskText) throws ConnectionPoolException;
   List<Task> getTasksListForTraining(int trainingId) throws ConnectionPoolException;
   boolean createTraining(String trainingName, int mentorId, String trainingDescription) throws ConnectionPoolException;
-  boolean updateTrainingsTopic(String topicName, String topicNewName, String topic, int trainingId) throws ConnectionPoolException;
+  boolean updateTrainingsTopic(int topicId, String topicName, String topic) throws ConnectionPoolException;
   boolean checkTopicStatus(int userId, int topicId) throws ConnectionPoolException;
   boolean markTopic(int userId, int topicId) throws ConnectionPoolException;
   boolean checkTrainingStatusForStudent(int userId, int trainingId) throws ConnectionPoolException;
+  Task getTask(int taskId) throws ConnectionPoolException;
+  boolean updateTask(int taskId, String taskName, String task) throws ConnectionPoolException;
+  boolean checkTaskStatus(int userId, int taskId) throws ConnectionPoolException;
+  boolean sendSolution(int userId, int taskId, String answer) throws ConnectionPoolException;
 }

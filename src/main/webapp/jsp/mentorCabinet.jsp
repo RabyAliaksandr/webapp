@@ -9,12 +9,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="ru" scope="session"/>
-<jsp:useBean id="data" class="com.epam.webapp.service.TrainingsService"/>
+<jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
 <fmt:bundle basename="local" prefix="label.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <html><head><title>Mentor page</title></head>
+    <html>
+    <head><title>Mentor page</title></head>
     </head>
     <body>
     <nav class="navbar navbar-default">
@@ -36,45 +37,48 @@
             <fmt:message key="trainingManagement"/>
         </div>
 
-       <div class="table-bordered">
-           <table class="table-striped">
-               <thead >
-               <tr>
-                   <th scope="col">#</th>
-                   <th scope="col"><fmt:message key="name"/></th>
-               </tr>
-               </thead>
-               <tbody>
-               <c:forEach var="training" items="${data.getTrainingForMentor(user.id)}">
-                   <tr>
-                       <th scope="row">${count}</th>
-                       <td>
-                           <a href="controller?command=trainings_information_page&trainingId=${training.id}">
-                                   ${training.name}
-                           </a>
-                       </td>
-                   </tr>
-                   <c:set var="count" value="${count + 1}"/>
-               </c:forEach>
-               </tbody>
+        <div class="table-bordered">
+            <table class="table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col"><fmt:message key="name"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="training" items="${trainingService.getTrainingForMentor(user.id)}">
+                    <tr>
+                        <th scope="row">${count}</th>
+                        <td>
+                                <%--                           <a href="controller?command=trainings_information_page&trainingId=${training.id}">--%>
+                                <%--                                   ${training.name}--%>
+                                <%--                           </a>--%>
+                            <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">
+                                    ${training.name}
+                            </a>
+                        </td>
+                    </tr>
+                    <c:set var="count" value="${count + 1}"/>
+                </c:forEach>
+                </tbody>
 
-           </table>
-       </div>
-<%--        <table border="2">--%>
-<%--            <c:forEach var="training" items="${data.getTrainingForMentor(user.id)}">--%>
-<%--            <tr>--%>
-<%--                <td>--%>
-<%--                    <c:out value="${count}"/>--%>
-<%--                </td>--%>
-<%--                <td>--%>
-<%--                    <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">--%>
-<%--                            ${training.name}--%>
-<%--                    </a>--%>
-<%--                </td>--%>
-<%--                <c:set var="count" value="${count + 1}"/>--%>
-<%--                </c:forEach>--%>
-<%--            </tr>--%>
-<%--        </table>--%>
+            </table>
+        </div>
+            <%--        <table border="2">--%>
+            <%--            <c:forEach var="training" items="${trainingService.getTrainingForMentor(user.id)}">--%>
+            <%--            <tr>--%>
+            <%--                <td>--%>
+            <%--                    <c:out value="${count}"/>--%>
+            <%--                </td>--%>
+            <%--                <td>--%>
+            <%--                    <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">--%>
+            <%--                            ${training.name}--%>
+            <%--                    </a>--%>
+            <%--                </td>--%>
+            <%--                <c:set var="count" value="${count + 1}"/>--%>
+            <%--                </c:forEach>--%>
+            <%--            </tr>--%>
+            <%--        </table>--%>
     </div>
     <c:import url="footer.jsp"/></body>
     </html>

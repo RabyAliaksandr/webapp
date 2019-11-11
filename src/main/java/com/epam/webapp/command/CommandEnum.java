@@ -113,6 +113,26 @@ public enum CommandEnum {
     {
       this.command = new MarkTopicCommand();
     }
+  },
+  TASK_PAGE {
+    {
+      this.command = new TaskPageCommand();
+    }
+  },
+  UPDATE_TRAININGS_TASK {
+    {
+      this.command = new UpdateTrainingsTaskCommand();
+    }
+  },
+  SEND_SOLUTION {
+    {
+      this.command = new SendSolutionCommand();
+    }
+  },
+  STUDENT_MANAGEMENT {
+    {
+      this.command = new StudentManagementCommand();
+    }
   };
   Command command;
 

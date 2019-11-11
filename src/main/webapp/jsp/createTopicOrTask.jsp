@@ -43,7 +43,7 @@
         <form id="www" method="post" action="controller">
             <input type="hidden" name="command" value="update_information_about_training"/>
             <input type="hidden" name="trainingId" value="${trainingId}"/>
-            <textarea id="editor" form="www" name="information">
+            <textarea id="editor" form="www" name="information" required>
                     ${text}
             </textarea>
             <input type="submit" value=<fmt:message key="send"/>/>
@@ -64,10 +64,10 @@
         <form id="addTopic" method="post" action="controller">
             <div class="form-group">
                 <label for="form">Topics name:</label>
-                <input type="text" class="form-control" id="form" name="topicsName" maxlength="70">
+                <input type="text" class="form-control" id="form" name="topicsName" maxlength="70" required>
             </div>
             <input type="hidden" name="command" value="add_topic_for_training"/>
-            <input type="hidden" name="trainingId" value="${trainingId}"/>
+            <input type="hidden" name="trainingId" value="${trainingId}" required/>
             <textarea id="editor1" form="addTopic" name="topicsText" maxlength="10000">
                     ${text}
             </textarea>
@@ -89,11 +89,11 @@
         <form id="addTopic" method="post" action="controller">
             <div class="form-group">
                 <label>Topics name:</label>
-                <input type="text" class="form-control" name="taskName" maxlength="70">
+                <input type="text" class="form-control" name="taskName" maxlength="70" required>
             </div>
             <input type="hidden" name="command" value="add_task_for_training"/>
             <input type="hidden" name="trainingId" value="${trainingId}"/>
-            <textarea id="editor2" form="addTopic" name="taskText" maxlength="10000">
+            <textarea id="editor2" form="addTopic" name="taskText" maxlength="10000" required>
                     ${text}
             </textarea>
             <input type="submit" value=<fmt:message key="send"/>>
@@ -115,7 +115,7 @@
                 <label>Training Name:</label>
                 <input type="text" class="form-control" name="trainingName" maxlength="70">
             </div>
-            <textarea id="editor3" form="addTraining" name="description" maxlength="1000">
+            <textarea id="editor3" form="addTraining" name="description" maxlength="1000" required>
             </textarea>
 
             <div class="form-group">
@@ -150,15 +150,16 @@
     <c:if test="${typeOperation == 'editTopic'}">
         <c:set var="topic" value="${trainingService.getTopic(topicId)}"/>
         <hr/>
+        <c:out value="${topicId} fuck "/>
         <form id="editTopic" method="post" action="controller">
+            <input type="hidden" name="topicId" value="${topicId}"/>
             <div class="form-group">
                 <label><fmt:message key="topicsName"/></label>
-                <input type="text" class="form-control" name="topicNewName" maxlength="70" value="${topic.name}">
-                <input type="hidden" name="topicName" value="${topic.name}"/>
+                <input type="text" class="form-control" name="topicName" maxlength="70" value="${topic.name}" required>
             </div>
             <input type="hidden" name="command" value="update_trainings_topic"/>
-            <input type="hidden" name="trainingId" value="${trainingId}"/>
-            <textarea id="editor4" form="editTopic" name="topic" maxlength="10000">
+<%--            <input type="hidden" name="trainingId" value="${trainingId}"/>--%>
+            <textarea id="editor4" form="editTopic" name="topic" maxlength="10000" required>
                     ${topic.topic}
             </textarea>
             <input type="submit"  value=<fmt:message key="send"/>>
@@ -171,7 +172,33 @@
             });
         });
     </script>
+<%--edit task for training--%>
+    <c:if test="${typeOperation == 'editTask'}">
+        i am here
+        <c:out value="${taskId} it id task"/>
 
+        <c:set var="task" value="${trainingService.getTask(taskId)}"/>
+        <hr/>
+        <form id="editTask" method="post" action="controller">
+            <div class="form-group">
+                <label><fmt:message key="tasksName"/></label>
+                <input type="text" class="form-control" name="taskName" maxlength="70" value="${task.name}" required>
+                <input type="hidden" name="taskId" value="${taskId}"/>
+            </div>
+            <input type="hidden" name="command" value="update_trainings_task"/>
+            <textarea id="editor5" form="editTask" name="task" maxlength="10000" required>
+                    ${task.task}
+            </textarea>
+            <input type="submit"  value=<fmt:message key="send"/>>
+        </form>
+    </c:if>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#editor5").editor({
+                uiLibrary: 'bootstrap'
+            });
+        });
+    </script>
     </body>
     </html>
 </fmt:bundle>
