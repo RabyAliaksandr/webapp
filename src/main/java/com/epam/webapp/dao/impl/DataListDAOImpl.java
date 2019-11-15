@@ -3,7 +3,7 @@ package com.epam.webapp.dao.impl;
 import com.epam.webapp.dao.DataListsDAO;
 import com.epam.webapp.dao.UserDAO;
 import com.epam.webapp.connectionpool.ConnectionPool;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,20 +15,34 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//created trigger update student task when insert into task FIXME
+//and automat. add task for every student who registered at this training (update_student_task)
+//CREATE TRIGGER update_student_task
+//        AFTER INSERT ON tasks
+//        FOR EACH ROW
+//        BEGIN
+//        insert into student_task (user_id, task_id)
+//        SELECT   users.user_id, tasks.task_id
+//        FROM training_by_students  inner join tasks  using(training_id) left  join  student_task using (user_id, task_id) left join users  using (user_id)
+//        where student_task.user_id is  null;
+//        END ;
+
+
 public class DataListDAOImpl implements DataListsDAO {
 
   private final static Logger logger = LogManager.getLogger(UserDAO.class);
   private static final String SQL_TOPIC_BY_TOPIC_ID = "SELECT * FROM topics_for_study WHERE (topic_id = ?)";
-  private static final String SQL_UPDATE_TRAININGS_INFORMATION = "UPDATE trainings SET information = ? WHERE training_id = ?";
+  private static final String SQL_UPDATE_TRAININGS_INFORMATION = "UPDATE trainings SET information = ?, name = ? WHERE training_id = ?";
   private static final String SQL_ADD_TOPIC_FOR_TRAINING = "INSERT INTO topics_for_study (training_id, name_topic, topic) VALUES (?, ?, ?)";
   private static final String SQL_ADD_TASK_FOR_TRAINING = "INSERT INTO tasks (training_id, task_name, task) VALUES (?, ?, ?)";
   private static final String SQL_TASKS_FOR_TRAINING = "SELECT * FROM tasks WHERE training_id = ?";
   private final static String SQL_ALL_TRAININGS = "SELECT * FROM trainings";//TODO
-  private final static String SQL_TRAININGS_BY_STUDENT_ID = "SELECT * FROM trainings JOIN training_by_students USING (training_id) where user_id=?";
+  private final static String SQL_TRAININGS_BY_STUDENT_ID = "SELECT * FROM trainings JOIN training_by_students USING (training_id) where user_id = ?";
   private static final String SQL_TOPICS_FOR_TRAINING = "SELECT name_topic, topic, topic_id FROM topics_for_study WHERE training_id = ?";
   private static final String SQL_COMPLETED_TRAININGS_FOR_MENTOR = "SELECT * FROM trainings WHERE mentor_id = ?";
   private static final String SQL_ALL_TRAININGS_BY_TRAINING_ID = "SELECT * FROM trainings WHERE training_id = ?";
-  private final static String SQL_STUDENTS_BY_ID_TRAINING = "SELECT user_id, name, surname, grade_for_training FROM users join training_by_students USING (user_id) WHERE (training_id =? and grade_for_training = 0)";
+  private final static String SQL_STUDENTS_BY_ID_TRAINING = "SELECT user_id, name, surname, grade_for_training FROM " +
+          "users join training_by_students USING (user_id) WHERE (training_id =? and grade_for_training = 0)";
   private final static String SQL_NAME = "name";
   private final static String SQL_SURNAME = "surname";
   private final static String STUDENT_ID = "user_id";
@@ -42,20 +56,22 @@ public class DataListDAOImpl implements DataListsDAO {
   private static final String SQL_TRAINING_ID = "training_id";
   private static final String SQL_TASK_NAME = "task_name";
   private static final String SQL_TASK = "task";
-  private static final String SQL_CREATE_TRAINING = "INSERT  INTO trainings (name, mentor_id, information) VALUES (?, ?, ?);";
+  private static final String SQL_CREATE_TRAINING = "INSERT  INTO trainings (name, mentor_id, information) VALUES (?, ?, ?)";
   private static final String SQL_UPDATE_TRAININGS_TOPIC = "UPDATE topics_for_study SET name_topic = ?, topic = ? WHERE (topic_id = ?)";
-  private static final String SQL_CHECK_STATUS_TOPIC = "SELECT topic_status FROM students_topic WHERE (user_id = ? AND  topic_id = ?)";
+  private static final String SQL_CHECK_STATUS_TOPIC = "SELECT topic_status FROM student_topic WHERE (user_id = ? AND  topic_id = ?)";
   private static final String SQL_TOPIC_STATUS = "topic_status";
   private static final String SQL_TASK_ID = "task_id";
   private static final String SQL_TOPIC_ID = "topic_id";
-  private static final String SQL_SET_MARK_TOPIC = "INSERT INTO students_topic (user_id, topic_id, topic_status) VALUES (?, ?, 1)";
+  private static final String SQL_SET_MARK_TOPIC = "INSERT INTO student_topic (user_id, topic_id, topic_status) VALUES (?, ?, 1)";
   private static final String SQL_CHECK_TRAINING_STATUS_FOR_STUDENT = "SELECT COUNT(1) FROM training_by_students WHERE (user_id = ? AND training_id = ?);";
   private static final String SQL_STATUS = "status";
-  private static final String SQL_TASK_BY_ID = "SELECT * FROM training.tasks WHERE task_id = ?";
-  private static final String SQL_UPDATE_TRAININGS_TASK = "UPDATE training.tasks SET task_name = ?, task = ? WHERE task_id = ?";
-  private static final String SQL_CHECK_STATUS_TASK = "SELECT COUNT(1) FROM students_task WHERE (user_id = ?  AND task_id = ?)";
+  private static final String SQL_TASK_BY_ID = "SELECT * FROM trainings_center.tasks WHERE task_id = ?";
+  private static final String SQL_UPDATE_TRAININGS_TASK = "UPDATE trainings_center.tasks SET task_name = ?, task = ? WHERE task_id = ?";
+  private static final String SQL_CHECK_STATUS_TASK = "SELECT COUNT(answer) FROM student_task WHERE (user_id = ?  AND task_id = ?)";
   private static final String SQL_MARK = "mark";
-  private static final String SQL_SEND_SOLUTION = "INSERT INTO students_task (user_id, task_id, answer) VALUES (?, ?, ?)";
+  private static final String SQL_SEND_SOLUTION = "UPDATE student_task SET answer = ? WHERE user_id= ? AND task_id= ?";
+  private static final String SQl_TASK_SOLUTION = "SELECT answer FROM student_task WHERE user_id = ? AND task_id = ?";
+  private static final String SQL_GRADE_TASK = "UPDATE student_task SET mark = ? WHERE user_id = ? AND task_id = ?";
 
 
   @Override
@@ -172,7 +188,7 @@ public class DataListDAOImpl implements DataListsDAO {
     } finally {
       connectionPool.closeConnection(connection, preparedStatement, rs);
     }
-    return null;
+    return trainings;
   }
 
   @Override
@@ -294,7 +310,7 @@ public class DataListDAOImpl implements DataListsDAO {
   }
 
   @Override
-  public boolean updateTrainingsInformation(int trainingId, String information) throws ConnectionPoolException {
+  public boolean updateTrainingsInformation(int trainingId, String trainingName, String information) throws ConnectionPoolException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     connectionPool.initPool();
     Connection connection = null;
@@ -304,7 +320,8 @@ public class DataListDAOImpl implements DataListsDAO {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_UPDATE_TRAININGS_INFORMATION);
       preparedStatement.setString(1, information);
-      preparedStatement.setInt(2, trainingId);
+      preparedStatement.setString(2, trainingName);
+      preparedStatement.setInt(3, trainingId);
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
@@ -569,7 +586,6 @@ public class DataListDAOImpl implements DataListsDAO {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     boolean done = false;
-    int mark = 0;
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_CHECK_STATUS_TASK);
@@ -597,9 +613,59 @@ public class DataListDAOImpl implements DataListsDAO {
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_SEND_SOLUTION);
-      preparedStatement.setInt(1, userId);
+      preparedStatement.setString(1, answer);
+      preparedStatement.setInt(2, userId);
+      preparedStatement.setInt(3, taskId);
+      preparedStatement.executeUpdate();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement);
+    }
+    return false;
+  }
+
+  @Override
+  public String findTaskSolution(int studentId, int taskId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    connectionPool.initPool();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    String solution = null;
+
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQl_TASK_SOLUTION);
+      preparedStatement.setInt(1, studentId);
       preparedStatement.setInt(2, taskId);
-      preparedStatement.setString(3, answer);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        solution = resultSet.getString(1);
+      }
+      return solution;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+    }
+    return solution;
+  }
+
+  @Override
+  public boolean gradeTask(int studentId, int taskId, int mark) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    connectionPool.initPool();
+    PreparedStatement preparedStatement = null;
+    boolean done = false;
+    try{
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_GRADE_TASK);
+      preparedStatement.setInt(1, mark);
+      preparedStatement.setInt(2, studentId);
+      preparedStatement.setInt(3, taskId);
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {

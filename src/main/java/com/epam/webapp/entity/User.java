@@ -8,7 +8,7 @@ public class User {
   private int id;
   private String login;
   private String password;
-  private UserTypes type;
+  private UserType type;
   private String name;
   private String surname;
   private String email;
@@ -46,11 +46,11 @@ public class User {
     this.password = password;
   }
 
-  public UserTypes getType() {
+  public UserType getType() {
     return type;
   }
 
-  public void setType(UserTypes type) {
+  public void setType(UserType type) {
     this.type = type;
   }
 

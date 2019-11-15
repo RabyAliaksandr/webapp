@@ -2,7 +2,7 @@ package com.epam.webapp.controller;
 import com.epam.webapp.command.Command;
 import com.epam.webapp.command.CommandFactory;
 import com.epam.webapp.command.exception.CommandException;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.manager.ConfigurationManager;
 import com.epam.webapp.manager.MessageManager;
 import javax.servlet.RequestDispatcher;
@@ -12,16 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-
-          throws ServletException, IOException {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
       processRequest(request, response);
-    } catch (CommandException | ConnectionPoolException e) {
+    } catch (CommandException | ConnectionPoolException | ParseException e) {
       e.printStackTrace();
     }
   }
@@ -32,12 +31,12 @@ public class Controller extends HttpServlet {
     try {
       request.setCharacterEncoding("UTF-8");
       processRequest(request, response);
-    } catch (CommandException | ConnectionPoolException e) {
+    } catch (CommandException | ConnectionPoolException | ParseException e) {
       e.printStackTrace();
     }
   }
 
-  private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, CommandException, ConnectionPoolException {
+  private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, CommandException, ConnectionPoolException, ParseException {
     String page;
     CommandFactory client = new CommandFactory();
     Command command = client.defineCommand(request);

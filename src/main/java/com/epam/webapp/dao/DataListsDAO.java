@@ -1,10 +1,11 @@
 package com.epam.webapp.dao;
 
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.entity.*;
 
+
+
 import java.util.List;
-import java.util.Map;
 
 public interface DataListsDAO {
 
@@ -18,7 +19,7 @@ public interface DataListsDAO {
   Training getTrainingByIdTraining(int trainingId) throws ConnectionPoolException;
   List<Topic> getTopicsForTraining(int trainingId) throws ConnectionPoolException;
   Topic getTopic(int topicId) throws ConnectionPoolException;
-  boolean updateTrainingsInformation(int trainingId, String information) throws ConnectionPoolException;
+  boolean updateTrainingsInformation(int trainingId, String trainingNAme, String information) throws ConnectionPoolException;
   boolean addTopicForTraining(int trainingId, String topicsName, String topicsText) throws ConnectionPoolException;
   boolean addTaskForTraining(int trainingId, String taskName, String taskText) throws ConnectionPoolException;
   List<Task> getTasksListForTraining(int trainingId) throws ConnectionPoolException;
@@ -31,4 +32,6 @@ public interface DataListsDAO {
   boolean updateTask(int taskId, String taskName, String task) throws ConnectionPoolException;
   boolean checkTaskStatus(int userId, int taskId) throws ConnectionPoolException;
   boolean sendSolution(int userId, int taskId, String answer) throws ConnectionPoolException;
+  String findTaskSolution(int studentId, int taskId) throws ConnectionPoolException;
+  boolean gradeTask(int studentId, int taskId, int mark) throws ConnectionPoolException;
 }

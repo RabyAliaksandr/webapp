@@ -2,14 +2,16 @@ package com.epam.webapp.service;
 
 import com.epam.webapp.dao.DAOFactory;
 import com.epam.webapp.dao.UserDAO;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.dao.exception.DAOException;
 import com.epam.webapp.entity.*;
 import com.google.protobuf.ServiceException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserService {
 
@@ -35,8 +37,6 @@ public class UserService {
     } catch (DAOException | ConnectionPoolException e) {
       throw new ServiceException("Error access database", e);
     }
-
-
   }
 
   public final static User checkRegistrationField(String login, String password, String name, String surname,
@@ -44,7 +44,7 @@ public class UserService {
     User user = new User();
     user.setLogin(login);
     user.setPassword(password);
-    user.setType(UserTypes.getUserType(type));
+    user.setType(UserType.getUserType(type));
     user.setEmail(email);
     user.setName(name);
     user.setSurname(surname);
@@ -56,7 +56,7 @@ public class UserService {
       } else {
 //TODO return error page
         return null;
-      }
+    }
     } catch (DAOException | ConnectionPoolException e) {
       throw new ServiceException("Error access database", e);
     }
@@ -84,15 +84,15 @@ public class UserService {
     return users;
   }
 
-  public final UserTypes[] usersType() {
-    return UserTypes.values();
+  public final UserType[] usersType() {
+    return UserType.values();
   }
 
   public final UserStatus[] userStatuses() {
     return UserStatus.values();
   }
 
-  public final boolean updateUserType(int userId, UserTypes type, UserStatus status) throws ConnectionPoolException {
+  public final boolean updateUserType(int userId, UserType type, UserStatus status) throws ConnectionPoolException {
     UserDAO userDAO = DAOFactory.getUserDAO();
     return userDAO.updateUserType(userId, type, status);
   }
@@ -107,6 +107,14 @@ public class UserService {
   public final List<Task> getTaskByStudentId(int studentId) {
     UserDAO userDAO = DAOFactory.getUserDAO();
     List<Task> tasks = new ArrayList<>();
-    tasks = userDAO
+//    tasks = userDAO
+    return tasks;
+  }
+
+  public final List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws ConnectionPoolException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    List<Task> tasks = new ArrayList<>();
+    tasks = userDAO.findStudentsMarkForTrainingsTask(studentId, trainingId);
+    return tasks;
   }
 }

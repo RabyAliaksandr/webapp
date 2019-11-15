@@ -2,7 +2,7 @@ package com.epam.webapp.command.impl;
 
 import com.epam.webapp.command.Command;
 import com.epam.webapp.command.exception.CommandException;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.manager.ConfigurationManager;
 import com.epam.webapp.service.UserService;
 

@@ -1,0 +1,9 @@
+
+hsquid:UselessImportCheck"8Remove this unused import 'com.epam.webapp.entity.Task'.(½—ö“şÿÿÿÿ8¨õıªæ-
+[
+squid:S106"9Replace this use of System.out or System.err by a logger.(¡÷£®úÿÿÿÿ8ÑŞ«æ-
+V
+squid:S106"9Replace this use of System.out or System.err by a logger.(ÓÃì 8˜íŞ«æ-
+¢%squid:RedundantThrowsDeclarationCheck"jRemove the redundant 'com.epam.webapp.command.exception.CommandException' thrown exception declaration(s).(ö•Ëú8×‚Í…å-
+V
+squid:S106"9Replace this use of System.out or System.err by a logger.(°É£‚8ÑŞ«æ-

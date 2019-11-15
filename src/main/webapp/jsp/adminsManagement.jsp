@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="style/bootstrap-datetimepicker.css"/>
+    <link rel="stylesheet" href="style/bootstrap-datetimepicker.min.css"/>
     <html>
     <head><title>Mentor page</title></head>
     </head>
@@ -149,7 +153,30 @@
                 toggleBtn.hasClass('active') ? toggleBtn.text('Включено') : toggleBtn.text('Выключено');
             });
         </script>
+
+    <c:if test="${typeOperation == 'consultationManagement'}">
+
+                <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+                <link rel="stylesheet" href="/resources/demos/style.css">
+                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                <script>
+                    $( function() {
+                        $( "#datepicker" ).datepicker();
+                    } );
+                </script>
+            i am here
+        <div class="container-fluid">
+            Предложить консультацию для ментора
+            <br/>
+           <form action="controller" method="post">
+               <input type="hidden" name="command" value="offer_date"/>
+               <p>Date: <input type="text" id="datepicker" name="date"></p>
+               <input type="submit" value=<fmt:message key="offerConsultation"/>>
+           </form>
+        </c:if>
     </div>
+
     <fmt:bundle basename="local" prefix="footer.">
         <fmt:message key="copyright"/>
     </fmt:bundle>

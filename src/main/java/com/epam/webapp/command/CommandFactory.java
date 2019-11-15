@@ -8,15 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 public class CommandFactory {
 
     public Command defineCommand(HttpServletRequest request) {
-      Command current = new EmptyCommand();
+      Command current = null;
       String action = request.getParameter("command");
       if (action == null || action.isEmpty()) {
-        return current;
+        return new EmptyCommand();
       }
       try {
         CommandEnum currentEnum = CommandEnum.valueOf(action.toUpperCase());
         current = currentEnum.getCurrentCommand();
       } catch (IllegalArgumentException e) {
+        current = new EmptyCommand();
         request.setAttribute("wrongAction", action
                 + MessageManager.getProperty("message.wrongaction"));
       }

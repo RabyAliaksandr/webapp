@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
     <style>
-        body{
+        body {
             background-image: url('./images/background2.jpg');
             background-position: center center;
             background-repeat: no-repeat;
@@ -17,10 +17,7 @@
             background-size: cover;
         }
     </style>
-    <html >
     <head><title>Welcome</title></head>
-    </head>
-    <body >
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -41,7 +38,23 @@
         </div>
     </nav>
     <br/>
-    Here will be information about this resource
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
+    </script>
+
+
+    <body>
+    <p>Date: <input type="text" id="datepicker"></p>
+
+
+
     </body>
-    </html>
+
+    <html></html>
 </fmt:bundle>

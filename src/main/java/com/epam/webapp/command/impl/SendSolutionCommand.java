@@ -2,7 +2,7 @@ package com.epam.webapp.command.impl;
 
 import com.epam.webapp.command.Command;
 import com.epam.webapp.command.exception.CommandException;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.manager.ConfigurationManager;
 import com.epam.webapp.manager.MessageManager;
 import com.epam.webapp.service.TrainingsService;
@@ -22,7 +22,7 @@ public class SendSolutionCommand implements Command {
 
 
   @Override
-  public String execute(HttpServletRequest request) throws CommandException, CommandException, ConnectionPoolException {
+  public String execute(HttpServletRequest request) throws CommandException, ConnectionPoolException {
     TrainingsService trainingsService = new TrainingsService();
     int userId = Integer.parseInt(request.getParameter(USER_ID));
     int taskId = Integer.parseInt(request.getParameter(TASK_ID));

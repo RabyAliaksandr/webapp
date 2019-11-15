@@ -56,7 +56,6 @@
                 <c:if test="${user.type != null}">
                     <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
                 </c:if>
-
             </ul>
         </div>
     </nav>
@@ -65,6 +64,17 @@
     <br/>
     <br/>
     <br/>
+
+        <%--            message about edit changes --%>
+
+    <c:if test="${changesSavedMessage != null}">
+        <div class="alert alert-danger" role="alert">
+                ${changesSavedMessage}
+            <c:set var="changesSavedMessage" value="${null}"/>
+        </div>
+    </c:if>
+
+
     <section class="a">
         <div class="container-fluid">
             <h1><fmt:message key="informationAboutTraining"/></h1>
@@ -164,7 +174,7 @@
         </div>
         </div>
     </section>
-    </head>
+    <c:set var="markDoneMessage" value="${null}"/>
     </body>
     </html>
 </fmt:bundle>

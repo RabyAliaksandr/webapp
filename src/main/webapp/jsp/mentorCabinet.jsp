@@ -32,38 +32,38 @@
     <br/>
     <c:set var="user" value="${sessionScope.user}"/>
     <c:set var="count" value="1"/>
-    <div class="container-fluid">
-        <div class="jumbotron">
-            <fmt:message key="trainingManagement"/>
-        </div>
+        <div class="container-fluid">
+            <div class="jumbotron">
+                <fmt:message key="trainingManagement"/>
+            </div>
 
-        <div class="table-bordered">
-            <table class="table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col"><fmt:message key="name"/></th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="training" items="${trainingService.getTrainingForMentor(user.id)}">
+            <div class="table-bordered">
+                <table class="table-striped">
+                    <thead>
                     <tr>
-                        <th scope="row">${count}</th>
-                        <td>
-                                <%--                           <a href="controller?command=trainings_information_page&trainingId=${training.id}">--%>
-                                <%--                                   ${training.name}--%>
-                                <%--                           </a>--%>
-                            <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">
-                                    ${training.name}
-                            </a>
-                        </td>
+                        <th scope="col">#</th>
+                        <th scope="col"><fmt:message key="name"/></th>
                     </tr>
-                    <c:set var="count" value="${count + 1}"/>
-                </c:forEach>
-                </tbody>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="training" items="${trainingService.getTrainingForMentor(user.id)}">
+                        <tr>
+                            <th scope="row">${count}</th>
+                            <td>
+                                    <%--                           <a href="controller?command=trainings_information_page&trainingId=${training.id}">--%>
+                                    <%--                                   ${training.name}--%>
+                                    <%--                           </a>--%>
+                                <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">
+                                        ${training.name}
+                                </a>
+                            </td>
+                        </tr>
+                        <c:set var="count" value="${count + 1}"/>
+                    </c:forEach>
+                    </tbody>
 
-            </table>
-        </div>
+                </table>
+            </div>
             <%--        <table border="2">--%>
             <%--            <c:forEach var="training" items="${trainingService.getTrainingForMentor(user.id)}">--%>
             <%--            <tr>--%>

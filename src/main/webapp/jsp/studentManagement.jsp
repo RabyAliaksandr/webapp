@@ -1,4 +1,3 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: alex
@@ -39,32 +38,43 @@
         <div class="container">
             <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
             <h2><fmt:message key="button.studentsManagement"/></h2>
-<%--            table stusents registred on training--%>
+                <%--            table stusents registred on training--%>
             <table class="table">
+                <c:set var="count" value="${1}"/>
                 <thead>
                 <tr>
                     <th>No</th>
-                    <th ><fmt:message key="userName"/></th>
+                    <th><fmt:message key="userName"/></th>
                     <th><fmt:message key="userSurname"/></th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="student" items="${userService.getStudentsForTraining(trainingId)}">
+
                     <tr>
-                        <td>${count}</td>
-                        <td>${student.name}</td>
-                        <td>${student.surname}</td>
+                        <td>
+                            <a href="controller?command=mentoring&studentId=${student.id}&trainingId=${trainingId}">
+                                    ${count} ${student.id}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="controller?command=mentoring&studentId=${student.id}&trainingId=${trainingId}">
+                                    ${student.name}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="controller?command=mentoring&studentId=${student.id}&trainingId=${trainingId}">
+                                    ${student.surname}
+                            </a>
+                        </td>
                     </tr>
-                    <c:set var="count" value="${count + 1}" scope="page"/>
+                    <c:set var="count" value="${count + 1}"/>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
 
     </div>
-
-
-
 
 
     </body>

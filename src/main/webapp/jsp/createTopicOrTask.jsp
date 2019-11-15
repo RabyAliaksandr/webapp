@@ -39,16 +39,19 @@
     <c:if test="${typeOperation == 'edit'}">
         <c:set var="training" value="${trainingService.getTrainingByIdTraining(trainingId)}" scope="session"/>
         <c:set var="text" value="${training.information}"/>
+        <c:set var="trainingName" value="${training.name}"/>
         <hr/>
         <form id="www" method="post" action="controller">
-            <input type="hidden" name="command" value="update_information_about_training"/>
+            <input type="hidden" name="command" value="update_information_about_training" id="name" required/>
+            <input type="text" name="trainingName" value="${trainingName}"/>
             <input type="hidden" name="trainingId" value="${trainingId}"/>
-            <textarea id="editor" form="www" name="information" required>
+            <textarea id="editor" form="www" name="information" maxlength="1000" required id="editor"/>
                     ${text}
             </textarea>
             <input type="submit" value=<fmt:message key="send"/>/>
         </form>
     </c:if>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $("#editor").editor({
@@ -71,7 +74,7 @@
             <textarea id="editor1" form="addTopic" name="topicsText" maxlength="10000">
                     ${text}
             </textarea>
-            <input type="submit" value=<fmt:message key="send"/>/>
+            <input type="submit" value=<fmt:message key="send"/>>
         </form>
     </c:if>
     <script type="text/javascript">
@@ -93,9 +96,11 @@
             </div>
             <input type="hidden" name="command" value="add_task_for_training"/>
             <input type="hidden" name="trainingId" value="${trainingId}"/>
-            <textarea id="editor2" form="addTopic" name="taskText" maxlength="10000" required>
+<%--            <input type="text" required maxlength="1000" size=" 1000" id="editor2" form="addTopic" name="taskText" value=" ${text}"/>--%>
+            <textarea id="editor2" pa form="addTopic" name="taskText" maxlength="1000" required>
                     ${text}
             </textarea>
+
             <input type="submit" value=<fmt:message key="send"/>>
         </form>
     </c:if>

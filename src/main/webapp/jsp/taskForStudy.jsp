@@ -95,6 +95,19 @@
             </c:when>
         </c:choose>
     </c:if>
+    <c:if test="${showSolution == true}">
+    <c:set var="solution" value="${trainingServie.findTaskSolution(studentId, taskId)}"/>
+        ${solution}
+        <form name="setMark"  method="post" action="controller">
+            <input type="hidden" name="command" value="set_mark_for_task"/>
+            <input type="hidden" name="studentId" value="${studentId}"/>
+            <input type="hidden" name="taskId" value="${taskId}"/>
+            <input type="number" name="mark"  min="1" max="10"/>
+            <input type="submit" class="btn-warning"/>
+        </form>
+
+
+    </c:if>
 <%--    nullify the message about sent solution --%>
     <c:set var="sendSolutionMessage" value="${null}"/>
     </body>

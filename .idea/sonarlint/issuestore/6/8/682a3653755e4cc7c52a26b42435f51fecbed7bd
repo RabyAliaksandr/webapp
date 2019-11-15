@@ -1,0 +1,5 @@
+
+qsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¨¬¬8±ϊαγ-
+qsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ϊ©Θ²8±ϊαγ-
+qsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ώ³’Ϋ8±ϊαγ-
+Ά%squid:RedundantThrowsDeclarationCheck"jRemove the redundant 'com.epam.webapp.command.exception.CommandException' thrown exception declaration(s).(φ•Λϊ8³Ω±ίγ-

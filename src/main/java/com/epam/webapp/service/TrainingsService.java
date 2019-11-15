@@ -2,7 +2,7 @@ package com.epam.webapp.service;
 
 import com.epam.webapp.dao.DAOFactory;
 import com.epam.webapp.dao.DataListsDAO;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.dao.TrainingsOperationDAO;
 import com.epam.webapp.dao.exception.DAOException;
 import com.epam.webapp.entity.Student;
@@ -10,10 +10,9 @@ import com.epam.webapp.entity.Task;
 import com.epam.webapp.entity.Topic;
 import com.epam.webapp.entity.Training;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TrainingsService {
   public Training getTrainingByIdTraining(int trainingId) throws ConnectionPoolException {
@@ -69,9 +68,9 @@ public class TrainingsService {
     return dataListsDAO.getTopic(topicId);
   }
 
-  public boolean updateTrainingsInformation(int trainingId, String information) throws ConnectionPoolException {
+  public boolean updateTrainingsInformation(int trainingId, String trainingName, String information) throws ConnectionPoolException {
     DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
-    return dataListsDAO.updateTrainingsInformation(trainingId, information);
+    return dataListsDAO.updateTrainingsInformation(trainingId, trainingName, information);
   }
 
   public final boolean addTopicForTraining(int trainingId, String topicsName, String topicsText) throws ConnectionPoolException {
@@ -137,5 +136,17 @@ public class TrainingsService {
   public final boolean sendSolution(int userId, int taskId, String answer) throws ConnectionPoolException {
     DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
     return dataListsDAO.sendSolution(userId, taskId, answer);
+  }
+
+  public final String findTaskSolution(int studentId, int taskId) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    String solution;
+    solution = dataListsDAO.findTaskSolution(studentId, taskId);
+    return solution;
+  }
+
+  public final boolean gradeTask(int studentId, int taskId, int mark) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.gradeTask(studentId, taskId, mark);
   }
 }

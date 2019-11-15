@@ -5,15 +5,10 @@ public enum UserStatus {
   BLOCKED;
 
   public static UserStatus getUserType(String name) {
-    name = name.toUpperCase();
-    switch (name) {
-      case "BLOCKED":
-        return BLOCKED;
-      case "UNBLOCKED":
-        return UNBLOCKED;
-      default:
-        throw new NullPointerException();
-//          TODO throw EnumException()
+    try {
+      return UserStatus.valueOf(name.toUpperCase());
+    } catch (EnumConstantNotPresentException e) {
+      throw new EnumConstantNotPresentException(UserType.class, "no parameter set"); //  FIXME
     }
   }
 }

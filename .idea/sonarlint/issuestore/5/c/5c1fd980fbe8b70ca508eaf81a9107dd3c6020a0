@@ -1,10 +1,9 @@
 
-gsquid:S1134"DTake the required action to fix the issue indicated by this comment.(ªüÖ­ùÿÿÿÿ8ñİç¹á-
-]squid:S1854>":Remove this useless assignment to local variable "topics".(­Ã«ıÿÿÿÿ8ÉÍÂ¹å-
-Wsquid:S1854Y"9Remove this useless assignment to local variable "tasks".(ËŒÈé8Ô˜§¹å-
-gsquid:S1134#"DTake the required action to fix the issue indicated by this comment.(ãè‡Öşÿÿÿÿ8À¤â¸á-
-Zsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8Ü·±¹å-
-^squid:UselessImportCheck".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8Ô˜§¹å-
-[squid:S1854z"8Remove this useless assignment to local variable "task".(Êœî«øÿÿÿÿ8”Ö³Áå-
+[squid:S1854y"8Remove this useless assignment to local variable "task".(Êœî«øÿÿÿÿ8”Ö³Áå-
+]squid:S1854=":Remove this useless assignment to local variable "topics".(­Ã«ıÿÿÿÿ8ÉÍÂ¹å-
+gsquid:S1134"DTake the required action to fix the issue indicated by this comment.(ªüÖ­ùÿÿÿÿ8ñİç¹á-
 [
-squid:S106="9Replace this use of System.out or System.err by a logger.(èÎöÍùÿÿÿÿ8·ï¹å-
+squid:S106<"9Replace this use of System.out or System.err by a logger.(èÎöÍùÿÿÿÿ8·ï¹å-
+gsquid:S1134""DTake the required action to fix the issue indicated by this comment.(ãè‡Öşÿÿÿÿ8À¤â¸á-
+Wsquid:S1854X"9Remove this useless assignment to local variable "tasks".(ËŒÈé8Ô˜§¹å-
+bsquid:UselessImportCheck"2Remove this unused import 'javax.xml.crypto.Data'.(¦¿çˆıÿÿÿÿ8—°Ûæ-

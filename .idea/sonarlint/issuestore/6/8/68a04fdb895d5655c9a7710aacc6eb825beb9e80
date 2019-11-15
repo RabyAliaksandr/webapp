@@ -1,9 +1,10 @@
 
-bsquid:S2147P"DCombine this catch with the one at line 77, which has the same body.(É®£8ÀÇÓºá-
-ksquid:S2095I"HUse try-with-resources or close this "Connection" in a "finally" clause.(¹»­èúÿÿÿÿ8ÀÇÓºá-
-Jsquid:S1068"'Remove this unused "URL" private field.(ïÌ¥üÿÿÿÿ8ßØâºá-
-€squid:S1845"]Rename field "url" to prevent any misunderstanding/clash with field "URL" defined on line 21.(«Œåùÿÿÿÿ8Å¤Ãºá-
-‚squid:S1845"_Rename field "user" to prevent any misunderstanding/clash with field "USER" defined on line 22.(‡ÏÇ³øÿÿÿÿ8Å¤Ãºá-
-}squid:S1192q"ZDefine a constant instead of duplicating this literal "Error closing connection." 5 times.(¢àÔÊúÿÿÿÿ8ÀÇÓºá-
-Šsquid:S1845"gRename field "password" to prevent any misunderstanding/clash with field "PASSWORD" defined on line 23.(œãë­úÿÿÿÿ8Å¤Ãºá-
-dsquid:S2142\"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8ÀÇÓºá-
+gsquid:S1134B"DTake the required action to fix the issue indicated by this comment.(Ò¥Øàÿÿÿÿÿ8©á‚æ-
+ksquid:S2095U"HUse try-with-resources or close this "Connection" in a "finally" clause.(¹»­èúÿÿÿÿ8©á‚æ-
+Šsquid:S1845/"gRename field "password" to prevent any misunderstanding/clash with field "PASSWORD" defined on line 39.(œãë­úÿÿÿÿ8©á‚æ-
+dsquid:S2142h"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8©á‚æ-
+}squid:S1192~"ZDefine a constant instead of duplicating this literal "Error closing connection." 5 times.(¢àÔÊúÿÿÿÿ8©á‚æ-
+bsquid:S2147\"DCombine this catch with the one at line 89, which has the same body.(É®£8©á‚æ-
+Jsquid:S1068%"'Remove this unused "URL" private field.(ïÌ¥üÿÿÿÿ8©á‚æ-
+‚squid:S1845."_Rename field "user" to prevent any misunderstanding/clash with field "USER" defined on line 38.(‡ÏÇ³øÿÿÿÿ8Å¤Ãºá-
+€squid:S1845-"]Rename field "url" to prevent any misunderstanding/clash with field "URL" defined on line 37.(«Œåùÿÿÿÿ8Å¤Ãºá-

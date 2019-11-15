@@ -133,6 +133,21 @@ public enum CommandEnum {
     {
       this.command = new StudentManagementCommand();
     }
+  },
+  MENTORING {
+    {
+      this.command = new MentoringCommand();
+    }
+  },
+  SET_MARK_FOR_TASK {
+    {
+      this.command = new SetMarkCommand();
+    }
+  },
+  OFFER_DATE {
+    {
+      this.command = new OfferDateCommand();
+    }
   };
   Command command;
 

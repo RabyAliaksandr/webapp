@@ -2,9 +2,9 @@ package com.epam.webapp.command.impl;
 
 import com.epam.webapp.command.Command;
 import com.epam.webapp.command.exception.CommandException;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.entity.UserStatus;
-import com.epam.webapp.entity.UserTypes;
+import com.epam.webapp.entity.UserType;
 import com.epam.webapp.manager.ConfigurationManager;
 import com.epam.webapp.manager.MessageManager;
 import com.epam.webapp.service.UserService;
@@ -23,10 +23,10 @@ public class UpdateUserTypeCommand implements Command {
 
 
   @Override
-  public String execute(HttpServletRequest request) throws CommandException, CommandException, ConnectionPoolException {
+  public String execute(HttpServletRequest request) throws CommandException, ConnectionPoolException {
     UserService userService = new UserService();
     int userId = Integer.parseInt(request.getParameter(USER_ID));
-    UserTypes type = UserTypes.getUserType(request.getParameter(USER_TYPE));
+    UserType type = UserType.getUserType(request.getParameter(USER_TYPE));
     UserStatus status = UserStatus.getUserType(request.getParameter(USER_STATUS));
 
     boolean done = userService.updateUserType(userId, type, status);

@@ -78,8 +78,6 @@ c
 3src/main/java/com/epam/webapp/dao/DataListsDAO.java,0\e\0e7b9f2712c390c46f0726422c75a069a8c00282
 Q
 !src/main/webapp/jsp/trainings.jsp,8\0\8044df610a307beb3a4b1c7b7c71065d2ce6e46e
-ƒ
-Ssrc/main/java/com/epam/webapp/connectionpool/exception/ConnectionPoolException.java,9\a\9a9254ac64c4d1401b3b96fb66e91399513e7f2d
 p
 @src/main/java/com/epam/webapp/connectionpool/ConnectionPool.java,6\8\68a04fdb895d5655c9a7710aacc6eb825beb9e80
 {
@@ -92,8 +90,6 @@ l
 <src/main/java/com/epam/webapp/dao/TrainingsOperationDAO.java,6\c\6c065a290a4c9249f41410727f4f75c97f9684c9
 u
 Esrc/main/java/com/epam/webapp/dao/impl/TrainingsOperationDAOImpl.java,6\4\64abf6442dc7e30b54eb16b4316a10c200b89559
-\
-,src/main/java/com/epam/webapp/style/main.css,7\3\7346463b384e33f2fc8ac0e22ba12c5151f0f20f
 O
 src/main/webapp/tld/buttons.tld,b\8\b8362011f9193deff798c3973cc43ef2cf0605f1
 U
@@ -238,8 +234,6 @@ N
 src/main/webapp/jsp/editor.jsp,9\6\967fdf5b6853f790b888448611ae4dc16c9db45b
 {
 Ksrc/main/java/com/epam/webapp/command/impl/UpdateTrainingsTopicCommand.java,4\b\4b60f45b40f2d54031dda88501daf0a48ebb5846
-c
-3src/main/java/com/epam/webapp/entity/UserTypes.java,1\7\17c34a0edfbb5df5d301ff4495ae7abc07693254
 d
 4src/main/java/com/epam/webapp/entity/UserStatus.java,7\4\74dda09986cdf4a6263191a5d769918488f4849c
 u
@@ -262,3 +256,21 @@ x
 Hsrc/main/java/com/epam/webapp/command/impl/StudentManagementCommand.java,7\4\74bbc30d85e906e643f0bff8e44cc38f0f611233
 Y
 )src/main/webapp/jsp/studentManagement.jsp,2\c\2cde93bcf44986ebdf22a33663a85e72db510e17
+y
+Isrc/main/java/com/epam/webapp/connectionpool/ConnectionPoolException.java,9\2\92e0fc482ddc7cf1e6ae335157ce9f8a65b44d57
+b
+2src/main/java/com/epam/webapp/entity/UserType.java,4\5\45fc524143b85f177e9a7430e7a485a8f4fdb974
+Q
+!src/main/webapp/jsp/mentoring.jsp,a\b\ab0b14990c93f503f88a7f40044be38c9e789bcc
+p
+@src/main/java/com/epam/webapp/command/impl/MentoringCommand.java,2\1\21cd333a1c3e3eebc74120d5191cb3657f5bf2e1
+O
+src/main/webapp/style/table.css,6\a\6a39f0bbfa2430d014949ac4f474e56cd8b72b9a
+W
+'src/main/webapp/style/bootstrap.min.css,6\5\658929d929adb19c2dc7c46b43ac0adfd44edac9
+n
+>src/main/java/com/epam/webapp/command/impl/SetMarkCommand.java,c\c\cc8a55707a2f00f17faae249ab6f8b9e423e6a8e
+P
+ src/main/webapp/jsp/calendar.jsp,8\7\8737837e7f21a4607ed82d29733a3289f097dfde
+N
+src/main/webapp/js/calendar.js,9\6\967149a82bb176034a8155141d98d625abf172c1

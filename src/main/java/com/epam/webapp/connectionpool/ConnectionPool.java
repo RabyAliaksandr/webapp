@@ -1,12 +1,28 @@
 package com.epam.webapp.connectionpool;
 
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLWarning;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.DriverManager;
 import java.util.Map;
+import java.sql.PreparedStatement;
+import java.sql.CallableStatement;
+import java.sql.Blob;
+import java.sql.Savepoint;
+import java.sql.Clob;
+import java.sql.NClob;
+import java.sql.SQLXML;
+import java.sql.SQLClientInfoException;
+import java.sql.SQLDataException;
 import java.util.Properties;
+import java.sql.Struct;
+import java.sql.Array;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
@@ -33,32 +49,28 @@ public class ConnectionPool {
   private static ConnectionPool instance;
 
   static {
-    try {
-      instance = new ConnectionPool();
-    } catch (ConnectionPoolException e) {
-      e.printStackTrace();
-    }
+
+    instance = new ConnectionPool();
+
   }
 
   public static ConnectionPool getInstance() {
     return instance;
   }
 
-  private ConnectionPool() throws ConnectionPoolException {
+  private ConnectionPool() {
 
     DBResourceManager resourceManager = DBResourceManager.getInstance();
     this.driverName = resourceManager.getValue(DRIVER);
-    this.url = "jdbc:mysql://localhost:3306/training?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    this.url = "jdbc:mysql://localhost:3306/trainings_center?useUnicode=true&useJDBCCompliantTimezoneShift=true&" +
+            "useLegacyDatetimeCode=false&serverTimezone=UTC"; // FIXME
 //    this.url = resourceManager.getValue(URL);
     this.user = resourceManager.getValue(USER);
     this.password = resourceManager.getValue(PASSWORD);
 
-    try {
-      this.sizePool = Integer.parseInt(resourceManager.getValue(POOL_SIZE));
-    } catch (NumberFormatException e) {
-      logger.error(e);
-      throw new ConnectionPoolException("invalid integer", e);
-    }
+
+    this.sizePool = Integer.parseInt(resourceManager.getValue(POOL_SIZE));
+
   }
 
   /**
@@ -102,6 +114,7 @@ public class ConnectionPool {
 
   /**
    * closing connecting
+   *
    * @param con
    * @param st
    * @param rs
@@ -130,22 +143,22 @@ public class ConnectionPool {
 
   /**
    * closing connecting
+   *
    * @param con
    * @param st
    */
   public void closeConnection(Connection con, Statement st) throws ConnectionPoolException {
     try {
-      con.close();
-    } catch (SQLException e) {
-      logger.error("Error closing connection.", e);
-      throw new ConnectionPoolException(e);
-    }
-
-    try {
       st.close();
     } catch (SQLException e) {
       logger.error("Error closing connection.", e);
 
+    }
+    try {
+      con.close();
+    } catch (SQLException e) {
+      logger.error("Error closing connection.", e);
+      throw new ConnectionPoolException(e);
     }
   }
 
@@ -163,6 +176,7 @@ public class ConnectionPool {
 
   /**
    * close connections queue
+   *
    * @param queue
    * @throws SQLException
    */
@@ -183,14 +197,14 @@ public class ConnectionPool {
 
     private Connection connection;
 
-    public PooledConnection(Connection connection) throws SQLException {
+    PooledConnection(Connection connection) throws SQLException {
       this.connection = connection;
       this.connection.setAutoCommit(true);
 
     }
 
 
-    public void reallyClose() throws SQLException {
+    void reallyClose() throws SQLException {
       connection.close();
     }
 
@@ -433,7 +447,8 @@ public class ConnectionPool {
 
     @Override
     public Array createArrayOf(String s, Object[] objects) throws SQLException {
-return connection.createArrayOf(s, objects);    }
+      return connection.createArrayOf(s, objects);
+    }
 
     @Override
     public Struct createStruct(String s, Object[] objects) throws SQLException {
@@ -442,7 +457,7 @@ return connection.createArrayOf(s, objects);    }
 
     @Override
     public void setSchema(String s) throws SQLException {
-    connection.setSchema(s);
+      connection.setSchema(s);
     }
 
     @Override
@@ -452,12 +467,12 @@ return connection.createArrayOf(s, objects);    }
 
     @Override
     public void abort(Executor executor) throws SQLException {
-  connection.abort(executor);
+      connection.abort(executor);
     }
 
     @Override
     public void setNetworkTimeout(Executor executor, int i) throws SQLException {
-connection.setNetworkTimeout(executor, i);
+      connection.setNetworkTimeout(executor, i);
     }
 
     @Override

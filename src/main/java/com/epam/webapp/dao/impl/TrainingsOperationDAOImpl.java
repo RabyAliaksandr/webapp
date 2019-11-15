@@ -1,7 +1,7 @@
 package com.epam.webapp.dao.impl;
 
 import com.epam.webapp.connectionpool.ConnectionPool;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.dao.TrainingsOperationDAO;
 import com.epam.webapp.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;

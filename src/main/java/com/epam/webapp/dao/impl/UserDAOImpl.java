@@ -2,7 +2,7 @@ package com.epam.webapp.dao.impl;
 
 import com.epam.webapp.dao.UserDAO;
 import com.epam.webapp.connectionpool.ConnectionPool;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.dao.exception.DAOException;
 import com.epam.webapp.entity.*;
 import org.apache.logging.log4j.LogManager;
@@ -10,28 +10,43 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDAOImpl implements UserDAO {
 
-  private final static String SQL_NEW_USER = "INSERT INTO users (name, surname, email, login, password, type) values (?, ?, ?, ?, ?, ?)";
-  private final static String SQL_GET_USER = "SELECT user_id, name, surname, email, user_status, type FROM users WHERE login=? AND password=?";
+  private final static String SQL_NEW_USER = "INSERT INTO users (name, surname, email, login, password, type)" +
+          " values (?, ?, ?, ?, ?, ?)";
+  private final static String SQL_GET_USER = "SELECT user_id, name, surname, email, user_status, type FROM users WHERE " +
+          "login=? AND password=?";
   private final static String SQL_USER_ID = "user_id";
   private final static String SQL_USER_NAME = "name";
   private final static String SQL_USER_SURNAME = "surname";
   private final static String SQL_USER_EMAIL = "email";
   private final static String SQL_USER_TYPE = "type";
   private final static Logger logger = LogManager.getLogger(UserDAO.class);
-  private static final String SQL_GRADE = "UPDATE trainingbystudents SET grade_for_training = ? WHERE (user_id = ? and training_id = ?)";
-  private static final String SQL_ADD_TRAINING_TO_STUDENT = "INSERT INTO trainingbystudents (user_id, training_id) VALUES (?, ?)";
-  private static final String SQL_CHECK_ENROLLED = "SELECT EXISTS(SELECT training.training_by_students.user_id FROM trainingbystudents WHERE (user_id = ? and\n" +
-          "                                                                                       training_id =?))";
+  private static final String SQL_GRADE = "UPDATE trainingbystudents SET grade_for_training = ? WHERE " +
+          "(user_id = ? and training_id = ?)";
+  private static final String SQL_ADD_TRAINING_TO_STUDENT = "INSERT INTO training_by_students " +
+          "(user_id, training_id) VALUES (?, ?)";
+  private static final String SQL_CHECK_ENROLLED = "SELECT EXISTS(SELECT trainings_center.training_by_students.user_id FROM" +
+          " training_by_students WHERE (user_id = ? and training_id =?))";
   private static final String SQL_ALL_MENTORS = "SELECT user_id, name, surname FROM users WHERE type = 'mentor'";
   private static final String SQL_ALL_USERS = "SELECT user_id, name, surname, login, email, user_status, type FROM users";
   private static final String SQL_USER_LOGIN = "login";
-  private static final String SQL_UPDATE_USER_TYPE = "UPDATE users SET type = ?, user_status = ? WHERE userid = ?";
+  private static final String SQL_UPDATE_USER_TYPE = "UPDATE users SET type = ?, user_status = ? WHERE user_id = ?";
   private static final String SQL_USER_STATUS = "user_status";
-  private static final String SQL_STUDENT_FOR_TRAINIG = "SELECT * FROM users  JOIN training_by_students USING(user_id) WHERE (training_id = ? AND type = 'student')";
+  private static final String SQL_STUDENT_FOR_TRAINING = "SELECT * FROM users  JOIN training_by_students " +
+          "USING(user_id) WHERE (training_id = ? AND type = 'student')";
+  private static final String SQL_ALL_MARKS_FOR_TRAINING = "SELECT task_id, task_name, mark, answer, task FROM " +
+          "training_by_students INNER JOIN tasks USING (training_id) LEFT JOIN student_task USING (user_id, task_id) " +
+          "WHERE user_id = ? AND training_id = ?";
+  private static final String SQL_TASK_ID = "task_id";
+  private static final String SQL_TASK_NAME = "task_name";
+  private static final String SQL_TASK = "task";
+  private static final String SQL_TASK_MARK = "mark";
+  private static final String SQL_TASK_ANSWER = "answer";
 
   /**
    * check if user is in database - take information about him
@@ -61,7 +76,7 @@ public class UserDAOImpl implements UserDAO {
         user.setSurname(resultSet.getString(SQL_USER_SURNAME));
         user.setEmail(resultSet.getString(SQL_USER_EMAIL));
         user.setStatus(UserStatus.getUserType(resultSet.getString(SQL_USER_STATUS)));
-        user.setType(UserTypes.getUserType(resultSet.getString(SQL_USER_TYPE)));
+        user.setType(UserType.getUserType(resultSet.getString(SQL_USER_TYPE)));
         return user;
       }
       return null; // TODO return ?????????????????????????????
@@ -235,7 +250,7 @@ public class UserDAOImpl implements UserDAO {
         user.setSurname(resultSet.getString(SQL_USER_SURNAME));
         user.setLogin(resultSet.getString(SQL_USER_LOGIN));
         user.setEmail(resultSet.getString(SQL_USER_EMAIL));
-        user.setType(UserTypes.getUserType(resultSet.getString(SQL_USER_TYPE)));
+        user.setType(UserType.getUserType(resultSet.getString(SQL_USER_TYPE)));
         user.setId(resultSet.getInt(SQL_USER_ID));
         user.setStatus(UserStatus.getUserType(resultSet.getString(SQL_USER_STATUS)));
         users.add(user);
@@ -250,7 +265,7 @@ public class UserDAOImpl implements UserDAO {
   }
 
   @Override
-  public boolean updateUserType(int userId, UserTypes type, UserStatus status) throws ConnectionPoolException {
+  public boolean updateUserType(int userId, UserType type, UserStatus status) throws ConnectionPoolException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -281,7 +296,7 @@ public class UserDAOImpl implements UserDAO {
     List<Student> students = new ArrayList<>();
     try {
       connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_STUDENT_FOR_TRAINIG);
+      preparedStatement = connection.prepareStatement(SQL_STUDENT_FOR_TRAINING);
       preparedStatement.setInt(1,trainingId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
@@ -310,16 +325,49 @@ public class UserDAOImpl implements UserDAO {
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<Task> tasks = new ArrayList<>();
+//    try {
+      connection = connectionPool.takeConnection();
+//      preparedStatement = connection.prepareStatement(SQL_TASKS_BY_STUDENT_ID);
+//      preparedStatement.setInt(1, studentId);
+//      resultSet = preparedStatement.executeQuery();
+//      while (resultSet.next()) {
+//        Task task = new Task();
+//        task.setName(resultSet.getString(SQL_TASK_NAME));
+//        task.setTask(resultSet.getString(SQL_TASK));
+//        task.setId(resultSet.getInt(SQL_TASK_ID));
+//        tasks.add(task);
+//      }
+//      return tasks;
+//    } catch (SQLException e) {
+//      e.printStackTrace();
+//    } finally {
+//      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+//    }
+    return tasks;
+  }
+
+  @Override
+  public List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws ConnectionPoolException {
+
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    connectionPool.initPool();
+    Connection connection = null;
+    PreparedStatement  preparedStatement = null;
+    ResultSet resultSet = null;
+    List<Task> tasks = new ArrayList<>();
     try {
       connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_TASKS_BY_STUDENT_ID);
+      preparedStatement = connection.prepareStatement(SQL_ALL_MARKS_FOR_TRAINING);
       preparedStatement.setInt(1, studentId);
+      preparedStatement.setInt(2, trainingId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Task task = new Task();
+        task.setId(resultSet.getInt(SQL_TASK_ID));
         task.setName(resultSet.getString(SQL_TASK_NAME));
         task.setTask(resultSet.getString(SQL_TASK));
-        task.setId(resultSet.getInt(SQL_TASK_ID));
+        task.setMark(resultSet.getInt(SQL_TASK_MARK));
+        task.setAnswer(resultSet.getString(SQL_TASK_ANSWER));
         tasks.add(task);
       }
       return tasks;
@@ -330,5 +378,4 @@ public class UserDAOImpl implements UserDAO {
     }
     return tasks;
   }
-
 }

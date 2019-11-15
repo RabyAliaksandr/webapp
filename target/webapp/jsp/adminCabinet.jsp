@@ -29,7 +29,7 @@
                 <li><a href="controller?command=management_page&typeOperation=trainingManagement"><fmt:message
                         key="trainingManagement"/></a></li>
                 <li><a href="controller?command=management_page&typeOperation=usersManagement"><fmt:message key="usersManagement"/></a></li>
-                <li><a href="controller?command=management_page"><fmt:message key="consultationManagement"/></a></li>
+                <li><a href="controller?command=management_page&typeOperation=consultationManagement"><fmt:message key="consultationManagement"/></a></li>
                 <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
             </ul>
         </div>
