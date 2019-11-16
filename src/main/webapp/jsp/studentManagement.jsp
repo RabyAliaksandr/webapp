@@ -14,6 +14,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <script src="${pageContext.request.contextPath}js/table_sort.js"></script>
     <html>
     <head><title><fmt:message key="button.studentsManagement"/></title></head>
@@ -42,21 +45,21 @@
             <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
             <h2><fmt:message key="button.studentsManagement"/></h2>
                 <%--            table stusents registred on training--%>
-            <table class="table table_sort">
+            <table id="table_id" class="table table_sort" cellpadding="0" width="100%">
                 <c:set var="count" value="${1}"/>
                 <thead>
                 <tr>
                     <th>No<i class="fa fa-fw fa-sort"/></th>
                     <th><fmt:message key="userName"/><i class="fa fa-fw fa-sort"/></th>
                     <th><fmt:message key="userSurname"/><i class="fa fa-fw fa-sort"/></th>
-                    <c:forEach var="task" items="${userService.findStudentsMarkForTrainingsTask(student.id, trainingId)}">
+                    <th><fmt:message key="average"/><i class="fa fa-fw fa-sort"/></th>
+                    <c:forEach var="task" items="${trainingService.getTasksListForTraining(trainingId)}">
                         <th>
-                            <a href="controller?command=task_page&studentId=${student.id}&taskId=${task.id}&showSolution=true" >
+                            <a href="controller?command=task_page&studentId=${studentId}&taskId=${task.id}&showSolution=true">
                                     ${task.name}
                             </a>
                         </th>
                     </c:forEach>
-                    <th><fmt:message key="average"/><i class="fa fa-fw fa-sort"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,46 +80,60 @@
                                     ${student.surname}
                             </a>
                         </td>
-                        <c:forEach var="task" items="${userService.findStudentsMarkForTrainingsTask(student.id, trainingId)}">
-                            <%--                </c:forEach>--%>
-                            <th>
-                                    ${task.mark}
-                            </th>
-                        </c:forEach>
                         <td>${trainingService.findAvgMarkForTasks(student.id, trainingId)}</td>
+
+                        <c:forEach var="task"
+                                   items="${userService.findStudentsMarkForTrainingsTask(student.id, trainingId)}">
+                            <%--                </c:forEach>--%>
+                            <td>
+                                    ${task.mark}
+                            </td>
+                        </c:forEach>
+
                     </tr>
                     <c:set var="count" value="${count + 1}"/>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
-
     </div>
-
 
     </body>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            const getSort = ({target}) => {
-                const order = (target.dataset.order = -(target.dataset.order || -1));
-                const index = [...target.parentNode.cells].indexOf(target);
-                const collator = new Intl.Collator(['en', 'ru'], {numeric: true});
-                const comparator = (index, order) => (a, b) => order * collator.compare(
-                    a.children[index].innerHTML,
-                    b.children[index].innerHTML
-                );
-
-                for (const tBody of target.closest('table').tBodies)
-                    tBody.append(...[...tBody.rows].sort(comparator(index, order)));
-
-                for (const cell of target.parentNode.cells)
-                    cell.classList.toggle('sorted', cell === target);
-            };
-
-            document.querySelectorAll('.table_sort thead').forEach(tableTH => tableTH.addEventListener('click', () => getSort(event)));
-
-        });
+        $(document).ready( function () {
+            $('#table_id').DataTable();
+        } );
     </script>
+    <script>
+        var table = $('#table_id').dataTable( {
+            sScrollX: "100%",
+            sScrollXInner: "150%",
+            bScrollCollapse: true
+        });
+        new $.fn.dataTable.FixedColumns(table);
+    </script>
+    <%--    <script>--%>
+    <%--        document.addEventListener('DOMContentLoaded', () => {--%>
+
+    <%--            const getSort = ({target}) => {--%>
+    <%--                const order = (target.dataset.order = -(target.dataset.order || -1));--%>
+    <%--                const index = [...target.parentNode.cells].indexOf(target);--%>
+    <%--                const collator = new Intl.Collator(['en', 'ru'], {numeric: true});--%>
+    <%--                const comparator = (index, order) => (a, b) => order * collator.compare(--%>
+    <%--                    a.children[index].innerHTML,--%>
+    <%--                    b.children[index].innerHTML--%>
+    <%--                );--%>
+
+    <%--                for (const tBody of target.closest('table').tBodies)--%>
+    <%--                    tBody.append(...[...tBody.rows].sort(comparator(index, order)));--%>
+
+    <%--                for (const cell of target.parentNode.cells)--%>
+    <%--                    cell.classList.toggle('sorted', cell === target);--%>
+    <%--            };--%>
+
+    <%--            document.querySelectorAll('.table_sort thead').forEach(tableTH => tableTH.addEventListener('click', () => getSort(event)));--%>
+
+    <%--        });--%>
+    <%--    </script>--%>
     </html>
 </fmt:bundle>

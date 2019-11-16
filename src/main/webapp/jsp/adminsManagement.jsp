@@ -73,17 +73,17 @@
             </div>
             </c:if>
                 <%--        block Users Management--%>
-            <c:if test="${typeOperation == 'usersManagement'}">
-            <div class="container-fluid">
-                <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
-                <h1><fmt:message key="usersManagement"/></h1>
-                    <%--Message about saved changes--%>
-                <c:if test="${changesSavedMessage != null}">
-                    <div class="alert alert-danger" role="alert">
-                            ${changesSavedMessage}
-                        <c:set var="changesSavedMessage" value="${null}"/>
-                    </div>
-                </c:if>
+                    <c:if test="${typeOperation == 'usersManagement'}">
+                    <div class="container-fluid">
+                        <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
+                        <h1><fmt:message key="usersManagement"/></h1>
+                            <%--Message about saved changes--%>
+                        <c:if test="${changesSavedMessage != null}">
+                            <div class="alert alert-danger" role="alert">
+                                    ${changesSavedMessage}
+                                <c:set var="changesSavedMessage" value="${null}"/>
+                            </div>
+                        </c:if>
                     <%--users table--%>
                 <table class="table">
                     <thead>

@@ -11,6 +11,7 @@ import com.epam.webapp.entity.Topic;
 import com.epam.webapp.entity.Training;
 
 import javax.xml.crypto.Data;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -159,5 +160,24 @@ public class TrainingsService {
   public final int findAvgMarkForTasks(int userId, int trainingId) throws ConnectionPoolException {
     DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
     return dataListsDAO.avgMarkForTask(userId, trainingId);
+  }
+
+  public final List<Task> findCompletedTasks(int trainingId, int studentId) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.findCompletedTasks(trainingId, studentId);
+  }
+  public final List<Topic> findLearnedTopics(int studentId, int trainingId) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.findLearnedTopics(studentId, trainingId);
+  }
+
+  public final Map<Integer, Date> findConsultationsForTraining(int trainingId) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.findConsultationsForTraining(trainingId);
+  }
+
+  public final boolean sendOrderConsultation(int consultationId, int studentId, String taskIds, String topicIds) throws ConnectionPoolException {
+    DataListsDAO dataListsDAO = DAOFactory.getDataListsDAO();
+    return dataListsDAO.sendOrderConsultation(consultationId, studentId, taskIds, topicIds);
   }
 }

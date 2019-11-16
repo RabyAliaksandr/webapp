@@ -18,6 +18,14 @@
     <link rel="stylesheet" href="style/bootstrap-datetimepicker.css"/>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style/bootstrap-datetimepicker.min.css"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
     <html>
     <head><title>Mentor page</title></head>
     </head>
@@ -67,7 +75,7 @@
                             <input type="hidden" name="trainingId" value="${training.key.id}"/>
                             <input type="hidden" name="date" value="${training.value}"/>
                             <div class="form-group">
-                                <select id="agreement" class="form-control" name="agreement">
+                                <select id="agreement" class="selectpicker" name="agreement">
                                     <option value="true"><fmt:message key="confirm"/></option>
                                     <option value="false"><fmt:message key="refuse"/> </option>
                                 </select>

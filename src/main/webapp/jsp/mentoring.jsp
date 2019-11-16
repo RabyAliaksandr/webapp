@@ -48,13 +48,13 @@
                     <table class="table table-bordered text-center">
                         <thead>
                         <tr>
-                            <c:forEach var="task" items="${userService.findStudentsMarkForTrainingsTask(studentId, trainingId)}">
-                                <th>
-                                        <a href="controller?command=task_page&studentId=${studentId}&taskId=${task.id}&showSolution=true" >
-                                                ${task.name}
-                                        </a>
-                                </th>
-                            </c:forEach>
+                                <c:forEach var="task" items="${userService.findStudentsMarkForTrainingsTask(studentId, trainingId)}">
+                                    <th>
+                                            <a href="controller?command=task_page&studentId=${studentId}&taskId=${task.id}&showSolution=true" >
+                                                    ${task.name}
+                                            </a>
+                                    </th>
+                                </c:forEach>
                         </tr>
                         </thead>
                         <tbody>

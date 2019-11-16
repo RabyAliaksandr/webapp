@@ -53,6 +53,13 @@
                                 key="button.studentsManagement"/></a>
                     </li>
                 </c:if>
+                <c:if test="${user.type == 'STUDENT'}">
+                    <li>
+                        <a href="controller?command=order_consultation&trainingId=${trainingId}&studentId=${user.id}">
+                            <fmt:message key="orderConsultation"/>
+                        </a>
+                    </li>
+                </c:if>
                 <c:if test="${user.type != null}">
                     <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
                 </c:if>

@@ -23,7 +23,24 @@ import java.util.Map;
 public class deleteTHIS {
 
   public static void main(String[] args) throws ConnectionPoolException, ParseException {
-    DataListsDAO dataListsDAO = new DataListDAOImpl();
-    System.out.println(dataListsDAO.avgMarkForTask(3, 2));
+
+    String[] ar  = new String[5];
+    ar[0] = "1";
+    ar[1] = "2";
+    ar[2] = "3";
+    ar[3] = "4";
+    ar[4] = "5";
+    String stringBuilder = new String();
+    for (int i = 0; i < ar.length; i++) {
+      stringBuilder = stringBuilder + ar[i] + ",";
+    }
+    System.out.println(stringBuilder);
+    String[] aaa = stringBuilder.split(",");
+    System.out.println(aaa.length);
+    for (int i = 0; i < aaa.length; i++) {
+      System.out.println(aaa[i]);
+    }
   }
+
+
 }

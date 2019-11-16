@@ -179,8 +179,6 @@
     </script>
 <%--edit task for training--%>
     <c:if test="${typeOperation == 'editTask'}">
-        i am here
-        <c:out value="${taskId} it id task"/>
 
         <c:set var="task" value="${trainingService.getTask(taskId)}"/>
         <hr/>

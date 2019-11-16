@@ -8,10 +8,7 @@ import com.epam.webapp.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +76,12 @@ public class DataListDAOImpl implements DataListsDAO {
   private static final String SQL_AVG_FOR_TASKS = "SELECT AVG(mark) FROM student_task INNER JOIN tasks USING (task_id) " +
           "LEFT JOIN trainings USING (training_id) WHERE user_id = ? AND training_id = ? AND mark > 0";
   private static final String SQL_AVG_MARK = "AVG(mark)";
+  private static final String SQL_COMPLETED_TASKS_FOR_STUDENT = "SELECT task_id, task_name FROM student_task JOIN tasks USING (task_id) WHERE user_id = ? AND training_id = ? AND mark > 0";
+  private static final String SQL_LEARNED_TOPICS = "SELECT topic_id, name_topic FROM student_topic JOIN topics_for_study USING (topic_id) WHERE user_id = ? AND training_id = ?";
+  private static final String SQL_CONSULTATIONS_FOR_TRAINING = "SELECT consultation_id, date FROM consultations LEFT JOIN trainings USING (training_id) WHERE training_id = ? AND date > CURRENT_DATE";
+  private static final String SQL_CONSULTATION_ID = "consultation_id";
+  private static final String SQL_DATE = "date";
+  private static final String SQL_SEND_ORDER_CONSULTATION = "INSERT INTO student_consultation (consultation_id, user_id, tasks_list, topics_list) VALUES (?, ?, ?, ?)";
 
 
   @Override
@@ -712,6 +715,116 @@ public class DataListDAOImpl implements DataListsDAO {
   }
 
   @Override
+  public List<Task> findCompletedTasks(int trainingId, int studentId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    connectionPool.initPool();
+    List<Task> tasks = new ArrayList<>();
+    try{
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_COMPLETED_TASKS_FOR_STUDENT);
+      preparedStatement.setInt(1, studentId);
+      preparedStatement.setInt(2, trainingId);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        Task task = new Task();
+        task.setId(resultSet.getInt(SQL_TASK_ID));
+        task.setName(resultSet.getString(SQL_TASK_NAME));
+        tasks.add(task);
+      }
+      return tasks;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+    }
+    return tasks;
+  }
+
+  @Override
+  public List<Topic> findLearnedTopics(int studentId, int trainingId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    connectionPool.initPool();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    List<Topic> topics = new ArrayList<>();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_LEARNED_TOPICS);
+      preparedStatement.setInt(1, studentId);
+      preparedStatement.setInt(2, trainingId);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        Topic topic = new Topic();
+        topic.setId(resultSet.getInt(SQL_TOPIC_ID));
+        topic.setName(resultSet.getString(SQL_NAME_TOPIC));
+        topics.add(topic);
+      }
+      return topics;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+    }
+    return topics;
+  }
+
+  @Override
+  public Map<Integer, Date> findConsultationsForTraining(int trainingId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    connectionPool.initPool();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    Map<Integer, Date> consultations = new HashMap<>();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_CONSULTATIONS_FOR_TRAINING);
+      preparedStatement.setInt(1, trainingId);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        int consultationId = resultSet.getInt(SQL_CONSULTATION_ID);
+        Date date = resultSet.getDate(SQL_DATE);
+        consultations.put(consultationId, date);
+      }
+      return consultations;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+    }
+    return consultations;
+  }
+
+  @Override
+  public boolean sendOrderConsultation(int consultationId, int studentId, String taskIds, String topicIds) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet rs = null;
+    connectionPool.initPool();
+    boolean done = false;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_SEND_ORDER_CONSULTATION);
+      preparedStatement.setInt(1, consultationId);
+      preparedStatement.setInt(2, studentId);
+      preparedStatement.setString(3, taskIds);
+      preparedStatement.setString(4, topicIds);
+      preparedStatement.executeUpdate();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement);
+    }
+    return false;
+  }
+
+  @Override
   public List<Training> getTraining() throws ConnectionPoolException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
@@ -738,5 +851,16 @@ public class DataListDAOImpl implements DataListsDAO {
     return null;
   }
 
-
+//public void test() throws ConnectionPoolException {
+//    List<String> list = new ArrayList<>();
+//    ConnectionPool connectionPool = ConnectionPool.getInstance();
+//    Connection connection = null;
+//    PreparedStatement preparedStatement = null;\
+//  connectionPool.initPool();
+//    try{
+//      connection = connectionPool.takeConnection();
+//      preparedStatement = connection.prepareStatement();
+//      preparedStatement.addBatch();
+//    }
+//}
 }
