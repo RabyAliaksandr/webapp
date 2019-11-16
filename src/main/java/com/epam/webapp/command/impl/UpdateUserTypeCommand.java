@@ -22,6 +22,7 @@ public class UpdateUserTypeCommand implements Command {
   private static final String USER_STATUS = "status";
 
 
+
   @Override
   public String execute(HttpServletRequest request) throws CommandException, ConnectionPoolException {
     UserService userService = new UserService();

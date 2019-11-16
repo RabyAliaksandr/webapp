@@ -7,15 +7,13 @@ import com.epam.webapp.dao.exception.DAOException;
 import com.epam.webapp.entity.*;
 import com.google.protobuf.ServiceException;
 
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserService {
 
-  public final List<User> getAllMentors() throws ConnectionPoolException {
+  public final Map<Task, User> getAllMentors() throws ConnectionPoolException {
     UserDAO userDAO = DAOFactory.getUserDAO();
     return userDAO.getAllMentors();
   }
@@ -117,4 +115,23 @@ public class UserService {
     tasks = userDAO.findStudentsMarkForTrainingsTask(studentId, trainingId);
     return tasks;
   }
+
+  public final boolean sendOfferConsultations(int trainingId, Date date) throws ConnectionPoolException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    return userDAO.sendOfferConsultations(trainingId, date);
+  }
+
+  public final Map<Training, Date> findConsultationsOffer(int mentorId) throws ConnectionPoolException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    Map<Training, Date> consultations = new HashMap<>();
+    consultations = userDAO.findConsultationsOffer(mentorId);
+    return consultations;
+  }
+
+  public final boolean sendAgreement(int trainingId, Date date, boolean mark) throws ConnectionPoolException {
+    UserDAO userDAO = DAOFactory.getUserDAO();
+    return userDAO.sendAgreement(trainingId, date, mark);
+  }
+
+
 }

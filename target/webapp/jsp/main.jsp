@@ -38,20 +38,17 @@
         </div>
     </nav>
     <br/>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $( function() {
-            $( "#datepicker" ).datepicker();
-        } );
-    </script>
-
-
     <body>
-    <p>Date: <input type="text" id="datepicker"></p>
+<%--        <jsp:useBean id="t" class="com.epam.webapp.service.UserService"/>--%>
 
+<%--        <div class="form-group">--%>
+<%--            <fmt:message key="choose_mentor"/>--%>
+<%--            <select id="chooseMentor" class="form-control" name="status">--%>
+<%--                <c:forEach  var="mentor" items="${t.getAllMentors()}">--%>
+<%--                    <option>     ${mentor.name}</option>--%>
+<%--                </c:forEach>--%>
+<%--            </select>--%>
+<%--        </div>--%>
 
 
     </body>

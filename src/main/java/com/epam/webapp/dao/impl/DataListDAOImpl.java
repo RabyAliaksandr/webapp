@@ -13,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //created trigger update student task when insert into task FIXME
 //and automat. add task for every student who registered at this training (update_student_task)
@@ -62,7 +64,7 @@ public class DataListDAOImpl implements DataListsDAO {
   private static final String SQL_TOPIC_STATUS = "topic_status";
   private static final String SQL_TASK_ID = "task_id";
   private static final String SQL_TOPIC_ID = "topic_id";
-  private static final String SQL_SET_MARK_TOPIC = "INSERT INTO student_topic (user_id, topic_id, topic_status) VALUES (?, ?, 1)";
+  private static final String SQL_SET_MARK_TOPIC = "INSERT INTO student_topic (user_id, topic_id, topic_status) VALUES (?, ?, true)";
   private static final String SQL_CHECK_TRAINING_STATUS_FOR_STUDENT = "SELECT COUNT(1) FROM training_by_students WHERE (user_id = ? AND training_id = ?);";
   private static final String SQL_STATUS = "status";
   private static final String SQL_TASK_BY_ID = "SELECT * FROM trainings_center.tasks WHERE task_id = ?";
@@ -70,8 +72,13 @@ public class DataListDAOImpl implements DataListsDAO {
   private static final String SQL_CHECK_STATUS_TASK = "SELECT COUNT(answer) FROM student_task WHERE (user_id = ?  AND task_id = ?)";
   private static final String SQL_MARK = "mark";
   private static final String SQL_SEND_SOLUTION = "UPDATE student_task SET answer = ? WHERE user_id= ? AND task_id= ?";
-  private static final String SQl_TASK_SOLUTION = "SELECT answer FROM student_task WHERE user_id = ? AND task_id = ?";
+  private static final String SQl_TASK_SOLUTION = "SELECT answer, mark FROM student_task WHERE user_id = ? AND task_id = ?";
   private static final String SQL_GRADE_TASK = "UPDATE student_task SET mark = ? WHERE user_id = ? AND task_id = ?";
+  private static final String SQL_MARK_FOR_TASK = "SELECT mark FROM student_task WHERE user_id = ? AND task_id = ?";
+  private static final String SQL_ANSWER = "answer";
+  private static final String SQL_AVG_FOR_TASKS = "SELECT AVG(mark) FROM student_task INNER JOIN tasks USING (task_id) " +
+          "LEFT JOIN trainings USING (training_id) WHERE user_id = ? AND training_id = ? AND mark > 0";
+  private static final String SQL_AVG_MARK = "AVG(mark)";
 
 
   @Override
@@ -627,13 +634,13 @@ public class DataListDAOImpl implements DataListsDAO {
   }
 
   @Override
-  public String findTaskSolution(int studentId, int taskId) throws ConnectionPoolException {
+  public Map<String, Integer> findTaskSolution(int studentId, int taskId) throws ConnectionPoolException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     connectionPool.initPool();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    String solution = null;
+    Map<String, Integer> solution = new HashMap<>();
 
     try {
       connection = connectionPool.takeConnection();
@@ -642,7 +649,9 @@ public class DataListDAOImpl implements DataListsDAO {
       preparedStatement.setInt(2, taskId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
-        solution = resultSet.getString(1);
+        String answer = resultSet.getString(SQL_ANSWER);
+        int mark = resultSet.getInt(SQL_MARK);
+        solution.put(answer, mark);
       }
       return solution;
     } catch (SQLException e) {
@@ -676,6 +685,31 @@ public class DataListDAOImpl implements DataListsDAO {
     return false;
   }
 
+  @Override
+  public int avgMarkForTask(int userId, int trainingId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    connectionPool.initPool();
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    int avgMark = 0;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_AVG_FOR_TASKS);
+      preparedStatement.setInt(1, userId);
+      preparedStatement.setInt(2, trainingId);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        avgMark = resultSet.getInt(SQL_AVG_MARK);
+      }
+      return avgMark;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+    }
+    return avgMark;
+  }
 
   @Override
   public List<Training> getTraining() throws ConnectionPoolException {

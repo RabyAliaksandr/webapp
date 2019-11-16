@@ -96,17 +96,26 @@
         </c:choose>
     </c:if>
     <c:if test="${showSolution == true}">
-    <c:set var="solution" value="${trainingServie.findTaskSolution(studentId, taskId)}"/>
-        ${solution}
-        <form name="setMark"  method="post" action="controller">
-            <input type="hidden" name="command" value="set_mark_for_task"/>
-            <input type="hidden" name="studentId" value="${studentId}"/>
-            <input type="hidden" name="taskId" value="${taskId}"/>
-            <input type="number" name="mark"  min="1" max="10"/>
-            <input type="submit" class="btn-warning"/>
-        </form>
-
-
+    <c:set var="map" value="${trainingServie.findTaskSolution(studentId, taskId)}"/>
+       <div class="container-fluid">
+      <c:forEach var="solution" items="${map}">
+          <h4><fmt:message key="solution"/>:</h4>
+          <br/>
+          ${solution.key}
+          <br/>
+          <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
+          <h5> <fmt:message key="currentMark"/>:</h5> ${solution.value}
+      </c:forEach>
+           <form name="setMark"  method="post" action="controller">
+               <input type="hidden" name="command" value="set_mark_for_task"/>
+               <input type="hidden" name="studentId" value="${studentId}"/>
+               <input type="hidden" name="taskId" value="${taskId}"/>
+               <input type="number" name="mark"  min="1" max="10"/>
+               <button type="submit" class="btn-warning" >
+                   <fmt:message key="grade"/>
+               </button>
+           </form>
+       </div>
     </c:if>
 <%--    nullify the message about sent solution --%>
     <c:set var="sendSolutionMessage" value="${null}"/>

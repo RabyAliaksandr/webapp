@@ -148,6 +148,16 @@ public enum CommandEnum {
     {
       this.command = new OfferDateCommand();
     }
+  },
+  CONSULTATION_FOR_MENTOR {
+    {
+      this.command = new ConsultationForMentorCommand();
+    }
+  },
+  SEND_AGREEMENT {
+    {
+      this.command = new SendAgreementCommand();
+    }
   };
   Command command;
 

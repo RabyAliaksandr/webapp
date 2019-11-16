@@ -206,12 +206,6 @@ Z
 *target/webapp/jsp/trainingsInformation.jsp,b\9\b919d7ecd52a4c85eb915d81d2a36a74db39b39a
 \
 ,src/main/webapp/jsp/trainingsInformation.jsp,c\0\c05d17207ef8db1e86aeeed4e7f3ee79121b0244
-N
-src/main/webapp/style/main.css,e\a\eab62751a19f8137f1752d956a7e8962c5f55387
-Y
-)src/main/webapp/style/bootstrap-theme.css,9\9\99b50cd73186ec5dec8fb4a0796cbba01610c1ec
-S
-#src/main/webapp/style/bootstrap.css,e\8\e8fe369e639ce1920ec9f0016a2a754c6b0a6080
 r
 Bsrc/main/java/com/epam/webapp/command/impl/AddTaskForTraining.java,d\a\da09939cf77dad1d425387b463d777003e1a6419
 z
@@ -264,13 +258,7 @@ Q
 !src/main/webapp/jsp/mentoring.jsp,a\b\ab0b14990c93f503f88a7f40044be38c9e789bcc
 p
 @src/main/java/com/epam/webapp/command/impl/MentoringCommand.java,2\1\21cd333a1c3e3eebc74120d5191cb3657f5bf2e1
-O
-src/main/webapp/style/table.css,6\a\6a39f0bbfa2430d014949ac4f474e56cd8b72b9a
-W
-'src/main/webapp/style/bootstrap.min.css,6\5\658929d929adb19c2dc7c46b43ac0adfd44edac9
 n
 >src/main/java/com/epam/webapp/command/impl/SetMarkCommand.java,c\c\cc8a55707a2f00f17faae249ab6f8b9e423e6a8e
 P
  src/main/webapp/jsp/calendar.jsp,8\7\8737837e7f21a4607ed82d29733a3289f097dfde
-N
-src/main/webapp/js/calendar.js,9\6\967149a82bb176034a8155141d98d625abf172c1

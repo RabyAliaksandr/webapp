@@ -71,7 +71,7 @@
               <c:when test="${check == false}">
                   <div class="container-fluid">
                       <form class="form-inline" method="post" action="controller">
-                          <input type="hidden" name="command" value="set_mark_for_task"/>
+
                           <input type="hidden" name="userId" value="${user.id}"/>
                           <input type="hidden" name="topicId" value="${topicId}"/>
                           <input type="hidden" name="command" value="mark_topic"/>

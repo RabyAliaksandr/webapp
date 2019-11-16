@@ -32,7 +32,8 @@ public class UserDAOImpl implements UserDAO {
           "(user_id, training_id) VALUES (?, ?)";
   private static final String SQL_CHECK_ENROLLED = "SELECT EXISTS(SELECT trainings_center.training_by_students.user_id FROM" +
           " training_by_students WHERE (user_id = ? and training_id =?))";
-  private static final String SQL_ALL_MENTORS = "SELECT user_id, name, surname FROM users WHERE type = 'mentor'";
+  private static final String SQL_ALL_MENTORS = "SELECT user_id, users.name as user_name, surname, t.name, training_id FROM users " +
+          "left join trainings t on users.user_id = t.mentor_id WHERE users.type = 'mentor'";
   private static final String SQL_ALL_USERS = "SELECT user_id, name, surname, login, email, user_status, type FROM users";
   private static final String SQL_USER_LOGIN = "login";
   private static final String SQL_UPDATE_USER_TYPE = "UPDATE users SET type = ?, user_status = ? WHERE user_id = ?";
@@ -47,6 +48,18 @@ public class UserDAOImpl implements UserDAO {
   private static final String SQL_TASK = "task";
   private static final String SQL_TASK_MARK = "mark";
   private static final String SQL_TASK_ANSWER = "answer";
+  private static final String SQL_TRAINING_ID = "training_id";
+  private static final String SQL_TRAINING_NAME = "name";
+  private static final String SQL_USER_USER_NAME = "user_name";
+  private static final String SQL_OFFER_CONSULTATION = "INSERT  INTO  consultations (training_id, date) SELECT * FROM " +
+          "(SELECT ?, ?) AS tmp WHERE\n" +
+          "NOT EXISTS(SELECT training_id, date FROM consultations WHERE training_id = ? AND date = ?)";
+  private static final String SQL_CONSULTATION_OFFER = "SELECT training_id, date, name AS training_name FROM " +
+          "consultations JOIN trainings USING (training_id) WHERE mentor_id = ? AND mentor_mark IS NULL";
+  private static final String SQL_TRAINING_NAME_AS = "training_name";
+  private static final String SQL_DATE = "date";
+  private static final String SQL_SEND_AGREEMENT = "UPDATE consultations SET mentor_mark = ? WHERE" +
+          " training_id = ? AND date = ?";
 
   /**
    * check if user is in database - take information about him
@@ -114,7 +127,7 @@ public class UserDAOImpl implements UserDAO {
       preparedStatement.setString(4, user.getName());
       preparedStatement.setString(5, user.getSurname());
       preparedStatement.setString(6, user.getEmail());
-     preparedStatement.executeUpdate();
+      preparedStatement.executeUpdate();
       return user;
 
 
@@ -126,6 +139,7 @@ public class UserDAOImpl implements UserDAO {
       connectionPool.closeConnection(connection, preparedStatement);
     }
   }
+
   /**
    * update users information in database
    *
@@ -138,7 +152,7 @@ public class UserDAOImpl implements UserDAO {
   }
 
   @Override
-    public void grade(int assessment, int userId, int trainingId) throws ConnectionPoolException {
+  public void grade(int assessment, int userId, int trainingId) throws ConnectionPoolException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -204,13 +218,13 @@ public class UserDAOImpl implements UserDAO {
   }
 
   @Override
-  public List<User> getAllMentors() throws ConnectionPoolException {
+  public Map<Task, User> getAllMentors() throws ConnectionPoolException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     connectionPool.initPool();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    List<User> users = new ArrayList<>();
+    Map<Task, User> mentorsTraining = new HashMap<>();
 
     try {
       connection = connectionPool.takeConnection();
@@ -218,22 +232,28 @@ public class UserDAOImpl implements UserDAO {
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         User user = new User();
+        Task task = new Task();
         user.setId(resultSet.getInt(SQL_USER_ID));
-        user.setName(resultSet.getString(SQL_USER_NAME));
+        user.setName(resultSet.getString(SQL_USER_USER_NAME));
+        System.out.println(user.getName());
         user.setSurname(resultSet.getString(SQL_USER_SURNAME));
-        users.add(user);
+        System.out.println(user.getSurname());
+        task.setId(resultSet.getInt(SQL_TRAINING_ID));
+        task.setName(resultSet.getString(SQL_TRAINING_NAME));
+        System.out.println(task.getName());
+        mentorsTraining.put(task, user);
       }
-      return users;
+      return mentorsTraining;
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
       connectionPool.closeConnection(connection, preparedStatement, resultSet);
     }
-    return users;
+    return mentorsTraining;
   }
 
   @Override
-  public List<User> getAllUser() throws ConnectionPoolException{
+  public List<User> getAllUser() throws ConnectionPoolException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     connectionPool.initPool();
     Connection connection = null;
@@ -297,7 +317,7 @@ public class UserDAOImpl implements UserDAO {
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_STUDENT_FOR_TRAINING);
-      preparedStatement.setInt(1,trainingId);
+      preparedStatement.setInt(1, trainingId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Student student = new Student();
@@ -326,7 +346,7 @@ public class UserDAOImpl implements UserDAO {
     ResultSet resultSet = null;
     List<Task> tasks = new ArrayList<>();
 //    try {
-      connection = connectionPool.takeConnection();
+    connection = connectionPool.takeConnection();
 //      preparedStatement = connection.prepareStatement(SQL_TASKS_BY_STUDENT_ID);
 //      preparedStatement.setInt(1, studentId);
 //      resultSet = preparedStatement.executeQuery();
@@ -352,7 +372,7 @@ public class UserDAOImpl implements UserDAO {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     connectionPool.initPool();
     Connection connection = null;
-    PreparedStatement  preparedStatement = null;
+    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<Task> tasks = new ArrayList<>();
     try {
@@ -377,5 +397,80 @@ public class UserDAOImpl implements UserDAO {
       connectionPool.closeConnection(connection, preparedStatement, resultSet);
     }
     return tasks;
+  }
+
+  @Override
+  public boolean sendOfferConsultations(int trainingId, Date date) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    connectionPool.initPool();
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_OFFER_CONSULTATION);
+      preparedStatement.setInt(1, trainingId);
+      preparedStatement.setString(2, date.toString());
+      preparedStatement.setInt(3, trainingId);
+      preparedStatement.setString(4, date.toString());
+      System.out.println(date + " i got it");
+      preparedStatement.executeUpdate();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement);
+    }
+    return false;
+  }
+
+  @Override
+  public Map<Training, Date> findConsultationsOffer(int mentorId) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    connectionPool.initPool();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    Map<Training, Date> consultations = new HashMap<>();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_CONSULTATION_OFFER);
+      preparedStatement.setInt(1, mentorId);
+      resultSet = preparedStatement.executeQuery();
+     while (resultSet.next()) {
+       Training training = new Training();
+       training.setId(resultSet.getInt(SQL_TRAINING_ID));
+       training.setName(resultSet.getString(SQL_TRAINING_NAME_AS));
+       Date date = resultSet.getDate(SQL_DATE);
+       consultations.put(training, date);
+     }
+     return consultations;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+    }
+    return consultations;
+  }
+
+  @Override
+  public boolean sendAgreement(int trainingId, Date date, boolean mark) throws ConnectionPoolException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    connectionPool.initPool();
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_SEND_AGREEMENT);
+      preparedStatement.setBoolean(1, mark);
+      preparedStatement.setInt(2, trainingId);
+      preparedStatement.setString(3, date.toString());
+      preparedStatement.executeUpdate();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      connectionPool.closeConnection(connection, preparedStatement);
+    }
+    return false;
   }
 }

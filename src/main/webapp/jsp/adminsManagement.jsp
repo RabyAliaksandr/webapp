@@ -18,31 +18,30 @@
     <link rel="stylesheet" href="style/bootstrap-datetimepicker.css"/>
     <link rel="stylesheet" href="style/bootstrap-datetimepicker.min.css"/>
     <html>
+
     <head><title>Mentor page</title></head>
     </head>
     <body>
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="controller?command=main_page">Trainings Center</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
-                <li><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
-                <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
-                <c:if test="${typeOperation == 'trainingManagement'}">
-                    <li><a href="controller?command=create_text&typeOperation=createTraining"><fmt:message
-                            key="create_training"/></a></li>
-                </c:if>
-            </ul>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="controller?command=main_page">Trainings Center</a>
         </div>
+        <ul class="nav navbar-nav">
+            <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
+            <li><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
+            <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
+            <c:if test="${typeOperation == 'trainingManagement'}">
+                <li><a href="controller?command=create_text&typeOperation=createTraining"><fmt:message
+                        key="create_training"/></a></li>
+            </c:if>
+        </ul>
     </nav>
     <br/>
-    <div class="row">
+    <div class="container-fluid">
 
-            <%--        block Traininngs Management--%>
+                <%--        block Traininngs Management--%>
 
-        <c:if test="${typeOperation == 'trainingManagement'}">
+            <c:if test="${typeOperation == 'trainingManagement'}">
             <div class="col-xs-1">
                 <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
                 <c:set var="count" value="1"/>
@@ -72,9 +71,9 @@
                 </div>
 
             </div>
-        </c:if>
-            <%--        block Users Management--%>
-        <c:if test="${typeOperation == 'usersManagement'}">
+            </c:if>
+                <%--        block Users Management--%>
+            <c:if test="${typeOperation == 'usersManagement'}">
             <div class="container-fluid">
                 <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
                 <h1><fmt:message key="usersManagement"/></h1>
@@ -145,41 +144,59 @@
                     </tbody>
                 </table>
             </div>
-        </c:if>
-        <script>
-            $('#toggleState').on('click', function () {
-                var toggleBtn = $('#toggle');
-                toggleBtn.button('toggle');
-                toggleBtn.hasClass('active') ? toggleBtn.text('Включено') : toggleBtn.text('Выключено');
-            });
-        </script>
+            </c:if>
+            <script>
+                $('#toggleState').on('click', function () {
+                    var toggleBtn = $('#toggle');
+                    toggleBtn.button('toggle');
+                    toggleBtn.hasClass('active') ? toggleBtn.text('Включено') : toggleBtn.text('Выключено');
+                });
+            </script>
 
-    <c:if test="${typeOperation == 'consultationManagement'}">
+            <c:if test="${typeOperation == 'consultationManagement'}">
+                <%--                    <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>--%>
 
-                <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-                <link rel="stylesheet" href="/resources/demos/style.css">
-                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-                <script>
-                    $( function() {
-                        $( "#datepicker" ).datepicker();
-                    } );
-                </script>
-            i am here
-        <div class="container-fluid">
-            Предложить консультацию для ментора
-            <br/>
-           <form action="controller" method="post">
-               <input type="hidden" name="command" value="offer_date"/>
-               <p>Date: <input type="text" id="datepicker" name="date"></p>
-               <input type="submit" value=<fmt:message key="offerConsultation"/>>
-           </form>
-        </c:if>
-    </div>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <link rel="stylesheet" href="/resources/demos/style.css">
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script>
+                $(function () {
+                    $("#datepicker").datepicker();
+                });
+            </script>
+                    <c:if test="${messageOfferSent != null}">
+                    <div class="alert alert-danger" role="alert">
+                            ${messageOfferSent}
+                        <c:set var="messageOfferSent" value="${null}"/>
+                    </div>
+                    </c:if>
+                Предложить консультацию для ментора
+                <br/>
+                <form action="controller" method="post">
+                    <input type="hidden" name="command" value="offer_date"/>
+                    <p><fmt:message key="chooseDate"/>: <input type="text" id="datepicker" name="date" required></p>
+                    <div class="form-group">
+                        <jsp:useBean id="service" class="com.epam.webapp.service.UserService"/>
 
-    <fmt:bundle basename="local" prefix="footer.">
-        <fmt:message key="copyright"/>
-    </fmt:bundle>
+                        <div class="form-group">
+                            <fmt:message key="choose_mentor"/>
+                            <select id="chooseMentor" class="form-control" name="trainingId">
+                                <c:forEach  var="mentor" items="${service.getAllMentors()}">
+                                    <option value="${mentor.key.id}">${mentor.key.name} ${mentor.value.name} ${mentor.value.surname}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" > DONE </button>
+                    <form>
+</c:if>
+                        <br/>
+            <fmt:bundle basename="local" prefix="footer.">
+                <fmt:message key="copyright"/>
+            </fmt:bundle>
     </body>
+
+
     </html>
 </fmt:bundle>

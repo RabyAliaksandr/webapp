@@ -6,6 +6,7 @@ import com.epam.webapp.entity.*;
 
 
 import java.util.List;
+import java.util.Map;
 
 public interface DataListsDAO {
 
@@ -32,6 +33,7 @@ public interface DataListsDAO {
   boolean updateTask(int taskId, String taskName, String task) throws ConnectionPoolException;
   boolean checkTaskStatus(int userId, int taskId) throws ConnectionPoolException;
   boolean sendSolution(int userId, int taskId, String answer) throws ConnectionPoolException;
-  String findTaskSolution(int studentId, int taskId) throws ConnectionPoolException;
+  Map<String, Integer> findTaskSolution(int studentId, int taskId) throws ConnectionPoolException;
   boolean gradeTask(int studentId, int taskId, int mark) throws ConnectionPoolException;
+  int avgMarkForTask(int userId, int trainingId) throws ConnectionPoolException;
 }

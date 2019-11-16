@@ -36,38 +36,6 @@
         <div class="jumbotron">
             <fmt:message key="trainingManagement"/>
         </div>
-
-    <%--            <table class="table-custom">--%>
-    <%--                <thead>--%>
-    <%--                <tr>--%>
-    <%--                <c:forEach var="task" items="${userService.findStudentsMarkForTrainingsTask(studentId, trainingId)}">--%>
-    <%--                    &lt;%&ndash;                </c:forEach>&ndash;%&gt;--%>
-    <%--                    <th>--%>
-    <%--                            ${task.name}--%>
-    <%--                    </th>--%>
-    <%--                </c:forEach>--%>
-    <%--                </tr>--%>
-    <%--                </thead>--%>
-    <%--                <body>--%>
-    <%--                <tr>--%>
-    <%--                <c:forEach var="task" items="${userService.findStudentsMarkForTrainingsTask(studentId, trainingId)}">--%>
-    <%--                    &lt;%&ndash;                </c:forEach>&ndash;%&gt;--%>
-    <%--                    <th>--%>
-    <%--                            ${task.mark}--%>
-    <%--                    </th>--%>
-    <%--                </c:forEach>--%>
-    <%--                </tr>--%>
-    <%--                </body>--%>
-    <%--            </table>--%>
-    <%--        </div>--%>
-
-
-
-
-
-
-
-
     <div class="container-fluid">
         <div class="item mx-5 mt-2" style="overflow: hidden">
 <%--            ЗДЕСЬ БУДЕТ ЗАГОЛОВОК КОТОРЫЙ НЕ ПЕРЕМАТЫВАЕТСЯ                                             --%>
@@ -82,15 +50,10 @@
                         <tr>
                             <c:forEach var="task" items="${userService.findStudentsMarkForTrainingsTask(studentId, trainingId)}">
                                 <th>
-
-
                                         <a href="controller?command=task_page&studentId=${studentId}&taskId=${task.id}&showSolution=true" >
                                                 ${task.name}
                                         </a>
-
-
                                 </th>
-
                             </c:forEach>
                         </tr>
                         </thead>
@@ -115,29 +78,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
-<%--        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">--%>
-<%--            Launch demo modal--%>
-<%--        </button>--%>
-
-        <!-- Модальное окно -->
-<%--        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">--%>
-<%--            <div class="modal-dialog" role="document">--%>
-<%--                <div class="modal-content">--%>
-<%--                    <div class="modal-header">--%>
-<%--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
-<%--                            <span aria-hidden="true">&times;</span>--%>
-<%--                        </button>--%>
-<%--                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>--%>
-<%--                    </div>--%>
-<%--                    <div class="modal-body">--%>
-<%--                        ${text}--%>
-<%--                    </div>--%>
-<%--                    <div class="modal-footer">--%>
-<%--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
-<%--                        <button type="button" class="btn btn-primary">Save changes</button>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
 
 <%--        </div>--%>
     </body>

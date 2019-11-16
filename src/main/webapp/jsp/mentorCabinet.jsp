@@ -26,6 +26,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
                 <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
+                <li><a href="controller?command=consultation_for_mentor"><fmt:message key="consultationManagement"/></a></li>
             </ul>
         </div>
     </nav>
