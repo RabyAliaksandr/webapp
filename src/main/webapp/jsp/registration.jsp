@@ -24,8 +24,8 @@
 </nav>
 <br/>
 <form name="registration" method="POST" action="controller">
+    <input type="hidden" name="redirectTo" value="true"/>
     <input type="hidden" name="command" value="registration"/>
-
     First Name:<br/>
     <input type="text" name="name" value="" required maxlength="50"/><br/>
     <br/>
@@ -53,7 +53,6 @@
     <br/>
     ${nullPage}
     <br/>
-
 </form>
 </form>
 </body>

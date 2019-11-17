@@ -45,7 +45,7 @@
     </nav>
     <br/>
     <div class="container-fluid">
-        <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
+        <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
         <c:if test="${messageAgreement != null}">
             <div class="alert alert-danger" role="alert">
                     ${messageAgreement}
@@ -71,6 +71,7 @@
                     <td>${training.value}</td>
                     <td>
                         <form class="form-inline" method="post" action="controller">
+                            <input type="hidden" name="redirectTo" value="true"/>
                             <input type="hidden" name="command" value="send_agreement"/>
                             <input type="hidden" name="trainingId" value="${training.key.id}"/>
                             <input type="hidden" name="date" value="${training.value}"/>

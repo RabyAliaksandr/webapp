@@ -35,9 +35,9 @@
     <br/>
     <hr/>
         <%--form for edit description training--%>
-    <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
+    <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
     <c:if test="${typeOperation == 'edit'}">
-        <c:set var="training" value="${trainingService.getTrainingByIdTraining(trainingId)}" scope="session"/>
+        <c:set var="training" value="${trainingService.findTrainingByIdTraining(trainingId)}" scope="session"/>
         <c:set var="text" value="${training.information}"/>
         <c:set var="trainingName" value="${training.name}"/>
         <hr/>
@@ -124,13 +124,13 @@
             </textarea>
 
             <div class="form-group">
-                <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
+                <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
                 <label class="control-label col-sm-offset-2 col-sm-2" for="company"><fmt:message
                         key="choose_mentor"/></label>
                 <div class="col-sm-6 col-md-4">
 
                     <select id="company" class="form-control" name="mentorId">
-                        <c:forEach var="user" items="${userService.allMentors}">
+                        <c:forEach var="user" items="${userService.findAllMentors}">
                             <option value=${user.id}>${user.name} ${user.surname}</option>
                         </c:forEach>
                     </select>
@@ -153,7 +153,7 @@
 <%--    edit trainings topic --%>
 
     <c:if test="${typeOperation == 'editTopic'}">
-        <c:set var="topic" value="${trainingService.getTopic(topicId)}"/>
+        <c:set var="topic" value="${trainingService.findTopic(topicId)}"/>
         <hr/>
         <c:out value="${topicId} fuck "/>
         <form id="editTopic" method="post" action="controller">
@@ -180,7 +180,7 @@
 <%--edit task for training--%>
     <c:if test="${typeOperation == 'editTask'}">
 
-        <c:set var="task" value="${trainingService.getTask(taskId)}"/>
+        <c:set var="task" value="${trainingService.findTask(taskId)}"/>
         <hr/>
         <form id="editTask" method="post" action="controller">
             <div class="form-group">

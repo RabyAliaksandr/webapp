@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:bundle basename="local" prefix="label.">
 
-    <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
+    <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -49,9 +49,7 @@
 
 
     <div class="container-fluid">
-        <c:set var="topic" value="${trainingService.getTopic(topicId)}"/>
-
-
+        <c:set var="topic" value="${trainingService.findTopic(topicId)}"/>
         <h1>${topic.name}</h1>
         <br/>
         <p>${topic.topic}</p>
@@ -71,7 +69,7 @@
               <c:when test="${check == false}">
                   <div class="container-fluid">
                       <form class="form-inline" method="post" action="controller">
-
+                          <input type="hidden" name="redirectTo" value="true"/>
                           <input type="hidden" name="userId" value="${user.id}"/>
                           <input type="hidden" name="topicId" value="${topicId}"/>
                           <input type="hidden" name="command" value="mark_topic"/>
@@ -87,9 +85,7 @@
                       <fmt:bundle basename="local" prefix="message.">
                           <fmt:message key="markDone"/>
                       </fmt:bundle>
-
                   </div>
-
               </c:when>
           </c:choose>
         </c:if>

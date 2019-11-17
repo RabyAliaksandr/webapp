@@ -9,7 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="ru" scope="session"/>
-<jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
+<jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
 <fmt:bundle basename="local" prefix="label.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -47,7 +47,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="training" items="${trainingService.getTrainingForMentor(user.id)}">
+                    <c:forEach var="training" items="${trainingService.findTrainingForMentor(user.id)}">
                         <tr>
                             <th scope="row">${count}</th>
                             <td>
@@ -65,21 +65,6 @@
 
                 </table>
             </div>
-            <%--        <table border="2">--%>
-            <%--            <c:forEach var="training" items="${trainingService.getTrainingForMentor(user.id)}">--%>
-            <%--            <tr>--%>
-            <%--                <td>--%>
-            <%--                    <c:out value="${count}"/>--%>
-            <%--                </td>--%>
-            <%--                <td>--%>
-            <%--                    <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">--%>
-            <%--                            ${training.name}--%>
-            <%--                    </a>--%>
-            <%--                </td>--%>
-            <%--                <c:set var="count" value="${count + 1}"/>--%>
-            <%--                </c:forEach>--%>
-            <%--            </tr>--%>
-            <%--        </table>--%>
     </div>
     <c:import url="footer.jsp"/></body>
     </html>

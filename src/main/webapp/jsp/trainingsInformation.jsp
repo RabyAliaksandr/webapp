@@ -17,9 +17,9 @@
     </head>
     <body>
     <c:set var="trainingId" value="${sessionScope.trainingId}"/>
-    <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
-    <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
-    <c:set var="training" value="${trainingService.getTrainingByIdTraining(trainingId)}" scope="session"/>
+    <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
+    <c:set var="training" value="${trainingService.findTrainingByIdTraining(trainingId)}" scope="session"/>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -92,6 +92,7 @@
             <c:if test="${sessionScope.user.type == 'STUDENT'}">
                 <c:if test="${userService.checkEnrolled(user.id, trainingId) == false}">
                     <form name="addTrainingToStudent" method="POST" action="controller">
+                        <input type="hidden" name="redirectTo" value="true"/>
                         <input type="hidden" name="command" value="add_training_to_student"/>
                         <input type="hidden" name="userId" value="${user.id}"/>
                         <input type="hidden" name="trainingId" value="${trainingId}"/>
@@ -108,7 +109,6 @@
     <section class="b">
         <div class="col-lg-6 col-md-6">
             <div class="container-fluid">
-
                 <c:set var="check" value="${trainingService.checkTrainingStatusForStudent(user.id, trainingId)}"/>
                     <%--        if student on training or admin or mentor--%>
                 <c:if test="${check == true || user.type == 'ADMIN' || user.type == 'MENTOR'}">
@@ -116,10 +116,7 @@
                         <fmt:message key="listTopics"/>
                     </h3>
                     <br/>
-
                     <%--table topics for training--%>
-
-
                     <table class="table">
                         <thead>
                         <tr>
@@ -129,7 +126,7 @@
                         </thead>
                         <tbody>
                         <c:set var="count" value="1"/>
-                        <c:forEach var="topic" items="${trainingService.getTopicsForTraining(trainingId)}">
+                        <c:forEach var="topic" items="${trainingService.findTopicsForTraining(trainingId)}">
                             <tr>
                                 <td>${count}</td>
                                 <td>
@@ -145,7 +142,6 @@
             </div>
         </div>
         </div>
-
             <%--        if student on training or admin or mentor--%>
         <c:if test="${check == true || user.type == 'ADMIN' || user.type == 'MENTOR'}">
         <div class="col-lg-6 col-md-6">
@@ -164,7 +160,7 @@
                     </thead>
                     <tbody>
                     <c:set var="count" value="1"/>
-                    <c:forEach var="task" items="${trainingService.getTasksListForTraining(trainingId)}">
+                    <c:forEach var="task" items="${trainingService.findTasksListForTraining(trainingId)}">
                         <tr>
                             <td>${count}</td>
                             <td>
@@ -173,7 +169,6 @@
                         </tr>
                         <c:set var="count" value="${count + 1}"/>
                     </c:forEach>
-
                     </tbody>
                 </table>
                 </c:if>

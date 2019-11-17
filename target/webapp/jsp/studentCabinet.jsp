@@ -23,8 +23,8 @@
         </div>
     </nav>
     <br/>
-    <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
-    <jsp:useBean id="getCompletedTrinings" class="com.epam.webapp.service.TrainingsService"/>
+    <jsp:useBean id="gettrainings" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="getCompletedTrinings" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
     <c:set var="count" value="1"/>
     <div class="container">
             <%--        list of trainings for which the student is registered --%>
@@ -37,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="training" items="${gettrainings.getCompletedTrainingForStudent(user.id)}">
+            <c:forEach var="training" items="${gettrainings.findCompletedTrainingForStudent(user.id)}">
                 <c:choose>
                     <c:when test="${training.grade == 0 }">
                         <tr>
@@ -78,7 +78,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="training" items="${gettrainings.getCompletedTrainingForStudent(user.id)}">
+            <c:forEach var="training" items="${gettrainings.findCompletedTrainingForStudent(user.id)}">
                 <c:choose>
                     <c:when test="${training.grade > 0 }">
                         <tr>

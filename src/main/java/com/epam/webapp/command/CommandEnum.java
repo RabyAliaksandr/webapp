@@ -1,9 +1,9 @@
 package com.epam.webapp.command;
 
-
 import com.epam.webapp.command.impl.*;
 
 public enum CommandEnum {
+
   ADD_TRAINING_TO_STUDENT {
     {
       this.command = new AddTrainingToStudentCommand();
@@ -62,11 +62,6 @@ public enum CommandEnum {
   TOPIC_PAGE {
     {
       this.command = new TopicPageCommand();
-    }
-  },
-  GET_TEXT {
-    {
-      this.command = new GetTextTopicCommand();
     }
   },
   CREATE_TEXT {
@@ -169,8 +164,8 @@ public enum CommandEnum {
       this.command = new SendOrderConsultationCommand();
     }
   };
-  Command command;
 
+  Command command;
 
   public Command getCurrentCommand() {
     return command;

@@ -12,7 +12,7 @@
     <fmt:bundle basename="local" prefix="label.">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="ru" scope="session" />
-<jsp:useBean id="add" class="com.epam.webapp.service.TrainingsService"/>
+<jsp:useBean id="add" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -36,7 +36,7 @@
 
     <c:set var="idUser" value="${sessionScope.user.id}"/>
     <br/>
-        <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
+        <jsp:useBean id="gettrainings" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
         <c:set var="count" value="1"/>
         <div class="container">
             <h2><fmt:message key="currentTrainings"/></h2>
@@ -55,7 +55,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="training" items="${gettrainings.allTrainings}">
+                <c:forEach var="training" items="${gettrainings.findAllTrainings()}">
                     <tr>
                         <td><c:out value="${count}"/></td>
                         <td>
@@ -73,66 +73,3 @@
 </body>
 </html>
 </fmt:bundle>
-
-
-
-
-<%--    <%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%--    <fmt:bundle basename="local" prefix="label.">--%>
-
-<%--        <html>--%>
-<%--        <head>--%>
-<%--            <title>Information about Training</title>--%>
-
-
-
-<%--                &lt;%&ndash;    <% int id = Integer.parseInt(request.getParameter("trainingId"));    %>&ndash;%&gt;--%>
-<%--            <c:set var="trainingId" value="${requestScope.trainingid}" />--%>
-<%--            <c:import url="mainButtons.jsp"/>--%>
-<%--            <c:out value="${requestScope.trainingid}"/>--%>
-
-<%--            <br/>--%>
-<%--            <jsp:useBean id="service" class="com.epam.webapp.service.TrainingsService"/>--%>
-<%--            <fmt:message key="informationAboutTraining"/>--%>
-
-<%--            <br/>--%>
-<%--            <c:out value="${trainingid}"/>--%>
-<%--            <table border="3">--%>
-<%--                <tr>--%>
-<%--                    <td>--%>
-
-<%--                        <c:set var="count" value="0" />--%>
-<%--                        <c:set var="training" value="${service.getTrainingByIdTraining(trainingid)}" scope="session"/>--%>
-<%--                        <c:out value="${training.information}"/>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--            </table>--%>
-<%--            <br/>--%>
-<%--            <fmt:message key="trainedStudents"/>--%>
-<%--            <jsp:useBean id="stedentList" class="com.epam.webapp.service.TrainingsService"/>--%>
-<%--            <table border="3">--%>
-<%--                <c:forEach var="student" items="${stedentList.getStudentsByIdTraining(trainingId)}">--%>
-<%--                    <tr>--%>
-<%--                        <td>--%>
-<%--                            <c:out value="${student.name}"/>--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                            <c:out value="${student.surname}"/>--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                            <c:out value="${student.grade}"/>--%>
-<%--                            <form name="alltrainings" method="post" action="controller">--%>
-<%--                                <input type="hidden" name="command" value="trainings"/>--%>
-<%--                                <input type="text" value=""/>--%>
-<%--                                <input type="submit" value=<fmt:message key="rate"></fmt:message>/>--%>
-<%--                            </form>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
-<%--                </c:forEach>--%>
-<%--            </table>--%>
-<%--        </head>--%>
-<%--        <body>--%>
-
-<%--        </body>--%>
-<%--        </html>--%>
-<%--    </fmt:bundle>--%>

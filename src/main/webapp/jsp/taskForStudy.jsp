@@ -40,7 +40,7 @@
         </div>
     </nav>
     <br/>
-    <jsp:useBean id="trainingServie" class="com.epam.webapp.service.TrainingsService"/>
+    <jsp:useBean id="trainingServie" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
     <c:if test="${changesSavedMessage != null}">
         <div class="alert alert-danger" role="alert">
                 ${changesSavedMessage}
@@ -48,7 +48,7 @@
         </div>
     </c:if>
     <div class="container-fluid">
-        <c:set var="task" value="${trainingServie.getTask(taskId)}"/>
+        <c:set var="task" value="${trainingServie.findTask(taskId)}"/>
         <h1>${task.name}</h1>
         <br/>
         <p>${task.task}</p>
@@ -68,6 +68,7 @@
         <c:choose>
             <c:when test="${check == false}">
                 <form id="sendSolution" method="post" action="controller">
+                    <input type="hidden" name="redirectTo" value="true"/>
                     <input type="hidden" name="command" value="send_solution"/>
                     <input type="hidden" name="taskId" value="${taskId}"/>
                     <input type="hidden" name="userId" value="${user.id}"/>
@@ -103,10 +104,11 @@
           <br/>
           ${solution.key}
           <br/>
-          <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
+          <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
           <h5> <fmt:message key="currentMark"/>:</h5> ${solution.value}
       </c:forEach>
            <form name="setMark"  method="post" action="controller">
+               <input type="hidden" name="redirectTo" value="true"/>
                <input type="hidden" name="command" value="set_mark_for_task"/>
                <input type="hidden" name="studentId" value="${studentId}"/>
                <input type="hidden" name="taskId" value="${taskId}"/>

@@ -16,10 +16,14 @@
     <error-code>404</error-code>
     <location>/jsp/error.jsp</location>
   </error-page>
-  <error-page>
-    <exception-type>java.lang.RuntimeException</exception-type>
-    <location>/jsp/error.jsp</location>
-  </error-page>
+<filter>
+  <filter-name>encodingFilter</filter-name>
+  <filter-class>com.epam.webapp.filter.EncodingFilter</filter-class>
+</filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <description>MySQL</description>
   <resource-ref>
     <description>MySQL DB Connection Pool</description>

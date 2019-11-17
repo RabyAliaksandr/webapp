@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="ctg" uri="/WEB-INF/tld/currentDate.tld" %>
+
 <fmt:bundle basename="local" prefix="label.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -39,19 +41,7 @@
     </nav>
     <br/>
     <body>
-<%--        <jsp:useBean id="t" class="com.epam.webapp.service.UserService"/>--%>
-
-<%--        <div class="form-group">--%>
-<%--            <fmt:message key="choose_mentor"/>--%>
-<%--            <select id="chooseMentor" class="form-control" name="status">--%>
-<%--                <c:forEach  var="mentor" items="${t.getAllMentors()}">--%>
-<%--                    <option>     ${mentor.name}</option>--%>
-<%--                </c:forEach>--%>
-<%--            </select>--%>
-<%--        </div>--%>
-
-
     </body>
-
+    <ctg:currentDate/>
     <html></html>
 </fmt:bundle>

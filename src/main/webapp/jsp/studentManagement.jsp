@@ -15,7 +15,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <script src="${pageContext.request.contextPath}js/table_sort.js"></script>
     <html>
@@ -41,8 +40,8 @@
     <br/>
     <div class="col-xs-1">
         <div class="container">
-            <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
-            <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
+            <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
+            <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
             <h2><fmt:message key="button.studentsManagement"/></h2>
                 <%--            table stusents registred on training--%>
             <table id="table_id" class="table table_sort" cellpadding="0" width="100%">
@@ -53,7 +52,7 @@
                     <th><fmt:message key="userName"/><i class="fa fa-fw fa-sort"/></th>
                     <th><fmt:message key="userSurname"/><i class="fa fa-fw fa-sort"/></th>
                     <th><fmt:message key="average"/><i class="fa fa-fw fa-sort"/></th>
-                    <c:forEach var="task" items="${trainingService.getTasksListForTraining(trainingId)}">
+                    <c:forEach var="task" items="${trainingService.findTasksListForTraining(trainingId)}">
                         <th>
                             <a href="controller?command=task_page&studentId=${studentId}&taskId=${task.id}&showSolution=true">
                                     ${task.name}
@@ -63,7 +62,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="student" items="${userService.getStudentsForTraining(trainingId)}">
+                <c:forEach var="student" items="${userService.findStudentsForTraining(trainingId)}">
                     <tr>
                         <td>
                             <a href="controller?command=mentoring&studentId=${student.id}&trainingId=${trainingId}">
@@ -112,28 +111,5 @@
         });
         new $.fn.dataTable.FixedColumns(table);
     </script>
-    <%--    <script>--%>
-    <%--        document.addEventListener('DOMContentLoaded', () => {--%>
-
-    <%--            const getSort = ({target}) => {--%>
-    <%--                const order = (target.dataset.order = -(target.dataset.order || -1));--%>
-    <%--                const index = [...target.parentNode.cells].indexOf(target);--%>
-    <%--                const collator = new Intl.Collator(['en', 'ru'], {numeric: true});--%>
-    <%--                const comparator = (index, order) => (a, b) => order * collator.compare(--%>
-    <%--                    a.children[index].innerHTML,--%>
-    <%--                    b.children[index].innerHTML--%>
-    <%--                );--%>
-
-    <%--                for (const tBody of target.closest('table').tBodies)--%>
-    <%--                    tBody.append(...[...tBody.rows].sort(comparator(index, order)));--%>
-
-    <%--                for (const cell of target.parentNode.cells)--%>
-    <%--                    cell.classList.toggle('sorted', cell === target);--%>
-    <%--            };--%>
-
-    <%--            document.querySelectorAll('.table_sort thead').forEach(tableTH => tableTH.addEventListener('click', () => getSort(event)));--%>
-
-    <%--        });--%>
-    <%--    </script>--%>
     </html>
 </fmt:bundle>

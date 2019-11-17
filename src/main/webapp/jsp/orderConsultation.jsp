@@ -49,22 +49,23 @@
         <title><fmt:message key="orderPage"/></title>
     </head>
     <body>
-    <jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
+    <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
     <div class="container-fluid">
         <div class="row">
             <fmt:message key="availableConsultation"/>
             <div class="row">
 
-                        <%--Message about saved changes--%>
-                    <c:if test="${orderSentMessage != null}">
-                        <div class="alert alert-danger" role="alert">
-                                ${orderSentMessage}
-                            <c:set var="orderSentMessage" value="${null}"/>
-                        </div>
-                    </c:if>
+                    <%--Message about saved changes--%>
+                <c:if test="${orderSentMessage != null}">
+                    <div class="alert alert-danger" role="alert">
+                            ${orderSentMessage}
+                        <c:set var="orderSentMessage" value="${null}"/>
+                    </div>
+                </c:if>
             </div>
             <form id="chooseTasksForConsultation" onsubmit="return sub()" method="post" action="controller">
                 <input type="hidden" name="command" value="send_order_consultation"/>
+                <input type="hidden" name="redirectTo" value="true"/>
                 <input type="hidden" name="studentId" value="${user.id}"/>
             </form>
 
@@ -95,15 +96,12 @@
                 <tr>
                     <td>${count}</td>
                     <td>${task.name}</td>
-                <form id="q">
-
                     <td>
                         <input type="checkbox"
                                class="checkTask"
                                name="taskId"
                                value="${task.id}" form="chooseTasksForConsultation"/>
                     </td>
-                </form>
                 </tr>
                 <c:set var="count" value="${count + 1}"/>
                 <c:set var="checkTask" value="${1}"/>
@@ -141,28 +139,29 @@
                 <h3><fmt:message key="solveTask"/></h3>
             </c:if>
             <c:if test="${checkConsultation == 0}">
-                <h3><fmt:message key="noConsultation"/> </h3>
+                <h3><fmt:message key="noConsultation"/></h3>
             </c:if>
             <c:if test="${checkTopick == 0}">
-                <h3><fmt:message key="learnTopic"/> </h3>
+                <h3><fmt:message key="learnTopic"/></h3>
             </c:if>
             <c:if test="${checkTopick != 0 && checkConsultation != 0 && checkTask != 0}">
-                <button  type="submit" class="btn-warning"
-                         form="chooseTasksForConsultation">Отправить</button>
+                <button type="submit" class="btn-warning"
+                        form="chooseTasksForConsultation">Отправить
+                </button>
             </c:if>
         </div>
 
         <script>
             function sub() {
-            var a = !!document.querySelector(".checkTask:checked");
-            a || alert("Выберите хотя бы одну задачу");
+                var a = !!document.querySelector(".checkTask:checked");
+                a || alert("Выберите хотя бы одну задачу");
 
-            var b = !!document.querySelector(".checkTopic:checked");
-                b || alert("Выберите хотя бы одну тему") ;
+                var b = !!document.querySelector(".checkTopic:checked");
+                b || alert("Выберите хотя бы одну тему");
                 if (a == false || b == false) {
                     return false;
                 }
-            return true;
+                return true;
             };
         </script>
     </div>

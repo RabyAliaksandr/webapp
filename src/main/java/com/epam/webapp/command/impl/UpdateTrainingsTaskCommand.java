@@ -1,37 +1,37 @@
 package com.epam.webapp.command.impl;
 
 import com.epam.webapp.command.Command;
+import com.epam.webapp.command.CommandConst;
 import com.epam.webapp.command.exception.CommandException;
-import com.epam.webapp.connectionpool.ConnectionPoolException;
 import com.epam.webapp.manager.ConfigurationManager;
 import com.epam.webapp.manager.MessageManager;
-import com.epam.webapp.service.TrainingsService;
+import com.epam.webapp.service.impl.TrainingsServiceImpl;
+import com.epam.webapp.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class UpdateTrainingsTaskCommand implements Command {
 
-  private static final String TASK_ID =  "taskId";
-  private static final String TASK_NAME = "taskName";
-  private static final String TASK = "task";
-  private static final String TASK_PAGE = "path.page.taskPage";
-  private static final String MESSAGE_ABOUT_CHANGES = "changesSavedMessage";
-  private static final String MESSAGE_CHANGES_SAVED = "message.changesSaved";
-  private static final String MESSAGE_CHANGES_ERROR = "message.changesError";
-
   @Override
-  public String execute(HttpServletRequest request) throws CommandException, CommandException, ConnectionPoolException {
+  public String execute(HttpServletRequest request) throws CommandException {
 
-    TrainingsService trainingsService = new TrainingsService();
-    int taskId = Integer.parseInt(request.getParameter(TASK_ID));
-    String taskName = request.getParameter(TASK_NAME);
-    String task = request.getParameter(TASK);
-    boolean done = trainingsService.updateTask(taskId, taskName, task);
-    if (done) {
-      request.getSession().setAttribute(MESSAGE_ABOUT_CHANGES, MessageManager.getProperty(MESSAGE_CHANGES_SAVED));
-      return ConfigurationManager.getProperty(TASK_PAGE);
+    TrainingsServiceImpl trainingsService = new TrainingsServiceImpl();
+    int taskId = Integer.parseInt(request.getParameter(CommandConst.TASK_ID));
+    String taskName = request.getParameter(CommandConst.TASK_NAME);
+    String task = request.getParameter(CommandConst.TASK);
+    boolean done;
+    try {
+      done = trainingsService.updateTask(taskId, taskName, task);
+    } catch (ServiceException e) {
+      throw new CommandException("Error access service", e);
     }
-    request.getSession().setAttribute(MESSAGE_ABOUT_CHANGES, MessageManager.getProperty(MESSAGE_CHANGES_ERROR));
-    return ConfigurationManager.getProperty(TASK_PAGE);
+    if (done) {
+      request.getSession().setAttribute(CommandConst.MESSAGE_ABOUT_CHANGES,
+              MessageManager.getProperty(CommandConst.MESSAGE_CHANGES_SAVED));
+      return ConfigurationManager.getProperty(CommandConst.TASK_PAGE);
+    }
+    request.getSession().setAttribute(CommandConst.MESSAGE_ABOUT_CHANGES,
+            MessageManager.getProperty(CommandConst.MESSAGE_CHANGES_ERROR));
+    return ConfigurationManager.getProperty(CommandConst.TASK_PAGE);
   }
 }

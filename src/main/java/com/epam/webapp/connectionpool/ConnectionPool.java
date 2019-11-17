@@ -1,5 +1,6 @@
 package com.epam.webapp.connectionpool;
 
+import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,45 +39,41 @@ public class ConnectionPool {
   private static final String USER = "user";
   private static final String PASSWORD = "password";
   private static final String POOL_SIZE = "poolsize";
-  private BlockingQueue<Connection> connectionQueue;
-  private BlockingQueue<Connection> givenAwayConQueue;
-
-  private String driverName;
-  private String url;
-  private String user;
-  private String password;
-  private int sizePool;
+  private static BlockingQueue<Connection> connectionQueue;
+  private static BlockingQueue<Connection> givenAwayConQueue;
+  private static String driverName;
+  private static String url;
+  private static String user;
+  private static String password;
+  private static int sizePool;
   private static ConnectionPool instance;
 
   static {
-
     instance = new ConnectionPool();
-
+    try {
+      initPool();
+    } catch (ConnectionPoolException e) {
+      throw new RuntimeException(e);
+    }
   }
 
-  public static ConnectionPool getInstance() {
+  public static ConnectionPool Instance() {
     return instance;
   }
 
   private ConnectionPool() {
 
-    DBResourceManager resourceManager = DBResourceManager.getInstance();
-    this.driverName = resourceManager.getValue(DRIVER);
-    this.url = "jdbc:mysql://localhost:3306/trainings_center?useUnicode=true&useJDBCCompliantTimezoneShift=true&" +
-            "useLegacyDatetimeCode=false&serverTimezone=UTC"; // FIXME
-//    this.url = resourceManager.getValue(URL);
-    this.user = resourceManager.getValue(USER);
-    this.password = resourceManager.getValue(PASSWORD);
-
-
-    this.sizePool = Integer.parseInt(resourceManager.getValue(POOL_SIZE));
-
+    this.driverName = ConnectionPoolConst.DRIVER;
+    this.url = ConnectionPoolConst.URL;
+    this.user = ConnectionPoolConst.USER;
+    this.password = ConnectionPoolConst.PASSWORD;
+    this.sizePool = ConnectionPoolConst.POOL_SIZE;
   }
 
   /**
    * initialization connecting
    */
-  public void initPool() throws ConnectionPoolException {
+  private static void initPool() throws ConnectionPoolException {
     try {
       Class.forName(driverName);
       givenAwayConQueue = new ArrayBlockingQueue<>(sizePool);
@@ -94,7 +91,6 @@ public class ConnectionPool {
       throw new ConnectionPoolException(e);
     }
   }
-
 
   public Connection takeConnection() throws ConnectionPoolException {
     Connection connection;
@@ -193,7 +189,7 @@ public class ConnectionPool {
   /**
    * private inner class for creating connection
    */
-  private class PooledConnection implements Connection {
+  private static class PooledConnection implements Connection {
 
     private Connection connection;
 

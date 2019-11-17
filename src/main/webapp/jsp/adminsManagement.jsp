@@ -43,7 +43,7 @@
 
             <c:if test="${typeOperation == 'trainingManagement'}">
             <div class="col-xs-1">
-                <jsp:useBean id="gettrainings" class="com.epam.webapp.service.TrainingsService"/>
+                <jsp:useBean id="gettrainings" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
                 <c:set var="count" value="1"/>
                 <div class="container">
                     <h2><fmt:message key="currentTrainings"/></h2>
@@ -55,7 +55,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="training" items="${gettrainings.allTrainings}">
+                        <c:forEach var="training" items="${gettrainings.findAllTrainings}">
                             <tr>
                                 <td>${count}</td>
                                 <td>
@@ -75,7 +75,7 @@
                 <%--        block Users Management--%>
                     <c:if test="${typeOperation == 'usersManagement'}">
                     <div class="container-fluid">
-                        <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
+                        <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
                         <h1><fmt:message key="usersManagement"/></h1>
                             <%--Message about saved changes--%>
                         <c:if test="${changesSavedMessage != null}">
@@ -111,6 +111,7 @@
                                 <%--form for changing users type--%>
                             <td>
                                 <form class="form-inline" method="post" action="controller">
+                                    <input type="hidden" name="redirectTo" value="true"/>
                                     <input type="hidden" name="command" value="update_user_type"/>
                                     <input type="hidden" name="userId" value="${user.id}"/>
                                     <div class="form-group">
@@ -154,7 +155,7 @@
             </script>
 
             <c:if test="${typeOperation == 'consultationManagement'}">
-                <%--                    <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>--%>
+                <%--                    <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>--%>
 
             <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
             <link rel="stylesheet" href="/resources/demos/style.css">
@@ -174,15 +175,16 @@
                 Предложить консультацию для ментора
                 <br/>
                 <form action="controller" method="post">
+                    <input type="hidden" name="redirectTo" value="true"/>
                     <input type="hidden" name="command" value="offer_date"/>
                     <p><fmt:message key="chooseDate"/>: <input type="text" id="datepicker" name="date" required></p>
                     <div class="form-group">
-                        <jsp:useBean id="service" class="com.epam.webapp.service.UserService"/>
+                        <jsp:useBean id="service" class="com.epam.webapp.service.impl.UserServiceImpl"/>
 
                         <div class="form-group">
                             <fmt:message key="choose_mentor"/>
                             <select id="chooseMentor" class="form-control" name="trainingId">
-                                <c:forEach  var="mentor" items="${service.getAllMentors()}">
+                                <c:forEach  var="mentor" items="${service.findAllMentors()}">
                                     <option value="${mentor.key.id}">${mentor.key.name} ${mentor.value.name} ${mentor.value.surname}</option>
                                 </c:forEach>
                             </select>

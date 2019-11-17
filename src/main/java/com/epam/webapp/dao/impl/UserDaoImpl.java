@@ -1,9 +1,9 @@
 package com.epam.webapp.dao.impl;
 
-import com.epam.webapp.dao.UserDAO;
+import com.epam.webapp.dao.UserDao;
 import com.epam.webapp.connectionpool.ConnectionPool;
-import com.epam.webapp.connectionpool.ConnectionPoolException;
-import com.epam.webapp.dao.exception.DAOException;
+import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
+import com.epam.webapp.dao.exception.DaoException;
 import com.epam.webapp.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserDAOImpl implements UserDAO {
+public class UserDaoImpl implements UserDao {
 
   private final static String SQL_NEW_USER = "INSERT INTO users (name, surname, email, login, password, type)" +
           " values (?, ?, ?, ?, ?, ?)";
@@ -25,7 +25,7 @@ public class UserDAOImpl implements UserDAO {
   private final static String SQL_USER_SURNAME = "surname";
   private final static String SQL_USER_EMAIL = "email";
   private final static String SQL_USER_TYPE = "type";
-  private final static Logger logger = LogManager.getLogger(UserDAO.class);
+  private final static Logger logger = LogManager.getLogger(UserDao.class);
   private static final String SQL_GRADE = "UPDATE trainingbystudents SET grade_for_training = ? WHERE " +
           "(user_id = ? and training_id = ?)";
   private static final String SQL_ADD_TRAINING_TO_STUDENT = "INSERT INTO training_by_students " +
@@ -69,9 +69,8 @@ public class UserDAOImpl implements UserDAO {
    */
 
   @Override
-  public User authorization(User user) throws ConnectionPoolException, DAOException {
-    ConnectionPool pool = ConnectionPool.getInstance();
-    pool.initPool();
+  public User authorization(User user) throws DaoException {
+    ConnectionPool pool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -92,16 +91,17 @@ public class UserDAOImpl implements UserDAO {
         user.setType(UserType.getUserType(resultSet.getString(SQL_USER_TYPE)));
         return user;
       }
-      return null; // TODO return ?????????????????????????????
-
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new ConnectionPoolException(e);
+      return new User();
     } catch (SQLException e) {
-      logger.error(e);
-      throw new DAOException(e);
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      throw new DaoException(e);
     } finally {
-      pool.closeConnection(connection, preparedStatement, resultSet);
+      try {
+        pool.closeConnection(connection, preparedStatement, resultSet);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
   }
 
@@ -113,11 +113,10 @@ public class UserDAOImpl implements UserDAO {
    */
 
   @Override
-  public User registration(User user) throws DAOException, ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+  public User registration(User user) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    connectionPool.initPool();
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_NEW_USER);
@@ -129,34 +128,25 @@ public class UserDAOImpl implements UserDAO {
       preparedStatement.setString(6, user.getEmail());
       preparedStatement.executeUpdate();
       return user;
-
-
-    } catch (ConnectionPoolException | SQLException e) {
-
-      throw new DAOException(e);
-
+    } catch (SQLException e) {
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      e.printStackTrace();
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
-  }
-
-  /**
-   * update users information in database
-   *
-   * @param user
-   */
-
-  @Override
-  public void updateUser(User user) throws DAOException, ConnectionPoolException {
-
+    return user;
   }
 
   @Override
-  public void grade(int assessment, int userId, int trainingId) throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+  public void grade(int assessment, int userId, int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    connectionPool.initPool();
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_GRADE);
@@ -165,18 +155,23 @@ public class UserDAOImpl implements UserDAO {
       preparedStatement.setInt(3, trainingId);
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
       e.printStackTrace();
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
   }
 
   @Override
-  public void addTrainingToStudent(int userId, int trainingId) throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+  public void addTrainingToStudent(int userId, int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    connectionPool.initPool();
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_ADD_TRAINING_TO_STUDENT);
@@ -184,19 +179,24 @@ public class UserDAOImpl implements UserDAO {
       preparedStatement.setInt(2, trainingId);
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
       e.printStackTrace();
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
   }
 
   @Override
-  public boolean checkEnrolled(int userId, int trainingId) throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+  public boolean checkEnrolled(int userId, int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-    connectionPool.initPool();
+    ResultSet resultSet;
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_CHECK_ENROLLED);
@@ -205,23 +205,27 @@ public class UserDAOImpl implements UserDAO {
       preparedStatement.setInt(1, userId);
       preparedStatement.setInt(2, trainingId);
       resultSet = preparedStatement.executeQuery();
-
       while (resultSet.next()) {
         return resultSet.getInt(1) > 0;
       }
     } catch (SQLException e) {
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
       e.printStackTrace();
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
     return false;
   }
 
   @Override
-  public Map<Task, User> getAllMentors() throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+  public Map<Task, User> findAllMentors() throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
-    connectionPool.initPool();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     Map<Task, User> mentorsTraining = new HashMap<>();
@@ -235,27 +239,29 @@ public class UserDAOImpl implements UserDAO {
         Task task = new Task();
         user.setId(resultSet.getInt(SQL_USER_ID));
         user.setName(resultSet.getString(SQL_USER_USER_NAME));
-        System.out.println(user.getName());
         user.setSurname(resultSet.getString(SQL_USER_SURNAME));
-        System.out.println(user.getSurname());
         task.setId(resultSet.getInt(SQL_TRAINING_ID));
         task.setName(resultSet.getString(SQL_TRAINING_NAME));
-        System.out.println(task.getName());
         mentorsTraining.put(task, user);
       }
       return mentorsTraining;
     } catch (SQLException e) {
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
       e.printStackTrace();
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
     return mentorsTraining;
   }
 
   @Override
-  public List<User> getAllUser() throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
-    connectionPool.initPool();
+  public List<User> findAllUser() throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -277,19 +283,24 @@ public class UserDAOImpl implements UserDAO {
       }
       return users;
     } catch (SQLException e) {
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
       e.printStackTrace();
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
     return users;
   }
 
   @Override
-  public boolean updateUserType(int userId, UserType type, UserStatus status) throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+  public boolean updateUserType(int userId, UserType type, UserStatus status) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    connectionPool.initPool();
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_UPDATE_USER_TYPE);
@@ -299,18 +310,22 @@ public class UserDAOImpl implements UserDAO {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      throw new DaoException(e);
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
-    return false;
   }
 
   @Override
-  public List<Student> getStudentsForTraining(int trainingId) throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+  public List<Student> findStudentsForTraining(int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
-    connectionPool.initPool();
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<Student> students = new ArrayList<>();
@@ -330,47 +345,22 @@ public class UserDAOImpl implements UserDAO {
       }
       return students;
     } catch (SQLException e) {
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
       e.printStackTrace();
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
     return students;
   }
 
   @Override
-  public List<Task> getTaskByStudentId(int studentId) throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
-    connectionPool.initPool();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-    List<Task> tasks = new ArrayList<>();
-//    try {
-    connection = connectionPool.takeConnection();
-//      preparedStatement = connection.prepareStatement(SQL_TASKS_BY_STUDENT_ID);
-//      preparedStatement.setInt(1, studentId);
-//      resultSet = preparedStatement.executeQuery();
-//      while (resultSet.next()) {
-//        Task task = new Task();
-//        task.setName(resultSet.getString(SQL_TASK_NAME));
-//        task.setTask(resultSet.getString(SQL_TASK));
-//        task.setId(resultSet.getInt(SQL_TASK_ID));
-//        tasks.add(task);
-//      }
-//      return tasks;
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    } finally {
-//      connectionPool.closeConnection(connection, preparedStatement, resultSet);
-//    }
-    return tasks;
-  }
-
-  @Override
-  public List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws ConnectionPoolException {
-
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
-    connectionPool.initPool();
+  public List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -392,18 +382,22 @@ public class UserDAOImpl implements UserDAO {
       }
       return tasks;
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      throw new DaoException(e);
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
-    return tasks;
   }
 
   @Override
-  public boolean sendOfferConsultations(int trainingId, Date date) throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+  public boolean sendOfferConsultations(int trainingId, Date date) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
-    connectionPool.initPool();
     PreparedStatement preparedStatement = null;
     try {
       connection = connectionPool.takeConnection();
@@ -412,21 +406,24 @@ public class UserDAOImpl implements UserDAO {
       preparedStatement.setString(2, date.toString());
       preparedStatement.setInt(3, trainingId);
       preparedStatement.setString(4, date.toString());
-      System.out.println(date + " i got it");
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      throw new DaoException(e);
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
-    return false;
   }
 
   @Override
-  public Map<Training, Date> findConsultationsOffer(int mentorId) throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
-    connectionPool.initPool();
+  public Map<Training, Date> findConsultationsOffer(int mentorId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -445,19 +442,24 @@ public class UserDAOImpl implements UserDAO {
      }
      return consultations;
     } catch (SQLException e) {
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
       e.printStackTrace();
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement, resultSet);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
     return consultations;
   }
 
   @Override
-  public boolean sendAgreement(int trainingId, Date date, boolean mark) throws ConnectionPoolException {
-    ConnectionPool connectionPool = ConnectionPool.getInstance();
+  public boolean sendAgreement(int trainingId, Date date, boolean mark) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.Instance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    connectionPool.initPool();
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_SEND_AGREEMENT);
@@ -467,9 +469,15 @@ public class UserDAOImpl implements UserDAO {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
       e.printStackTrace();
     } finally {
-      connectionPool.closeConnection(connection, preparedStatement);
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        throw new DaoException(e);
+      }
     }
     return false;
   }

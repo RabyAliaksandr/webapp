@@ -7,7 +7,6 @@ public enum UserType {
   GUEST;
 
   public static UserType getUserType(String name) {
-    System.out.println(name);
     try {
       return UserType.valueOf(name.toUpperCase());
     } catch (IllegalArgumentException e) {

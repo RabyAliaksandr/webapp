@@ -9,7 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="ru" scope="session"/>
-<jsp:useBean id="trainingService" class="com.epam.webapp.service.TrainingsService"/>
+<jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
 <fmt:bundle basename="local" prefix="label.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -30,7 +30,7 @@
         </div>
     </nav>
     <br/>
-    <jsp:useBean id="userService" class="com.epam.webapp.service.UserService"/>
+    <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
     <c:set var="count" value="${0}"/>
     <div class="container-fluid">
         <div class="jumbotron">
