@@ -57,7 +57,7 @@
     <br/>
     <hr/>
         <%--form for edit description training--%>
-    <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
 
     <div class="container-fluid">
 
@@ -86,37 +86,17 @@
             <div id="counter"></div>
         </c:if>
 
-        <script>
-            $(function () {
-                $(document).ready(function () {
-                    var $textarea = '#qweqwe';
-                    var $counter = '#counter';
-                    $($textarea).on('blur, keyup', function () {
-                        var $max = 10; // Максимальное кол-во символов
-                        var $val = $(this).val();
-                        $(this).attr('maxlength', $max); // maxlength=""
-                        if ($val.length <= 0) {
-                            $($counter).html(0);
-                        } else {
-                            if ($max < parseInt($val.length)) {
-                                $this.val($val.substring(0, $max));
-                            }
-                            $($counter).html($(this).val().length);
-                        }
-                    });
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('textarea').editor({
+                    uiLibrary: 'bootstrap'
                 });
+
             });
         </script>
-
-<%--        <script type="text/javascript">--%>
-<%--            $(document).ready(function () {--%>
-<%--                $('textarea').editor({--%>
-<%--                    uiLibrary: 'bootstrap'--%>
-<%--                });--%>
-
-<%--            });--%>
-<%--        </script>--%>
-            <%--  form for add topic  --%>
+              form for add topic
         <c:if test="${typeOperation == 'addTopic'}">
             <hr/>
             <form id="addTopic" method="post" action="controller">
@@ -133,14 +113,7 @@
                 <input type="submit" value=<fmt:message key="send"/>>
             </form>
         </c:if>
-            <%--    <script type="text/javascript">--%>
-            <%--        $(document).ready(function () {--%>
-            <%--            $("#editor1").editor({--%>
-            <%--                uiLibrary: 'bootstrap'--%>
-            <%--            });--%>
-            <%--        });--%>
-            <%--    </script>--%>
-            <%--    add task for trining--%>
+
         <c:if test="${typeOperation == 'addTask'}">
             <hr/>
             <form id="addTopic" method="post" action="controller">
@@ -158,19 +131,10 @@
             </form>
         </c:if>
 
-            <%--    <script type="text/javascript">--%>
-            <%--        $(document).ready(function () {--%>
-            <%--            $("#editor2").editor({--%>
-            <%--                uiLibrary: 'bootstrap'--%>
-            <%--            });--%>
-            <%--        });--%>
-            <%--    </script>--%>
-
         <c:if test="${typeOperation == 'createTraining'}">
             <hr/>
             <form id="addTraining" method="post" action="controller">
                 <input type="hidden" name="command" value="create_training"/>
-
                 <div class="form-group">
                     <label>Training Name:</label>
                     <input type="text" class="form-control" name="trainingName" maxlength="70">
@@ -179,7 +143,7 @@
             </textarea>
 
                 <div class="form-group">
-                    <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
+                    <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>
                     <label class="control-label col-sm-offset-2 col-sm-2" for="company"><fmt:message
                             key="choose_mentor"/></label>
                     <div class="col-sm-6 col-md-4">
@@ -189,31 +153,19 @@
                                 <option value=${user.id}>${user.name} ${user.surname}</option>
                             </c:forEach>
                         </select>
-
-
                     </div>
                 </div>
 
                 <input type="submit" value=<fmt:message key="send"/>>
             </form>
         </c:if>
-            <%--    <script type="text/javascript">--%>
-            <%--        $(document).ready(function () {--%>
-            <%--            $("#editor3").editor({--%>
-            <%--                uiLibrary: 'bootstrap'--%>
-            <%--            });--%>
-            <%--        });--%>
-            <%--    </script>--%>
-
-            <%--    edit trainings topic --%>
-
+        <jsp:useBean id="topicService" class="com.epam.tc.service.impl.TopicServiceImpl"/>
         <c:if test="${typeOperation == 'editTopic'}">
-            <c:set var="topic" value="${trainingService.findTopic(topicId)}"/>
+            <c:set var="topic" value="${topicService.findTopic(topicId)}"/>
             <hr/>
             <c:out value="${topicId} fuck "/>
             <form id="editTopic" method="post" action="controller">
                 <input type="hidden" name="topicId" value="${topicId}"/>
-
                 <div class="form-group">
                     <label><fmt:message key="topicsName"/></label>
                     <input type="text" class="form-control" name="topicName" maxlength="70" value="${topic.name}"
@@ -228,20 +180,12 @@
             </form>
         </c:if>
 
-            <%--    <script type="text/javascript">--%>
-            <%--        $(document).ready(function () {--%>
-            <%--            $("#editor4").editor({--%>
-            <%--                uiLibrary: 'bootstrap'--%>
-            <%--            });--%>
-            <%--        });--%>
-            <%--    </script>--%>
-
             <%--edit task for training--%>
         <c:if test="${typeOperation == 'editTask'}">
-            <c:set var="task" value="${trainingService.findTask(taskId)}"/>
+            <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TaskServiceImpl"/>
+            <c:set var="task" value="${taskService.findTask(taskId)}"/>
             <hr/>
             <form id="editTask" method="post" action="controller">
-
                 <div class="form-group">
                     <label><fmt:message key="tasksName"/></label>
                     <input type="text" class="form-control" name="taskName" maxlength="70" value="${task.name}"

@@ -54,8 +54,7 @@
             </c:if>
         </ul>
         <form id="xxx" method="post" action="controller">
-            <input type="hidden" name="command" value="set_local"/>
-            <input type="hidden" name="redirectTo" value="true"/>
+            <input type="hidden" name="command" value="set_local_cabinet"/>
             <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
                     class="btn-link" type="submit">
                     ${local == 'en' ? 'Ru' : 'En'}
@@ -68,7 +67,7 @@
         <c:if test="${typeOperation == 'trainingManagement'}">
         <div class="col-xs-1">
             <jsp:useBean id="gettrainings"
-                         class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+                         class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
             <c:set var="count" value="1"/>
             <div class="container">
                 <h2><fmt:message key="currentTrainings"/></h2>
@@ -102,7 +101,7 @@
         <c:if test="${typeOperation == 'usersManagement'}">
         <div class="container-fluid">
             <jsp:useBean id="userService"
-                         class="com.epam.webapp.service.impl.UserServiceImpl"/>
+                         class="com.epam.tc.service.impl.UserServiceImpl"/>
             <h1><fmt:message key="usersManagement"/></h1>
                 <%--Message about saved changes--%>
             <c:if test="${changesSavedMessage != null}">
@@ -203,7 +202,7 @@
         </script>
 
         <c:if test="${typeOperation == 'consultationManagement'}">
-            <%--                    <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>--%>
+            <%--                    <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>--%>
 
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="/resources/demos/style.css">
@@ -229,7 +228,7 @@
                 <input type="text" id="datepicker" name="date" required></p>
             <div class="form-group">
                 <jsp:useBean id="service"
-                             class="com.epam.webapp.service.impl.UserServiceImpl"/>
+                             class="com.epam.tc.service.impl.UserServiceImpl"/>
                 <div class="form-group">
                     <fmt:message key="choose_mentor"/>
                     <select id="chooseMentor" class="form-control" name="trainingId">
@@ -239,13 +238,13 @@
                     </select>
                 </div>
             </div>
-            Цена занятия ИСПРАВИТЬ
+            <label><fmt:message key="priceConsultation"/></label>
             <input type="text"
                    name="price"
                    pattern="(0\.((0[1-9]{1})|([1-9]{1}([0-9]{1})?)))|(([1-9]+[0-9]*)(\.([0-9]{1,2}))?)"
                    maxlength="6"
                    class="form-control" placeholder="100.00" required>
-            <button type="submit" class="btn-primary"> DONE</button>
+            <button type="submit" class="btn-primary"><fmt:message key="send"/> </button>
             <form>
                 </c:if>
                 <br/>

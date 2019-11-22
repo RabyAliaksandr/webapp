@@ -61,8 +61,8 @@
     </nav>
     <br/>
     <div class="container-fluid">
-        <jsp:useBean id="userService"
-                     class="com.epam.webapp.service.impl.UserServiceImpl"/>
+        <jsp:useBean id="consultationService"
+                     class="com.epam.tc.service.impl.ConsultationServiceImpl"/>
         <c:if test="${messageAgreement != null}">
             <div class="alert alert-danger" role="alert">
                     ${messageAgreement}
@@ -82,7 +82,7 @@
             </thead>
             <tbody>
             <c:set var="count" value="${1}"/>
-            <c:forEach var="training" items="${userService.findConsultationsOffer(user.id)}">
+            <c:forEach var="training" items="${consultationService.findConsultationsOffer(user.id)}">
                 <tr>
                     <td>${training.key.name}</td>
                     <td>${training.value}</td>

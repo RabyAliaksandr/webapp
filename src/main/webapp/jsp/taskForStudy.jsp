@@ -71,7 +71,7 @@
         </div>
     </nav>
     <br/>
-    <jsp:useBean id="trainingServie" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TaskServiceImpl"/>
     <c:if test="${changesSavedMessage != null}">
         <div class="alert alert-danger" role="alert">
                 ${changesSavedMessage}
@@ -79,7 +79,7 @@
         </div>
     </c:if>
     <div class="container-fluid">
-        <c:set var="task" value="${trainingServie.findTask(taskId)}"/>
+        <c:set var="task" value="${taskService.findTask(taskId)}"/>
         <h1>${task.name}</h1>
         <br/>
         <p>${task.task}</p>
@@ -94,9 +94,9 @@
             </div>
         </c:if>
         <%--check task status--%>
-        <c:set var="checkMark" value="${trainingServie.checkTaskStatus(user.id, taskId)}"/>
+        <c:set var="checkMark" value="${taskService.checkTaskStatus(user.id, taskId)}"/>
         <%--            students form for send solution if check is false --%>
-        <c:set var="task" value="${trainingServie.findTaskSolution(user.id, taskId)}"/>
+        <c:set var="task" value="${taskService.findTaskSolution(user.id, taskId)}"/>
         <c:set value="${task.answer}" var="solution"/>
         <c:set var="mark" value="${task.mark}"/>
         <c:choose>
@@ -136,13 +136,12 @@
         </c:choose>
     </c:if>
     <c:if test="${showSolution == true}">
-        <c:set var="task" value="${trainingServie.findTaskSolution(studentId, taskId)}"/>
+        <c:set var="task" value="${taskService.findTaskSolution(studentId, taskId)}"/>
         <div class="container-fluid">
             <h4><fmt:message key="solution"/>:</h4>
             <br/>
                 ${task.answer}
             <br/>
-            <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
             <h5><fmt:message key="currentMark"/>:</h5> ${task.mark}
             <form name="setMark" method="post" action="controller">
                 <input type="hidden" name="redirectTo" value="true"/>

@@ -48,7 +48,7 @@
         </div>
     </nav>
     <br/>
-    <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
+    <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>
     <c:set var="count" value="${0}"/>
     <div class="container-fluid">
 
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+            <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
 <%--            <c:forEach var="fd" items="${trainingService.}"--%>
 
             <c:set var="finalGrade" value="${trainingService.findFinalGrade(studentId, trainingId)}"/>

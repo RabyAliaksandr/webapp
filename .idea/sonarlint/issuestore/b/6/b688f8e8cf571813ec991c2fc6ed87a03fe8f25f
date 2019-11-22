@@ -1,4 +1,3 @@
 
-;squid:S1118	"Hide this public constructor.(è²ûÂ8ÄÄÊüß-
-vsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(§±À¿üÿÿÿÿ8ÄÄÊüß-
-Ÿsquid:S1186	"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(è²ûÂ8ÄÄÊüß-
+Ÿsquid:S1186	"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(êîÏ£8ÄÄÊüß-
+;squid:S1118	"Hide this public constructor.(êîÏ£8ÄÄÊüß-

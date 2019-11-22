@@ -44,7 +44,7 @@
     </nav>
     <br/>
 
-    <jsp:useBean id="cardService" class="com.epam.webapp.service.impl.PaymentCardServiceImpl"/>
+    <jsp:useBean id="cardService" class="com.epam.tc.service.impl.PaymentCardServiceImpl"/>
 
     <div class="container-fluid">
 

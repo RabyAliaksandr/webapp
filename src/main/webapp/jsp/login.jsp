@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="com.epam.webapp.entity.Student" %>
+<%@ page import="com.epam.tc.entity.Student" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.io.PrintWriter" %><%--&lt;%&ndash;--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>

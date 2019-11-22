@@ -86,7 +86,6 @@
                 <div class="invalid-feedback">
                         <p><font color="red"> ${messageValidationPassword}</font> </p>
                     <p><font color="red"> ${messageEmailIsExist}</font> </p>
-
                 </div>
                 <div class="input-group">
                     <input type="password" class="form-control" required name="repeatPassword"

@@ -1,4 +1,4 @@
 
-KWeb:PageWithoutTitleCheck."Add a <title> tag to this page.(Êƒ«8Ñ„ˆç-
-\	Web:S5254."@Add "lang" and/or "xml:lang" attributes to this "<html>" element(Êƒ«8Ñ„ˆç-
-eWeb:DoctypePresenceCheck.":Insert a <!DOCTYPE> declaration to before this <html> tag.(Êƒ«8Ñ„ˆç-
+eWeb:DoctypePresenceCheckK":Insert a <!DOCTYPE> declaration to before this <html> tag.(Êƒ«8Ñ„ˆç-
+\	Web:S5254K"@Add "lang" and/or "xml:lang" attributes to this "<html>" element(Êƒ«8Ñ„ˆç-
+KWeb:PageWithoutTitleCheckK"Add a <title> tag to this page.(Êƒ«8Ñ„ˆç-

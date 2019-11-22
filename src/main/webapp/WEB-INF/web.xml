@@ -23,7 +23,7 @@
   </error-page>
   <filter>
     <filter-name>XSS</filter-name>
-    <filter-class>com.epam.webapp.filter.XssProtectionFilter</filter-class>
+    <filter-class>com.epam.tc.filter.XssProtectionFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>XSS</filter-name>
@@ -31,7 +31,7 @@
   </filter-mapping>
 <filter>
   <filter-name>encodingFilter</filter-name>
-  <filter-class>com.epam.webapp.filter.EncodingFilter</filter-class>
+  <filter-class>com.epam.tc.filter.EncodingFilter</filter-class>
 </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>

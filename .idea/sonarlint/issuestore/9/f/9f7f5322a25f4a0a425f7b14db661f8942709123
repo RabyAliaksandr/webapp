@@ -1,23 +1,20 @@
 
-[squid:UselessImportCheck"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ëÕ×Îè-
-Esquid:S1481"'Remove this unused "pe" local variable.(’ŸÆ¶8¨µŞøè-
-\squid:UselessImportCheck"1Remove this unused import 'java.math.BigDecimal'.(êêŠ8ëÕ×Îè-
-Ssquid:S1854"5Remove this useless assignment to local variable "p".(‹ÁËÙ8Ÿ«Æ÷è-
-Ysquid:S1854";Remove this useless assignment to local variable "userDao".(†»¢8ıÆ÷è-
-Vsquid:S1854"8Remove this useless assignment to local variable "user".(Ç­‚û8Şòõè-
+Tsquid:S1854"6Remove this useless assignment to local variable "uv".(›—óË8Œ¶ïíè-
+È%squid:RedundantThrowsDeclarationCheck"Remove the declaration of thrown exception 'com.epam.webapp.connectionpool.ConnectionPoolException', as it cannot be thrown from method's body.(µ¯­8Ã“”€é-
+©%squid:RedundantThrowsDeclarationCheck"qRemove the declaration of thrown exception 'java.text.ParseException', as it cannot be thrown from method's body.(µ¯­8Ã“”€é-
+µ%squid:RedundantThrowsDeclarationCheck"}Remove the declaration of thrown exception 'com.google.protobuf.ServiceException', as it cannot be thrown from method's body.(µ¯­8Ã“”€é-
+Tsquid:S1854"6Remove this useless assignment to local variable "pe".(’ŸÆ¶8¨µŞøè-
+Esquid:S1481"'Remove this unused "pe" local variable.(’ŸÆ¶8¨µŞøè-
+Ysquid:S1854";Remove this useless assignment to local variable "userDao".(†»¢8‹›†‚é-
+Gsquid:S1481")Remove this unused "user" local variable.(Ç­‚û8Şòõè-
+±%squid:RedundantThrowsDeclarationCheck"yRemove the declaration of thrown exception 'com.epam.webapp.dao.DaoException', as it cannot be thrown from method's body.(µ¯­8‹›†‚é-
+qsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¯Œüùÿÿÿÿ8ëÕ×Îè-
+Tsquid:S1854"6Remove this useless assignment to local variable "db".(ë·Ú»8êÅ’€é-
+Vsquid:S1854"8Remove this useless assignment to local variable "user".(Ç­‚û8Şòõè-
+Ssquid:S1854"5Remove this useless assignment to local variable "p".(‹ÁËÙ8Ÿ«Æ÷è-
 [
-squid:S106"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8ÙÎè-
-Dsquid:S1481"&Remove this unused "p" local variable.(‹ÁËÙ8Ÿ«Æ÷è-
-Gsquid:S1481")Remove this unused "user" local variable.(Ç­‚û8Şòõè-
-Jsquid:S1481",Remove this unused "userDao" local variable.(†»¢8ıÆ÷è-
-xsquid:UselessImportCheck"HRemove this unused import 'com.epam.webapp.dao.impl.PaymentCardDaoImpl'.(£Ôœıùÿÿÿÿ8ëÕ×Îè-
-Esquid:S1481"'Remove this unused "uv" local variable.(›—óË8Œ¶ïíè-
-Tsquid:S1854"6Remove this useless assignment to local variable "pe".(’ŸÆ¶8¨µŞøè-
-V
-squid:S106"9Replace this use of System.out or System.err by a logger.(ÿÛ Å8ıÆ÷è-
-Tsquid:S1854"6Remove this useless assignment to local variable "uv".(›—óË8Œ¶ïíè-
-qsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¯Œüùÿÿÿÿ8ëÕ×Îè-
-È%squid:RedundantThrowsDeclarationCheck"Remove the declaration of thrown exception 'com.epam.webapp.connectionpool.ConnectionPoolException', as it cannot be thrown from method's body.(µ¯­8€¿ßøè-
-©%squid:RedundantThrowsDeclarationCheck"qRemove the declaration of thrown exception 'java.text.ParseException', as it cannot be thrown from method's body.(µ¯­8€¿ßøè-
-µ%squid:RedundantThrowsDeclarationCheck"}Remove the declaration of thrown exception 'com.google.protobuf.ServiceException', as it cannot be thrown from method's body.(µ¯­8€¿ßøè-
-º%squid:RedundantThrowsDeclarationCheck"Remove the declaration of thrown exception 'com.epam.webapp.service.ServiceException', as it cannot be thrown from method's body.(µ¯­8€¿ßøè-
+squid:S106"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8ÙÎè-
+Dsquid:S1481"&Remove this unused "p" local variable.(‹ÁËÙ8Ÿ«Æ÷è-
+Jsquid:S1481",Remove this unused "userDao" local variable.(†»¢8‹›†‚é-
+Esquid:S1481"'Remove this unused "db" local variable.(ë·Ú»8êÅ’€é-
+Esquid:S1481"'Remove this unused "uv" local variable.(›—óË8Œ¶ïíè-

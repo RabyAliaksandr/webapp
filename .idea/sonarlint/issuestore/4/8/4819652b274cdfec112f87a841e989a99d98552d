@@ -1,0 +1,10 @@
+
+hsquid:UselessImportCheck"8Remove this unused import 'com.epam.webapp.dao.UserDao'.(Ãœ¬Ìûÿÿÿÿ8¨ç¼ˆé-
+isquid:S2147º"ECombine this catch with the one at line 183, which has the same body.(Ù£­—ÿÿÿÿÿ8¸ƒÆˆé-
+qsquid:HiddenFieldCheck¬"BRename "connectionPool" which hides the field declared at line 27.(Ò«ÿòøÿÿÿÿ8¸ƒÆˆé-
+gsquid:S21473"DCombine this catch with the one at line 48, which has the same body.(Ù£­—ÿÿÿÿÿ8ô„»ˆé-
+isquid:S2147"ECombine this catch with the one at line 154, which has the same body.(Ù£­—ÿÿÿÿÿ8¯ÂÄˆé-
+hsquid:S2147z"ECombine this catch with the one at line 119, which has the same body.(Ù£­—ÿÿÿÿÿ8¯ğÁˆé-
+ysquid:S11922"VDefine a constant instead of duplicating this literal "Error access database" 6 times.(Æàø‹üÿÿÿÿ8ô„»ˆé-
+gsquid:S2147\"DCombine this catch with the one at line 89, which has the same body.(Ù£­—ÿÿÿÿÿ8æü¿ˆé-
+Jsquid:S1481E"'Remove this unused "rs" local variable.(ÀÇÄûÿÿÿÿ8æü¿ˆé-

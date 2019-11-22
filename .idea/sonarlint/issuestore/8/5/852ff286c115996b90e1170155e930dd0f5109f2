@@ -1,6 +1,4 @@
 
-gsquid:UselessImportCheck
-"<Remove this unused import 'com.epam.webapp.entity.UserType'.(ê¼í8ÞÞºÎè-
 Vsquid:S1854"8Remove this useless assignment to local variable "user".(Ç­‚û8ŒÀÎè-
 Msquid:S1068"*Remove this unused "logger" private field.(Ùå…úýÿÿÿÿ8ÞÞºÎè-
 ]squid:S2441!":Make "User" serializable or don't store it in the session.(Š€Û»þÿÿÿÿ8û±¼Îè-

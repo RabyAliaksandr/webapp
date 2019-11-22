@@ -71,7 +71,7 @@
         <title><fmt:message key="orderPage"/></title>
     </head>
     <body>
-    <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="consultationService" class="com.epam.tc.service.impl.ConsultationServiceImpl"/>
     <div class="container-fluid">
         <div class="row">
             <fmt:message key="availableConsultation"/>
@@ -96,7 +96,7 @@
                 <div class="form-group">
                     <select class="selectpicker" name="consultationId" form="chooseTasksForConsultation" required>
                         <c:forEach var="consultation"
-                                   items="${trainingService.findConsultationsForTraining(trainingId)}">
+                                   items="${consultationService.findConsultationsForTraining(trainingId)}">
                             <option value="${consultation.id}" >
                                     ${consultation.date}
                                      <fmt:message key="price"/>: ${consultation.price}
@@ -106,7 +106,9 @@
                     </select>
                 </div>
             </div>
-            <jsp:useBean id="cardService" class="com.epam.webapp.service.impl.PaymentCardServiceImpl"/>
+            <jsp:useBean id="cardService" class="com.epam.tc.service.impl.PaymentCardServiceImpl"/>
+            <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TaskServiceImpl"/>
+            <jsp:useBean id="topicService" class="com.epam.tc.service.impl.TopicServiceImpl"/>
             <select class="selectpicker" name="cardId" form="chooseTasksForConsultation" required>
                 <c:forEach var="card" items="${cardService.findUsersCard(user.id)}">
                     <option value="${card.id}">${card.number}</option>
@@ -123,7 +125,7 @@
                     <th></th>
                 </tr>
                 <tr>
-                    <c:forEach var="task" items="${trainingService.findCompletedTasks(trainingId, studentId)}">
+                    <c:forEach var="task" items="${taskService.findCompletedTasks(trainingId, studentId)}">
                 <tr>
                     <td>${count}</td>
                     <td>${task.name}</td>
@@ -150,7 +152,7 @@
                     <th></th>
                 </tr>
                 <tr>
-                    <c:forEach var="topic" items="${trainingService.findLearnedTopics(studentId, trainingId)}">
+                    <c:forEach var="topic" items="${topicService.findLearnedTopics(studentId, trainingId)}">
                 <tr>
                     <td>${count}</td>
                     <td>${topic.name}</td>

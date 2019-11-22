@@ -10,7 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${sessionScope.local}"/>
 <fmt:bundle basename="local" prefix="label.">
-    <jsp:useBean id="add" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="add" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -37,7 +37,10 @@
                         <fmt:message key="logout"/>
                     </a>
                 </li>
-                    <form id="xxx" method="post" action="controller">
+                </c:if>
+            </ul>
+
+            <form id="xxx" method="post" action="controller">
                         <input type="hidden" name="command" value="set_local"/>
                         <input type="hidden" name="redirectTo" value="true"/>
                     <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
@@ -45,15 +48,13 @@
                             ${local == 'en' ? 'Ru' : 'En'}
                     </button>
                     </form>
-                </c:if>
-            </ul>
         </div>
     </nav>
 
     <br/>
     <c:set var="idUser" value="${sessionScope.user.id}"/>
     <br/>
-    <jsp:useBean id="gettrainings" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
     <c:set var="count" value="1"/>
     <div class="container">
         <h2><fmt:message key="currentTrainings"/></h2>
@@ -79,7 +80,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="training" items="${gettrainings.findAllTrainings()}">
+            <c:forEach var="training" items="${trainingService.findAllTrainings()}">
                 <tr>
                     <td><c:out value="${count}"/></td>
                     <td>

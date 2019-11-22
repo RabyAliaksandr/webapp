@@ -43,8 +43,7 @@
                 </li>
             </ul>
             <form id="xxx" method="post" action="controller">
-                <input type="hidden" name="command" value="set_local"/>
-                <input type="hidden" name="redirectTo" value="true"/>
+                <input type="hidden" name="command" value="set_local_cabinet"/>
                 <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
                         class="btn-link" type="submit">
                         ${local == 'en' ? 'Ru' : 'En'}

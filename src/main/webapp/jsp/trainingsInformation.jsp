@@ -18,8 +18,8 @@
     </head>
     <body>
     <c:set var="trainingId" value="${sessionScope.trainingId}"/>
-    <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
-    <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
+    <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>
     <c:set var="training" value="${trainingService.findTrainingByIdTraining(trainingId)}" scope="session"/>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -94,17 +94,15 @@
                         </a>
                     </li>
                 </c:if>
-                <form id="xxx" method="post" action="controller">
+            </ul>
+            <form id="xxx" method="post" action="controller">
                     <input type="hidden" name="command" value="set_local"/>
                     <input type="hidden" name="redirectTo" value="true"/>
-                    <li>
                         <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
                                 class="btn-link" type="submit">
                                 ${local == 'en' ? 'Ru' : 'En'}
                         </button>
-                    </li>
                 </form>
-            </ul>
         </div>
     </nav>
     <br/>
@@ -165,6 +163,7 @@
         <div class="col-lg-6 col-md-6">
             <div class="container-fluid">
                 <c:set var="checkMark" value="${trainingService.checkTrainingStatusForStudent(user.id, trainingId)}"/>
+                <jsp:useBean id="topicService" class="com.epam.tc.service.impl.TopicServiceImpl"/>
                     <%--        if student on training or admin or mentor--%>
                 <c:if test="${checkMark == true && user.status == 'UNBLOCKED' ||
                 user.type == 'ADMIN' && user.status == 'UNBLOCKED' ||
@@ -188,7 +187,7 @@
                         </thead>
                         <tbody>
                         <c:set var="count" value="1"/>
-                        <c:forEach var="topic" items="${trainingService.findTopicsForTraining(trainingId)}">
+                        <c:forEach var="topic" items="${topicService.findTopicsForTraining(trainingId)}">
                             <tr>
                                 <td>${count}</td>
                                 <td>
@@ -246,7 +245,8 @@
                         </thead>
                         <tbody>
                         <c:set var="count" value="1"/>
-                        <c:forEach var="task" items="${trainingService.findTasksListForTraining(trainingId)}">
+                        <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TaskServiceImpl"/>
+                        <c:forEach var="task" items="${taskService.findTasksListForTraining(trainingId)}">
                             <tr>
                                 <td>${count}</td>
                                 <td>

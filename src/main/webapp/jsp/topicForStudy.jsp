@@ -10,8 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${sessionScope.local}" scope="session"/>
 <fmt:bundle basename="local" prefix="label.">
-
-    <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="topicService" class="com.epam.tc.service.impl.TopicServiceImpl"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -80,7 +79,7 @@
         </div>
     </c:if>
     <div class="container-fluid">
-        <c:set var="topic" value="${trainingService.findTopic(topicId)}"/>
+        <c:set var="topic" value="${topicService.findTopic(topicId)}"/>
         <h1>${topic.name}</h1>
         <br/>
         <p>${topic.topic}</p>
@@ -94,7 +93,7 @@
             </div>
         </c:if>
         <%--check status topic--%>
-        <c:set var="checkMark" value="${trainingService.checkTopicStatus(user.id, topicId)}"/>
+        <c:set var="checkMark" value="${topicService.checkTopicStatus(user.id, topicId)}"/>
 
         <c:choose>
             <c:when test="${checkMark == false}">

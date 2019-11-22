@@ -28,8 +28,7 @@
                 <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
             </ul>
             <form id="xxx" method="post" action="controller">
-                <input type="hidden" name="command" value="set_local"/>
-                <input type="hidden" name="redirectTo" value="true"/>
+                <input type="hidden" name="command" value="set_local_cabinet"/>
                 <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
                         class="btn-link" type="submit">
                         ${local == 'en' ? 'Ru' : 'En'}
@@ -38,8 +37,8 @@
         </div>
     </nav>
     <br/>
-    <jsp:useBean id="gettrainings" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
-    <jsp:useBean id="getCompletedTrinings" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="gettrainings" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="getCompletedTrinings" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
     <c:set var="count" value="1"/>
     <div class="container">
             <%--        list of trainings for which the student is registered --%>

@@ -4,7 +4,7 @@
   <short-name>Example TLD</short-name>
   <tag>
     <name>currentDate</name>
-    <tag-class>com.epam.webapp.tag.CurrentDateTag</tag-class>
+    <tag-class>com.epam.tc.tag.CurrentDateTag</tag-class>
     <body-content>empty</body-content>
   </tag>
 </taglib>

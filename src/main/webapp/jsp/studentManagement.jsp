@@ -68,8 +68,9 @@
     <br/>
     <div class="col-xs-1">
         <div class="container">
-            <jsp:useBean id="userService" class="com.epam.webapp.service.impl.UserServiceImpl"/>
-            <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+            <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>
+            <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
+            <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TopicServiceImpl"/>
             <h2><fmt:message key="button.studentsManagement"/></h2>
                 <%--            table stusents registred on training--%>
             <table id="table_id" class="table table_sort" cellpadding="0" width="100%">
@@ -108,7 +109,7 @@
                                        ${student.surname}
                                </a>
                            </td>
-                           <td>${trainingService.findAvgMarkForTasks(student.id, trainingId)}</td>
+                           <td>${taskService.findAvgMarkForTasks(student.id, trainingId)}</td>
                            <c:forEach var="task"
                                       items="${userService.findStudentsMarkForTrainingsTask(student.id, trainingId)}">
                                <%--                </c:forEach>--%>
