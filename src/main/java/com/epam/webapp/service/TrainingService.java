@@ -1,10 +1,7 @@
 package com.epam.webapp.service;
 
-import com.epam.webapp.entity.Student;
-import com.epam.webapp.entity.Task;
-import com.epam.webapp.entity.Topic;
-import com.epam.webapp.entity.Training;
-import com.epam.webapp.service.exception.ServiceException;
+import com.epam.webapp.dao.DaoException;
+import com.epam.webapp.entity.*;
 
 import java.sql.Date;
 import java.util.List;
@@ -30,7 +27,7 @@ public interface TrainingService {
 
   Topic findTopic(int topicId) throws ServiceException;
 
-   boolean updateTrainingsInformation(int trainingId, String trainingName, String information) throws ServiceException;
+  boolean updateTrainingsInformation(int trainingId, String trainingName, String information) throws ServiceException;
 
   boolean addTopicForTraining(int trainingId, String topicsName, String topicsText) throws ServiceException;
 
@@ -52,11 +49,11 @@ public interface TrainingService {
 
   boolean updateTask(int taskId, String taskName, String task) throws ServiceException;
 
-  boolean checkTaskStatus(int userId, int taskId) throws ServiceException;
+  int checkTaskStatus(int userId, int taskId) throws ServiceException;
 
   boolean sendSolution(int userId, int taskId, String answer) throws ServiceException;
 
-  Map<String, Integer> findTaskSolution(int studentId, int taskId) throws ServiceException;
+  Task findTaskSolution(int studentId, int taskId) throws ServiceException;
 
   boolean gradeTask(int studentId, int taskId, int mark) throws ServiceException;
 
@@ -66,7 +63,22 @@ public interface TrainingService {
 
   List<Topic> findLearnedTopics(int studentId, int trainingId) throws ServiceException;
 
-  Map<Integer, Date> findConsultationsForTraining(int trainingId) throws ServiceException;
+  List<Consultation> findConsultationsForTraining(int trainingId) throws ServiceException;
 
-  boolean sendOrderConsultation(int consultationId, int studentId, String taskIds, String topicIds) throws ServiceException;
+  boolean sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
+                                List<Integer> topicIds) throws ServiceException;
+
+  void setFinalGrade(int studentId, int trainingId, int grade) throws ServiceException;
+
+  int findFinalGrade(int studentId, int trainingId) throws ServiceException;
+
+  void closeReception(int trainingId) throws ServiceException;
+
+  boolean deleteTraining(int trainingId) throws ServiceException;
+
+  void deleteTopic(int topicId) throws ServiceException;
+
+  void deleteTask(int taskId) throws ServiceException;
+
+  void giveFeedback(String feedback) throws ServiceException;
 }

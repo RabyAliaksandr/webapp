@@ -9,11 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Welcome</title>
+    <title></title>
 </head>
 
 <body>
 <c:choose>
+    <c:when test="${user.status == 'BLOCKED'}">
+        <jsp:forward page="blocked.jsp"></jsp:forward>
+    </c:when>
     <c:when test="${user.type == 'ADMIN'}">
         <jsp:forward page="adminCabinet.jsp"></jsp:forward>
     </c:when>
@@ -22,6 +25,9 @@
     </c:when>
     <c:when test="${user.type == 'MENTOR'}">
         <jsp:forward page="mentorCabinet.jsp"></jsp:forward>
+    </c:when>
+    <c:when test="${user.type == 'GUEST'}">
+        <jsp:forward page="guest.jsp"></jsp:forward>
     </c:when>
 </c:choose>
 </body>

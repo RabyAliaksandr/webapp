@@ -1,9 +1,0 @@
-
-gsquid:S1134 "DTake the required action to fix the issue indicated by this comment.(ªüÖ­ùÿÿÿÿ8ñİç¹á-
-gsquid:S1134%"DTake the required action to fix the issue indicated by this comment.(ãè‡Öşÿÿÿÿ8À¤â¸á-
-[
-squid:S106?"9Replace this use of System.out or System.err by a logger.(èÎöÍùÿÿÿÿ8·ï¹å-
-]squid:S1854@":Remove this useless assignment to local variable "topics".(­Ã«ıÿÿÿÿ8ÉÍÂ¹å-
-Wsquid:S1854["9Remove this useless assignment to local variable "tasks".(ËŒÈé8Ô˜§¹å-
-[squid:S1854|"8Remove this useless assignment to local variable "task".(Êœî«øÿÿÿÿ8”Ö³Áå-
-Zsquid:S1854’"<Remove this useless assignment to local variable "solution".(¾Û½8ŞÓ‰ç-

@@ -1,3 +1,0 @@
-
-vsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Í­Ï“øÿÿÿÿ8’‘öà-
-¬squid:S1845"ˆRename method "getTYPE" to prevent any misunderstanding/clash with method "getType" defined in superclass "com.epam.webapp.entity.User".(²‚œ£øÿÿÿÿ8¾¸‘öà-

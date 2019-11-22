@@ -1,6 +1,8 @@
 package com.epam.webapp.command;
 
-import com.epam.webapp.command.exception.CommandException;
+
+import com.epam.webapp.service.ServiceException;
+
 import javax.servlet.http.HttpServletRequest;
 
 public interface Command {

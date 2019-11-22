@@ -1,7 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="ru" scope="session"/>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<fmt:setLocale value="${sessionScope.local}" scope="session"/>
 <fmt:bundle basename="local" prefix="label.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -18,8 +19,22 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
                 <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
+                </li>
+                <li>
+                    <a href="controller?command=card_management">
+                        <fmt:message key="cardManagement"/>
+                    </a>
+                </li>
                 <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
             </ul>
+            <form id="xxx" method="post" action="controller">
+                <input type="hidden" name="command" value="set_local"/>
+                <input type="hidden" name="redirectTo" value="true"/>
+                <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
+                        class="btn-link" type="submit">
+                        ${local == 'en' ? 'Ru' : 'En'}
+                </button>
+            </form>
         </div>
     </nav>
     <br/>
@@ -68,7 +83,7 @@
     <div class="container">
         <c:set var="count" value="1"/>
         <h1><fmt:message key="completedTraining"/></h1>
-<%--        list of completed trainings--%>
+            <%--        list of completed trainings--%>
         <table class="table">
             <thead>
             <tr>
@@ -89,6 +104,9 @@
                                 </a>
                             </td>
                             <td>${training.grade}</td>
+                            <td><a href="controller?command=create_text&typeOperation=giveFeedback&trainingId=${trainingId}">
+                                <fmt:message key="giveFeedBack"/>
+                            </a> </td>
                         </tr>
                         <c:set var="count" value="${count + 1}" scope="page"/>
                     </c:when>

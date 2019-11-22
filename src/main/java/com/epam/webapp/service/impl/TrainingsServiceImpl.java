@@ -2,28 +2,26 @@ package com.epam.webapp.service.impl;
 
 import com.epam.webapp.dao.DaoFactory;
 import com.epam.webapp.dao.DataListsDao;
-import com.epam.webapp.dao.TrainingsOperationDao;
-import com.epam.webapp.dao.exception.DaoException;
-import com.epam.webapp.entity.Student;
-import com.epam.webapp.entity.Task;
-import com.epam.webapp.entity.Topic;
-import com.epam.webapp.entity.Training;
+import com.epam.webapp.dao.TrainingDao;
+import com.epam.webapp.dao.DaoException;
+import com.epam.webapp.entity.*;
 import com.epam.webapp.service.TrainingService;
-import com.epam.webapp.service.exception.ServiceException;
+import com.epam.webapp.service.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TrainingsServiceImpl implements TrainingService {
+
+  private static Logger logger = LogManager.getLogger(TrainingService.class);
 
   public Training findTrainingByIdTraining(int trainingId) throws ServiceException {
     DataListsDao dataListsDao = DaoFactory.getDataListDao();
     try {
       return dataListsDao.findTrainingByIdTraining(trainingId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -33,6 +31,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDAO.findCompletedTrainingForStudent(studentId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -43,6 +42,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.findTrainingsForStudent(studentId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -52,15 +52,17 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.findTraining();
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
 
   public final void findTrainingToStudent(int idStudent, int idTraining) throws ServiceException {
-    TrainingsOperationDao operationDao = DaoFactory.getTrainingsOperationDAO();
+    TrainingDao operationDao = DaoFactory.getTrainingsOperationDAO();
     try {
       operationDao.addTrainingsToStudent(idStudent, idTraining);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -70,6 +72,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.findStudentsByIdTraining(trainingId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -79,17 +82,18 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.findTrainingForMentor(mentorId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
 
   public final List<Topic> findTopicsForTraining(int trainingId) throws ServiceException {
     DataListsDao dataListsDao = DaoFactory.getDataListDao();
-    System.out.println("вызываю сервис");
-    List<Topic> topics = new ArrayList<>();
+    List<Topic> topics;
     try {
       topics = dataListsDao.findTopicsForTraining(trainingId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
     return topics;
@@ -100,6 +104,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.findTopic(topicId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -110,6 +115,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.updateTrainingsInformation(trainingId, trainingName, information);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -120,6 +126,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.addTopicForTraining(trainingId, topicsName, topicsText);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -130,16 +137,18 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.addTaskForTraining(trainingId, taskName, taskText);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
 
   public final List<Task> findTasksListForTraining(int trainingId) throws ServiceException {
     DataListsDao dataListsDao = DaoFactory.getDataListDao();
-    List<Task> tasks = new ArrayList<>();
+    List<Task> tasks;
     try {
       tasks = dataListsDao.findTasksListForTraining(trainingId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
     return tasks;
@@ -151,6 +160,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.createTraining(trainingName, mentorId, trainingDescription);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -160,6 +170,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.updateTrainingsTopic(topicId, topicName, topic);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -169,6 +180,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.checkTopicStatus(userId, topicId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -178,6 +190,18 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.markTopic(userId, topicId);
     } catch (DaoException e) {
+      logger.error(e);
+      throw new ServiceException("Error access database", e);
+    }
+  }
+
+  @Override
+  public void giveFeedback(String feedback) throws ServiceException {
+    DataListsDao dataListsDao = DaoFactory.getDataListDao();
+    try {
+      dataListsDao.giveFeedback(feedback);
+    } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -187,6 +211,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.checkTrainingStatusForStudent(userId, trainingId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -197,6 +222,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       task = dataListsDao.findTask(taskId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
     return task;
@@ -207,15 +233,17 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.updateTask(taskId, taskName, task);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
 
-  public final boolean checkTaskStatus(int userId, int taskId) throws ServiceException {
+  public final int checkTaskStatus(int userId, int taskId) throws ServiceException {
     DataListsDao dataListsDao = DaoFactory.getDataListDao();
     try {
       return dataListsDao.checkTaskStatus(userId, taskId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -225,19 +253,54 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.sendSolution(userId, taskId, answer);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
 
-  public final Map<String, Integer> findTaskSolution(int studentId, int taskId) throws ServiceException {
+  @Override
+  public void deleteTask(int taskId) throws ServiceException {
     DataListsDao dataListsDao = DaoFactory.getDataListDao();
-    Map<String, Integer> solution = new HashMap<>();
     try {
-      solution = dataListsDao.findTaskSolution(studentId, taskId);
+      dataListsDao.deleteTask(taskId);
     } catch (DaoException e) {
+      logger.error(e);
+      throw new ServiceException(e);
+    }
+  }
+
+  @Override
+  public void deleteTopic(int topicId) throws ServiceException {
+    DataListsDao dataListsDao = DaoFactory.getDataListDao();
+    try {
+      dataListsDao.deleteTopic(topicId);
+    } catch (DaoException e) {
+      logger.error(e);
+      throw new ServiceException(e);
+    }
+  }
+
+  @Override
+  public boolean deleteTraining(int trainingId) throws ServiceException {
+    DataListsDao dataListsDao = DaoFactory.getDataListDao();
+    try {
+      return dataListsDao.deleteTraining(trainingId);
+    } catch (DaoException e) {
+      logger.error(e);
+      throw new ServiceException(e);
+    }
+  }
+
+  public final Task findTaskSolution(int studentId, int taskId) throws ServiceException {
+    DataListsDao dataListsDao = DaoFactory.getDataListDao();
+    Task task = new Task();
+    try {
+      task = dataListsDao.findTaskSolution(studentId, taskId);
+    } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
-    return solution;
+    return task;
   }
 
   public final boolean gradeTask(int studentId, int taskId, int mark) throws ServiceException {
@@ -245,6 +308,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.gradeTask(studentId, taskId, mark);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -254,6 +318,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.avgMarkForTask(userId, trainingId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -263,6 +328,7 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.findCompletedTasks(trainingId, studentId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
@@ -272,26 +338,64 @@ public class TrainingsServiceImpl implements TrainingService {
     try {
       return dataListsDao.findLearnedTopics(studentId, trainingId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
 
-  public final Map<Integer, Date> findConsultationsForTraining(int trainingId) throws ServiceException {
+  public List<Consultation> findConsultationsForTraining(int trainingId) throws ServiceException {
     DataListsDao dataListsDao = DaoFactory.getDataListDao();
     try {
       return dataListsDao.findConsultationsForTraining(trainingId);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
 
-  public final boolean sendOrderConsultation(int consultationId, int studentId, String taskIds,
-                                             String topicIds) throws ServiceException {
+  public final boolean sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
+                                             List<Integer> topicIds) throws ServiceException {
     DataListsDao dataListsDao = DaoFactory.getDataListDao();
     try {
       return dataListsDao.sendOrderConsultation(consultationId, studentId, taskIds, topicIds);
     } catch (DaoException e) {
+      logger.error(e);
       throw new ServiceException("Error access database", e);
     }
+  }
+
+  @Override
+  public void setFinalGrade(int studentId, int trainingId, int grade) throws ServiceException {
+    DataListsDao dataListsDao = DaoFactory.getDataListDao();
+    try {
+      dataListsDao.setFinalGrade(studentId, trainingId, grade);
+    } catch (DaoException e) {
+      logger.error(e);
+      throw new ServiceException("Error access database", e);
+    }
+  }
+
+  @Override
+  public void closeReception(int trainingId) throws ServiceException {
+    DataListsDao dataListsDao = DaoFactory.getDataListDao();
+    try {
+      dataListsDao.closeReception(trainingId);
+    } catch (DaoException e) {
+      logger.error(e);
+      throw new ServiceException(e);
+    }
+  }
+
+  @Override
+  public int findFinalGrade(int studentId, int trainingId) throws ServiceException {
+    DataListsDao dataListsDao = DaoFactory.getDataListDao();
+    int grade = 0;
+    try {
+      grade = dataListsDao.findFinalGrade(studentId, trainingId);
+    } catch (DaoException e) {
+      logger.error(e);
+      throw new ServiceException(e);
+    }
+    return grade;
   }
 }

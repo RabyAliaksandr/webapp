@@ -23,20 +23,51 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="controller?command=main_page">Trainings Center</a>
+                <a class="navbar-brand" href="controller?command=main_page">
+                    Trainings Center
+                </a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
+                <li>
+                    <a href="controller?command=trainings_page">
+                        <fmt:message key="currentTrainings"/>
+                    </a>
+                </li>
                 <c:if test="${user.type != null}">
-                    <li class="active"><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
-                    <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
+                    <li class="active">
+                        <a href="controller?command=cabinet">
+                            <fmt:message key="cabinet"/>
+                        </a>
+                    </li>
                 </c:if>
-<%--                is user is admin or mentor, then he can edit topic and task--%>
-                <c:if test="${(user.type == 'ADMIN' && editor == true) || (user.type == 'MENTOR' && editor == true)}">
-                    <li><a href="controller?command=create_text&typeOperation=editTask&
-                            taskId=${taskId}"><fmt:message key="button.editDescription"/></a></li>
+                    <%--                is user is admin or mentor, then he can edit topic and task--%>
+                <c:if test="${(user.type == 'ADMIN' && editor == true && user.status == 'UNBLOCKED') ||
+                 (user.type == 'MENTOR' && editor == true && user.status == 'UNBLOCKED')}">
+                    <li>
+                        <a href="controller?command=create_text&typeOperation=editTask&taskId=${taskId}">
+                            <fmt:message key="button.editDescription"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="controller?command=delete_task&taskId=${taskId}">
+                            <fmt:message key="delete"/>
+                        </a>
+                    </li>
                 </c:if>
+                <li>
+                    <a href="controller?command=log_out">
+                        <fmt:message key="logout"/>
+                    </a>
+                </li>
             </ul>
+            <form id="xxx" method="post" action="controller">
+                <input type="hidden" name="command" value="set_local"/>
+                <input type="hidden" name="redirectTo" value="true"/>
+                <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
+                        class="btn-link" type="submit">
+                        ${local == 'en' ? 'Ru' : 'En'}
+                </button>
+            </form>
         </div>
     </nav>
     <br/>
@@ -54,7 +85,7 @@
         <p>${task.task}</p>
     </div>
     <c:if test="${user.type == 'STUDENT'}">
-<%--                    message about sent task solution--%>
+        <%--                    message about sent task solution--%>
         <c:if test="${sendSolutionMessage != null}">
             <div class="alert alert-danger" role="alert">
                 <fmt:bundle basename="local" prefix="message.">
@@ -63,10 +94,13 @@
             </div>
         </c:if>
         <%--check task status--%>
-        <c:set var="check" value="${trainingServie.checkTaskStatus(user.id, taskId)}"/>
+        <c:set var="checkMark" value="${trainingServie.checkTaskStatus(user.id, taskId)}"/>
         <%--            students form for send solution if check is false --%>
+        <c:set var="task" value="${trainingServie.findTaskSolution(user.id, taskId)}"/>
+        <c:set value="${task.answer}" var="solution"/>
+        <c:set var="mark" value="${task.mark}"/>
         <c:choose>
-            <c:when test="${check == false}">
+            <c:when test="${mark == 0 && solution == null}">
                 <form id="sendSolution" method="post" action="controller">
                     <input type="hidden" name="redirectTo" value="true"/>
                     <input type="hidden" name="command" value="send_solution"/>
@@ -86,40 +120,43 @@
                     });
                 </script>
             </c:when>
-<%--            if student sent already soltion then message about it--%>
-            <c:when test="${check == true && sendSolutionMessage == null}">
+            <%--            if student sent already soltion then message about it--%>
+            <c:when test="${mark > 0 && sendSolutionMessage == null}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:bundle basename="local" prefix="message.">
-                        <fmt:message key="solutionSendAlready"/>
+                        <c:if test="${mark > 0}">
+                            <label><font color="red"><fmt:message key="yourMark"/>: ${checkMark} </font> </label>
+                        </c:if>
                     </fmt:bundle>
                 </div>
+            </c:when>
+            <c:when test="${mark == 0}">
+                <label><font color="red"><fmt:message key="taskOnVerification"/></font> </label>
             </c:when>
         </c:choose>
     </c:if>
     <c:if test="${showSolution == true}">
-    <c:set var="map" value="${trainingServie.findTaskSolution(studentId, taskId)}"/>
-       <div class="container-fluid">
-      <c:forEach var="solution" items="${map}">
-          <h4><fmt:message key="solution"/>:</h4>
-          <br/>
-          ${solution.key}
-          <br/>
-          <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
-          <h5> <fmt:message key="currentMark"/>:</h5> ${solution.value}
-      </c:forEach>
-           <form name="setMark"  method="post" action="controller">
-               <input type="hidden" name="redirectTo" value="true"/>
-               <input type="hidden" name="command" value="set_mark_for_task"/>
-               <input type="hidden" name="studentId" value="${studentId}"/>
-               <input type="hidden" name="taskId" value="${taskId}"/>
-               <input type="number" name="mark"  min="1" max="10"/>
-               <button type="submit" class="btn-warning" >
-                   <fmt:message key="grade"/>
-               </button>
-           </form>
-       </div>
+        <c:set var="task" value="${trainingServie.findTaskSolution(studentId, taskId)}"/>
+        <div class="container-fluid">
+            <h4><fmt:message key="solution"/>:</h4>
+            <br/>
+                ${task.answer}
+            <br/>
+            <jsp:useBean id="trainingService" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+            <h5><fmt:message key="currentMark"/>:</h5> ${task.mark}
+            <form name="setMark" method="post" action="controller">
+                <input type="hidden" name="redirectTo" value="true"/>
+                <input type="hidden" name="command" value="set_mark_for_task"/>
+                <input type="hidden" name="studentId" value="${studentId}"/>
+                <input type="hidden" name="taskId" value="${taskId}"/>
+                <input type="number" name="mark" min="1" max="10"/>
+                <button type="submit" class="btn-warning">
+                    <fmt:message key="grade"/>
+                </button>
+            </form>
+        </div>
     </c:if>
-<%--    nullify the message about sent solution --%>
+        <%--    nullify the message about sent solution --%>
     <c:set var="sendSolutionMessage" value="${null}"/>
     </body>
     </html>

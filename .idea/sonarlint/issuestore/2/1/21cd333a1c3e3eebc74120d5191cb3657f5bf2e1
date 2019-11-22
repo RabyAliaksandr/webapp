@@ -1,3 +1,2 @@
 
-[squid:S1854">Remove this useless assignment to local variable "trainingId".(¬ØÜs8©Û¢´æ-
-Lsquid:S1481"/Remove this unused "trainingId" local variable.(¬ØÜs8©Û¢´æ-
+lsquid:UselessImportCheck"ARemove this unused import 'com.epam.webapp.command.CommandConst'.(ùý¢á8Š¬€ýç-

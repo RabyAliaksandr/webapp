@@ -7,9 +7,26 @@ public class Training {
 
   private int id;
   private String name;
-  private Mentor mentor;
   private int grade;
   private String information;
+  private User mentor;
+  private boolean status;
+
+  public boolean isStatus() {
+    return status;
+  }
+
+  public void setStatus(boolean status) {
+    this.status = status;
+  }
+
+  public User getMentor() {
+    return mentor;
+  }
+
+  public void setMentor(User mentor) {
+    this.mentor = mentor;
+  }
 
   public String getInformation() {
     return information;
@@ -43,11 +60,4 @@ public class Training {
     this.name = name;
   }
 
-  public Mentor getMentor() {
-    return mentor;
-  }
-
-  public void setMentor(Mentor mentor) {
-    this.mentor = mentor;
-  }
 }

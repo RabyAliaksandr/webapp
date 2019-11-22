@@ -3,6 +3,7 @@ package com.epam.webapp.service;
 import com.epam.webapp.entity.*;
 import com.google.protobuf.ServiceException;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ public interface UserService {
   User checkLogin(String login, String password) throws ServiceException;
 
   User checkRegistrationField(String login, String password, String name, String surname,
-                              String email, String type) throws ServiceException;
+                              String email) throws ServiceException;
 
   void grade(int assessment, int userId, int trainingId) throws ServiceException;
 
@@ -34,9 +35,20 @@ public interface UserService {
 
   List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws ServiceException;
 
-  boolean sendOfferConsultations(int trainingId, Date date) throws ServiceException;
+  boolean sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws ServiceException;
 
   Map<Training, Date> findConsultationsOffer(int mentorId) throws ServiceException;
 
   boolean sendAgreement(int trainingId, Date date, boolean mark) throws ServiceException;
+
+  boolean checkLogin(String login) throws ServiceException;
+
+  boolean checkEmail(String email) throws ServiceException;
+
+  void registration(User user) throws ServiceException;
+
+  void deleteUser(int userId) throws ServiceException;
+
+
+
 }

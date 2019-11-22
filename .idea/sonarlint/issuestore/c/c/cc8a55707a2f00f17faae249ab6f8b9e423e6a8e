@@ -1,8 +1,2 @@
 
-[
-squid:S106"9Replace this use of System.out or System.err by a logger.(«τκ±ύÿÿÿÿ8‰ήγάζ-
-jsquid:S1192"GDefine a constant instead of duplicating this literal "tskid " 3 times.(βΑΩώÿÿÿÿ8‰ήγάζ-
-V
-squid:S106"9Replace this use of System.out or System.err by a logger.(Σόδ8‰ήγάζ-
-[
-squid:S106"9Replace this use of System.out or System.err by a logger.(βΑΩώÿÿÿÿ8‰ήγάζ-
+lsquid:UselessImportCheck"ARemove this unused import 'com.epam.webapp.command.CommandConst'.(ωύΆα8ζ§ύη-

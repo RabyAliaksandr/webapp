@@ -9,12 +9,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="ru" scope="session"/>
 <fmt:bundle basename="local" prefix="footer.">
-<html>
-<head><title>Footer</title></head>
-<body>
-<hr/>
-<fmt:message key="copyright"/>
-</body>
-</html>
+    <html>
+    <head><title>Footer</title></head>
+    <body>
+    <hr/>
+    <fmt:message key="copyright"/>
+    </body>
+    </html>
 
 </fmt:bundle>

@@ -7,7 +7,7 @@ public enum UserStatus {
   public static UserStatus getUserType(String name) {
     try {
       return UserStatus.valueOf(name.toUpperCase());
-    } catch (EnumConstantNotPresentException e) {
+    } catch (IllegalArgumentException e) {
       throw new EnumConstantNotPresentException(UserType.class, "no parameter set"); //  FIXME
     }
   }

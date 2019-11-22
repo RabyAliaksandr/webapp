@@ -1,8 +1,2 @@
 
-V
-squid:S106"9Replace this use of System.out or System.err by a logger.(ß…Ú8øå-
-[
-squid:S106"9Replace this use of System.out or System.err by a logger.(€ï‡îûÿÿÿÿ8’úŒå-
-¢%squid:RedundantThrowsDeclarationCheck"jRemove the redundant 'com.epam.webapp.command.exception.CommandException' thrown exception declaration(s).(ö•Ëú8³Ê¿å-
-[
-squid:S106"9Replace this use of System.out or System.err by a logger.(üì³™ùÿÿÿÿ8Çïå-
+jsquid:UselessImportCheck"ARemove this unused import 'com.epam.webapp.command.CommandConst'.(ùı¢á8Ïßûç-

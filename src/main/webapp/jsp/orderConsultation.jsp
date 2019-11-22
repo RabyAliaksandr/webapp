@@ -14,6 +14,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<fmt:setLocale value="${sessionScope.local}" scope="session"/>
 <fmt:bundle basename="local" prefix="label.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -37,13 +38,34 @@
     <head>
         <nav class="navbar navbar-default">
             <div class="navbar-header">
-                <a class="navbar-brand" href="controller?command=main_page">Trainings Center</a>
+                <a class="navbar-brand" href="controller?command=main_page">
+                    Trainings Center
+                </a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="controller?command=trainings_page"><fmt:message key="currentTrainings"/></a></li>
-                <li><a href="controller?command=cabinet"><fmt:message key="cabinet"/></a></li>
-                <li><a href="controller?command=log_out"><fmt:message key="logout"/></a></li>
+                <li>
+                    <a href="controller?command=trainings_page">
+                        <fmt:message key="currentTrainings"/>
+                    </a>
+                </li>
+                <li>
+                    <a href="controller?command=cabinet">
+                        <fmt:message key="cabinet"/>
+                    </a>
+                </li>
+                <a href="controller?command=log_out">
+                    <fmt:message key="logout"/>
+                </a>
+                </li>
             </ul>
+            <form id="xxx" method="post" action="controller">
+                <input type="hidden" name="command" value="set_local"/>
+                <input type="hidden" name="redirectTo" value="true"/>
+                <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
+                        class="btn-link" type="submit">
+                        ${local == 'en' ? 'Ru' : 'En'}
+                </button>
+            </form>
         </nav>
         <br/>
         <title><fmt:message key="orderPage"/></title>
@@ -54,7 +76,6 @@
         <div class="row">
             <fmt:message key="availableConsultation"/>
             <div class="row">
-
                     <%--Message about saved changes--%>
                 <c:if test="${orderSentMessage != null}">
                     <div class="alert alert-danger" role="alert">
@@ -66,21 +87,31 @@
             <form id="chooseTasksForConsultation" onsubmit="return sub()" method="post" action="controller">
                 <input type="hidden" name="command" value="send_order_consultation"/>
                 <input type="hidden" name="redirectTo" value="true"/>
-                <input type="hidden" name="studentId" value="${user.id}"/>
+                <input type="hidden" name="userId" value="${user.id}"/>
             </form>
-
             <c:set var="checkConsultation" value="${0}"/>
             <c:set var="checkTask" value="${0}"/>
             <c:set var="checkTopick" value="${0}"/>
-            <div class="form-group">
-                <select class="selectpicker" name="consultationId" form="chooseTasksForConsultation" required>
-                    <c:forEach var="consultation" items="${trainingService.findConsultationsForTraining(trainingId)}">
-                        <option value="${consultation.key}">${consultation.value} ${consultation.key}</option>
-                        <c:set var="checkConsultation" value="${1}"/>
-                    </c:forEach>
-                </select>
+            <div class="container-fluid">
+                <div class="form-group">
+                    <select class="selectpicker" name="consultationId" form="chooseTasksForConsultation" required>
+                        <c:forEach var="consultation"
+                                   items="${trainingService.findConsultationsForTraining(trainingId)}">
+                            <option value="${consultation.id}" >
+                                    ${consultation.date}
+                                     <fmt:message key="price"/>: ${consultation.price}
+                            </option>
+                            <c:set var="checkConsultation" value="${1}"/>
+                        </c:forEach>
+                    </select>
+                </div>
             </div>
-
+            <jsp:useBean id="cardService" class="com.epam.webapp.service.impl.PaymentCardServiceImpl"/>
+            <select class="selectpicker" name="cardId" form="chooseTasksForConsultation" required>
+                <c:forEach var="card" items="${cardService.findUsersCard(user.id)}">
+                    <option value="${card.id}">${card.number}</option>
+                </c:forEach>
+            </select>
         </div>
         <div class="col-sm-6">
             <h3><fmt:message key="completedTasks"/></h3>
@@ -134,7 +165,6 @@
                 </c:forEach>
                 </tr>
             </table>
-
             <c:if test="${checkTask == 0}">
                 <h3><fmt:message key="solveTask"/></h3>
             </c:if>

@@ -1,4 +1,4 @@
 
-Psquid:S1135$"2Complete the task associated to this TODO comment.(œœ“¼8İíõ–á-
-Xsquid:S2441!":Make "User" serializable or don't store it in the session.(†¹›–8İíõ–á-
-nsquid:UselessImportCheck"CRemove this unused import 'com.epam.webapp.manager.MessageManager'.(§şÁÍ8İíõ–á-
+osquid:S2441X"LMake "Map" and its parameters serializable or don't store it in the session.(ÕĞğ“ùÿÿÿÿ8Åï ëè-
+V
+squid:S106]"9Replace this use of System.out or System.err by a logger.(İá¯8ç×íè-

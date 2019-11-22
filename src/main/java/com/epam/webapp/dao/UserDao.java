@@ -1,14 +1,15 @@
 package com.epam.webapp.dao;
 
-import com.epam.webapp.dao.exception.DaoException;
 import com.epam.webapp.entity.*;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
 
 public interface UserDao {
+
   User authorization(User user) throws DaoException;
 
   User registration(User user) throws DaoException;
@@ -27,11 +28,18 @@ public interface UserDao {
 
   List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws DaoException;
 
-  boolean sendOfferConsultations(int trainingId, Date date) throws DaoException;
+  boolean sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws DaoException;
 
   Map<Training, Date> findConsultationsOffer(int mentorId) throws DaoException;
 
   boolean sendAgreement(int trainingId, Date date, boolean mark) throws DaoException;
 
   Map<Task, User> findAllMentors() throws DaoException;
+
+  boolean checkLogin(String login) throws DaoException;
+
+  boolean checkEmail(String email) throws DaoException;
+
+  void deleteUser(int userId) throws DaoException;
+
 }

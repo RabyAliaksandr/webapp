@@ -1,92 +1,33 @@
 package com.epam.webapp.dao.impl;
 
+import com.epam.webapp.connectionpool.ConnectionPool;
+import com.epam.webapp.connectionpool.ConnectionPoolException;
+import com.epam.webapp.dao.DaoException;
 import com.epam.webapp.dao.DataListsDao;
 import com.epam.webapp.dao.UserDao;
-import com.epam.webapp.connectionpool.ConnectionPool;
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
-import com.epam.webapp.dao.exception.DaoException;
 import com.epam.webapp.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//created trigger update student task when insert into task FIXME
-//and automat. add task for every student who registered at this training (update_student_task)
-//CREATE TRIGGER update_student_task
-//        AFTER INSERT ON tasks
-//        FOR EACH ROW
-//        BEGIN
-//        insert into student_task (user_id, task_id)
-//        SELECT   users.user_id, tasks.task_id
-//        FROM training_by_students  inner join tasks  using(training_id) left  join  student_task using (user_id, task_id) left join users  using (user_id)
-//        where student_task.user_id is  null;
-//        END ;
-
+import static com.epam.webapp.constant.ConstSqlRequest.*;
+import static com.epam.webapp.constant.ConstSqlName.*;
 
 public class DataListDaoImpl implements DataListsDao {
 
   private final static Logger logger = LogManager.getLogger(UserDao.class);
-  private static final String SQL_TOPIC_BY_TOPIC_ID = "SELECT * FROM topics_for_study WHERE (topic_id = ?)";
-  private static final String SQL_UPDATE_TRAININGS_INFORMATION = "UPDATE trainings SET information = ?, name = ? WHERE training_id = ?";
-  private static final String SQL_ADD_TOPIC_FOR_TRAINING = "INSERT INTO topics_for_study (training_id, name_topic, topic) VALUES (?, ?, ?)";
-  private static final String SQL_ADD_TASK_FOR_TRAINING = "INSERT INTO tasks (training_id, task_name, task) VALUES (?, ?, ?)";
-  private static final String SQL_TASKS_FOR_TRAINING = "SELECT * FROM tasks WHERE training_id = ?";
-  private final static String SQL_ALL_TRAININGS = "SELECT * FROM trainings";//TODO
-  private final static String SQL_TRAININGS_BY_STUDENT_ID = "SELECT * FROM trainings JOIN training_by_students USING (training_id) where user_id = ?";
-  private static final String SQL_TOPICS_FOR_TRAINING = "SELECT name_topic, topic, topic_id FROM topics_for_study WHERE training_id = ?";
-  private static final String SQL_COMPLETED_TRAININGS_FOR_MENTOR = "SELECT * FROM trainings WHERE mentor_id = ?";
-  private static final String SQL_ALL_TRAININGS_BY_TRAINING_ID = "SELECT * FROM trainings WHERE training_id = ?";
-  private final static String SQL_STUDENTS_BY_ID_TRAINING = "SELECT user_id, name, surname, grade_for_training FROM " +
-          "users join training_by_students USING (user_id) WHERE (training_id =? and grade_for_training = 0)";
-  private final static String SQL_NAME = "name";
-  private final static String SQL_SURNAME = "surname";
-  private final static String STUDENT_ID = "user_id";
-  private static final String SQL_COMPLETED_TRAININGS_FOR_STUDENTS = "SELECT * FROM trainings  join trainingbystudents using (trainingid) where (trainingbystudents.userid = ? and trainingbystudents.grade_for_training = 0)";
-  private static final String SQL_MENTOR_ID = "mentor_id";
-  private static final String SQL_GRADE_FOR_TRAINING = "grade_for_training";
-  private static final String SQL_TRAINING_INFORMATION = "information";
-  private static final String SQL_STUDENT_GRADE = "grade_for_training";
-  private static final String SQL_NAME_TOPIC = "name_topic";
-  private static final String SQL_TOPIC = "topic";
-  private static final String SQL_TRAINING_ID = "training_id";
-  private static final String SQL_TASK_NAME = "task_name";
-  private static final String SQL_TASK = "task";
-  private static final String SQL_CREATE_TRAINING = "INSERT  INTO trainings (name, mentor_id, information) VALUES (?, ?, ?)";
-  private static final String SQL_UPDATE_TRAININGS_TOPIC = "UPDATE topics_for_study SET name_topic = ?, topic = ? WHERE (topic_id = ?)";
-  private static final String SQL_CHECK_STATUS_TOPIC = "SELECT topic_status FROM student_topic WHERE (user_id = ? AND  topic_id = ?)";
-  private static final String SQL_TOPIC_STATUS = "topic_status";
-  private static final String SQL_TASK_ID = "task_id";
-  private static final String SQL_TOPIC_ID = "topic_id";
-  private static final String SQL_SET_MARK_TOPIC = "INSERT INTO student_topic (user_id, topic_id, topic_status) VALUES (?, ?, true)";
-  private static final String SQL_CHECK_TRAINING_STATUS_FOR_STUDENT = "SELECT COUNT(1) FROM training_by_students WHERE (user_id = ? AND training_id = ?);";
-  private static final String SQL_STATUS = "status";
-  private static final String SQL_TASK_BY_ID = "SELECT * FROM trainings_center.tasks WHERE task_id = ?";
-  private static final String SQL_UPDATE_TRAININGS_TASK = "UPDATE trainings_center.tasks SET task_name = ?, task = ? WHERE task_id = ?";
-  private static final String SQL_CHECK_STATUS_TASK = "SELECT COUNT(answer) FROM student_task WHERE (user_id = ?  AND task_id = ?)";
-  private static final String SQL_MARK = "mark";
-  private static final String SQL_SEND_SOLUTION = "UPDATE student_task SET answer = ? WHERE user_id= ? AND task_id= ?";
-  private static final String SQl_TASK_SOLUTION = "SELECT answer, mark FROM student_task WHERE user_id = ? AND task_id = ?";
-  private static final String SQL_GRADE_TASK = "UPDATE student_task SET mark = ? WHERE user_id = ? AND task_id = ?";
-  private static final String SQL_MARK_FOR_TASK = "SELECT mark FROM student_task WHERE user_id = ? AND task_id = ?";
-  private static final String SQL_ANSWER = "answer";
-  private static final String SQL_AVG_FOR_TASKS = "SELECT AVG(mark) FROM student_task INNER JOIN tasks USING (task_id) " +
-          "LEFT JOIN trainings USING (training_id) WHERE user_id = ? AND training_id = ? AND mark > 0";
-  private static final String SQL_AVG_MARK = "AVG(mark)";
-  private static final String SQL_COMPLETED_TASKS_FOR_STUDENT = "SELECT task_id, task_name FROM student_task JOIN tasks USING (task_id) WHERE user_id = ? AND training_id = ? AND mark > 0";
-  private static final String SQL_LEARNED_TOPICS = "SELECT topic_id, name_topic FROM student_topic JOIN topics_for_study USING (topic_id) WHERE user_id = ? AND training_id = ?";
-  private static final String SQL_CONSULTATIONS_FOR_TRAINING = "SELECT consultation_id, date FROM consultations LEFT JOIN trainings USING (training_id) WHERE training_id = ? AND date > CURRENT_DATE";
-  private static final String SQL_CONSULTATION_ID = "consultation_id";
-  private static final String SQL_DATE = "date";
-  private static final String SQL_SEND_ORDER_CONSULTATION = "INSERT INTO student_consultation (consultation_id, user_id, tasks_list, topics_list) VALUES (?, ?, ?, ?)";
 
   @Override
   public List<Training> findTrainingsForStudent(int id) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
@@ -103,13 +44,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return trainings;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, rs);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -117,7 +61,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public List<Student> findStudentsByIdTraining(int trainingId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
@@ -137,13 +81,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return students;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, rs);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -151,7 +98,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public List<Training> findCompletedTrainingForStudent(int studentId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
@@ -163,7 +110,7 @@ public class DataListDaoImpl implements DataListsDao {
       rs = preparedStatement.executeQuery();
       while (rs.next()) {
         Training training = new Training();
-        Mentor mentor = new Mentor();
+        User mentor = new User();
         mentor.setId(rs.getInt(SQL_MENTOR_ID));
         training.setName(rs.getString(SQL_NAME));
         training.setId(rs.getInt(SQL_TRAINING_ID));
@@ -173,13 +120,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return trainings;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, rs);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -187,7 +137,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public List<Training> findTrainingForMentor(int mentorId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
@@ -205,13 +155,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return trainings;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, rs);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -219,7 +172,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public Training findTrainingByIdTraining(int trainingId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
@@ -233,16 +186,20 @@ public class DataListDaoImpl implements DataListsDao {
         training.setName(rs.getString(SQL_NAME));
         training.setId(rs.getInt(SQL_TRAINING_ID));
         training.setInformation(rs.getString(SQL_TRAINING_INFORMATION));
+        training.setStatus(rs.getBoolean(SQL_TRAINING_STATUS));
       }
       return training;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, rs);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -250,7 +207,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public List<Topic> findTopicsForTraining(int trainingId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -269,13 +226,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return topics;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -283,7 +243,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public Topic findTopic(int topicId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -300,13 +260,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return topic;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -314,7 +277,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean updateTrainingsInformation(int trainingId, String trainingName, String information) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -326,13 +289,16 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -340,7 +306,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean addTopicForTraining(int trainingId, String topicsName, String topicsText) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -352,13 +318,16 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -366,7 +335,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean addTaskForTraining(int trainingId, String taskName, String taskText) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -378,13 +347,16 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -392,7 +364,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public List<Task> findTasksListForTraining(int trainingId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -411,13 +383,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return tasks;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -425,7 +400,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean createTraining(String trainingName, int mentorId, String trainingDescription) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     PreparedStatement preparedStatement = null;
     Connection connection = null;
     try {
@@ -437,22 +412,24 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
-      e.printStackTrace();
+      logger.error(e);
+      throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
-    return false;
   }
 
   @Override
   public boolean updateTrainingsTopic(int topicId, String topicName, String topic) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -464,13 +441,16 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -478,7 +458,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean checkTopicStatus(int userId, int topicId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -493,13 +473,16 @@ public class DataListDaoImpl implements DataListsDao {
         check = resultSet.getBoolean(SQL_TOPIC_STATUS);
       }
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
-      e.printStackTrace();
+      logger.error(e);
+      throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -508,7 +491,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean markTopic(int userId, int topicId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -519,13 +502,41 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
+        throw new DaoException("Error access database", e);
+      }
+    }
+  }
+
+  @Override
+  public void giveFeedback(String feedback) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try{
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_GIVE_FEEDBACK);
+      preparedStatement.setString(1, feedback);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      logger.error(e);
+      throw new DaoException("Error access database", e);
+    } catch (ConnectionPoolException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -533,7 +544,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean checkTrainingStatusForStudent(int userId, int trainingId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     boolean done = false;
@@ -549,13 +560,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return done;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -563,7 +577,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public Task findTask(int taskId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -580,13 +594,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return task;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -594,7 +611,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean updateTask(int taskId, String taskName, String task) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -606,25 +623,28 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
-  public boolean checkTaskStatus(int userId, int taskId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+  public int checkTaskStatus(int userId, int taskId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    boolean done = false;
+    int mark = 0;
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_CHECK_STATUS_TASK);
@@ -632,17 +652,20 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.setInt(2, taskId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
-        done = resultSet.getBoolean(1);
+        mark = resultSet.getInt(1);
       }
-      return done;
+      return mark;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -650,7 +673,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean sendSolution(int userId, int taskId, String answer) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -662,25 +685,124 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
-  public Map<String, Integer> findTaskSolution(int studentId, int taskId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+  public void deleteTask(int taskId) throws DaoException {
+    ConnectionPool connectionPool =  ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_DELETE_TASK);
+      preparedStatement.setInt(1, taskId);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      logger.error(e);
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      logger.error(e);
+      throw new DaoException(e);
+    } finally {
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        logger.error(e);
+        throw new DaoException(e);
+      }
+    }
+  }
+
+  @Override
+  public void deleteTopic(int topicId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_DELETE_TOPIC);
+      preparedStatement.setInt(1, topicId);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      logger.error(e);
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        logger.error(e);
+        throw new DaoException(e);
+      }
+    }
+  }
+
+  @Override
+  public boolean deleteTraining(int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    Map<String, Integer> solution = new HashMap<>();
+    int checkUsers = 0;
+    try {
+      connection = connectionPool.takeConnection();
+      connection.setAutoCommit(false);
+      preparedStatement = connection.prepareStatement(SQL_CHECK_USERS_ON_TRAINING);
+      preparedStatement.setInt(1, trainingId);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        checkUsers = resultSet.getInt(1);
+      }
+      if (checkUsers == 0) {
+        preparedStatement = connection.prepareStatement(SQL_DELETE_TRAINING);
+        preparedStatement.setInt(1, trainingId);
+        preparedStatement.executeUpdate();
+        connection.commit();
+        return true;
+      } else {
+        connection.rollback();
+      }
+    } catch (SQLException e) {
+      logger.error(e);
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        connection.setAutoCommit(true);
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        logger.error(e);
+        throw new DaoException(e);
+      } catch (SQLException e) {
+        logger.error(e);
+        throw new DaoException(e);
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public Task findTaskSolution(int studentId, int taskId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    Task task = new Task();
 
     try {
       connection = connectionPool.takeConnection();
@@ -689,19 +811,21 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.setInt(2, taskId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
-        String answer = resultSet.getString(SQL_ANSWER);
-        int mark = resultSet.getInt(SQL_MARK);
-        solution.put(answer, mark);
+        task.setMark(resultSet.getInt(SQL_MARK));
+        task.setAnswer(resultSet.getString(SQL_ANSWER));
       }
-      return solution;
+      return task;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -709,7 +833,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public boolean gradeTask(int studentId, int taskId, int mark) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     boolean done = false;
@@ -722,13 +846,16 @@ public class DataListDaoImpl implements DataListsDao {
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -736,7 +863,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public int avgMarkForTask(int userId, int trainingId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -752,13 +879,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return avgMark;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -766,7 +896,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public List<Task> findCompletedTasks(int trainingId, int studentId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -785,13 +915,16 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return tasks;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -799,7 +932,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public List<Topic> findLearnedTopics(int studentId, int trainingId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -818,73 +951,178 @@ public class DataListDaoImpl implements DataListsDao {
       }
       return topics;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
-  public Map<Integer, Date> findConsultationsForTraining(int trainingId) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+  public List<Consultation> findConsultationsForTraining(int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    Map<Integer, Date> consultations = new HashMap<>();
+    List<Consultation> consultations = new ArrayList<>();
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_CONSULTATIONS_FOR_TRAINING);
       preparedStatement.setInt(1, trainingId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
-        int consultationId = resultSet.getInt(SQL_CONSULTATION_ID);
-        Date date = resultSet.getDate(SQL_DATE);
-        consultations.put(consultationId, date);
+        Consultation consultation = new Consultation();
+        consultation.setId(resultSet.getInt(SQL_CONSULTATION_ID));
+        consultation.setDate(resultSet.getDate(SQL_DATE));
+        consultation.setPrice(resultSet.getInt(SQL_PRICE));
+        consultations.add(consultation);
       }
       return consultations;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
-  public boolean sendOrderConsultation(int consultationId, int studentId, String taskIds, String topicIds) throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+  public boolean sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
+                                       List<Integer> topicIds) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
-    boolean done = false;
     try {
       connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_SEND_ORDER_CONSULTATION);
-      preparedStatement.setInt(1, consultationId);
-      preparedStatement.setInt(2, studentId);
-      preparedStatement.setString(3, taskIds);
-      preparedStatement.setString(4, topicIds);
+      preparedStatement = connection.prepareStatement(SQL_TASKS_FOR_CONSULTATION);
+      for (Integer id : taskIds) {
+        preparedStatement.setInt(1, consultationId);
+        preparedStatement.setInt(2, studentId);
+        preparedStatement.setInt(3, id);
+        preparedStatement.addBatch();
+      }
+      preparedStatement.executeBatch();
+      preparedStatement = connection.prepareStatement(SQL_TOPICS_FOR_CONSULTATION);
+      for (Integer id : topicIds) {
+        preparedStatement.setInt(1, consultationId);
+        preparedStatement.setInt(2, studentId);
+        preparedStatement.setInt(3, id);
+        preparedStatement.addBatch();
+      }
       preparedStatement.executeUpdate();
       return true;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
+        throw new DaoException("Error access database", e);
+      }
+    }
+  }
+
+  @Override
+  public void closeReception(int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_CLOSE_RECEPTION);
+      preparedStatement.setInt(1, trainingId);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      logger.error(e);
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        logger.error(e);
+        throw new DaoException(e);
+      }
+    }
+  }
+
+  @Override
+  public int findFinalGrade(int studentId, int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    ResultSet resultSet = null;
+    PreparedStatement preparedStatement = null;
+    int grade = 0;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_FIND_FINAL_GRADE);
+      preparedStatement.setInt(1, studentId);
+      preparedStatement.setInt(2, trainingId);
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        grade = resultSet.getInt(SQL_GRADE_FOR_TRAINING);
+      }
+    } catch (SQLException e) {
+      logger.error(e);
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+      } catch (ConnectionPoolException e) {
+        logger.error(e);
+        throw new DaoException(e);
+      }
+    }
+    return grade;
+  }
+
+  @Override
+  public void setFinalGrade(int studentId, int trainingId, int grade) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_SET_FINAL_GRADE);
+      preparedStatement.setInt(1, grade);
+      preparedStatement.setInt(2, studentId);
+      preparedStatement.setInt(3, trainingId);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      logger.error(e);
+      throw new DaoException("Error access database", e);
+    } catch (ConnectionPoolException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }
@@ -892,7 +1130,7 @@ public class DataListDaoImpl implements DataListsDao {
 
   @Override
   public List<Training> findTraining() throws DaoException {
-    ConnectionPool connectionPool = ConnectionPool.Instance();
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet rs = null;
@@ -905,17 +1143,21 @@ public class DataListDaoImpl implements DataListsDao {
         Training training = new Training();
         training.setId(rs.getInt(SQL_TRAINING_ID));
         training.setName(rs.getString(SQL_NAME));
+        training.setStatus(rs.getBoolean(SQL_TRAINING_STATUS));
         trainings.add(training);
       }
       return trainings;
     } catch (SQLException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new DaoException("Error access database", e);
     } finally {
       try {
         connectionPool.closeConnection(connection, preparedStatement, rs);
       } catch (ConnectionPoolException e) {
+        logger.error(e);
         throw new DaoException("Error access database", e);
       }
     }

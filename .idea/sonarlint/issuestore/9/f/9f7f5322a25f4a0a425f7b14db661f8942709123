@@ -1,28 +1,23 @@
 
-[squid:UselessImportCheck"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ÑıÊşæ-
-Usquid:UselessImportCheck"*Remove this unused import 'java.sql.Date'.(ÙÀ½Ê8îûÊç-
+[squid:UselessImportCheck"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ëÕ×Îè-
+Esquid:S1481"'Remove this unused "pe" local variable.(’ŸÆ¶8¨µŞøè-
+\squid:UselessImportCheck"1Remove this unused import 'java.math.BigDecimal'.(êêŠ8ëÕ×Îè-
+Ssquid:S1854"5Remove this useless assignment to local variable "p".(‹ÁËÙ8Ÿ«Æ÷è-
+Ysquid:S1854";Remove this useless assignment to local variable "userDao".(†»¢8ıÆ÷è-
+Vsquid:S1854"8Remove this useless assignment to local variable "user".(Ç­‚û8Şòõè-
+[
+squid:S106"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8ÙÎè-
+Dsquid:S1481"&Remove this unused "p" local variable.(‹ÁËÙ8Ÿ«Æ÷è-
+Gsquid:S1481")Remove this unused "user" local variable.(Ç­‚û8Şòõè-
+Jsquid:S1481",Remove this unused "userDao" local variable.(†»¢8ıÆ÷è-
+xsquid:UselessImportCheck"HRemove this unused import 'com.epam.webapp.dao.impl.PaymentCardDaoImpl'.(£Ôœıùÿÿÿÿ8ëÕ×Îè-
+Esquid:S1481"'Remove this unused "uv" local variable.(›—óË8Œ¶ïíè-
+Tsquid:S1854"6Remove this useless assignment to local variable "pe".(’ŸÆ¶8¨µŞøè-
 V
-squid:S106%"9Replace this use of System.out or System.err by a logger.(’ıÙ†8¤û¾³ç-
-hsquid:UselessImportCheck
-"8Remove this unused import 'com.epam.webapp.entity.User'.(„«Îïüÿÿÿÿ8™—Š‚ç-
->squid:S2129!" Remove this "String" constructor(––Ô³8æŸÇ³ç-
-[
-squid:S106'"9Replace this use of System.out or System.err by a logger.(ŒÆ¼şÿÿÿÿ8ƒÆË³ç-
-psquid:UselessImportCheck"ERemove this unused import 'com.epam.webapp.service.TrainingsService'.(€ÏÈ8£ÎÌç-
-Zsquid:UselessImportCheck"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8îûÊç-
-bsquid:UselessImportCheck"7Remove this unused import 'java.text.SimpleDateFormat'.(ú¡ÙÛ8Ã©êˆç-
-©%squid:RedundantThrowsDeclarationCheck"qRemove the declaration of thrown exception 'java.text.ParseException', as it cannot be thrown from method's body.(Î¦àË8Óõ¹³ç-
-ksquid:UselessImportCheck"@Remove this unused import 'com.epam.webapp.service.UserService'.(ÒÿÀ8îûÊç-
-hsquid:UselessImportCheck"=Remove this unused import 'com.epam.webapp.dao.DataListsDAO'.(«½º˜8Éõ³³ç-
-lsquid:UselessImportCheck"ARemove this unused import 'com.epam.webapp.dao.impl.UserDAOImpl'.(ôÓ±ÿ8ØóÀˆæ-
-È%squid:RedundantThrowsDeclarationCheck"Remove the declaration of thrown exception 'com.epam.webapp.connectionpool.ConnectionPoolException', as it cannot be thrown from method's body.(Î¦àË8Óõ¹³ç-
-^squid:UselessImportCheck".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8îûÊç-
-gsquid:UselessImportCheck"<Remove this unused import 'com.epam.webapp.entity.UserType'.(ê¼í8ØóÀˆæ-
-lsquid:UselessImportCheck	"<Remove this unused import 'com.epam.webapp.entity.Training'.(ö ²üÿÿÿÿ8îûÊç-
-usquid:UselessImportCheck"ERemove this unused import 'com.epam.webapp.dao.impl.DataListDAOImpl'.(·Æ˜ûÿÿÿÿ8Éõ³³ç-
-?squid:S1643#"Use a StringBuilder instead.(É¢ûÿÿÿÿ8±ÀÉ³ç-
-qsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¯Œüùÿÿÿÿ8ã«¿ˆæ-
-hsquid:UselessImportCheck"8Remove this unused import 'com.epam.webapp.entity.Task'.(½—ö“şÿÿÿÿ8™—Š‚ç-
-Zsquid:UselessImportCheck"/Remove this unused import 'java.util.Calendar'.(ÿÛö´8¯òƒç-
-[
-squid:S106)"9Replace this use of System.out or System.err by a logger.(ıÌ¡Äşÿÿÿÿ8†ßÌ³ç-
+squid:S106"9Replace this use of System.out or System.err by a logger.(ÿÛ Å8ıÆ÷è-
+Tsquid:S1854"6Remove this useless assignment to local variable "uv".(›—óË8Œ¶ïíè-
+qsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¯Œüùÿÿÿÿ8ëÕ×Îè-
+È%squid:RedundantThrowsDeclarationCheck"Remove the declaration of thrown exception 'com.epam.webapp.connectionpool.ConnectionPoolException', as it cannot be thrown from method's body.(µ¯­8€¿ßøè-
+©%squid:RedundantThrowsDeclarationCheck"qRemove the declaration of thrown exception 'java.text.ParseException', as it cannot be thrown from method's body.(µ¯­8€¿ßøè-
+µ%squid:RedundantThrowsDeclarationCheck"}Remove the declaration of thrown exception 'com.google.protobuf.ServiceException', as it cannot be thrown from method's body.(µ¯­8€¿ßøè-
+º%squid:RedundantThrowsDeclarationCheck"Remove the declaration of thrown exception 'com.epam.webapp.service.ServiceException', as it cannot be thrown from method's body.(µ¯­8€¿ßøè-

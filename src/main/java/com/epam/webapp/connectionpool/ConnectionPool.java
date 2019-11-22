@@ -1,6 +1,5 @@
 package com.epam.webapp.connectionpool;
 
-import com.epam.webapp.connectionpool.exception.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,11 +33,6 @@ import java.util.concurrent.Executor;
 public class ConnectionPool {
 
   private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
-  private static final String DRIVER = "driver";
-  private static final String URL = "url";
-  private static final String USER = "user";
-  private static final String PASSWORD = "password";
-  private static final String POOL_SIZE = "poolsize";
   private static BlockingQueue<Connection> connectionQueue;
   private static BlockingQueue<Connection> givenAwayConQueue;
   private static String driverName;
@@ -47,27 +41,29 @@ public class ConnectionPool {
   private static String password;
   private static int sizePool;
   private static ConnectionPool instance;
+  private  DataBaseManager dataBaseManager;
 
   static {
     instance = new ConnectionPool();
     try {
       initPool();
     } catch (ConnectionPoolException e) {
+      logger.error(e);
       throw new RuntimeException(e);
     }
   }
 
-  public static ConnectionPool Instance() {
+  public static ConnectionPool getInstance() {
     return instance;
   }
 
-  private ConnectionPool() {
-
-    this.driverName = ConnectionPoolConst.DRIVER;
-    this.url = ConnectionPoolConst.URL;
-    this.user = ConnectionPoolConst.USER;
-    this.password = ConnectionPoolConst.PASSWORD;
-    this.sizePool = ConnectionPoolConst.POOL_SIZE;
+  private ConnectionPool()  {
+    this.dataBaseManager = new DataBaseManager();
+    this.driverName = dataBaseManager.getDrivers();
+    this.url = dataBaseManager.getConnectionURL();
+    this.user = dataBaseManager.getUsername();
+    this.password = dataBaseManager.getPassword();
+    this.sizePool = dataBaseManager.getPoolSize();
   }
 
   /**
@@ -104,7 +100,7 @@ public class ConnectionPool {
     return connection;
   }
 
-  public void dispose() {
+  public void dispose() throws ConnectionPoolException {
     clearConnectionQueue();
   }
 
@@ -147,8 +143,8 @@ public class ConnectionPool {
     try {
       st.close();
     } catch (SQLException e) {
-      logger.error("Error closing connection.", e);
-
+      logger.error("Error clearing connection queue.", e);
+      throw new ConnectionPoolException(e);
     }
     try {
       con.close();
@@ -161,13 +157,9 @@ public class ConnectionPool {
   /**
    * clear connection queue
    */
-  private void clearConnectionQueue() {
-    try {
-      closeConnectionsQueue(givenAwayConQueue);
-      closeConnectionsQueue(connectionQueue);
-    } catch (SQLException e) {
-      logger.error("Error clearing connection queue.", e);
-    }
+  private void clearConnectionQueue() throws ConnectionPoolException {
+    closeConnectionsQueue(givenAwayConQueue);
+    closeConnectionsQueue(connectionQueue);
   }
 
   /**
@@ -176,13 +168,23 @@ public class ConnectionPool {
    * @param queue
    * @throws SQLException
    */
-  private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
+  private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws ConnectionPoolException {
     Connection connection;
     while ((connection = queue.poll()) != null) {
-      if (!connection.getAutoCommit()) {
-        connection.commit();
+      try {
+        if (!connection.getAutoCommit()) {
+          connection.commit();
+        }
+      } catch (SQLException e) {
+        logger.error("Error clearing connection queue.", e);
+        throw new ConnectionPoolException(e);
       }
-      ((PooledConnection) connection).reallyClose();
+      try {
+        ((PooledConnection) connection).reallyClose();
+      } catch (SQLException e) {
+        logger.error("Error clearing connection queue.", e);
+        throw new ConnectionPoolException(e);
+      }
     }
   }
 

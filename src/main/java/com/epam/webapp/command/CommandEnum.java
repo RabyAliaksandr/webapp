@@ -81,7 +81,7 @@ public enum CommandEnum {
   },
   ADD_TASK_FOR_TRAINING {
     {
-      this.command = new AddTaskForTraining();
+      this.command = new AddTaskForTrainingCommand();
     }
   },
   MANAGEMENT_PAGE {
@@ -162,6 +162,66 @@ public enum CommandEnum {
   SEND_ORDER_CONSULTATION {
     {
       this.command = new SendOrderConsultationCommand();
+    }
+  },
+  SET_LOCAL {
+    {
+      this.command = new SetLocalCommand();
+    }
+  },
+  CARD_MANAGEMENT {
+    {
+      this.command = new CardManagementCommand();
+    }
+  },
+  REPLENISH_CARD {
+    {
+      this.command = new ReplenishCardCommand();
+    }
+  },
+  TRANSFER_MONEY {
+    {
+      this.command = new TransferMoneyCommand();
+    }
+  },
+  PAYMENT_CONSULTATION {
+    {
+      this.command = new PaymentConsulttionCommand();
+    }
+  },
+  SET_FINAL_GRADE {
+    {
+      this.command = new SetFinalGradeCommand();
+    }
+  },
+  CLOSE_RECEPTION {
+    {
+      this.command = new CloseReceptionCommand();
+    }
+  },
+  DELETE_USER {
+    {
+      this.command = new DeleteUserCommand();
+    }
+  },
+  DELETE_TRAINING {
+    {
+      this.command = new DeleteTrainingCommand();
+    }
+  },
+  DELETE_TOPIC {
+    {
+      this.command = new DeleteTopicCommand();
+    }
+  },
+  DELETE_TASK {
+    {
+      this.command = new DeleteTaskCommand();
+    }
+  },
+  GIVE_FEEDBACK {
+    {
+      this.command = new GiveFeedBackCommand();
     }
   };
 

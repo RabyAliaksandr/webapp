@@ -1,2 +1,2 @@
 
-¢%squid:RedundantThrowsDeclarationCheck"jRemove the redundant 'com.epam.webapp.command.exception.CommandException' thrown exception declaration(s).(ö•Ëú8‘©‹ä-
+gsquid:UselessImportCheck"<Remove this unused import 'com.epam.webapp.entity.UserType'.(ê¼í8Ðû“™è-

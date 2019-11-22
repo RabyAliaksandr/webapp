@@ -1,10 +1,15 @@
 
-gsquid:S1134B"DTake the required action to fix the issue indicated by this comment.(Ò¥Øàÿÿÿÿÿ8©á‚æ-
-ksquid:S2095U"HUse try-with-resources or close this "Connection" in a "finally" clause.(¹»­èúÿÿÿÿ8©á‚æ-
-Šsquid:S1845/"gRename field "password" to prevent any misunderstanding/clash with field "PASSWORD" defined on line 39.(œãë­úÿÿÿÿ8©á‚æ-
-dsquid:S2142h"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8©á‚æ-
-}squid:S1192~"ZDefine a constant instead of duplicating this literal "Error closing connection." 5 times.(¢àÔÊúÿÿÿÿ8©á‚æ-
-bsquid:S2147\"DCombine this catch with the one at line 89, which has the same body.(É®£8©á‚æ-
-Jsquid:S1068%"'Remove this unused "URL" private field.(ïÌ¥üÿÿÿÿ8©á‚æ-
-‚squid:S1845."_Rename field "user" to prevent any misunderstanding/clash with field "USER" defined on line 38.(‡ÏÇ³øÿÿÿÿ8Å¤Ãºá-
-€squid:S1845-"]Rename field "url" to prevent any misunderstanding/clash with field "URL" defined on line 37.(«Œåùÿÿÿÿ8Å¤Ãºá-
+Csquid:S3010"'Remove this assignment of "driverName".(ë÷Èç8Ö”¯Ôç-
+Fsquid:S3010"%Remove this assignment of "password".(ñ Éøÿÿÿÿ8ºÇÄ·ç-
+Vsquid:S2209"5Change this instance-reference to a static reference.(ñ Éøÿÿÿÿ8ºÇÄ·ç-
+Qsquid:S2209"5Change this instance-reference to a static reference.(³Ñ¢¯8ºÇÄ·ç-
+`squid:S2147"DCombine this catch with the one at line 84, which has the same body.(É®£8Ö”¯Ôç-
+Asquid:S3010"%Remove this assignment of "sizePool".(›ø’Ã8Ö”¯Ôç-
+bsquid:S2142"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8Ö”¯Ôç-
+<squid:S3010" Remove this assignment of "url".(İÎ€ê8Ö”¯Ôç-
+Qsquid:S2209"5Change this instance-reference to a static reference.(ë÷Èç8Ö”¯Ôç-
+hsquid:S00112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ºÇÄ·ç-
+Qsquid:S2209"5Change this instance-reference to a static reference.(İÎ€ê8Ö”¯Ôç-
+{squid:S1192"ZDefine a constant instead of duplicating this literal "Error closing connection." 5 times.(¢àÔÊúÿÿÿÿ8Ö”¯Ôç-
+Qsquid:S2209"5Change this instance-reference to a static reference.(›ø’Ã8Ö”¯Ôç-
+=squid:S3010"!Remove this assignment of "user".(³Ñ¢¯8ºÇÄ·ç-
