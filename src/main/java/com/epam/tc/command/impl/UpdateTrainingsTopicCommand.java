@@ -10,6 +10,7 @@ import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceFactory;
 import com.epam.tc.service.TopicService;
 import com.epam.tc.service.ServiceException;
+import com.epam.tc.validator.InputDataValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,21 +25,36 @@ public class  UpdateTrainingsTopicCommand implements Command {
     TopicService topicService = ServiceFactory.getTopicService();
     String topicName = request.getParameter(RequestVariableName.TOPIC_NAME);
     String topic = request.getParameter(RequestVariableName.TOPIC);
+    InputDataValidation validation = new InputDataValidation();
+    topicName = validation.stripXSS(topicName);
+    topicName = validation.deleteExcessiveSpace(topicName);
+    topic = validation.stripXSS(topic);
+    topic = validation.deleteExcessiveSpace(topic);
     int topicId = Integer.parseInt(request.getParameter(RequestVariableName.TOPIC_ID));
-    boolean done;
+    boolean checkTopic = validation.checkSizeTextArea(topic, 50, 1000);
+    boolean checkTopicName = validation.checkSizeTextArea(topicName, 5, 70);
+    if (!checkTopic) {
+      request.getSession().setAttribute(RequestVariableName.TEXT, topic);
+      request.getSession().setAttribute(RequestVariableName.NAME, topicName);
+      request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
+              MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_SIZE));
+      return ConfigurationManager.getProperty(PageName.TOPIC_PAGE);
+    }
+    if (!checkTopicName) {
+      request.getSession().setAttribute(RequestVariableName.TEXT, topic);
+      request.getSession().setAttribute(RequestVariableName.NAME, topicName);
+      request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
+              MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_NAME_SIZE));
+      return ConfigurationManager.getProperty(PageName.TOPIC_PAGE);
+    }
     try {
-      done = topicService.updateTrainingsTopic(topicId, topicName, topic);
+    topicService.updateTrainingsTopic(topicId, topicName, topic);
     } catch (ServiceException e) {
       logger.error(e);
       throw new CommandException("Error access service", e);
     }
-    if (done) {
       request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
               MessageManager.getProperty(MessageName.MESSAGE_CHANGES_SAVED));
       return ConfigurationManager.getProperty(PageName.TOPIC_PAGE);
-    }
-    request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
-            MessageManager.getProperty(MessageName.MESSAGE_CHANGES_ERROR));
-    return ConfigurationManager.getProperty(PageName.TOPIC_PAGE);
   }
 }

@@ -10,6 +10,7 @@ import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.PaymentCardService;
 import com.epam.tc.service.ServiceException;
 import com.epam.tc.service.ServiceFactory;
+import com.epam.tc.validator.InputDataValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +23,15 @@ public class ReplenishCardCommand implements Command {
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
-    BigDecimal sum = new BigDecimal(request.getParameter(RequestVariableName.SUM));
+    String tempSum = request.getParameter(RequestVariableName.SUM);
+    InputDataValidation validation = new InputDataValidation();
+    boolean checkSum = validation.checkMoneyField(tempSum);
+    if (!checkSum) {
+      request.getSession().setAttribute(MessageName.MESSAGE_OPERATION,
+              MessageManager.getProperty(MessageName.MESSAGE_INVALID_SUM));
+      return ConfigurationManager.getProperty(PageName.CARD_MANAGEMENT);
+    }
+    BigDecimal sum = new BigDecimal(tempSum);
     int cardId = Integer.parseInt(request.getParameter(RequestVariableName.CARD_ID));
     PaymentCardService paymentCardService = ServiceFactory.getPaymentCardService();
     request.getSession().setAttribute(MessageName.MESSAGE_OPERATION,

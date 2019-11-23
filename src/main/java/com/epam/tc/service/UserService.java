@@ -6,15 +6,33 @@ import com.google.protobuf.ServiceException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * this interface has methods for work with User
+ * @see User
+ */
+
 public interface UserService {
 
-  Map<Task, User> findAllMentors() throws ServiceException;
+  /**
+   * finding all users who have type 'mentor'
+   * @return
+   * @throws ServiceException
+   * @see User
+   * @see Training
+   * @see UserType
+   */
+  Map<Training, User> findAllMentors() throws ServiceException;
 
+  /**
+   * compare values login and password which are in dataBase to input values
+   * @param login
+   * @param password
+   * @return
+   * @throws ServiceException
+   */
   User checkLogin(String login, String password) throws ServiceException;
-
-//  User checkRegistrationField(String login, String password, String name, String surname,
-//                              String email) throws ServiceException;
-
 
   boolean checkEnrolled(int userId, int trainingId) throws ServiceException;
 

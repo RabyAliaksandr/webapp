@@ -1,4 +1,0 @@
-
-msquid:S1192"JUse already-defined constant 'TYPE' instead of duplicating its value here.(Şíßÿÿÿÿÿ8ÓÊøà-
-vsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(á¨Ú8šŒŸøà-
-¬squid:S1845"ˆRename method "getTYPE" to prevent any misunderstanding/clash with method "getType" defined in superclass "com.epam.webapp.entity.User".(²‚œ£øÿÿÿÿ8›ª”á-

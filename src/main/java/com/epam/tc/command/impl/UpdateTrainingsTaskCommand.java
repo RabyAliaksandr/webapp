@@ -10,6 +10,7 @@ import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceFactory;
 import com.epam.tc.service.TaskService;
 import com.epam.tc.service.ServiceException;
+import com.epam.tc.validator.InputDataValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,20 +26,35 @@ public class UpdateTrainingsTaskCommand implements Command {
     int taskId = Integer.parseInt(request.getParameter(RequestVariableName.TASK_ID));
     String taskName = request.getParameter(RequestVariableName.TASK_NAME);
     String task = request.getParameter(RequestVariableName.TASK);
-    boolean done;
+    InputDataValidation validation = new InputDataValidation();
+    taskName = validation.stripXSS(taskName);
+    taskName = validation.deleteExcessiveSpace(taskName);
+    task = validation.stripXSS(task);
+    task = validation.deleteExcessiveSpace(task);
+    boolean checkTask = validation.checkSizeTextArea(task, 50, 1000);
+    boolean checkTaskName = validation.checkSizeTextArea(taskName, 5, 70);
+    if (!checkTask) {
+      request.getSession().setAttribute(RequestVariableName.NAME, taskName);
+      request.getSession().setAttribute(RequestVariableName.INFORMATION, task);
+      request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
+              MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_SIZE));
+      return ConfigurationManager.getProperty(PageName.CREATE_TEXT_PAGE);
+    }
+    if (!checkTaskName) {
+      request.getSession().setAttribute(RequestVariableName.NAME, taskName);
+      request.getSession().setAttribute(RequestVariableName.INFORMATION, task);
+      request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
+              MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_SIZE));
+      return ConfigurationManager.getProperty(PageName.CREATE_TEXT_PAGE);
+    }
     try {
-      done = taskService.updateTask(taskId, taskName, task);
+      taskService.updateTask(taskId, taskName, task);
     } catch (ServiceException e) {
       logger.error(e);
       throw new CommandException("Error access service", e);
     }
-    if (done) {
       request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
               MessageManager.getProperty(MessageName.MESSAGE_CHANGES_SAVED));
       return ConfigurationManager.getProperty(PageName.TASK_PAGE);
-    }
-    request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
-            MessageManager.getProperty(MessageName.MESSAGE_CHANGES_ERROR));
-    return ConfigurationManager.getProperty(PageName.TASK_PAGE);
   }
 }

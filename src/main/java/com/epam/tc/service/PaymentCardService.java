@@ -14,4 +14,6 @@ public interface PaymentCardService {
   boolean transferMoneyCardToCard(int cardDonor, int cardRecipient, BigDecimal sum) throws ServiceException;
 
   boolean paymentConsultation(int cardId, int consultationId, int userId) throws ServiceException;
+
+  boolean addPaymentCard(int userId, long cardNumber) throws ServiceException;
 }

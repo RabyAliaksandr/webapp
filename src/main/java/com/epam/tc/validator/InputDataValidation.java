@@ -1,50 +1,9 @@
-package com.epam.tc.filter;
+package com.epam.tc.validator;
 
-import com.epam.tc.validator.InputDataValidation;
-import com.epam.tc.validator.RegEx;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class XssRequestWrapper extends HttpServletRequestWrapper {
-
-
-  public XssRequestWrapper(HttpServletRequest request) {
-    super(request);
-  }
-
-  InputDataValidation inputDataValidation;
-  @Override
-  public String[] getParameterValues(String parameter) {
-    String[] values = super.getParameterValues(parameter);
-    this.inputDataValidation = new InputDataValidation();
-
-    if (values == null) {
-      return null;
-    }
-
-    int count = values.length;
-    String[] encodedValues = new String[count];
-    for (int i = 0; i < count; i++) {
-      encodedValues[i] = inputDataValidation.stripXSS(values[i]);
-    }
-
-    return encodedValues;
-  }
-
-  @Override
-  public String getParameter(String parameter) {
-    String value = super.getParameter(parameter);
-
-    return stripXSS(value);
-  }
-
-  @Override
-  public String getHeader(String name) {
-    String value = super.getHeader(name);
-    return stripXSS(value);
-  }
+public class InputDataValidation {
 
   public String stripXSS(String value) {
     if (value != null) {
@@ -71,4 +30,33 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
     }
     return value;
   }
+
+  public boolean checkMoneyField(String sum) {
+    Pattern pattern = Pattern.compile(RegEx.PATTERN_MONEY);
+    Matcher matcher = pattern.matcher(sum);
+    return matcher.matches();
+  }
+
+  public boolean checkCardNumber(String number) {
+    Pattern pattern = Pattern.compile(RegEx.PATTERN_CARD_NUMBER);
+    Matcher matcher = pattern.matcher(number);
+    return matcher.matches();
+  }
+
+  public boolean checkSizeTextArea(String text, int minSize, int maxSize) {
+    if (text.isEmpty()) {
+      return false;
+    }
+    return text.length() <= maxSize && text.length() >= minSize;
+  }
+
+  public String deleteExcessiveSpace(String text) {
+    text = text.replaceAll(RegEx.PATTERN_EXCESSIVE_SPACES, " ");
+    return text;
+  }
+
+  public boolean checkGrade(int grade) {
+    return grade >= 1 && grade <= 10;
+  }
+
 }

@@ -1,16 +1,0 @@
-
-bsquid:S2147U"DCombine this catch with the one at line 82, which has the same body.(É®£8Ö”¯Ôç-
-}squid:S1192v"ZDefine a constant instead of duplicating this literal "Error closing connection." 4 times.(¢àÔÊúÿÿÿÿ8Ö”¯Ôç-
-dsquid:S2142`"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8Ö”¯Ôç-
-Dsquid:S3010@"!Remove this assignment of "user".(ÿú·üÿÿÿÿ8ºÇÄ·ç-
-Ssquid:S2209>"5Change this instance-reference to a static reference.(¨ °ã8Ö”¯Ôç-
-Csquid:S3010?" Remove this assignment of "url".(úœ½ıøÿÿÿÿ8Ö”¯Ôç-
-Csquid:S3010A"%Remove this assignment of "password".(ÀÁê…8ºÇÄ·ç-
-Esquid:S3010>"'Remove this assignment of "driverName".(¨ °ã8Ö”¯Ôç-
-Ssquid:S2209B"5Change this instance-reference to a static reference.(´ÁÈ8Ö”¯Ôç-
-Xsquid:S2209?"5Change this instance-reference to a static reference.(úœ½ıøÿÿÿÿ8Ö”¯Ôç-
-Csquid:S3010B"%Remove this assignment of "sizePool".(´ÁÈ8Ö”¯Ôç-
-Xsquid:S2209@"5Change this instance-reference to a static reference.(ÿú·üÿÿÿÿ8ºÇÄ·ç-
-jsquid:S001124"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ºÇÄ·ç-
-€squid:S1192’"aDefine a constant instead of duplicating this literal "Error clearing connection queue." 3 times.(õ÷ç8Äğùÿè-
-Ssquid:S2209A"5Change this instance-reference to a static reference.(ÀÁê…8ºÇÄ·ç-

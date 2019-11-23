@@ -24,7 +24,7 @@ public interface UserDao {
 
   List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws DaoException;
 
-  Map<Task, User> findAllMentors() throws DaoException;
+  Map<Training, User> findAllMentors() throws DaoException;
 
   boolean checkLogin(String login) throws DaoException;
 

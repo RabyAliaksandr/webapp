@@ -8,6 +8,7 @@ import com.epam.tc.command.PageName;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.impl.UserServiceImpl;
+import com.epam.tc.validator.InputDataValidation;
 import com.google.protobuf.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +38,20 @@ public class OfferDateCommand implements Command {
       throw new CommandException("Invalid date", e);
     }
     java.sql.Date dateSql = new java.sql.Date(dateUtil.getTime());
-    BigDecimal price = new BigDecimal(request.getParameter(RequestVariableName.PRICE));
+    if (currentDate.after(dateSql)) {
+      request.getSession().setAttribute(MessageName.MESSAGE_OFFER_SENT,
+              MessageManager.getProperty(MessageName.MESSAGE_SENT_ERROR_DATE));
+      return ConfigurationManager.getProperty(PageName.ADMIN_MANAGEMENT);
+    }
+    InputDataValidation validation = new InputDataValidation();
+    String tempPrice = request.getParameter(RequestVariableName.PRICE);
+    boolean checkPrice = validation.checkMoneyField(tempPrice);
+    if (!checkPrice) {
+      request.getSession().setAttribute(MessageName.MESSAGE_OFFER_SENT,
+              MessageManager.getProperty(MessageName.MESSAGE_SENT_ERROR_MONEY));
+      return ConfigurationManager.getProperty(PageName.ADMIN_MANAGEMENT);
+    }
+    BigDecimal price = new BigDecimal(tempPrice);
     int trainingId = Integer.parseInt(request.getParameter(RequestVariableName.TRAINING_ID));
     UserServiceImpl userService = new UserServiceImpl();
     try {
@@ -45,11 +59,6 @@ public class OfferDateCommand implements Command {
     } catch (ServiceException e) {
       logger.error(e);
       throw new CommandException("Error access service", e);
-    }
-    if (currentDate.after(dateSql)) {
-      request.getSession().setAttribute(MessageName.MESSAGE_OFFER_SENT,
-              MessageManager.getProperty(MessageName.MESSAGE_SENT_ERROR_DATE));
-      return ConfigurationManager.getProperty(PageName.ADMIN_MANAGEMENT);
     }
     if (done) {
       request.getSession().setAttribute(MessageName.MESSAGE_OFFER_SENT,

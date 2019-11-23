@@ -107,6 +107,17 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  @Override
+  public List<String> findReviews() throws ServiceException {
+    TrainingDao trainingDao = DaoFactory.getTrainingDao();
+    try {
+      return trainingDao.findReviews();
+    } catch (DaoException e) {
+      logger.error(e);
+      throw new ServiceException(e);
+    }
+  }
+
   public final boolean checkTrainingStatusForStudent(int userId, int trainingId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
     try {

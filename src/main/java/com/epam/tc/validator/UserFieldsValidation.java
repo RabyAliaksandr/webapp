@@ -1,7 +1,5 @@
 package com.epam.tc.validator;
 
-import com.epam.tc.filter.RegEx;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

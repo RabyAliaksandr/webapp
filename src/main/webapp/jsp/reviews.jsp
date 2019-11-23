@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: alex
+  Date: 23.11.2019
+  Time: 6:15
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,16 +17,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
-    <style>
-        body {
-            background-image: url('./images/background2.jpg');
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
-    </style>
-    <head><title>Welcome</title></head>
+    <head><title><fmt:message key="reviews"/></title></head>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -57,12 +55,6 @@
                         </a>
                     </li>
                 </c:if>
-                <li>
-                    <a href="controller?command=reviews">
-                        <fmt:message key="reviews"/>
-                    </a>
-                </li>
-
             </ul>
             <form id="xxx" method="post" action="controller">
                 <input type="hidden" name="command" value="set_local"/>
@@ -75,8 +67,31 @@
     </nav>
     <br/>
     <body>
-
+    <div class="container">
+        <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
+        <div class="text-center">
+            <table>
+            <thead>
+            <tr>
+                <th>No</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:set var="count" value="1"/>
+            <c:forEach var="review" items="${trainingService.findReviews()}">
+                <tr>
+                    <td>${count}</td>
+                    <td>
+                       ${review}
+                    </td>
+                </tr>
+                <c:set var="count" value="${count + 1}"/>
+            </c:forEach>
+            </tbody>
+        </table>
+        </div>
+    </div>
     </body>
-    <ctg:currentDate/>
-    <html></html>
+    </html>
 </fmt:bundle>

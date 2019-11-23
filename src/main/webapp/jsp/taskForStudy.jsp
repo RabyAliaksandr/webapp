@@ -106,9 +106,9 @@
                     <input type="hidden" name="command" value="send_solution"/>
                     <input type="hidden" name="taskId" value="${taskId}"/>
                     <input type="hidden" name="userId" value="${user.id}"/>
-                    <textarea id="editor" form="sendSolution" name="solution" maxlength="10000" required>
+                    <textarea id="editor" form="sendSolution" name="solution" maxlength="1000" required>
             </textarea>
-                    <button type="submit" class="btn btn-danger btn-lg btn-block" style="width: 95%;margin: 5px auto;">
+                    <button type="submit" class="btn btn-danger btn-lg btn-block">
                         <fmt:message key="send"/>
                     </button>
                 </form>

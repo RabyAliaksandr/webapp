@@ -1,7 +1,0 @@
-
-lsquid:S2259‘"HA "NullPointerException" could be thrown; "connection" is nullable here.(Øîğ€ıÿÿÿÿ8–†–’é-
-gsquid:S21470"DCombine this catch with the one at line 45, which has the same body.(Ù£­—ÿÿÿÿÿ8úÿ’ªè-
-gsquid:S2147f"DCombine this catch with the one at line 99, which has the same body.(Ù£­—ÿÿÿÿÿ8úÿ’ªè-
-Ksquid:S1125j"(Remove the literal "true" boolean value.(¯Åîıÿÿÿÿ8úÿ’ªè-
-gsquid:S2147K"DCombine this catch with the one at line 72, which has the same body.(Ù£­—ÿÿÿÿÿ8úÿ’ªè-
-Qsquid:S1481q".Remove this unused "resultSet" local variable.(›÷Œœúÿÿÿÿ8³¶«è-

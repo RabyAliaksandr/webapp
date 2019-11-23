@@ -111,7 +111,6 @@
             </tbody>
         </table>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const getSort = ({target}) => {

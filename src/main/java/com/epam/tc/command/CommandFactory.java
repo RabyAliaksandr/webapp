@@ -19,7 +19,7 @@ public class CommandFactory {
     } catch (IllegalArgumentException e) {
       current = new EmptyCommand();
       request.setAttribute(MessageName.WRONG_ACTION,
-              action + MessageManager.getProperty(MessageName.MESSAGE_WRONG_ACTION));
+              action + " " + MessageManager.getProperty(MessageName.MESSAGE_WRONG_ACTION));
     }
     return current;
   }

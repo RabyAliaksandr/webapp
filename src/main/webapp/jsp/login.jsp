@@ -41,11 +41,11 @@
             <br/><fmt:message key="userPassword"/> :<br/>
             <input type="password" name="password" value=""/>
             <br/>
-                ${errorLoginPassMessage}
+              <label><font color="red">${errorLoginPassMessage}</font> </label>
             <br/>
-                ${wrongAction}
+            <label><font color="red"> ${wrongAction}</font> </label>
             <br/>
-                ${nullPage}
+            <label><font color="red"> ${nullPage}</font> </label>
             <br/>
             <input type="submit" value=<fmt:message key="login"/>>
             <br/>

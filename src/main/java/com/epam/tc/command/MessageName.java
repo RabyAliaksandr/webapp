@@ -56,4 +56,13 @@ public class MessageName {
   public static final String DELETE_TRAINING_MESSAGE_WRONG = "message.deleteTrainingWrong";
   public static final String FEEDBACK_MESSAGE_SAVE = "message.feedbackGave";
   public static final String FEEDBACK_MESSAGE = "messageFeedback";
+  public static final String MESSAGE_ADD_PAYMENT_CARD = "messageAddCard";
+  public static final String MESSAGE_ADD_PAYMENT_CARD_DONE = "message.addCardDone";
+  public static final String MESSAGE_ADD_PAYMENT_CARD_WRONG = "message.addCardWrong";
+  public static final String MESSAGE_SENT_ERROR_MONEY = "message.errorMoney";
+  public static final String MESSAGE_ADD_PAYMENT_CARD_INVALID_NUMBER = "message.invalidCardNumber";
+  public static final String MESSAGE_INVALID_SUM = "message.invalidSum";
+  public static final String MESSAGE_TEXTAREA_SIZE = "message.textAreaSize";
+  public static final String MESSAGE_TEXTAREA_NAME_SIZE = "message.textAreaNameSize";
+  public static final String FINAL_GRADE_INVALID = "message.invalidGrade";
 }

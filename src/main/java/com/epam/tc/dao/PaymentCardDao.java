@@ -14,4 +14,6 @@ public interface PaymentCardDao {
   boolean transferMoneyCardToCard(int cardDonor, int cardRecipient, BigDecimal sum) throws DaoException;
 
   boolean paymentConsultation(int cardId, int consultationId, int userId) throws DaoException;
+
+  boolean addPaymentCard(int userId, long cardNumber) throws DaoException;
 }

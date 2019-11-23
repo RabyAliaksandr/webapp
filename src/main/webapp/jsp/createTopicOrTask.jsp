@@ -36,7 +36,6 @@
                     <a href="controller?command=cabinet">
                         <fmt:message key="cabinet"/></a>
                 </li>
-
                 <li>
                     <a href="controller?command=log_out">
                         <fmt:message key="logout"/>
@@ -46,7 +45,7 @@
             </ul>
             <form id="xxx" method="post" action="controller">
                 <input type="hidden" name="command" value="set_local"/>
-
+                <input type="hidden" name="redirectTo" value="true"/>
                 <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
                         class="btn-link" type="submit">
                         ${local == 'en' ? 'Ru' : 'En'}
@@ -58,9 +57,13 @@
     <hr/>
         <%--form for edit description training--%>
     <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
-
     <div class="container-fluid">
-
+        <c:if test="${changesSavedMessage != null}">
+            <div class="alert alert-danger" role="alert">
+                    ${changesSavedMessage}
+                <c:set var="changesSavedMessage" value="${null}"/>
+            </div>
+        </c:if>
         <c:if test="${typeOperation == 'edit'}">
             <c:set var="training"
                    value="${trainingService.findTrainingByIdTraining(trainingId)}"
@@ -71,77 +74,66 @@
             <form id="www" method="post" action="controller">
                 <input type="hidden" name="command" value="update_information_about_training"
                        id="name" required/>
-                <input type="text" name="trainingName" value="${trainingName}" required maxlength="70"/>
+                <input type="text" name="trainingName" value="${name != null ? name : trainingName}" required maxlength="70"/>
                 <input type="hidden" name="trainingId" value="${trainingId}"/>
-
-                <textarea id="qweqwe" form="www"
+                <textarea id="qweqwe" required maxlength="1000" form="www"
                           name="information">
-                        ${text}
+                        ${information != null ? information : text}
                 </textarea>
-
-                <div class="last_later">Left <span id="remain">100</span> symbols</div>
                 <input type="submit" value=<fmt:message key="send"/>/>
             </form>
-
+            <c:set var="information" value="${null}"/>
+            <c:set var="name" value="${null}"/>
             <div id="counter"></div>
         </c:if>
-
-
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('textarea').editor({
-                    uiLibrary: 'bootstrap'
-                });
-
-            });
-        </script>
-              form for add topic
         <c:if test="${typeOperation == 'addTopic'}">
             <hr/>
             <form id="addTopic" method="post" action="controller">
-
                 <div class="form-group">
-                    <label for="form">Topics name:</label>
-                    <input type="text" class="form-control" id="form" name="topicsName" maxlength="70" required>
+                    <label for="form"><fmt:message key="topicsName"/></label>
+                    <input type="hidden" name="redirectTo" value="true"/>
+                    <input type="text" class="form-control" id="form"
+                           placeholder="min 5 max 70" name="topicsName" maxlength="70"
+                           value="${name}" required>
                 </div>
                 <input type="hidden" name="command" value="add_topic_for_training"/>
                 <input type="hidden" name="trainingId" value="${trainingId}" required/>
-                <textarea id="editor1" form="addTopic" name="topicsText" maxlength="10000">
+                <textarea id="editor1" form="addTopic" name="topicsText" placeholder="min 50 max 1000" maxlength="1000">
                         ${text}
                 </textarea>
                 <input type="submit" value=<fmt:message key="send"/>>
             </form>
         </c:if>
-
         <c:if test="${typeOperation == 'addTask'}">
             <hr/>
             <form id="addTopic" method="post" action="controller">
-
+                <input type="hidden" name="redirectTo" value="true"/>
                 <div class="form-group">
-                    <label>Topics name:</label>
-                    <input type="text" class="form-control" name="taskName" maxlength="70" required>
+                    <label><fmt:message key="topicsName"/></label>
+                    <input type="text" placeholder="min - 5 max - 70" class="form-control" name="taskName"
+                          value="${name}" maxlength="70" required>
                 </div>
                 <input type="hidden" name="command" value="add_task_for_training"/>
                 <input type="hidden" name="trainingId" value="${trainingId}"/>
-                <textarea id="editor2" pa form="addTopic" name="taskText" maxlength="1000" required>
+                <textarea id="editor2" form="addTopic" name="taskText" maxlength="1000" required>
                         ${text}
                 </textarea>
                 <input type="submit" value=<fmt:message key="send"/>>
             </form>
         </c:if>
-
         <c:if test="${typeOperation == 'createTraining'}">
             <hr/>
             <form id="addTraining" method="post" action="controller">
                 <input type="hidden" name="command" value="create_training"/>
+                <input type="hidden" name="redirectTo" value="true"/>
                 <div class="form-group">
-                    <label>Training Name:</label>
-                    <input type="text" class="form-control" name="trainingName" maxlength="70">
+                    <label><fmt:message key="name"/> </label>
+                    <input type="text" class="form-control" name="trainingName"
+                           required maxlength="70" value="${name}">
                 </div>
                 <textarea id="editor3" form="addTraining" name="description" maxlength="1000" required>
+                    ${text}
             </textarea>
-
                 <div class="form-group">
                     <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>
                     <label class="control-label col-sm-offset-2 col-sm-2" for="company"><fmt:message
@@ -149,13 +141,12 @@
                     <div class="col-sm-6 col-md-4">
 
                         <select id="company" class="form-control" name="mentorId">
-                            <c:forEach var="user" items="${userService.findAllMentors}">
-                                <option value=${user.id}>${user.name} ${user.surname}</option>
+                            <c:forEach var="mentor" items="${userService.findAllMentors()}">
+                                <option value=${mentor.value.id}>${mentor.value.name} ${mentor.value.surname}</option>
                             </c:forEach>
                         </select>
                     </div>
                 </div>
-
                 <input type="submit" value=<fmt:message key="send"/>>
             </form>
         </c:if>
@@ -163,76 +154,62 @@
         <c:if test="${typeOperation == 'editTopic'}">
             <c:set var="topic" value="${topicService.findTopic(topicId)}"/>
             <hr/>
-            <c:out value="${topicId} fuck "/>
             <form id="editTopic" method="post" action="controller">
                 <input type="hidden" name="topicId" value="${topicId}"/>
+                <input type="hidden" name="redirectTo" value="true"/>
                 <div class="form-group">
                     <label><fmt:message key="topicsName"/></label>
-                    <input type="text" class="form-control" name="topicName" maxlength="70" value="${topic.name}"
+                    <input type="text" class="form-control" name="topicName"
+                           maxlength="70" value="${name == null ? topic.name : name}"
                            required>
                 </div>
                 <input type="hidden" name="command" value="update_trainings_topic"/>
-                    <%--            <input type="hidden" name="trainingId" value="${trainingId}"/>--%>
                 <textarea id="editor4" form="editTopic" name="topic" maxlength="10000" required>
-                        ${topic.topic}
+                        ${text == null ? topic.topic : text}
                 </textarea>
                 <input type="submit" value=<fmt:message key="send"/>>
             </form>
         </c:if>
-
             <%--edit task for training--%>
         <c:if test="${typeOperation == 'editTask'}">
             <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TaskServiceImpl"/>
             <c:set var="task" value="${taskService.findTask(taskId)}"/>
             <hr/>
             <form id="editTask" method="post" action="controller">
+                <input type="hidden" name="redirectTo" value="true"/>
                 <div class="form-group">
                     <label><fmt:message key="tasksName"/></label>
-                    <input type="text" class="form-control" name="taskName" maxlength="70" value="${task.name}"
+                    <input type="text" class="form-control" name="taskName" maxlength="70"
+                           value="${name == null ? task.name : name}"
                            required>
                     <input type="hidden" name="taskId" value="${taskId}"/>
                 </div>
                 <input type="hidden" name="command" value="update_trainings_task"/>
                 <textarea id="editor5" form="editTask" name="task" maxlength="10000" required>
-                        ${task.task}
+                        ${text == null ? task : text}
                 </textarea>
                 <input type="submit" value=<fmt:message key="send"/>>
             </form>
         </c:if>
-            <%--    <script type="text/javascript">--%>
-            <%--        $(document).ready(function () {--%>
-            <%--            $("#editor5").editor({--%>
-            <%--                uiLibrary: 'bootstrap'--%>
-            <%--            });--%>
-            <%--        });--%>
-            <%--    </script>--%>
-
         <div class="container-fluid">
-                <%--        <c:if test="${messageFeedback != null}">--%>
-                <%--            <div class="alert alert-danger" role="alert">--%>
-                <%--                    ${messageFeedback}--%>
-                <%--                <c:set var="messageFeedback" value="${null}"/>--%>
-                <%--            </div>--%>
-                <%--        </c:if>--%>
             <c:if test="${typeOperation == 'giveFeedback'}">
                 <hr/>
                 <form method="post" action="controller">
                     <input type="hidden" name="command" value="give_feedback"/>
-
                     <textarea id="editor6" name="feedback" maxlength="1000" required>
             </textarea>
                     <input type="submit" value=<fmt:message key="send"/>>
                 </form>
             </c:if>
         </div>
-            <%--    <script type="text/javascript">--%>
-            <%--        $(document).ready(function () {--%>
-            <%--            $("#editor6").editor({--%>
-            <%--                uiLibrary: 'bootstrap'--%>
-            <%--            });--%>
-            <%--        });--%>
-            <%--    </script>--%>
     </div>
     </body>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('textarea').editor({
+                        uiLibrary: 'bootstrap'
+                    });
+                });
+            </script>
     </html>
 </fmt:bundle>

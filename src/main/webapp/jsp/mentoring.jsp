@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <html>
     <head><title>Mentor page</title></head>
     </head>
@@ -51,7 +54,6 @@
     <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>
     <c:set var="count" value="${0}"/>
     <div class="container-fluid">
-
         <h2><fmt:message key="trainingManagement"/></h2>
         <div class="container-fluid">
             <div class="item mx-5 mt-2" style="overflow: hidden">
@@ -79,7 +81,6 @@
                             <tr>
                                 <c:forEach var="task"
                                            items="${userService.findStudentsMarkForTrainingsTask(studentId, trainingId)}">
-                                    <%--                </c:forEach>--%>
                                     <th>
                                             ${task.mark}
                                     </th>
@@ -92,10 +93,7 @@
                 </div>
             </div>
             <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
-<%--            <c:forEach var="fd" items="${trainingService.}"--%>
-
             <c:set var="finalGrade" value="${trainingService.findFinalGrade(studentId, trainingId)}"/>
-
             <c:choose>
                 <c:when test="${finalGrade > 0}">
                     <h4><fmt:message key="finalGrade"/>: ${finalGrade}</h4>
@@ -114,17 +112,14 @@
             </c:choose>
 
         </div>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-                integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-                crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-                integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-                crossorigin="anonymous"></script>
-
-
+        <script>
+            $(document).ready( function () {
+                $('table').DataTable({
+                    "sDom": '<"top"i>rt<"bottom"lp><"clear">',
+                    "info":false
+                });
+            } );
+        </script>
             <%--        </div>--%>
     </body>
     </html>

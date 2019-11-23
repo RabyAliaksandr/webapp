@@ -30,4 +30,5 @@ public class PageName {
   public static final String MENTOR_CABINET = "path.page.mentorCabinet";
 
   public static final String CARD_MANAGEMENT = "path.page.cardManagement";
+  public static final String REVIEWS = "path.page.reviews";
 }

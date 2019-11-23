@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
   public final Logger logger = LogManager.getLogger(UserService.class);
 
-  public final Map<Task, User> findAllMentors() throws ServiceException {
+  public final Map<Training, User> findAllMentors() throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
     try {
       return userDao.findAllMentors();

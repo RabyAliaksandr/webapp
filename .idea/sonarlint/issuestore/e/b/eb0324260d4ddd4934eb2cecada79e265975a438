@@ -1,18 +1,0 @@
-
-isquid:S2147æ"ECombine this catch with the one at line 227, which has the same body.(Ù£­—ÿÿÿÿÿ8ÀŠıˆé-
-isquid:S2147¬"ECombine this catch with the one at line 297, which has the same body.(Ù£­—ÿÿÿÿÿ8ÜÑ‚‰é-
-isquid:S2147“"ECombine this catch with the one at line 400, which has the same body.(Ù£­—ÿÿÿÿÿ8ª–ƒ‰é-
-isquid:S2147í"ECombine this catch with the one at line 362, which has the same body.(Ù£­—ÿÿÿÿÿ8ÜÑ‚‰é-
-isquid:S2147Ë"ECombine this catch with the one at line 200, which has the same body.(Ù£­—ÿÿÿÿÿ8ÀŠıˆé-
-isquid:S2147­"ECombine this catch with the one at line 170, which has the same body.(Ù£­—ÿÿÿÿÿ8ÀŠıˆé-
-\
-squid:S106û"9Replace this use of System.out or System.err by a logger.(¦è¸ùÿÿÿÿ8Î¿‚‰é-
-zsquid:S1192¬"VDefine a constant instead of duplicating this literal "Error access database" 3 times.(Æàø‹üÿÿÿÿ8ÀŠıˆé-
-gsquid:S21473"DCombine this catch with the one at line 48, which has the same body.(Ù£­—ÿÿÿÿÿ8Ì‰ÄÄè-
-isquid:S2147¹"ECombine this catch with the one at line 438, which has the same body.(Ù£­—ÿÿÿÿÿ8ª–ƒ‰é-
-isquid:S2147†"ECombine this catch with the one at line 259, which has the same body.(Ù£­—ÿÿÿÿÿ8Î¿‚‰é-
-W
-squid:S106ü"9Replace this use of System.out or System.err by a logger.(Ì¡¼8ÀŠıˆé-
-hsquid:S2147q"ECombine this catch with the one at line 110, which has the same body.(Ù£­—ÿÿÿÿÿ8ÀŠıˆé-
-gsquid:S2147R"DCombine this catch with the one at line 79, which has the same body.(Ù£­—ÿÿÿÿÿ8ÀŠıˆé-
-\squid:UselessImportCheck"1Remove this unused import 'java.math.BigDecimal'.(êêŠ8¹‰÷ˆé-

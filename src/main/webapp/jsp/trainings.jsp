@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <html>
     <head><title>Trainings</title></head>
     </head>
@@ -106,5 +109,13 @@
         </table>
     </div>
     </body>
+    <script>
+        $(document).ready( function () {
+            $('table').DataTable({
+                "sDom": '<"top"i>rt<"bottom"lp><"clear">',
+                "info":false
+            });
+        } );
+    </script>
     </html>
 </fmt:bundle>

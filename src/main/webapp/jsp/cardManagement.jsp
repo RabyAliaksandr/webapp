@@ -16,6 +16,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <html>
     <head>
         <title><fmt:message key="cardManagement"/></title>
@@ -43,21 +46,21 @@
         </div>
     </nav>
     <br/>
-
     <jsp:useBean id="cardService" class="com.epam.tc.service.impl.PaymentCardServiceImpl"/>
-
     <div class="container-fluid">
-
-
         <c:if test="${messageOperation != null}">
             <div class="alert alert-danger" role="alert">
-                    ${messageOperation}
+                <label><font color="red">${messageOperation}</font> </label>
                 <c:set var="messageOperation" value="${null}"/>
             </div>
         </c:if>
-
-
-        <c:if test="${editor == null}">
+        <c:if test="${messageAddCard != null}">
+            <div class="alert alert-danger" role="alert">
+                   <label><font color="red">${messageAddCard}</font> </label>
+                <c:set var="messageAddCard" value="${null}"/>
+            </div>
+        </c:if>
+         <c:if test="${editor == null}">
             <div class="container">
                 <h2><fmt:message key="yoursCards"/></h2>
                 <table class="table">
@@ -87,7 +90,24 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                <div class="col-sm-3">
+                <label><fmt:message key="addPaymentCard"/> </label>
+                    <form id="addCard" action="controller" method="post">
+                        <input type="hidden" name="command" value="add_payment_card">
+                        <input type="hidden" name="userId" value="${user.id}"/>
+                        <input type="text"  pattern="\d{16}"
+                               class="form-control col-lg-3" required
+                               name="cardNumber"
+                               placeholder=<fmt:message key="inputCardNumber"/>>
+                            <div class="input-group"></div>
+                            <div class="col-sm-2">
+                                <button type="submit" form="addCard"  class="btn btn-danger">
+                                    <fmt:message key="addPaymentCard"/>
+                                </button>
+                            </div>
+                    </form>
             </div>
+    </div>
         </c:if>
         <c:if test="${editor != null}">
             <div class="container">
@@ -105,7 +125,7 @@
                                 <form name="replenish" method="POST" action="controller">
                                     <input type="hidden" name="redirectTo" value="true"/>
                                     <input type="hidden" name="cardId" value="${cardId}"/>
-<%--                                    <input type="hidden" name="editor" value=""/>--%>
+                                        <%--                                    <input type="hidden" name="editor" value=""/>--%>
                                     <input type="hidden" name="command" value="replenish_card"/>
                                     <input type="text"
                                            name="sum"
@@ -121,20 +141,19 @@
                                 <input type="hidden" name="redirectTo" value="true"/>
                                 <input type="hidden" name="command" value="transfer_money"/>
                                 <input type="hidden" name="cardDonor" value="${cardId}"/>
-                                перевести на
+                                <label><fmt:message key="replenish"/></label>
                                 <select class="selectpicker show-tick" name="cardRecipient" required>
-                                   <c:forEach var="card" items="${cardService.findUsersCard(user.id)}">
-                                       <c:if test="${card.id != cardId}">
-                                           <option value="${card.id}">${card.number}</option>
-                                       </c:if>
+                                    <c:forEach var="card" items="${cardService.findUsersCard(user.id)}">
+                                        <c:if test="${card.id != cardId}">
+                                            <option value="${card.id}">${card.number}</option>
+                                        </c:if>
                                     </c:forEach>
                                 </select>
-                                сумма
-
+                                    <fmt:message key="sum"/>
                                 <input type="text" name="sum" class="form-control" maxlength="6"
                                        placeholder="100.00" required
                                        pattern="(0\.((0[1-9]{1})|([1-9]{1}([0-9]{1})?)))|(([1-9]+[0-9]*)(\.([0-9]{1,2}))?)">
-                                <button type="submit" class="btn-success">перевести</button>
+                                <button type="submit" class="btn-success"><fmt:message key="send"/></button>
                             </form>
                         </td>
                     </tr>
@@ -146,5 +165,13 @@
     </div>
 
     </body>
+    <script>
+        $(document).ready( function () {
+            $('table').DataTable({
+                "sDom": '<"top"i>rt<"bottom"lp><"clear">',
+                "info":false
+            });
+        } );
+    </script>
     </html>
 </fmt:bundle>

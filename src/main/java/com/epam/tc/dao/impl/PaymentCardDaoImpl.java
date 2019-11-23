@@ -23,6 +23,50 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
   private static Logger logger = LogManager.getLogger(PaymentCardDaoImpl.class);
 
   @Override
+  public boolean addPaymentCard(int userId, long cardNumber) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection =connectionPool.takeConnection();
+      connection.setAutoCommit(false);
+      preparedStatement = connection.prepareStatement(SQL_ADD_PAYMENT_CARD);
+      preparedStatement.setLong(1, cardNumber);
+      preparedStatement.setLong(2, cardNumber);
+      int check = preparedStatement.executeUpdate();
+      if (check > 0) {
+        preparedStatement.close();
+        preparedStatement = connection.prepareStatement(SQL_ADD_PAYMENT_CARD_TO_USER);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setLong(2, cardNumber);
+        preparedStatement.executeUpdate();
+        connection.commit();
+        return true;
+      } else {
+        connection.rollback();
+        return false;
+      }
+    } catch (SQLException e) {
+      logger.error(e);
+      throw new DaoException(e);
+    } catch (ConnectionPoolException e) {
+      logger.error(e);
+      throw new DaoException(e);
+    } finally {
+      try {
+        connection.setAutoCommit(true);
+      } catch (SQLException e) {
+        logger.error(e);
+      }
+      try {
+        connectionPool.closeConnection(connection, preparedStatement);
+      } catch (ConnectionPoolException e) {
+        logger.error(e);
+      }
+    }
+  }
+
+  @Override
   public List<PaymentCard> findUsersCard(int userId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
@@ -37,7 +81,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
       while (resultSet.next()) {
         PaymentCard paymentCard = new PaymentCard();
         paymentCard.setId(resultSet.getInt(SQL_CARD_ID));
-        paymentCard.setNumber(resultSet.getInt(SQL_CARD_NUMBER));
+        paymentCard.setNumber(resultSet.getLong(SQL_CARD_NUMBER));
         paymentCard.setScore(resultSet.getBigDecimal(SQL_CARD_SCORE));
         paymentCards.add(paymentCard);
       }

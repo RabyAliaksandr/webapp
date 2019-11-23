@@ -70,7 +70,7 @@
         <div class="container">
             <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>
             <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
-            <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TopicServiceImpl"/>
+            <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TaskServiceImpl"/>
             <h2><fmt:message key="button.studentsManagement"/></h2>
                 <%--            table stusents registred on training--%>
             <table id="table_id" class="table table_sort" cellpadding="0" width="100%">
@@ -81,7 +81,7 @@
                     <th><fmt:message key="userName"/><i class="fa fa-fw fa-sort"/></th>
                     <th><fmt:message key="userSurname"/><i class="fa fa-fw fa-sort"/></th>
                     <th><fmt:message key="average"/><i class="fa fa-fw fa-sort"/></th>
-                    <c:forEach var="task" items="${trainingService.findTasksListForTraining(trainingId)}">
+                    <c:forEach var="task" items="${taskService.findTasksListForTraining(trainingId)}">
                         <th>
                             <a href="controller?command=task_page&studentId=${studentId}&taskId=${task.id}&showSolution=true">
                                     ${task.name}
@@ -112,7 +112,6 @@
                            <td>${taskService.findAvgMarkForTasks(student.id, trainingId)}</td>
                            <c:forEach var="task"
                                       items="${userService.findStudentsMarkForTrainingsTask(student.id, trainingId)}">
-                               <%--                </c:forEach>--%>
                                <td>
                                        ${task.mark}
                                </td>
@@ -125,20 +124,14 @@
             </table>
         </div>
     </div>
-
     </body>
     <script>
-        $(document).ready(function () {
-            $('#table_id').DataTable();
-        });
-    </script>
-    <script>
-        var table = $('#table_id').dataTable({
-            sScrollX: "100%",
-            sScrollXInner: "150%",
-            bScrollCollapse: true
-        });
-        new $.fn.dataTable.FixedColumns(table);
+        $(document).ready( function () {
+            $('table').DataTable({
+                "sDom": '<"top"i>rt<"bottom"lp><"clear">',
+                "info":false
+            });
+        } );
     </script>
     </html>
 </fmt:bundle>

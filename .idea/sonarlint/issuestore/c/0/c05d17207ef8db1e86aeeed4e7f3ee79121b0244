@@ -1,7 +1,4 @@
 
-e	Web:S5255"DAdd an "aria-label" or "aria-labbelledby" attribute to this element.(¾÷“Çüÿÿÿÿ8ãØé‚é-
-a	Web:S5254"@Add "lang" and/or "xml:lang" attributes to this "<html>" element(œ÷Ãûÿÿÿÿ8ˆ€æÎç-
-jWeb:DoctypePresenceCheck":Insert a <!DOCTYPE> declaration to before this <html> tag.(œ÷Ãûÿÿÿÿ8ˆ€æÎç-
-a	Web:S5255‡"DAdd an "aria-label" or "aria-labbelledby" attribute to this element.(î¿Ş¦8ãØé‚é-
-a	Web:S5255Í"DAdd an "aria-label" or "aria-labbelledby" attribute to this element.(î¿Ş¦8›¹õƒé-
-YWeb:UnsupportedTagsInHtml5Check"&Remove this deprecated "font" element.(”Â§ÿ8ßã©òè-
+jWeb:DoctypePresenceCheck":Insert a <!DOCTYPE> declaration to before this <html> tag.(œ÷Ãûÿÿÿÿ8ˆ€æÎç-
+YWeb:UnsupportedTagsInHtml5Check“"&Remove this deprecated "font" element.(”Â§ÿ8ışßÈé-
+a	Web:S5254"@Add "lang" and/or "xml:lang" attributes to this "<html>" element(œ÷Ãûÿÿÿÿ8ˆ€æÎç-

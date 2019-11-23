@@ -32,4 +32,5 @@ public interface TrainingService {
   boolean deleteTraining(int trainingId) throws ServiceException;
 
   void giveFeedback(String feedback) throws ServiceException;
+  List<String> findReviews() throws ServiceException;
 }

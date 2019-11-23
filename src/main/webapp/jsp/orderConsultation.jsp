@@ -53,9 +53,10 @@
                         <fmt:message key="cabinet"/>
                     </a>
                 </li>
-                <a href="controller?command=log_out">
-                    <fmt:message key="logout"/>
-                </a>
+                <li>
+                    <a href="controller?command=log_out">
+                        <fmt:message key="logout"/>
+                    </a>
                 </li>
             </ul>
             <form id="xxx" method="post" action="controller">
@@ -71,131 +72,133 @@
         <title><fmt:message key="orderPage"/></title>
     </head>
     <body>
-    <jsp:useBean id="consultationService" class="com.epam.tc.service.impl.ConsultationServiceImpl"/>
     <div class="container-fluid">
-        <div class="row">
-            <fmt:message key="availableConsultation"/>
+        <jsp:useBean id="consultationService" class="com.epam.tc.service.impl.ConsultationServiceImpl"/>
+        <div class="container-fluid">
             <div class="row">
-                    <%--Message about saved changes--%>
-                <c:if test="${orderSentMessage != null}">
-                    <div class="alert alert-danger" role="alert">
-                            ${orderSentMessage}
-                        <c:set var="orderSentMessage" value="${null}"/>
+                <fmt:message key="availableConsultation"/>
+                <div class="row">
+                        <%--Message about saved changes--%>
+                    <c:if test="${orderSentMessage != null}">
+                        <div class="alert alert-danger" role="alert">
+                                ${orderSentMessage}
+                            <c:set var="orderSentMessage" value="${null}"/>
+                        </div>
+                    </c:if>
+                </div>
+                <form id="chooseTasksForConsultation" onsubmit="return sub()" method="post" action="controller">
+                    <input type="hidden" name="command" value="send_order_consultation"/>
+                    <input type="hidden" name="redirectTo" value="true"/>
+                    <input type="hidden" name="userId" value="${user.id}"/>
+                </form>
+                <c:set var="checkConsultation" value="${0}"/>
+                <c:set var="checkTask" value="${0}"/>
+                <c:set var="checkTopick" value="${0}"/>
+                <div class="container-fluid">
+                    <div class="form-group">
+                        <select class="selectpicker" name="consultationId" form="chooseTasksForConsultation" required>
+                            <c:forEach var="consultation"
+                                       items="${consultationService.findConsultationsForTraining(trainingId)}">
+                                <option value="${consultation.id}">
+                                        ${consultation.date}
+                                    <fmt:message key="price"/>: ${consultation.price}
+                                </option>
+                                <c:set var="checkConsultation" value="${1}"/>
+                            </c:forEach>
+                        </select>
                     </div>
+                </div>
+                <jsp:useBean id="cardService" class="com.epam.tc.service.impl.PaymentCardServiceImpl"/>
+                <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TaskServiceImpl"/>
+                <jsp:useBean id="topicService" class="com.epam.tc.service.impl.TopicServiceImpl"/>
+                <select class="selectpicker" name="cardId" form="chooseTasksForConsultation" required>
+                    <c:forEach var="card" items="${cardService.findUsersCard(user.id)}">
+                        <option value="${card.id}">${card.number}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <h3><fmt:message key="completedTasks"/></h3>
+                <table class="table">
+                    <c:set var="count" value="${0}"/>
+                    <tr>
+                        <th>No</th>
+                        <th><fmt:message key="nameTask"/></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <c:forEach var="task" items="${taskService.findCompletedTasks(trainingId, studentId)}">
+                    <tr>
+                        <td>${count}</td>
+                        <td>${task.name}</td>
+                        <td>
+                            <input type="checkbox"
+                                   class="checkTask"
+                                   name="taskId"
+                                   value="${task.id}" form="chooseTasksForConsultation"/>
+                        </td>
+                    </tr>
+                    <c:set var="count" value="${count + 1}"/>
+                    <c:set var="checkTask" value="${1}"/>
+                    </c:forEach>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <h3><fmt:message key="learnedTopics"/></h3>
+                <table class="table">
+                    <c:set var="count" value="${0}"/>
+                    <tr>
+                        <th>No</th>
+                        <th><fmt:message key="nameTopic"/></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <c:forEach var="topic" items="${topicService.findLearnedTopics(studentId, trainingId)}">
+                    <tr>
+                        <td>${count}</td>
+                        <td>${topic.name}</td>
+                        <td>
+                            <input type="checkbox" name="topicId"
+                                   class="checkTopic"
+                                   value="${topic.id}" form="chooseTasksForConsultation"/>
+                        </td>
+                    </tr>
+                    <c:set var="count" value="${count + 1}"/>
+                    <c:set var="checkTopick" value="${1}"/>
+                    </c:forEach>
+                    </tr>
+                </table>
+                <c:if test="${checkTask == 0}">
+                    <h3><fmt:message key="solveTask"/></h3>
+                </c:if>
+                <c:if test="${checkConsultation == 0}">
+                    <h3><fmt:message key="noConsultation"/></h3>
+                </c:if>
+                <c:if test="${checkTopick == 0}">
+                    <h3><fmt:message key="learnTopic"/></h3>
+                </c:if>
+                <c:if test="${checkTopick != 0 && checkConsultation != 0 && checkTask != 0}">
+                    <button type="submit" class="btn-warning"
+                            form="chooseTasksForConsultation">
+                        <fmt:message key="send"/>
+                    </button>
                 </c:if>
             </div>
-            <form id="chooseTasksForConsultation" onsubmit="return sub()" method="post" action="controller">
-                <input type="hidden" name="command" value="send_order_consultation"/>
-                <input type="hidden" name="redirectTo" value="true"/>
-                <input type="hidden" name="userId" value="${user.id}"/>
-            </form>
-            <c:set var="checkConsultation" value="${0}"/>
-            <c:set var="checkTask" value="${0}"/>
-            <c:set var="checkTopick" value="${0}"/>
-            <div class="container-fluid">
-                <div class="form-group">
-                    <select class="selectpicker" name="consultationId" form="chooseTasksForConsultation" required>
-                        <c:forEach var="consultation"
-                                   items="${consultationService.findConsultationsForTraining(trainingId)}">
-                            <option value="${consultation.id}" >
-                                    ${consultation.date}
-                                     <fmt:message key="price"/>: ${consultation.price}
-                            </option>
-                            <c:set var="checkConsultation" value="${1}"/>
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
-            <jsp:useBean id="cardService" class="com.epam.tc.service.impl.PaymentCardServiceImpl"/>
-            <jsp:useBean id="taskService" class="com.epam.tc.service.impl.TaskServiceImpl"/>
-            <jsp:useBean id="topicService" class="com.epam.tc.service.impl.TopicServiceImpl"/>
-            <select class="selectpicker" name="cardId" form="chooseTasksForConsultation" required>
-                <c:forEach var="card" items="${cardService.findUsersCard(user.id)}">
-                    <option value="${card.id}">${card.number}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <div class="col-sm-6">
-            <h3><fmt:message key="completedTasks"/></h3>
-            <table class="table">
-                <c:set var="count" value="${0}"/>
-                <tr>
-                    <th>No</th>
-                    <th><fmt:message key="nameTask"/></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <c:forEach var="task" items="${taskService.findCompletedTasks(trainingId, studentId)}">
-                <tr>
-                    <td>${count}</td>
-                    <td>${task.name}</td>
-                    <td>
-                        <input type="checkbox"
-                               class="checkTask"
-                               name="taskId"
-                               value="${task.id}" form="chooseTasksForConsultation"/>
-                    </td>
-                </tr>
-                <c:set var="count" value="${count + 1}"/>
-                <c:set var="checkTask" value="${1}"/>
-                </c:forEach>
-                </tr>
-            </table>
-        </div>
-        <div class="col-sm-6">
-            <h3><fmt:message key="learnedTopics"/></h3>
-            <table class="table">
-                <c:set var="count" value="${0}"/>
-                <tr>
-                    <th>No</th>
-                    <th><fmt:message key="nameTopic"/></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <c:forEach var="topic" items="${topicService.findLearnedTopics(studentId, trainingId)}">
-                <tr>
-                    <td>${count}</td>
-                    <td>${topic.name}</td>
-                    <td>
-                        <input type="checkbox" name="topicId"
-                               class="checkTopic"
-                               value="${topic.id}" form="chooseTasksForConsultation"/>
-                    </td>
-                </tr>
-                <c:set var="count" value="${count + 1}"/>
-                <c:set var="checkTopick" value="${1}"/>
-                </c:forEach>
-                </tr>
-            </table>
-            <c:if test="${checkTask == 0}">
-                <h3><fmt:message key="solveTask"/></h3>
-            </c:if>
-            <c:if test="${checkConsultation == 0}">
-                <h3><fmt:message key="noConsultation"/></h3>
-            </c:if>
-            <c:if test="${checkTopick == 0}">
-                <h3><fmt:message key="learnTopic"/></h3>
-            </c:if>
-            <c:if test="${checkTopick != 0 && checkConsultation != 0 && checkTask != 0}">
-                <button type="submit" class="btn-warning"
-                        form="chooseTasksForConsultation">Отправить
-                </button>
-            </c:if>
-        </div>
 
-        <script>
-            function sub() {
-                var a = !!document.querySelector(".checkTask:checked");
-                a || alert("Выберите хотя бы одну задачу");
-
-                var b = !!document.querySelector(".checkTopic:checked");
-                b || alert("Выберите хотя бы одну тему");
-                if (a == false || b == false) {
-                    return false;
-                }
-                return true;
-            };
-        </script>
+            <script>
+                function sub() {
+                    var a = !!document.querySelector(".checkTask:checked");
+                    a || alert("Выберите хотя бы одну задачу");
+                    var b = !!document.querySelector(".checkTopic:checked");
+                    b || alert("Выберите хотя бы одну тему");
+                    if (a == false || b == false) {
+                        return false;
+                    }
+                    return true;
+                };
+            </script>
+        </div>
     </div>
     </body>
     </html>

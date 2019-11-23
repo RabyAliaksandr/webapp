@@ -65,7 +65,7 @@
             </tr>
             </thead>
             <jsp:useBean id="trainingService"
-                         class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+                         class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
             <tbody>
             <c:forEach var="training"
                        items="${trainingService.findTrainingForMentor(user.id)}">

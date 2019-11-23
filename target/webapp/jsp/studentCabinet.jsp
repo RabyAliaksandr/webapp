@@ -37,8 +37,8 @@
         </div>
     </nav>
     <br/>
-    <jsp:useBean id="gettrainings" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
-    <jsp:useBean id="getCompletedTrinings" class="com.epam.webapp.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="gettrainings" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
+    <jsp:useBean id="getCompletedTrinings" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
     <c:set var="count" value="1"/>
     <div class="container">
             <%--        list of trainings for which the student is registered --%>

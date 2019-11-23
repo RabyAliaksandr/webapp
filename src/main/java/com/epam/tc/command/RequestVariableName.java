@@ -51,4 +51,6 @@ public class RequestVariableName {
   public static final String USER_FIELDS = "userFields";
   public static final String FEEDBACK = "feedback";
   public static final String LOCAL = "local";
+  public static final String CARD_NUMBER = "cardNumber";
+  public static final String TEXT = "text";
 }

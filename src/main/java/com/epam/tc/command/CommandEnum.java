@@ -223,6 +223,16 @@ public enum CommandEnum {
     {
       this.command = new SetLocalCabinetCommand();
     }
+  },
+  ADD_PAYMENT_CARD {
+    {
+      this.command = new AddPaymentCardCommand();
+    }
+  },
+  REVIEWS {
+    {
+      this.command = new ReviewsCommand();
+    }
   };
 
   Command command;

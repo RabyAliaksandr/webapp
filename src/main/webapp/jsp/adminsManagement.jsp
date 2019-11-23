@@ -14,13 +14,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" href="style/bootstrap-datetimepicker.css"/>
     <link rel="stylesheet" href="style/bootstrap-datetimepicker.min.css"/>
     <html>
 
-    <head><title>Mentor page</title></head>
+    <head><title><fmt:message key="administration"/></title></head>
     </head>
     <body>
     <nav class="navbar navbar-default">
@@ -55,6 +62,7 @@
         </ul>
         <form id="xxx" method="post" action="controller">
             <input type="hidden" name="command" value="set_local_cabinet"/>
+            <input type="hidden" name="redirectTo" value="true"/>
             <button form="xxx" name="local" value="${local == 'en' ? 'ru' : 'en'}"
                     class="btn-link" type="submit">
                     ${local == 'en' ? 'Ru' : 'En'}
@@ -71,7 +79,7 @@
             <c:set var="count" value="1"/>
             <div class="container">
                 <h2><fmt:message key="currentTrainings"/></h2>
-                <table class="table">
+                <table>
                     <thead>
                     <tr>
                         <th>No</th>
@@ -116,9 +124,8 @@
                     <c:set var="messageDeleteUser" value="${null}"/>
                 </div>
             </c:if>
-
                 <%--users table--%>
-            <table class="table">
+            <table>
                 <thead>
                 <tr>
                     <th>No</th>
@@ -149,7 +156,7 @@
                                     <input type="hidden" name="command" value="update_user_type"/>
                                     <input type="hidden" name="userId" value="${users.id}"/>
                                     <div class="form-group">
-                                        <select id="company" class="form-control" name="type">
+                                        <select id="company" class="form-control" name="type" required>
                                             <option>${fn:toLowerCase(users.type)}</option>
                                             <c:forEach var="type" items="${userService.usersType()}">
                                                 <option>${fn:toLowerCase(type)}</option>
@@ -175,16 +182,6 @@
                             </td>
                             </form>
                             </td>
-                            <td>
-                                <form class="form-inline" method="post" action="controller">
-                                    <input type="hidden" name="redirectTo" value="true"/>
-                                    <input type="hidden" name="command" value="delete_user"/>
-                                    <input type="hidden" name="userId" value="${users.id}"/>
-                                    <button type="submit" class="btn btn-warning">
-                                        <fmt:message key="delete"/>
-                                    </button>
-                                </form>
-                            </td>
                         </tr>
                         <c:set var="count" value="${count + 1}"/>
                     </c:if>
@@ -193,33 +190,16 @@
             </table>
         </div>
         </c:if>
-        <script>
-            $('#toggleState').on('click', function () {
-                var toggleBtn = $('#toggle');
-                toggleBtn.button('toggle');
-                toggleBtn.hasClass('active') ? toggleBtn.text('Включено') : toggleBtn.text('Выключено');
-            });
-        </script>
-
         <c:if test="${typeOperation == 'consultationManagement'}">
             <%--                    <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>--%>
 
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="/resources/demos/style.css">
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script>
-            $(function () {
-                $("#datepicker").datepicker();
-            });
-        </script>
         <c:if test="${messageOfferSent != null}">
         <div class="alert alert-danger" role="alert">
                 ${messageOfferSent}
             <c:set var="messageOfferSent" value="${null}"/>
         </div>
         </c:if>
-        Предложить консультацию для ментора
+        <label><fmt:message key="offerToMentor"/> </label>
         <br/>
         <form action="controller" method="post">
             <input type="hidden" name="redirectTo" value="true"/>
@@ -231,7 +211,7 @@
                              class="com.epam.tc.service.impl.UserServiceImpl"/>
                 <div class="form-group">
                     <fmt:message key="choose_mentor"/>
-                    <select id="chooseMentor" class="form-control" name="trainingId">
+                    <select id="chooseMentor" class="form-control" name="trainingId" required>
                         <c:forEach var="mentor" items="${service.findAllMentors()}">
                             <option value="${mentor.key.id}">${mentor.key.name} ${mentor.value.name} ${mentor.value.surname}</option>
                         </c:forEach>
@@ -244,13 +224,26 @@
                    pattern="(0\.((0[1-9]{1})|([1-9]{1}([0-9]{1})?)))|(([1-9]+[0-9]*)(\.([0-9]{1,2}))?)"
                    maxlength="6"
                    class="form-control" placeholder="100.00" required>
-            <button type="submit" class="btn-primary"><fmt:message key="send"/> </button>
+            <button type="submit" class="btn-primary"><fmt:message key="send"/></button>
             <form>
                 </c:if>
                 <br/>
                 <fmt:bundle basename="local" prefix="footer.">
                     <fmt:message key="copyright"/>
                 </fmt:bundle>
+                <script>
+                    $(document).ready(function () {
+                        $('table').DataTable({
+                            "sDom": '<"top"i>rt<"bottom"lp><"clear">',
+                            "info": false
+                        });
+                    });
+                </script>
+                <script>
+                    $(function () {
+                        $("#datepicker").datepicker();
+                    });
+                </script>
     </body>
     </html>
 </fmt:bundle>

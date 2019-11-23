@@ -44,19 +44,25 @@
                     <a href="controller?command=trainings_page">
                         <fmt:message key="currentTrainings"/>
                     </a>
-                    <c:if test="${user.type != null}">
-                <li class="active">
-                    <a href="controller?command=cabinet">
-                        <fmt:message key="cabinet"/>
-                    </a>
                 </li>
-                <li>
-                    <a href="controller?command=log_out">
-                        <fmt:message key="logout"/>
-                    </a>
-                </li>
+                <c:if test="${user.type != null}">
+                    <li class="active">
+                        <a href="controller?command=cabinet">
+                            <fmt:message key="cabinet"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="controller?command=log_out">
+                            <fmt:message key="logout"/>
+                        </a>
+                    </li>
                 </c:if>
+                <li>
+                    <a href="controller?command=reviews">
+                        <fmt:message key="reviews"/>
+                    </a>
                 </li>
+
             </ul>
             <form id="xxx" method="post" action="controller">
                 <input type="hidden" name="command" value="set_local"/>
@@ -65,7 +71,7 @@
                         ${local == 'en' ? 'Ru' : 'En'}
                 </button>
             </form>
-            </div>
+        </div>
     </nav>
     <br/>
     <body>

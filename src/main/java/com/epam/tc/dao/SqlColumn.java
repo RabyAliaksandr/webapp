@@ -36,4 +36,5 @@ public class SqlColumn {
   public static final String SQL_TOPIC = "topic";
   public static final String SQL_TASK_NAME = "task_name";
   public static final String SQL_TRAINING_STATUS = "training_status";
+  public static final String SQL_REVIEW = "review_text";
 }

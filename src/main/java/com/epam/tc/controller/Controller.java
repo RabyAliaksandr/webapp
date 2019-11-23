@@ -32,7 +32,7 @@ public class Controller extends HttpServlet {
       processRequest(request, response);
     } catch (CommandException e) {
       logger.error(e);
-      response.sendRedirect(ConfigurationManager.getProperty(PageName.ERROR_PAGE)); //  FIXME CHECKME
+      response.sendRedirect(ConfigurationManager.getProperty(PageName.ERROR_PAGE));
     }
   }
 
@@ -58,7 +58,6 @@ public class Controller extends HttpServlet {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);
       } else {
-        request.getSession().setAttribute("local", request.getParameter("local"));
         response.sendRedirect(RequestVariableName.CONTROLLER + request.getHeader(RequestVariableName.REFERER)
                 .replace(request.getRequestURL(), ""));
         request.getSession().setAttribute(REDIRECT_TO, null);

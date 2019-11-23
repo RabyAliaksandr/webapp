@@ -34,7 +34,6 @@ public interface TrainingDao {
 
   void giveFeedback(String feedback) throws DaoException;
 
-  void addTrainingToStudent(int userId, int trainingId) throws DaoException;
-
+  List<String> findReviews() throws DaoException;
 
 }

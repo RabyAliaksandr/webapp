@@ -10,6 +10,7 @@ import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceFactory;
 import com.epam.tc.service.TaskService;
 import com.epam.tc.service.ServiceException;
+import com.epam.tc.validator.InputDataValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,21 +25,24 @@ public class SendSolutionCommand implements Command {
     TaskService taskService = ServiceFactory.getTaskService();
     int userId = Integer.parseInt(request.getParameter(RequestVariableName.USER_ID));
     int taskId = Integer.parseInt(request.getParameter(RequestVariableName.TASK_ID));
+    InputDataValidation validation = new InputDataValidation();
     String solution = request.getParameter(RequestVariableName.SOLUTION);
-    boolean done;
+    solution = validation.stripXSS(solution);
+    solution = validation.deleteExcessiveSpace(solution);
+    boolean checkSolutionSize = validation.checkSizeTextArea(solution, 10, 1000);
+    if (!checkSolutionSize) {
+      request.getSession().setAttribute(MessageName.SEND_SOLUTION_MESSAGE,
+              MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_SIZE));
+      return ConfigurationManager.getProperty(PageName.TASK_PAGE);
+    }
     try {
-      done = taskService.sendSolution(userId, taskId, solution);
+       taskService.sendSolution(userId, taskId, solution);
     } catch (ServiceException e) {
       logger.error(e);
       throw new CommandException("Error access service", e);
     }
-    if (done) {
       request.getSession().setAttribute(MessageName.SEND_SOLUTION_MESSAGE,
               MessageManager.getProperty(MessageName.MESSAGE_SEND_SOLUTION));
       return ConfigurationManager.getProperty(PageName.TASK_PAGE);
-    }
-    request.getSession().setAttribute(MessageName.SEND_SOLUTION_MESSAGE,
-            MessageManager.getProperty(MessageName.MESSAGE_SEND_SOLUTION_ERROR));
-    return ConfigurationManager.getProperty(PageName.TASK_PAGE);
   }
 }

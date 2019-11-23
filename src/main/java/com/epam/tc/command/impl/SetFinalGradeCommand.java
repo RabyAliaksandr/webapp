@@ -10,6 +10,7 @@ import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceException;
 import com.epam.tc.service.ServiceFactory;
 import com.epam.tc.service.TrainingService;
+import com.epam.tc.validator.InputDataValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +25,13 @@ public class SetFinalGradeCommand implements Command {
     int studentId = Integer.parseInt(request.getParameter(RequestVariableName.STUDENT_ID));
     int trainingId = Integer.parseInt(request.getParameter(RequestVariableName.TRAINING_ID));
     int grade = Integer.parseInt(request.getParameter(RequestVariableName.GRADE));
+    InputDataValidation validation = new InputDataValidation();
+    boolean checkGrade = validation.checkGrade(grade);
+    if (!checkGrade) {
+      request.getSession().setAttribute(MessageName.FINAL_GRADE_MESSAGE,
+              MessageManager.getProperty(MessageName.FINAL_GRADE_INVALID));
+      return ConfigurationManager.getProperty(PageName.MENTORING_PAGE);
+    }
     TrainingService trainingService = ServiceFactory.getTrainingService();
     try {
       trainingService.setFinalGrade(studentId, trainingId, grade);

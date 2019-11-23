@@ -273,24 +273,24 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public Map<Task, User> findAllMentors() throws DaoException {
+  public Map<Training, User> findAllMentors() throws DaoException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
-    Map<Task, User> mentorsTraining = new HashMap<>();
+    Map<Training, User> mentorsTraining = new HashMap<>();
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_ALL_MENTORS);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         User user = new User();
-        Task task = new Task();
+        Training training = new Training();
         user.setId(resultSet.getInt(SQL_USER_ID));
         user.setName(resultSet.getString(SQL_USER_USER_NAME));
         user.setSurname(resultSet.getString(SQL_USER_SURNAME));
-        task.setId(resultSet.getInt(SQL_TRAINING_ID));
-        task.setName(resultSet.getString(SQL_TRAINING_NAME));
-        mentorsTraining.put(task, user);
+        training.setId(resultSet.getInt(SQL_TRAINING_ID));
+        training.setName(resultSet.getString(SQL_TRAINING_NAME));
+        mentorsTraining.put(training, user);
       }
       return mentorsTraining;
     } catch (SQLException e) {

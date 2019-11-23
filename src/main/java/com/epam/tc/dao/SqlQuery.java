@@ -120,4 +120,9 @@ public class SqlQuery {
   public static final String SQL_DELETE_TOPIC = "DELETE FROM topics_for_study WHERE topic_id = ?";
   public static final String SQL_DELETE_TASK = "DELETE FROM tasks WHERE task_id = ?";
   public static final String SQL_GIVE_FEEDBACK = "INSERT INTO recall (recall_text) VALUE (?)";
+  public static final String SQL_ADD_PAYMENT_CARD = "INSERT INTO payment_cards  (card_number) SELECT (?) WHERE " +
+          "NOT EXISTS(SELECT card_number FROM payment_cards WHERE card_number = ?)";
+  public static final String SQL_ADD_PAYMENT_CARD_TO_USER = "INSERT INTO users_payment_card (user_id, card_id) " +
+          "SELECT ?, card_id FROM payment_cards WHERE card_number = ?";
+  public static final String SQL_FIND_REVIEWS = "SELECT review_text FROM reviews";
 }

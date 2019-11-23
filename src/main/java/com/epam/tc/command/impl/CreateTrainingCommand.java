@@ -10,6 +10,7 @@ import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceFactory;
 import com.epam.tc.service.TrainingService;
 import com.epam.tc.service.ServiceException;
+import com.epam.tc.validator.InputDataValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,6 +26,29 @@ public class CreateTrainingCommand implements Command {
     String trainingName = request.getParameter(RequestVariableName.TRAINING_NAME);
     int mentorId = Integer.parseInt(request.getParameter(RequestVariableName.MENTOR_ID));
     String trainingDescription = request.getParameter(RequestVariableName.DESCRIPTION);
+    InputDataValidation validation = new InputDataValidation();
+    trainingDescription = validation.stripXSS(trainingDescription);
+    trainingDescription = validation.deleteExcessiveSpace(trainingDescription);
+    trainingName = validation.stripXSS(trainingName);
+    trainingName = validation.deleteExcessiveSpace(trainingName);
+    boolean checkName = validation.checkSizeTextArea(trainingName, 2, 70);
+    boolean checkDescription = validation.checkSizeTextArea(trainingDescription, 50, 1000);
+    if (!checkName) {
+      request.getSession().setAttribute(RequestVariableName.NAME, trainingName);
+      request.getSession().setAttribute(RequestVariableName.TEXT, trainingDescription);
+      request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
+              MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_NAME_SIZE));
+      return ConfigurationManager.getProperty(PageName.CREATE_TEXT_PAGE);
+    }
+    if (!checkDescription) {
+      request.getSession().setAttribute(RequestVariableName.NAME, trainingName);
+      request.getSession().setAttribute(RequestVariableName.TEXT, trainingDescription);
+      request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
+              MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_SIZE));
+      return ConfigurationManager.getProperty(PageName.CREATE_TEXT_PAGE);
+    }
+
+
     try {
        trainingsService.createTraining(trainingName, mentorId, trainingDescription);
     } catch (ServiceException e) {
