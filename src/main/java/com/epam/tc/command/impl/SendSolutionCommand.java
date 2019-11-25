@@ -3,8 +3,9 @@ package com.epam.tc.command.impl;
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
-import com.epam.tc.command.RequestVariableName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.command.PageName;
+import com.epam.tc.entity.Task;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceFactory;
@@ -16,17 +17,26 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * submitting a solution for a Task {@link Task}
+ */
 public class SendSolutionCommand implements Command {
 
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
   private static final Logger logger = LogManager.getLogger(SendSolutionCommand.class);
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     TaskService taskService = ServiceFactory.getTaskService();
-    int userId = Integer.parseInt(request.getParameter(RequestVariableName.USER_ID));
-    int taskId = Integer.parseInt(request.getParameter(RequestVariableName.TASK_ID));
+    int userId = Integer.parseInt(request.getParameter(VariableName.USER_ID));
+    int taskId = Integer.parseInt(request.getParameter(VariableName.TASK_ID));
     InputDataValidation validation = new InputDataValidation();
-    String solution = request.getParameter(RequestVariableName.SOLUTION);
+    String solution = request.getParameter(VariableName.SOLUTION);
     solution = validation.stripXSS(solution);
     solution = validation.deleteExcessiveSpace(solution);
     boolean checkSolutionSize = validation.checkSizeTextArea(solution, 10, 1000);

@@ -5,11 +5,22 @@ import com.epam.tc.manager.MessageManager;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * implementation class design pattern Command class factory
+ */
 public class CommandFactory {
 
+  /**
+   * method returning implementing class depending on request
+   * if this command does not exist returns EmptyCommand {@link EmptyCommand}
+   * @param request - object HttpServletRequest {@link HttpServletRequest}
+   * @return implementing class Command
+   */
   public Command defineCommand(HttpServletRequest request) {
     Command current;
-    String action = request.getParameter(RequestVariableName.COMMAND);
+    String action = request.getParameter(VariableName.COMMAND);
     if (action == null || action.isEmpty()) {
       return new EmptyCommand();
     }

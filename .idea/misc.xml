@@ -7,6 +7,10 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Documents" />
+    <option name="OPEN_IN_BROWSER" value="false" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>

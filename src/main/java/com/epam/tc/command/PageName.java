@@ -1,5 +1,13 @@
 package com.epam.tc.command;
 
+import com.epam.tc.manager.ConfigurationManager;
+
+/**
+ * @author alex raby
+ * @version 1.0
+ * contains constants to get the page path
+ * using the class ConfigurationManager {@link ConfigurationManager}
+ */
 public class PageName {
 
   public static final String CREATE_TEXT_PAGE = "path.page.createPage";
@@ -28,7 +36,8 @@ public class PageName {
   public static final String ADMIN_CABINET = "path.page.adminCabinet";
   public static final String STUDENT_CABINET = "path.page.studentCabinet";
   public static final String MENTOR_CABINET = "path.page.mentorCabinet";
-
   public static final String CARD_MANAGEMENT = "path.page.cardManagement";
   public static final String REVIEWS = "path.page.reviews";
+  public static final String PATH_INDEX_PAGE = "/index.jsp";
+  public static final String INDEX_PATH_NAME = "INDEX_PATH";
 }

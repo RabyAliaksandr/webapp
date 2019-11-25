@@ -234,8 +234,6 @@ b
 2src/main/java/com/epam/tc/encoder/PassEncoder.java,5\5\55489d9bf6d553e79dd1c94400ed8e8555214b27
 b
 2src/main/java/com/epam/tc/entity/Consultation.java,8\d\8d77a32bd8fa5a9447b37fc306c0310a68fc6653
-]
--src/main/java/com/epam/tc/entity/Student.java,2\b\2be38fad602522935101b3bb9bb2497d3e48a79a
 Z
 *src/main/java/com/epam/tc/entity/Task.java,6\9\696159e5c1116ed7676ac4b6663ae014e66579d3
 [
@@ -356,3 +354,5 @@ l
 Qsrc/main/java/com/epam/tc/command/impl/UpdateInformationAboutTrainingCommand.java,0\b\0bea5c5d1c975424c2c0e0bc860d4ee300b0b974
 v
 Fsrc/main/java/com/epam/tc/command/impl/AddTopicForTrainingCommand.java,9\8\980a42ce2e0c8051d993ffb672c9a3b9d9fb71f0
+j
+:src/main/java/com/epam/tc/manager/PathPropertiesFiles.java,0\8\08b6a1b228fa9b18c6056d1de598aa8f46b1e8e7

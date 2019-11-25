@@ -34,6 +34,7 @@ public class TrainingDaoImpl implements TrainingDao {
       preparedStatement.setInt(1, idStudent);
       preparedStatement.setInt(2, idTraining);
       preparedStatement.executeUpdate();
+      logger.info("student added training");
     } catch (SQLException e) {
       logger.error(e);
       throw new DaoException(e);
@@ -261,6 +262,7 @@ public class TrainingDaoImpl implements TrainingDao {
       preparedStatement.setInt(2, mentorId);
       preparedStatement.setString(3, trainingDescription);
       preparedStatement.executeUpdate();
+      logger.info("was created new training");
     } catch (SQLException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
@@ -329,6 +331,7 @@ public class TrainingDaoImpl implements TrainingDao {
         preparedStatement.setInt(1, trainingId);
         preparedStatement.executeUpdate();
         connection.commit();
+        logger.debug("was deleted training");
         return true;
       } else {
         connection.rollback();
@@ -421,6 +424,7 @@ public class TrainingDaoImpl implements TrainingDao {
       preparedStatement = connection.prepareStatement(SQL_CLOSE_RECEPTION);
       preparedStatement.setInt(1, trainingId);
       preparedStatement.executeUpdate();
+      logger.info("was closed reception to training");
     } catch (SQLException e) {
       logger.error(e);
       throw new DaoException(e);

@@ -12,7 +12,7 @@ public interface ConsultationDao {
 
   List<Consultation> findConsultationsForTraining(int trainingId) throws DaoException;
 
-  boolean sendOrderConsultation(int consultationId, int studentId,
+  void sendOrderConsultation(int consultationId, int studentId,
                                 List<Integer> taskIds, List<Integer> topicIds) throws DaoException;
 
   boolean sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws DaoException;

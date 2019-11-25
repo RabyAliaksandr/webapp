@@ -7,6 +7,11 @@ import com.epam.tc.manager.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * return to reviews page
+ */
 public class ReviewsCommand implements Command {
 
   @Override

@@ -11,15 +11,25 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * this class implements interface methods TaskService {@link TaskService}
+ * methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ */
 public class TaskServiceImpl implements TaskService {
 
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
   private static Logger logger = LogManager.getLogger(TaskServiceImpl.class);
 
-  public final boolean addTaskForTraining(int trainingId, String taskName,
+  public final void addTaskForTraining(int trainingId, String taskName,
                                           String taskText) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
-      return taskDao.addTaskForTraining(trainingId, taskName, taskText);
+      taskDao.addTaskForTraining(trainingId, taskName, taskText);
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException("Error access database", e);
@@ -41,7 +51,7 @@ public class TaskServiceImpl implements TaskService {
   @Override
   public final Task findTask(int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
-    Task task = new Task();
+    Task task;
     try {
       task = taskDao.findTask(taskId);
     } catch (DaoException e) {
@@ -52,10 +62,10 @@ public class TaskServiceImpl implements TaskService {
   }
 
 
-  public final boolean updateTask(int taskId, String taskName, String task) throws ServiceException {
+  public final void updateTask(int taskId, String taskName, String task) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
-      return taskDao.updateTask(taskId, taskName, task);
+      taskDao.updateTask(taskId, taskName, task);
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException("Error access database", e);
@@ -72,10 +82,10 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
-  public final boolean sendSolution(int userId, int taskId, String answer) throws ServiceException {
+  public final void sendSolution(int userId, int taskId, String answer) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
-      return taskDao.sendSolution(userId, taskId, answer);
+      taskDao.sendSolution(userId, taskId, answer);
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException("Error access database", e);
@@ -84,7 +94,7 @@ public class TaskServiceImpl implements TaskService {
 
   public final Task findTaskSolution(int studentId, int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
-    Task task = new Task();
+    Task task;
     try {
       task = taskDao.findTaskSolution(studentId, taskId);
     } catch (DaoException e) {
@@ -94,10 +104,10 @@ public class TaskServiceImpl implements TaskService {
     return task;
   }
 
-  public final boolean gradeTask(int studentId, int taskId, int mark) throws ServiceException {
+  public final void gradeTask(int studentId, int taskId, int mark) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
-      return taskDao.gradeTask(studentId, taskId, mark);
+      taskDao.gradeTask(studentId, taskId, mark);
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException("Error access database", e);

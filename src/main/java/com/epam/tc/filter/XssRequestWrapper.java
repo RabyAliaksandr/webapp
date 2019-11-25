@@ -7,45 +7,75 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.regex.Pattern;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * request processing class
+ * used in XssProtectionFilter {@link XssProtectionFilter}
+ */
 public class XssRequestWrapper extends HttpServletRequestWrapper {
 
+  /**
+   * object InputDataValidation {@link InputDataValidation}
+   */
+  private InputDataValidation inputDataValidation;
 
-  public XssRequestWrapper(HttpServletRequest request) {
+  /**
+   * class constructor
+   * @param request - object HttpServletRequest
+   * class field inputDataValidation {@link XssRequestWrapper#inputDataValidation}
+   */
+  XssRequestWrapper(HttpServletRequest request) {
     super(request);
+    this.inputDataValidation = new InputDataValidation();
   }
 
-  InputDataValidation inputDataValidation;
+  /**
+   * override method
+   * @param parameter - parameter by which we obtain data from the request
+   * @return filtered data
+   */
   @Override
   public String[] getParameterValues(String parameter) {
     String[] values = super.getParameterValues(parameter);
-    this.inputDataValidation = new InputDataValidation();
-
     if (values == null) {
       return null;
     }
-
     int count = values.length;
     String[] encodedValues = new String[count];
     for (int i = 0; i < count; i++) {
       encodedValues[i] = inputDataValidation.stripXSS(values[i]);
     }
-
     return encodedValues;
   }
 
+  /**
+   * override method
+   * @param parameter - parameter by which get data from the request
+   * @return filtered data
+   */
   @Override
   public String getParameter(String parameter) {
     String value = super.getParameter(parameter);
-
     return stripXSS(value);
   }
 
+  /**
+   * override method
+   * @param name - by which get the header
+   * @return
+   */
   @Override
   public String getHeader(String name) {
     String value = super.getHeader(name);
     return stripXSS(value);
   }
 
+  /**
+   *
+   * @param value String for to clear unwanted strings
+   * @return cleared string
+   */
   public String stripXSS(String value) {
     if (value != null) {
       Pattern scriptPattern = Pattern.compile(RegEx.PATTERN_SCRIPT, Pattern.CASE_INSENSITIVE);

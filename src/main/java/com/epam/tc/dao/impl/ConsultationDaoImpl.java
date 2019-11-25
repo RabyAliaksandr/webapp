@@ -23,17 +23,19 @@ import static com.epam.tc.dao.SqlQuery.SQL_TOPICS_FOR_CONSULTATION;
 public class ConsultationDaoImpl implements ConsultationDao {
 
   private final static Logger logger = LogManager.getLogger(ConsultationDaoImpl.class);
-  private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
   @Override
   public List<Consultation> findConsultationsForTraining(int trainingId) throws DaoException {
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+//    Connection connection = null;
+//    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<Consultation> consultations = new ArrayList<>();
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_CONSULTATIONS_FOR_TRAINING);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTATIONS_FOR_TRAINING);
+    ) {
+//      connection = connectionPool.takeConnection();
+//      preparedStatement = connection.prepareStatement(SQL_CONSULTATIONS_FOR_TRAINING);
       preparedStatement.setInt(1, trainingId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
@@ -52,20 +54,19 @@ public class ConsultationDaoImpl implements ConsultationDao {
       throw new DaoException("Error access database", e);
     } finally {
       try {
-        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+        connectionPool.closeConnection(resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
-  public boolean sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
+  public void sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
                                        List<Integer> topicIds) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    ResultSet rs = null;
     try {
       connection = connectionPool.takeConnection();
       preparedStatement = connection.prepareStatement(SQL_TASKS_FOR_CONSULTATION);
@@ -84,7 +85,6 @@ public class ConsultationDaoImpl implements ConsultationDao {
         preparedStatement.addBatch();
       }
       preparedStatement.executeUpdate();
-      return true;
     } catch (SQLException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
@@ -96,13 +96,13 @@ public class ConsultationDaoImpl implements ConsultationDao {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public boolean sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -126,13 +126,13 @@ public class ConsultationDaoImpl implements ConsultationDao {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException(e);
       }
     }
   }
 
   @Override
   public Map<Training, Date> findConsultationsOffer(int mentorId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -161,7 +161,6 @@ public class ConsultationDaoImpl implements ConsultationDao {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException(e);
       }
     }
   }
@@ -190,7 +189,6 @@ public class ConsultationDaoImpl implements ConsultationDao {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException(e);
       }
     }
   }

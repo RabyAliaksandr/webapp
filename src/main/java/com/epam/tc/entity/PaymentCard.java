@@ -1,5 +1,7 @@
 package com.epam.tc.entity;
 
+import com.epam.tc.validator.RegEx;
+
 import java.math.BigDecimal;
 
 /**@author alex raby
@@ -20,6 +22,7 @@ public class PaymentCard {
 
   /**
    * card number
+   * must match the pattern {@link RegEx#PATTERN_CARD_NUMBER}
    */
   private long number;
 
@@ -44,14 +47,14 @@ public class PaymentCard {
   public void setId(int id) {
     this.id = id;
   }
-
-  /**
-   * function to get the value of the field {@link PaymentCard#score}
-   * @return score - card score
-   */
-  public BigDecimal getScore() {
-    return score;
-  }
+//
+//  /**
+//   * function to get the value of the field {@link PaymentCard#score}
+//   * @return score - card score
+//   */
+//  public BigDecimal getScore() {
+//    return score;
+//  }
 
   /**
    * function to assignment value of the field {@link PaymentCard#score}
@@ -59,6 +62,11 @@ public class PaymentCard {
    */
   public void setScore(BigDecimal score) {
     this.score = score;
+  }
+
+
+  public BigDecimal getScore() {
+    return score;
   }
 
   /**
@@ -71,6 +79,7 @@ public class PaymentCard {
 
   /**
    * function to assignment value of the field {@link PaymentCard#number}
+   * must match the pattern {@link RegEx#PATTERN_CARD_NUMBER}
    * @param number - card number
    */
   public void setNumber(long number) {

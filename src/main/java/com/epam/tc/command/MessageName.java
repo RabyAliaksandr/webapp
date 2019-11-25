@@ -1,5 +1,13 @@
 package com.epam.tc.command;
 
+import com.epam.tc.manager.MessageManager;
+
+/**
+ * @author alex raby
+ * @version 1.0
+ * contains message name constants that are assigned
+ * in the request to receive a message using the class MessageManager {@link MessageManager}
+ */
 public class MessageName {
 
   public static final String WRONG_ACTION = "wrongAction";

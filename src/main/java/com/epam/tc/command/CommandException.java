@@ -1,5 +1,10 @@
 package com.epam.tc.command;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * native command package exception
+ */
 public class CommandException extends Exception {
 
   public CommandException() {

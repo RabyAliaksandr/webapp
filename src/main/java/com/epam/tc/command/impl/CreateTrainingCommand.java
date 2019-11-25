@@ -3,8 +3,9 @@ package com.epam.tc.command.impl;
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
-import com.epam.tc.command.RequestVariableName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.command.PageName;
+import com.epam.tc.entity.Training;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceFactory;
@@ -16,16 +17,25 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * creating a new Training {@link Training}
+ */
 public class CreateTrainingCommand implements Command {
 
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
   private static final Logger logger = LogManager.getLogger(CreateTrainingCommand.class);
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     TrainingService trainingsService = ServiceFactory.getTrainingService();
-    String trainingName = request.getParameter(RequestVariableName.TRAINING_NAME);
-    int mentorId = Integer.parseInt(request.getParameter(RequestVariableName.MENTOR_ID));
-    String trainingDescription = request.getParameter(RequestVariableName.DESCRIPTION);
+    String trainingName = request.getParameter(VariableName.TRAINING_NAME);
+    int mentorId = Integer.parseInt(request.getParameter(VariableName.MENTOR_ID));
+    String trainingDescription = request.getParameter(VariableName.DESCRIPTION);
     InputDataValidation validation = new InputDataValidation();
     trainingDescription = validation.stripXSS(trainingDescription);
     trainingDescription = validation.deleteExcessiveSpace(trainingDescription);
@@ -34,15 +44,15 @@ public class CreateTrainingCommand implements Command {
     boolean checkName = validation.checkSizeTextArea(trainingName, 2, 70);
     boolean checkDescription = validation.checkSizeTextArea(trainingDescription, 50, 1000);
     if (!checkName) {
-      request.getSession().setAttribute(RequestVariableName.NAME, trainingName);
-      request.getSession().setAttribute(RequestVariableName.TEXT, trainingDescription);
+      request.getSession().setAttribute(VariableName.NAME, trainingName);
+      request.getSession().setAttribute(VariableName.TEXT, trainingDescription);
       request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
               MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_NAME_SIZE));
       return ConfigurationManager.getProperty(PageName.CREATE_TEXT_PAGE);
     }
     if (!checkDescription) {
-      request.getSession().setAttribute(RequestVariableName.NAME, trainingName);
-      request.getSession().setAttribute(RequestVariableName.TEXT, trainingDescription);
+      request.getSession().setAttribute(VariableName.NAME, trainingName);
+      request.getSession().setAttribute(VariableName.TEXT, trainingDescription);
       request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
               MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_SIZE));
       return ConfigurationManager.getProperty(PageName.CREATE_TEXT_PAGE);

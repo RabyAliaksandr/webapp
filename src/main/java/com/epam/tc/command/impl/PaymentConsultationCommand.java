@@ -3,7 +3,7 @@ package com.epam.tc.command.impl;
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
-import com.epam.tc.command.RequestVariableName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.command.PageName;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
@@ -13,13 +13,19 @@ import com.epam.tc.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * student consultation order
+ */
 public class PaymentConsultationCommand implements Command {
+
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     boolean done;
-    int userId = Integer.parseInt(request.getParameter(RequestVariableName.USER_ID));
-    int consultationId = Integer.parseInt(request.getParameter(RequestVariableName.CONSULTATION_ID));
-    int cardId = Integer.parseInt(request.getParameter(RequestVariableName.CARD_ID));
+    int userId = Integer.parseInt(request.getParameter(VariableName.USER_ID));
+    int consultationId = Integer.parseInt(request.getParameter(VariableName.CONSULTATION_ID));
+    int cardId = Integer.parseInt(request.getParameter(VariableName.CARD_ID));
     PaymentCardService paymentCardService = ServiceFactory.getPaymentCardService();
     try {
       done = paymentCardService.paymentConsultation(cardId,  consultationId, userId);

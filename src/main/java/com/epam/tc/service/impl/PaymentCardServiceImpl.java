@@ -12,8 +12,18 @@ import org.apache.logging.log4j.Logger;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * this class implements interface methods PaymentCardService {@link PaymentCardService}
+ * methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ */
 public class PaymentCardServiceImpl implements PaymentCardService {
 
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
   private static Logger logger = LogManager.getLogger(PaymentCardServiceImpl.class);
 
   @Override

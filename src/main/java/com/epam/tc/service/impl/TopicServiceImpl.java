@@ -11,8 +11,18 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * this class implements interface methods TopicService {@link TopicService}
+ * methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ */
 public class TopicServiceImpl implements TopicService {
 
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
   private static Logger logger = LogManager.getLogger(TopicServiceImpl.class);
 
   public final List<Topic> findTopicsForTraining(int trainingId) throws ServiceException {
@@ -38,21 +48,21 @@ public class TopicServiceImpl implements TopicService {
     }
   }
   @Override
-  public final boolean addTopicForTraining(int trainingId, String topicsName,
+  public final void addTopicForTraining(int trainingId, String topicsName,
                                            String topicsText) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     try {
-      return topicDao.addTopicForTraining(trainingId, topicsName, topicsText);
+       topicDao.addTopicForTraining(trainingId, topicsName, topicsText);
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException("Error access database", e);
     }
   }
   @Override
-  public final boolean updateTrainingsTopic(int topicId, String topicName, String topic) throws ServiceException {
+  public final void updateTrainingsTopic(int topicId, String topicName, String topic) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     try {
-      return topicDao.updateTrainingsTopic(topicId, topicName, topic);
+        topicDao.updateTrainingsTopic(topicId, topicName, topic);
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException("Error access database", e);
@@ -70,10 +80,10 @@ public class TopicServiceImpl implements TopicService {
   }
 
   @Override
-  public final boolean markTopic(int userId, int topicId) throws ServiceException {
+  public final void markTopic(int userId, int topicId) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     try {
-      return topicDao.markTopic(userId, topicId);
+        topicDao.markTopic(userId, topicId);
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException("Error access database", e);

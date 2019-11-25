@@ -97,7 +97,6 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException(e);
       }
     }
   }
@@ -113,12 +112,12 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
       preparedStatement.setBigDecimal(1, sum);
       preparedStatement.setInt(2, cardId);
       preparedStatement.executeUpdate();
+      logger.info("card account was replenished");
     } catch (SQLException e) {
       logger.error(e);
       throw new DaoException(e);
     } catch (ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException(e);
     }
   }
 
@@ -140,12 +139,12 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
       preparedStatement.setInt(7, cardDonor);
       preparedStatement.setInt(8, cardRecipient);
       check = preparedStatement.executeUpdate();
+      logger.info("money was transferred from card to card");
     } catch (SQLException e) {
       logger.error(e);
       throw new DaoException(e);
     } catch (ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException(e);
     }
     return (check > 0 ? true : false);
   }
@@ -154,7 +153,6 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
   public boolean paymentConsultation(int cardId,  int consultationId, int userId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
-    ResultSet resultSet = null;
     PreparedStatement preparedStatement = null;
 
     try {
@@ -183,7 +181,8 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
       logger.error(e);
       throw new DaoException(e);
     } catch (ConnectionPoolException e) {
-      e.printStackTrace();
+      logger.error(e);
+      throw new DaoException(e);
     } finally {
       try {
         connection.setAutoCommit(true);
@@ -196,6 +195,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
         logger.error(e);
       }
     }
+    logger.debug("payment was made for consultation");
     return true;
     }
 }

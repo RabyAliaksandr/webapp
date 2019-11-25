@@ -3,7 +3,7 @@ package com.epam.tc.command.impl;
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
-import com.epam.tc.command.RequestVariableName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.command.PageName;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
@@ -16,15 +16,24 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * final grade for training
+ */
 public class SetFinalGradeCommand implements Command {
 
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
   private static Logger logger = LogManager.getLogger(SetFinalGradeCommand.class);
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
-    int studentId = Integer.parseInt(request.getParameter(RequestVariableName.STUDENT_ID));
-    int trainingId = Integer.parseInt(request.getParameter(RequestVariableName.TRAINING_ID));
-    int grade = Integer.parseInt(request.getParameter(RequestVariableName.GRADE));
+    int studentId = Integer.parseInt(request.getParameter(VariableName.STUDENT_ID));
+    int trainingId = Integer.parseInt(request.getParameter(VariableName.TRAINING_ID));
+    int grade = Integer.parseInt(request.getParameter(VariableName.GRADE));
     InputDataValidation validation = new InputDataValidation();
     boolean checkGrade = validation.checkGrade(grade);
     if (!checkGrade) {

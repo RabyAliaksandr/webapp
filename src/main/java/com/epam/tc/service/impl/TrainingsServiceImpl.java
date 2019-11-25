@@ -9,9 +9,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * this class implements interface methods TrainingService {@link TrainingService}
+ * methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ */
 public class TrainingsServiceImpl implements TrainingService {
 
-  private static Logger logger = LogManager.getLogger(TrainingService.class);
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
+  private static Logger logger = LogManager.getLogger(TrainingsServiceImpl.class);
 
   public Training findTrainingByIdTraining(int trainingId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();

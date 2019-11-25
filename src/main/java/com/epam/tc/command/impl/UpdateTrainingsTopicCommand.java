@@ -3,8 +3,9 @@ package com.epam.tc.command.impl;
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
-import com.epam.tc.command.RequestVariableName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.command.PageName;
+import com.epam.tc.entity.Topic;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceFactory;
@@ -16,33 +17,44 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * change fields Task {@link Topic}, description, name
+ * data validation also takes place here
+ * with setting the description length range and name length
+ */
 public class  UpdateTrainingsTopicCommand implements Command {
 
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
   private static final Logger logger = LogManager.getLogger(UpdateTrainingsTopicCommand.class);
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     TopicService topicService = ServiceFactory.getTopicService();
-    String topicName = request.getParameter(RequestVariableName.TOPIC_NAME);
-    String topic = request.getParameter(RequestVariableName.TOPIC);
+    String topicName = request.getParameter(VariableName.TOPIC_NAME);
+    String topic = request.getParameter(VariableName.TOPIC);
     InputDataValidation validation = new InputDataValidation();
     topicName = validation.stripXSS(topicName);
     topicName = validation.deleteExcessiveSpace(topicName);
     topic = validation.stripXSS(topic);
     topic = validation.deleteExcessiveSpace(topic);
-    int topicId = Integer.parseInt(request.getParameter(RequestVariableName.TOPIC_ID));
+    int topicId = Integer.parseInt(request.getParameter(VariableName.TOPIC_ID));
     boolean checkTopic = validation.checkSizeTextArea(topic, 50, 1000);
     boolean checkTopicName = validation.checkSizeTextArea(topicName, 5, 70);
     if (!checkTopic) {
-      request.getSession().setAttribute(RequestVariableName.TEXT, topic);
-      request.getSession().setAttribute(RequestVariableName.NAME, topicName);
+      request.getSession().setAttribute(VariableName.TEXT, topic);
+      request.getSession().setAttribute(VariableName.NAME, topicName);
       request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
               MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_SIZE));
       return ConfigurationManager.getProperty(PageName.TOPIC_PAGE);
     }
     if (!checkTopicName) {
-      request.getSession().setAttribute(RequestVariableName.TEXT, topic);
-      request.getSession().setAttribute(RequestVariableName.NAME, topicName);
+      request.getSession().setAttribute(VariableName.TEXT, topic);
+      request.getSession().setAttribute(VariableName.NAME, topicName);
       request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
               MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_NAME_SIZE));
       return ConfigurationManager.getProperty(PageName.TOPIC_PAGE);

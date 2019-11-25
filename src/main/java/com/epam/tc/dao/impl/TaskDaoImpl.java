@@ -21,10 +21,10 @@ import static com.epam.tc.dao.SqlQuery.*;
 public class TaskDaoImpl implements TaskDao {
 
   private static Logger logger = LogManager.getLogger(TaskDaoImpl.class);
-  private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
   @Override
   public boolean addTaskForTraining(int trainingId, String taskName, String taskText) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -46,13 +46,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public List<Task> findTasksListForTraining(int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -81,13 +81,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public Task findTask(int taskId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -114,13 +114,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public boolean updateTask(int taskId, String taskName, String task) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -142,13 +142,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public int checkTaskStatus(int userId, int taskId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -174,13 +174,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public boolean sendSolution(int userId, int taskId, String answer) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -202,13 +202,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public Task findTaskSolution(int studentId, int taskId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -236,13 +236,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public boolean gradeTask(int studentId, int taskId, int mark) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     boolean done = false;
@@ -265,13 +265,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public int avgMarkForTask(int userId, int trainingId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -297,13 +297,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public List<Task> findCompletedTasks(int trainingId, int studentId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -332,13 +332,13 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement, resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException("Error access database", e);
       }
     }
   }
 
   @Override
   public void deleteTask(int taskId) throws DaoException {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -357,7 +357,6 @@ public class TaskDaoImpl implements TaskDao {
         connectionPool.closeConnection(connection, preparedStatement);
       } catch (ConnectionPoolException e) {
         logger.error(e);
-        throw new DaoException(e);
       }
     }
   }

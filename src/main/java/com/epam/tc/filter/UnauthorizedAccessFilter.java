@@ -1,5 +1,7 @@
 package com.epam.tc.filter;
 
+import com.epam.tc.command.PageName;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -12,16 +14,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * class implementing interface Filter {@link Filter}
+ * the class is used to protect against direct access to the jsp pages
+ * urlPatterns - indicates which parameters for filter operation
+ * initParams - indicates what will be installed after filtering
+ */
 @WebFilter(urlPatterns = {"/jsp/*"},
-        initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp")})
+        initParams = {@WebInitParam(name = PageName.INDEX_PATH_NAME, value = PageName.PATH_INDEX_PAGE)})
 public class UnauthorizedAccessFilter implements Filter {
 
+  /**
+   * class field String indicates which page
+   * the user will be directed to when trying to access pages directly
+   */
   private String indexPath;
 
-  public void init(FilterConfig fConfig) throws ServletException {
-    indexPath = fConfig.getInitParameter("INDEX_PATH");
+  /**
+   * method initializes indexPath {@link UnauthorizedAccessFilter#indexPath}
+   * @param fConfig - object FilterConfig {@link FilterConfig}
+   */
+  public void init(FilterConfig fConfig) {
+    indexPath = fConfig.getInitParameter(PageName.INDEX_PATH_NAME);
   }
 
+  /**
+   * the method processes requests and,
+   * if there are urlPatterns = {"/ jsp / *"} in them, sends it to the specified page
+   * @param request - object ServletRequest {@link ServletResponse}
+   * @param response - object ServletResponse {@link ServletResponse}
+   * @param chain - object FilterChain {@link FilterConfig}
+   * @throws IOException standard exception {@link IOException}
+   * @throws ServletException standard exception {@link ServletException}
+   */
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
           throws IOException, ServletException {
     HttpServletRequest httpRequest = (HttpServletRequest) request;

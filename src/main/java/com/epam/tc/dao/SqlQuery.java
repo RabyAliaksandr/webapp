@@ -73,7 +73,7 @@ public class SqlQuery {
           "WHERE consultations.consultation_id = ?) WHERE payment_cards.card_id = ? AND card_score > " +
           "(SELECT price FROM consultations WHERE consultations.consultation_id = ?)";
   public static final String SQL_PUT_MONEY = "INSERT INTO trainings_center_score (consultation_id, sum, user_id, " +
-          "card_id, payment_date) VALUES\n" +
+          "card_id, payment_date) VALUES " +
           "(?, (SELECT price FROM consultations WHERE consultations.consultation_id = ?), ?, ?, current_date)";
   public static final String SQL_FIND_USERS_CARD = "SELECT card_id, card_number, card_score FROM payment_cards JOIN " +
           "users_payment_card USING (card_id) WHERE user_id = ?";

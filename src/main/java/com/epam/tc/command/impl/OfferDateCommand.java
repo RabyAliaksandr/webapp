@@ -3,7 +3,7 @@ package com.epam.tc.command.impl;
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
-import com.epam.tc.command.RequestVariableName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.command.PageName;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
@@ -20,16 +20,25 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * offer mentor consultation dates
+ */
 public class OfferDateCommand implements Command {
 
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
   private static final Logger logger = LogManager.getLogger(OfferDateCommand.class);
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
-    String temp = request.getParameter(RequestVariableName.DATE);
+    String temp = request.getParameter(VariableName.DATE);
     boolean done;
     Date currentDate = new Date(Calendar.getInstance().getTime().getTime());
-    SimpleDateFormat dateFormat = new SimpleDateFormat(RequestVariableName.DATE_PATTERN);
+    SimpleDateFormat dateFormat = new SimpleDateFormat(VariableName.DATE_PATTERN);
     java.util.Date dateUtil;
     try {
       dateUtil = dateFormat.parse(temp);
@@ -44,7 +53,7 @@ public class OfferDateCommand implements Command {
       return ConfigurationManager.getProperty(PageName.ADMIN_MANAGEMENT);
     }
     InputDataValidation validation = new InputDataValidation();
-    String tempPrice = request.getParameter(RequestVariableName.PRICE);
+    String tempPrice = request.getParameter(VariableName.PRICE);
     boolean checkPrice = validation.checkMoneyField(tempPrice);
     if (!checkPrice) {
       request.getSession().setAttribute(MessageName.MESSAGE_OFFER_SENT,
@@ -52,7 +61,7 @@ public class OfferDateCommand implements Command {
       return ConfigurationManager.getProperty(PageName.ADMIN_MANAGEMENT);
     }
     BigDecimal price = new BigDecimal(tempPrice);
-    int trainingId = Integer.parseInt(request.getParameter(RequestVariableName.TRAINING_ID));
+    int trainingId = Integer.parseInt(request.getParameter(VariableName.TRAINING_ID));
     UserServiceImpl userService = new UserServiceImpl();
     try {
       done = userService.sendOfferConsultations(trainingId, dateSql, price);

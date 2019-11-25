@@ -6,6 +6,11 @@ import com.epam.tc.manager.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * return to main page
+ */
 public class MainPageCommand implements Command {
 
   @Override

@@ -27,6 +27,7 @@ public class deleteTHIS {
     Pattern pattern = Pattern.compile(e);
     String te = "fdbffdbfeweqwffd";
     UserService userService = ServiceFactory.getUserService();
-    System.out.println(userService.findAllMentors().values());
+    PaymentCardService paymentCardService = ServiceFactory.getPaymentCardService();
+    paymentCardService.paymentConsultation(1, 9, 3);
   }
 }

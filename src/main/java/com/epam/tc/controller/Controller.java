@@ -4,8 +4,10 @@ import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandFactory;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
-import com.epam.tc.command.RequestVariableName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.command.PageName;
+import com.epam.tc.connectionpool.ConnectionPool;
+import com.epam.tc.connectionpool.ConnectionPoolException;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.epam.tc.command.RequestVariableName.REDIRECT_TO;
+import static com.epam.tc.command.VariableName.REDIRECT_TO;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
@@ -58,15 +60,25 @@ public class Controller extends HttpServlet {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);
       } else {
-        response.sendRedirect(RequestVariableName.CONTROLLER + request.getHeader(RequestVariableName.REFERER)
+        response.sendRedirect(VariableName.CONTROLLER + request.getHeader(VariableName.REFERER)
                 .replace(request.getRequestURL(), ""));
         request.getSession().setAttribute(REDIRECT_TO, null);
       }
     } else {
       page = ConfigurationManager.getProperty(PageName.INDEX_PAGE);
-      request.getSession().setAttribute(RequestVariableName.NULL_PAGE,
+      request.getSession().setAttribute(VariableName.NULL_PAGE,
               MessageManager.getProperty(MessageName.MESSAGE_NULL_PAGE));
       response.sendRedirect(request.getContextPath() + page);
+    }
+  }
+
+  @Override
+  public void destroy() {
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    try {
+      connectionPool.dispose();
+    } catch (ConnectionPoolException e) {
+      logger.error(e);
     }
   }
 }

@@ -1,5 +1,7 @@
 package com.epam.tc.entity;
 
+import com.epam.tc.validator.RegEx;
+
 import java.sql.Date;
 
 /**
@@ -25,6 +27,7 @@ public class Consultation {
 
   /**
    * consultation price
+   * must match the pattern {@link RegEx#PATTERN_MONEY}
    */
   private int price;
 
@@ -70,6 +73,7 @@ public class Consultation {
 
   /**
    * function to assigment the value of the field {@link Consultation#price}
+   * must match the pattern {@link RegEx#PATTERN_MONEY}
    * @param price - consultations price
    */
   public void setPrice(int price) {

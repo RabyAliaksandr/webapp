@@ -11,9 +11,19 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.*;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * this class implements interface methods UserService {@link UserService}
+ * methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ */
 public class UserServiceImpl implements UserService {
 
-  public final Logger logger = LogManager.getLogger(UserService.class);
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
+  public final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
   public final Map<Training, User> findAllMentors() throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
@@ -46,7 +56,7 @@ public class UserServiceImpl implements UserService {
       if (user != null) {
         return user;
       } else {
-      return user;
+        return user;
       }
     } catch (DaoException e) {
       logger.error(e);
@@ -139,19 +149,19 @@ public class UserServiceImpl implements UserService {
     return UserStatus.values();
   }
 
-  public final boolean updateUserType(int userId, UserType type, UserStatus status) throws ServiceException {
+  public final void updateUserType(int userId, UserType type, UserStatus status) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
     try {
-      return userDao.updateUserType(userId, type, status);
+      userDao.updateUserType(userId, type, status);
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException(e);
     }
   }
 
-  public final List<Student> findStudentsForTraining(int trainingId) throws ServiceException {
+  public final List<User> findStudentsForTraining(int trainingId) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
-    List<Student> students;
+    List<User> students;
     try {
       students = userDao.findStudentsForTraining(trainingId);
     } catch (DaoException e) {

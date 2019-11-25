@@ -1,6 +1,11 @@
 package com.epam.tc.command;
 
-public class RequestVariableName {
+/**
+ * @author alex raby
+ * @version 1.0
+ * contains constants names that are used to assign or receive variables in a request
+ */
+public class VariableName {
 
   public static final String COMMAND = "command";
   public static final String DATE = "date";

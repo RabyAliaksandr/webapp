@@ -3,8 +3,9 @@ package com.epam.tc.command.impl;
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
-import com.epam.tc.command.RequestVariableName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.command.PageName;
+import com.epam.tc.entity.Topic;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceException;
@@ -15,13 +16,22 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * deleting Topic {@link Topic} by Topic id
+ */
 public class DeleteTopicCommand implements Command {
 
+  /**
+   * class object Logger {@link Logger}
+   * writes important events to a log file
+   */
   private static Logger logger = LogManager.getLogger(DeleteTopicCommand.class);
 
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
-    int topicId = Integer.parseInt(request.getParameter(RequestVariableName.TOPIC_ID));
+    int topicId = Integer.parseInt(request.getParameter(VariableName.TOPIC_ID));
     TopicService topicService = ServiceFactory.getTopicService();
     try {
       topicService.deleteTopic(topicId);

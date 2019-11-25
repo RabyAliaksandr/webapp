@@ -27,9 +27,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
-/**
- * Class creating Connection pool
- */
+
 public class ConnectionPool {
 
   private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
@@ -103,6 +101,24 @@ public class ConnectionPool {
   public void dispose() throws ConnectionPoolException {
     clearConnectionQueue();
   }
+
+
+
+  public void closeConnection(ResultSet rs) throws ConnectionPoolException {
+    try {
+      rs.close();
+    } catch (SQLException e) {
+      logger.error("Error closing connection.", e);
+      throw new ConnectionPoolException(e);
+    }
+  }
+
+
+
+
+
+
+
 
   /**
    * closing connecting

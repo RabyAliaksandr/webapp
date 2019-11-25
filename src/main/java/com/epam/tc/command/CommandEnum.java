@@ -2,6 +2,11 @@ package com.epam.tc.command;
 
 import com.epam.tc.command.impl.*;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * returns, depending on the name, the class of the implementing Command
+ */
 public enum CommandEnum {
 
   ADD_TRAINING_TO_STUDENT {
@@ -235,8 +240,15 @@ public enum CommandEnum {
     }
   };
 
+  /**
+   * enum field Command {@link Command}
+   */
   Command command;
 
+  /**
+   * returns Command the appropriate  name
+   * @return Command {@link Command}
+   */
   public Command getCurrentCommand() {
     return command;
   }

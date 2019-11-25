@@ -1,6 +1,14 @@
 package com.epam.tc.service;
 
+/**
+ * @author alex raby
+ * @version 1.0
+ * this class extends an Exception and is its own exception for service package classes
+ * this class overrides class Exception methods
+ * @see Exception
+ */
 public class ServiceException extends Exception {
+
   public ServiceException() {
     super();
   }
