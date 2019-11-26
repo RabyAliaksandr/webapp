@@ -18,10 +18,14 @@ import java.util.List;
 import static com.epam.tc.dao.SqlColumn.*;
 import static com.epam.tc.dao.SqlQuery.*;
 
+/**
+ * The type Topic dao.
+ */
 public class TopicDaoImpl implements TopicDao {
 
   private static Logger logger = LogManager.getLogger(TopicDaoImpl.class);
 
+  /** {@inheritDoc} */
   @Override
   public List<Topic> findTopicsForTraining(int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -57,6 +61,7 @@ public class TopicDaoImpl implements TopicDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public Topic findTopic(int topicId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -90,6 +95,7 @@ public class TopicDaoImpl implements TopicDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void addTopicForTraining(int trainingId, String topicsName, String topicsText) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -117,6 +123,7 @@ public class TopicDaoImpl implements TopicDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void updateTrainingsTopic(int topicId, String topicName, String topic) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -144,6 +151,7 @@ public class TopicDaoImpl implements TopicDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean checkTopicStatus(int userId, int topicId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -176,6 +184,7 @@ public class TopicDaoImpl implements TopicDao {
     return check;
   }
 
+  /** {@inheritDoc} */
   @Override
   public void markTopic(int userId, int topicId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -202,6 +211,7 @@ public class TopicDaoImpl implements TopicDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public List<Topic> findLearnedTopics(int studentId, int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -237,6 +247,7 @@ public class TopicDaoImpl implements TopicDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void deleteTopic(int topicId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();

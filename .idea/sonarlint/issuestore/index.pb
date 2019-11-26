@@ -340,12 +340,8 @@ j
 :src/main/java/com/epam/tc/dao/impl/PaymentCardDaoImpl.java,f\1\f1f78eac4cf845c754ade5a30d603776862783ce
 ^
 .src/main/java/com/epam/tc/command/Command.java,3\6\36b17d3c4ead52444aa1ff07b33a5ea15a16192d
-j
-:src/main/java/com/epam/tc/command/RequestVariableName.java,9\a\9acf7e3bfcf717b88987997e0685bb06202c7b9e
 b
 2src/main/java/com/epam/tc/command/MessageName.java,b\4\b4781a68208803e7b3b2f738068e604c6b26e314
-Y
-)src/main/java/com/epam/tc/deleteTHIS.java,0\0\0090c84b8a957b1d8f2a895b19616cf54ce289a0
 ^
 .src/main/java/com/epam/tc/validator/RegEx.java,7\0\70a8fa7e19be96e923b0ff4d7d40aa4e0c5200b5
 l
@@ -356,3 +352,11 @@ v
 Fsrc/main/java/com/epam/tc/command/impl/AddTopicForTrainingCommand.java,9\8\980a42ce2e0c8051d993ffb672c9a3b9d9fb71f0
 j
 :src/main/java/com/epam/tc/manager/PathPropertiesFiles.java,0\8\08b6a1b228fa9b18c6056d1de598aa8f46b1e8e7
+c
+3src/main/java/com/epam/tc/command/VariableName.java,b\2\b22704a9eeb48372aebcb18c5efa5d79315facb8
+]
+-src/test/com/epam/tc/dao/UserDaoImplTest.java,e\5\e56b7b31298eb338cd4e06378dcb5018d199b71c
+_
+/src/resources/testDataBaseConnection.properties,0\1\01066dffe1f5536c6df19ac10977f6a266ef83e3
+M
+src/main/java/deleteTHIS.java,c\7\c72942ef4898545af00f03695a7724c3ec5613f1

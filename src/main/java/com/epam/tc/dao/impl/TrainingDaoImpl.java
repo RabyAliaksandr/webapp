@@ -19,18 +19,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Training dao.
+ */
 public class TrainingDaoImpl implements TrainingDao {
 
   private static final Logger logger = LogManager.getLogger(TrainingDaoImpl.class);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void addTrainingsToStudent(int idStudent, int idTraining) throws DaoException {
-     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_ADD_COURSE_TO_STUDENT);
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_COURSE_TO_STUDENT)) {
       preparedStatement.setInt(1, idStudent);
       preparedStatement.setInt(2, idTraining);
       preparedStatement.executeUpdate();
@@ -41,25 +44,19 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<Training> findTraining() throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<Training> trainings = new ArrayList<>();
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_ALL_TRAININGS);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_ALL_TRAININGS)) {
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Training training = new Training();
@@ -77,23 +74,23 @@ public class TrainingDaoImpl implements TrainingDao {
       throw new DaoException("Error access database", e);
     } finally {
       try {
-        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+        connectionPool.closeConnection(resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
       }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<Training> findTrainingsForStudent(int id) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<Training> trainings = new ArrayList<>();
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_TRAININGS_BY_STUDENT_ID);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_TRAININGS_BY_STUDENT_ID)) {
       preparedStatement.setInt(1, id);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
@@ -110,23 +107,23 @@ public class TrainingDaoImpl implements TrainingDao {
       throw new DaoException("Error access database", e);
     } finally {
       try {
-        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+        connectionPool.closeConnection(resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
       }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<Training> findCompletedTrainingForStudent(int studentId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<Training> trainings = new ArrayList<>();
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_TRAININGS_BY_STUDENT_ID);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_TRAININGS_BY_STUDENT_ID)) {
       preparedStatement.setInt(1, studentId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
@@ -148,23 +145,23 @@ public class TrainingDaoImpl implements TrainingDao {
       throw new DaoException("Error access database", e);
     } finally {
       try {
-        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+        connectionPool.closeConnection(resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
       }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<Training> findTrainingForMentor(int mentorId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<Training> trainings = new ArrayList<>();
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_COMPLETED_TRAININGS_FOR_MENTOR);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_COMPLETED_TRAININGS_FOR_MENTOR)) {
       preparedStatement.setInt(1, mentorId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
@@ -182,30 +179,30 @@ public class TrainingDaoImpl implements TrainingDao {
       throw new DaoException("Error access database", e);
     } finally {
       try {
-        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+        connectionPool.closeConnection(resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
       }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Training findTrainingByIdTraining(int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet rs = null;
+    ResultSet resultSet = null;
     Training training = new Training();
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_ALL_TRAININGS_BY_TRAINING_ID);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_ALL_TRAININGS_BY_TRAINING_ID)) {
       preparedStatement.setInt(1, trainingId);
-      rs = preparedStatement.executeQuery();
-      while (rs.next()) {
-        training.setName(rs.getString(SQL_NAME));
-        training.setId(rs.getInt(SQL_TRAINING_ID));
-        training.setInformation(rs.getString(SQL_TRAINING_INFORMATION));
-        training.setStatus(rs.getBoolean(SQL_TRAINING_STATUS));
+      resultSet = preparedStatement.executeQuery();
+      while (resultSet.next()) {
+        training.setName(resultSet.getString(SQL_NAME));
+        training.setId(resultSet.getInt(SQL_TRAINING_ID));
+        training.setInformation(resultSet.getString(SQL_TRAINING_INFORMATION));
+        training.setStatus(resultSet.getBoolean(SQL_TRAINING_STATUS));
       }
       return training;
     } catch (SQLException e) {
@@ -216,21 +213,21 @@ public class TrainingDaoImpl implements TrainingDao {
       throw new DaoException("Error access database", e);
     } finally {
       try {
-        connectionPool.closeConnection(connection, preparedStatement, rs);
+        connectionPool.closeConnection(resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
       }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void updateTrainingsInformation(int trainingId, String trainingName, String information) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_UPDATE_TRAININGS_INFORMATION);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_TRAININGS_INFORMATION)) {
       preparedStatement.setString(1, information);
       preparedStatement.setString(2, trainingName);
       preparedStatement.setInt(3, trainingId);
@@ -241,23 +238,17 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void createTraining(String trainingName, int mentorId, String trainingDescription) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    PreparedStatement preparedStatement = null;
-    Connection connection = null;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_CREATE_TRAINING);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE_TRAINING)) {
       preparedStatement.setString(1, trainingName);
       preparedStatement.setInt(2, mentorId);
       preparedStatement.setString(3, trainingDescription);
@@ -269,25 +260,19 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean checkTrainingStatusForStudent(int userId, int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
     boolean done = false;
     ResultSet resultSet;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_CHECK_TRAINING_STATUS_FOR_STUDENT);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CHECK_TRAINING_STATUS_FOR_STUDENT)) {
       preparedStatement.setInt(1, userId);
       preparedStatement.setInt(2, trainingId);
       resultSet = preparedStatement.executeQuery();
@@ -301,22 +286,20 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
+
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean deleteTraining(int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet;
-    int checkUsers = 0;
+    int checkUser = 0;
     try {
       connection = connectionPool.takeConnection();
       connection.setAutoCommit(false);
@@ -324,9 +307,9 @@ public class TrainingDaoImpl implements TrainingDao {
       preparedStatement.setInt(1, trainingId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
-        checkUsers = resultSet.getInt(1);
+        checkUser = resultSet.getInt(1);
       }
-      if (checkUsers == 0) {
+      if (checkUser == 0) {
         preparedStatement = connection.prepareStatement(SQL_DELETE_TRAINING);
         preparedStatement.setInt(1, trainingId);
         preparedStatement.executeUpdate();
@@ -355,14 +338,14 @@ public class TrainingDaoImpl implements TrainingDao {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setFinalGrade(int studentId, int trainingId, int grade) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_SET_FINAL_GRADE);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SET_FINAL_GRADE)) {
       preparedStatement.setInt(1, grade);
       preparedStatement.setInt(2, studentId);
       preparedStatement.setInt(3, trainingId);
@@ -371,27 +354,21 @@ public class TrainingDaoImpl implements TrainingDao {
       logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
-     logger.error(e);
-     throw new DaoException(e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
+      logger.error(e);
+      throw new DaoException(e);
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int findFinalGrade(int studentId, int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
     ResultSet resultSet = null;
-    PreparedStatement preparedStatement = null;
     int grade = 0;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_FIND_FINAL_GRADE);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_FINAL_GRADE)) {
       preparedStatement.setInt(1, studentId);
       preparedStatement.setInt(2, trainingId);
       resultSet = preparedStatement.executeQuery();
@@ -404,9 +381,9 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-   } finally {
+    } finally {
       try {
-        connectionPool.closeConnection(connection, preparedStatement, resultSet);
+        connectionPool.closeConnection(resultSet);
       } catch (ConnectionPoolException e) {
         logger.error(e);
       }
@@ -414,14 +391,14 @@ public class TrainingDaoImpl implements TrainingDao {
     return grade;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void closeReception(int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_CLOSE_RECEPTION);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CLOSE_RECEPTION)) {
       preparedStatement.setInt(1, trainingId);
       preparedStatement.executeUpdate();
       logger.info("was closed reception to training");
@@ -431,23 +408,17 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void giveFeedback(String feedback) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_GIVE_FEEDBACK);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_GIVE_FEEDBACK)) {
       preparedStatement.setString(1, feedback);
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
@@ -456,12 +427,6 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-      } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
@@ -491,16 +456,16 @@ public class TrainingDaoImpl implements TrainingDao {
 //    }
 //  }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<String> findReviews() throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<String> reviews = new ArrayList<>();
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_FIND_REVIEWS);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_REVIEWS)) {
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         String review = resultSet.getString(SQL_REVIEW);
@@ -513,12 +478,6 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement, resultSet);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 }

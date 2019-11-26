@@ -15,12 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * The type Unauthorized access filter.
+ *
  * @author alex raby
- * @version 1.0
- * class implementing interface Filter {@link Filter}
- * the class is used to protect against direct access to the jsp pages
- * urlPatterns - indicates which parameters for filter operation
- * initParams - indicates what will be installed after filtering
+ * @version 1.0 class implementing interface Filter {@link Filter} the class is used to protect against direct access to the jsp pages urlPatterns - indicates which parameters for filter operation initParams - indicates what will be installed after filtering
  */
 @WebFilter(urlPatterns = {"/jsp/*"},
         initParams = {@WebInitParam(name = PageName.INDEX_PATH_NAME, value = PageName.PATH_INDEX_PAGE)})
@@ -57,6 +55,7 @@ public class UnauthorizedAccessFilter implements Filter {
     chain.doFilter(request, response);
   }
 
+  /** {@inheritDoc} */
   public void destroy() {
   }
 }

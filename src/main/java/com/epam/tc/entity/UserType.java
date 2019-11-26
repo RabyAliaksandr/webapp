@@ -1,10 +1,10 @@
 package com.epam.tc.entity;
 
 /**
+ * The enum User type.
+ *
  * @author alex raby
- * @version 1.0
- * describes the type of user
- * depending on the type, site functionality is available
+ * @version 1.0 describes the type of user depending on the type, site functionality is available
  */
 public enum UserType {
 
@@ -29,6 +29,12 @@ public enum UserType {
    */
   GUEST;
 
+  /**
+   * Gets user type.
+   *
+   * @param name the name
+   * @return the user type
+   */
   public static UserType getUserType(String name) {
     try {
       return UserType.valueOf(name.toUpperCase());

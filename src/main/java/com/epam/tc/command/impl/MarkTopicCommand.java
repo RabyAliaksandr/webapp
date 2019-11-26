@@ -16,9 +16,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * The type Mark topic command.
+ *
  * @author alex raby
- * @version 1.0
- * set a mark for the topic that it is studied by a student
+ * @version 1.0 set a mark for the topic that it is studied by a student
  */
 public class MarkTopicCommand implements Command {
 
@@ -28,6 +29,7 @@ public class MarkTopicCommand implements Command {
    */
   private static final Logger logger = LogManager.getLogger(MarkTopicCommand.class);
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     TopicService topicService = ServiceFactory.getTopicService();

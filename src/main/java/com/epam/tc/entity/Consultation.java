@@ -5,14 +5,14 @@ import com.epam.tc.validator.RegEx;
 import java.sql.Date;
 
 /**
- *  consultation class
- *  this class has fields id - unique number,
- *  date - consultations date,
- *  price - consultations price
+ * consultation class
+ * this class has fields id - unique number,
+ * date - consultations date,
+ * price - consultations price
+ *
  * @author alex raby
  * @version 1.0
  */
-
 public class Consultation {
 
   /**
@@ -33,6 +33,7 @@ public class Consultation {
 
   /**
    * function to get the value of the field {@link Consultation#id}
+   *
    * @return unique number
    */
   public int getId() {
@@ -41,6 +42,7 @@ public class Consultation {
 
   /**
    * function to assignment value of the field {@link Consultation#id}
+   *
    * @param id - unique number
    */
   public void setId(int id) {
@@ -49,6 +51,7 @@ public class Consultation {
 
   /**
    * function to get the value of the field {@link Consultation#date}
+   *
    * @return consultations date
    */
   public Date getDate() {
@@ -57,6 +60,7 @@ public class Consultation {
 
   /**
    * function to assigment value of the field {@link Consultation#date}
+   *
    * @param date - consultations date
    */
   public void setDate(Date date) {
@@ -65,6 +69,7 @@ public class Consultation {
 
   /**
    * function to get the value of the field {@link Consultation#price}
+   *
    * @return consultations price
    */
   public int getPrice() {
@@ -74,6 +79,7 @@ public class Consultation {
   /**
    * function to assigment the value of the field {@link Consultation#price}
    * must match the pattern {@link RegEx#PATTERN_MONEY}
+   *
    * @param price - consultations price
    */
   public void setPrice(int price) {

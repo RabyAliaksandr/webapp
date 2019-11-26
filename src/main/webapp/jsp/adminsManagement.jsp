@@ -191,7 +191,7 @@
         </div>
         </c:if>
         <c:if test="${typeOperation == 'consultationManagement'}">
-            <%--                    <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>--%>
+            <%--                    <jsp:useBean id="userService" class="UserServiceImpl"/>--%>
 
         <c:if test="${messageOfferSent != null}">
         <div class="alert alert-danger" role="alert">

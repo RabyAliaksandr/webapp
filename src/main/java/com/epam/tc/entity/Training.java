@@ -1,9 +1,10 @@
 package com.epam.tc.entity;
 
 /**
+ * The type Training.
+ *
  * @author alex raby
- * @version 1.0
- * describes the entity of Training
+ * @version 1.0 describes the entity of Training
  */
 public class Training {
 
@@ -42,6 +43,7 @@ public class Training {
 
   /**
    * method to get the value of the field {@link Training#status}
+   *
    * @return status, boolean
    */
   public boolean isStatus() {
@@ -50,7 +52,8 @@ public class Training {
 
   /**
    * method to assignment value of the field{@link Training#status}
-   * @param status, boolean
+   *
+   * @param status the status
    */
   public void setStatus(boolean status) {
     this.status = status;
@@ -58,6 +61,7 @@ public class Training {
 
   /**
    * method to get the value of the field {@link Training#mentor}
+   *
    * @return mentor, User {@link User}
    */
   public User getMentor() {
@@ -66,6 +70,7 @@ public class Training {
 
   /**
    * method to assignment value of the field{@link Training#mentor}
+   *
    * @param mentor - User {@link User}
    */
   public void setMentor(User mentor) {
@@ -74,6 +79,7 @@ public class Training {
 
   /**
    * method to get the value of the field {@link Training#information}
+   *
    * @return information, description Training
    */
   public String getInformation() {
@@ -83,6 +89,7 @@ public class Training {
   /**
    * method to assignment value of the field{@link Training#information}
    * min size is 50 characters max 1000
+   *
    * @param information description Training, String
    */
   public void setInformation(String information) {
@@ -91,6 +98,7 @@ public class Training {
 
   /**
    * method to get the value of the field {@link Training#grade}
+   *
    * @return grade, int from 1 to 10
    */
   public int getGrade() {
@@ -99,7 +107,8 @@ public class Training {
 
   /**
    * method to assignment value of the field{@link Training#grade}
-   * @param grade, int from 1 to 10
+   *
+   * @param grade the grade
    */
   public void setGrade(int grade) {
     this.grade = grade;
@@ -107,6 +116,7 @@ public class Training {
 
   /**
    * method to get the value of the field {@link Training#id}
+   *
    * @return id, unique Training number
    */
   public int getId() {
@@ -115,6 +125,7 @@ public class Training {
 
   /**
    * method to assignment value of the field{@link Training#id}
+   *
    * @param id - Training unique number, int
    */
   public void setId(int id) {
@@ -124,6 +135,7 @@ public class Training {
   /**
    * method to get the value of the field {@link Training#name}
    * min size is 2 characters max 70
+   *
    * @return Training name, String
    */
   public String getName() {
@@ -133,7 +145,8 @@ public class Training {
   /**
    * method to assignment value of the field{@link Training#name}
    * min size is 50 characters max 1000
-   * @param name, Training name, String
+   *
+   * @param name the name
    */
   public void setName(String name) {
     this.name = name;

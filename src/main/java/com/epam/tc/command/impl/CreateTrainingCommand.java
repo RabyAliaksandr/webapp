@@ -18,9 +18,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * The type Create training command.
+ *
  * @author alex raby
- * @version 1.0
- * creating a new Training {@link Training}
+ * @version 1.0 creating a new Training {@link Training}
  */
 public class CreateTrainingCommand implements Command {
 
@@ -30,6 +31,7 @@ public class CreateTrainingCommand implements Command {
    */
   private static final Logger logger = LogManager.getLogger(CreateTrainingCommand.class);
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     TrainingService trainingsService = ServiceFactory.getTrainingService();

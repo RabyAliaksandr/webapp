@@ -6,9 +6,10 @@ import com.epam.tc.manager.MessageManager;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * The type Command factory.
+ *
  * @author alex raby
- * @version 1.0
- * implementation class design pattern Command class factory
+ * @version 1.0 implementation class design pattern Command class factory
  */
 public class CommandFactory {
 

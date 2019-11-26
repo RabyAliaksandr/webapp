@@ -18,11 +18,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * The type Update trainings topic command.
+ *
  * @author alex raby
- * @version 1.0
- * change fields Task {@link Topic}, description, name
- * data validation also takes place here
- * with setting the description length range and name length
+ * @version 1.0 change fields Task {@link Topic}, description, name data validation also takes place here with setting the description length range and name length
  */
 public class  UpdateTrainingsTopicCommand implements Command {
 
@@ -32,6 +31,7 @@ public class  UpdateTrainingsTopicCommand implements Command {
    */
   private static final Logger logger = LogManager.getLogger(UpdateTrainingsTopicCommand.class);
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     TopicService topicService = ServiceFactory.getTopicService();

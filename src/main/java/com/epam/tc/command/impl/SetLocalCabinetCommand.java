@@ -8,12 +8,14 @@ import com.epam.tc.manager.ConfigurationManager;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * The type Set local cabinet command.
+ *
  * @author alex raby
- * @version 1.0
- * change of locale in the cabinet page
+ * @version 1.0 change of locale in the cabinet page
  */
 public class SetLocalCabinetCommand implements Command {
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) {
     request.getSession().setAttribute(VariableName.LOCAL, request.getParameter(VariableName.LOCAL));

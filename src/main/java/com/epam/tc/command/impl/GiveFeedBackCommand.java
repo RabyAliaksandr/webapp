@@ -1,10 +1,10 @@
 package com.epam.tc.command.impl;
 
 import com.epam.tc.command.Command;
+import com.epam.tc.command.PageName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
-import com.epam.tc.command.VariableName;
-import com.epam.tc.command.PageName;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceException;
@@ -16,9 +16,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * The type Give feed back command.
+ *
  * @author alex raby
- * @version 1.0
- * accepts and sends feedback to DataBase
+ * @version 1.0 accepts and sends feedback to DataBase
  */
 public class GiveFeedBackCommand implements Command {
 
@@ -29,6 +30,7 @@ public class GiveFeedBackCommand implements Command {
    */
   private static Logger logger = LogManager.getLogger(GiveFeedBackCommand.class);
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     String feedback = request.getParameter(VariableName.FEEDBACK);

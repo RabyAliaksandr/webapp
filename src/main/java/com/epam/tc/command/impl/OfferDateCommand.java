@@ -1,10 +1,10 @@
 package com.epam.tc.command.impl;
 
 import com.epam.tc.command.Command;
+import com.epam.tc.command.PageName;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
 import com.epam.tc.command.VariableName;
-import com.epam.tc.command.PageName;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.impl.UserServiceImpl;
@@ -21,9 +21,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
+ * The type Offer date command.
+ *
  * @author alex raby
- * @version 1.0
- * offer mentor consultation dates
+ * @version 1.0 offer mentor consultation dates
  */
 public class OfferDateCommand implements Command {
 
@@ -33,6 +34,7 @@ public class OfferDateCommand implements Command {
    */
   private static final Logger logger = LogManager.getLogger(OfferDateCommand.class);
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     String temp = request.getParameter(VariableName.DATE);

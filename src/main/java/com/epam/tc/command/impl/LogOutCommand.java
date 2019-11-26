@@ -7,12 +7,14 @@ import com.epam.tc.manager.ConfigurationManager;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * The type Log out command.
+ *
  * @author alex raby
- * @version 1.0
- * log out command, closing session
+ * @version 1.0 log out command, closing session
  */
 public class LogOutCommand implements Command {
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) {
     request.getSession().invalidate();

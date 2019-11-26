@@ -4,6 +4,7 @@ import com.epam.tc.connectionpool.ConnectionPool;
 import com.epam.tc.connectionpool.ConnectionPoolException;
 import com.epam.tc.dao.ConsultationDao;
 import com.epam.tc.dao.DaoException;
+import com.epam.tc.dao.SqlColumn;
 import com.epam.tc.entity.Consultation;
 import com.epam.tc.entity.Training;
 import org.apache.logging.log4j.LogManager;
@@ -16,14 +17,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.tc.dao.SqlColumn.*;
 import static com.epam.tc.dao.SqlQuery.*;
 import static com.epam.tc.dao.SqlQuery.SQL_TOPICS_FOR_CONSULTATION;
 
+/**
+ * The type Consultation dao.
+ */
 public class ConsultationDaoImpl implements ConsultationDao {
 
   private final static Logger logger = LogManager.getLogger(ConsultationDaoImpl.class);
 
+  /** {@inheritDoc} */
   @Override
   public List<Consultation> findConsultationsForTraining(int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -40,9 +44,9 @@ public class ConsultationDaoImpl implements ConsultationDao {
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Consultation consultation = new Consultation();
-        consultation.setId(resultSet.getInt(SQL_CONSULTATION_ID));
+        consultation.setId(resultSet.getInt(SqlColumn.SQL_CONSULTATION_ID));
         consultation.setDate(resultSet.getDate(SQL_DATE));
-        consultation.setPrice(resultSet.getInt(SQL_PRICE));
+        consultation.setPrice(resultSet.getInt(SqlColumn.SQL_PRICE));
         consultations.add(consultation);
       }
       return consultations;
@@ -61,6 +65,7 @@ public class ConsultationDaoImpl implements ConsultationDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
                                        List<Integer> topicIds) throws DaoException {
@@ -100,6 +105,7 @@ public class ConsultationDaoImpl implements ConsultationDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -130,6 +136,7 @@ public class ConsultationDaoImpl implements ConsultationDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public Map<Training, Date> findConsultationsOffer(int mentorId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -144,7 +151,7 @@ public class ConsultationDaoImpl implements ConsultationDao {
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Training training = new Training();
-        training.setId(resultSet.getInt(SQL_TRAINING_ID));
+        training.setId(resultSet.getInt(SqlColumn.SQL_TRAINING_ID));
         training.setName(resultSet.getString(SQL_TRAINING_NAME_AS));
         Date date = resultSet.getDate(SQL_DATE);
         consultations.put(training, date);
@@ -165,6 +172,7 @@ public class ConsultationDaoImpl implements ConsultationDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean sendAgreement(int trainingId, Date date, boolean mark) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();

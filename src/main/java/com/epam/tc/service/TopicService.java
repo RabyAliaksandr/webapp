@@ -5,16 +5,19 @@ import com.epam.tc.entity.Training;
 import com.epam.tc.entity.User;
 
 import java.util.List;
+
 /**
+ * The interface Topic service.
+ *
  * @author alex raby
- * @version 1.0
- * this interface contains methods for working with Training
+ * @version 1.0 this interface contains methods for working with Training
  * @see Training
  */
 public interface TopicService {
 
   /**
    * search topics for this training
+   *
    * @param trainingId - Training id
    * @return list of Topic
    * @throws ServiceException package Service exception
@@ -24,6 +27,7 @@ public interface TopicService {
 
   /**
    * finds Topic by id
+   *
    * @param topicId - Topic id
    * @return - Topic
    * @throws ServiceException package Service exception
@@ -33,6 +37,7 @@ public interface TopicService {
 
   /**
    * adding a training Topic
+   *
    * @param trainingId - Training id
    * @param topicsName - Topic name
    * @param topicsText - Topic
@@ -44,9 +49,10 @@ public interface TopicService {
 
   /**
    * updates the fields of the Topic
-   * @param topicId - Topic id
+   *
+   * @param topicId   - Topic id
    * @param topicName - Topic name
-   * @param topic - Topic topic
+   * @param topic     - Topic topic
    * @throws ServiceException package Service exception
    * @see Topic
    * @see Training
@@ -55,8 +61,10 @@ public interface TopicService {
 
   /**
    * checks the status of the Topic for User
-   * @param userId - User id
+   *
+   * @param userId  - User id
    * @param topicId - Topic id
+   * @return the boolean
    * @throws ServiceException package Service exception
    * @see User
    * @see Topic
@@ -65,7 +73,8 @@ public interface TopicService {
 
   /**
    * adds a topic to the list of Topic for User with the status 'true'
-   * @param userId - User id
+   *
+   * @param userId  - User id
    * @param topicId - Topic id
    * @throws ServiceException package Service exception
    * @see Topic
@@ -75,7 +84,8 @@ public interface TopicService {
 
   /**
    * finds Topic with status 'true' for the User enrolled in this Training
-   * @param studentId - User id
+   *
+   * @param studentId  - User id
    * @param trainingId - Training id
    * @return - list of Topic
    * @throws ServiceException package Service exception
@@ -87,6 +97,7 @@ public interface TopicService {
 
   /**
    * deleting this Topic
+   *
    * @param topicId - Topic id
    * @throws ServiceException package Service exception
    * @see Topic

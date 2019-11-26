@@ -2,15 +2,15 @@ package com.epam.tc.command.impl;
 
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
-import com.epam.tc.command.MessageName;
-import com.epam.tc.command.VariableName;
 import com.epam.tc.command.PageName;
+import com.epam.tc.command.VariableName;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
-import com.epam.tc.service.ConsultationService;
 import com.epam.tc.service.PaymentCardService;
-import com.epam.tc.service.ServiceFactory;
 import com.epam.tc.service.ServiceException;
+import com.epam.tc.service.ServiceFactory;
+import com.epam.tc.command.MessageName;
+import com.epam.tc.service.ConsultationService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The type Send order consultation command.
+ *
  * @author alex raby
- * @version 1.0
- * Sending proposal for consultation from administrator to mentor
+ * @version 1.0 Sending proposal for consultation from administrator to mentor
  */
 public class SendOrderConsultationCommand implements Command {
 
@@ -31,6 +32,7 @@ public class SendOrderConsultationCommand implements Command {
    */
   private static final Logger logger = LogManager.getLogger(SendOrderConsultationCommand.class);
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     boolean done;

@@ -1,10 +1,10 @@
 package com.epam.tc.command.impl;
 
+import com.epam.tc.command.PageName;
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
 import com.epam.tc.command.VariableName;
-import com.epam.tc.command.PageName;
 import com.epam.tc.entity.Task;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
@@ -18,11 +18,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * The type Update trainings task command.
+ *
  * @author alex raby
- * @version 1.0
- * change fields Task {@link Task}, description, name
- * data validation also takes place here
- * with setting the description length range and name length
+ * @version 1.0 change fields Task {@link Task}, description, name data validation also takes place here with setting the description length range and name length
  */
 public class UpdateTrainingsTaskCommand implements Command {
 
@@ -32,6 +31,7 @@ public class UpdateTrainingsTaskCommand implements Command {
    */
   private static final Logger logger = LogManager.getLogger(UpdateTrainingsTaskCommand.class);
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     TaskService taskService = ServiceFactory.getTaskService();

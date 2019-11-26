@@ -1,10 +1,10 @@
 package com.epam.tc.command.impl;
 
 import com.epam.tc.command.Command;
+import com.epam.tc.command.PageName;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
 import com.epam.tc.command.VariableName;
-import com.epam.tc.command.PageName;
 import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ConsultationService;
@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 
 /**
+ * The type Send agreement command.
+ *
  * @author alex raby
- * @version 1.0
- * sending consultation agreement from mentor to administrator
+ * @version 1.0 sending consultation agreement from mentor to administrator
  */
 public class SendAgreementCommand implements Command {
 
@@ -29,6 +30,7 @@ public class SendAgreementCommand implements Command {
    */
   private static final Logger logger = LogManager.getLogger(SendAgreementCommand.class);
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     ConsultationService consultationService = ServiceFactory.getConsultationService();

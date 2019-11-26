@@ -5,13 +5,14 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
+ * The type Encoding filter.
+ *
  * @author alex raby
- * @version 1.0
- * class implementing interface Filter {@link Filter}
- * sets the encoding of the request and response
+ * @version 1.0 class implementing interface Filter {@link Filter} sets the encoding of the request and response
  */
 public class EncodingFilter implements Filter {
 
+  /** {@inheritDoc} */
   @Override
   public void init(FilterConfig filterConfig) {
   }
@@ -31,6 +32,7 @@ public class EncodingFilter implements Filter {
     filterChain.doFilter(servletRequest, servletResponse);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void destroy() {
   }

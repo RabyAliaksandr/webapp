@@ -8,14 +8,16 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
+ * The interface Payment card service.
+ *
  * @author alex raby
- * @version 1.0
- * an interface containing methods for working with an object PaymentCard
+ * @version 1.0 an interface containing methods for working with an object PaymentCard
  */
 public interface PaymentCardService {
 
   /**
    * finds all PaymentCard owned by the User
+   *
    * @param userId - User id
    * @return lit of PaymentCard
    * @throws ServiceException package Service exception
@@ -26,8 +28,9 @@ public interface PaymentCardService {
 
   /**
    * PaymentCard score replenishment
+   *
    * @param cardId - PaymentCard id
-   * @param sum - balance value. class object {@link BigDecimal}
+   * @param sum    - balance value. class object {@link BigDecimal}
    * @throws ServiceException package Service exception
    * @see PaymentCard
    */
@@ -35,9 +38,10 @@ public interface PaymentCardService {
 
   /**
    * balance transfer from one PaymentCard to another PaymentCard
-   * @param cardDonor - PaymentCard id with which the amount is debited
+   *
+   * @param cardDonor     - PaymentCard id with which the amount is debited
    * @param cardRecipient - PaymentCard id on which the amount is written
-   * @param sum - amount by which the account is replenished. class object {@link BigDecimal}
+   * @param sum           - amount by which the account is replenished. class object {@link BigDecimal}
    * @return - boolean
    * @throws ServiceException package Service exception
    */
@@ -46,10 +50,11 @@ public interface PaymentCardService {
   /**
    * payment Consultation
    * the amount of the payment is taken from the database. Consultation table contains price
-   * @param cardId - PaymentCard id
+   *
+   * @param cardId         - PaymentCard id
    * @param consultationId - Consultation id
-   * @param userId - User id
-   * @return boolean
+   * @param userId         - User id
+   * @return boolean boolean
    * @throws ServiceException package Service exception
    * @see PaymentCard
    * @see User
@@ -59,7 +64,8 @@ public interface PaymentCardService {
 
   /**
    * add PaymentCard
-   * @param userId - User id
+   *
+   * @param userId     - User id
    * @param cardNumber - PaymentCard number
    * @return - boolean
    * @throws ServiceException package Service exception

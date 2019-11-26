@@ -6,18 +6,20 @@ import com.epam.tc.entity.User;
 import java.util.List;
 
 /**
+ * The interface Training dao.
+ *
  * @author alex raby
- * @version 1.0
- * this interface contains methods for working with DataBase with Training
+ * @version 1.0 this interface contains methods for working with DataBase with Training
  * @see Training
  */
 public interface TrainingDao {
 
   /**
    * adding training to user
-   * @param idStudent - User id
+   *
+   * @param idStudent  - User id
    * @param idTraining - Training id
-   * @throws DaoException
+   * @throws DaoException service package exception
    * @see User
    * @see Training
    */
@@ -25,27 +27,30 @@ public interface TrainingDao {
 
   /**
    * finds all Training
+   *
    * @return list of Training
-   * @throws DaoException
+   * @throws DaoException the dao exception
    * @see Training
    */
   List<Training> findTraining() throws DaoException;
 
   /**
    * finds trainings for which is recorded
+   *
    * @param id - User id
    * @return list of Training
-   * @throws DaoException
+   * @throws DaoException the dao exception
    * @see User
    * @see Training
    */
   List<Training> findTrainingsForStudent(int id) throws DaoException;
 
   /**
-   *  finds trainings for a student with a grade
+   * finds trainings for a student with a grade
+   *
    * @param studentId - User id
    * @return list of Training
-   * @throws DaoException
+   * @throws DaoException the dao exception
    * @see Training
    * @see User
    */
@@ -53,9 +58,10 @@ public interface TrainingDao {
 
   /**
    * finds all the trainings that this mentor oversees
+   *
    * @param mentorId - User id
    * @return list of Training
-   * @throws DaoException
+   * @throws DaoException the dao exception
    * @see User
    * @see Training
    */
@@ -63,29 +69,32 @@ public interface TrainingDao {
 
   /**
    * finds training on training id
+   *
    * @param trainingId - Training id
-   * @return Training
-   * @throws DaoException
+   * @return Training training
+   * @throws DaoException the dao exception
    * @see Training
    */
   Training findTrainingByIdTraining(int trainingId) throws DaoException;
 
   /**
    * changes the values of the training fields
-   * @param trainingId - Training id
+   *
+   * @param trainingId   - Training id
    * @param trainingName - Training name
-   * @param information - Training information
-   * @throws DaoException
+   * @param information  - Training information
+   * @throws DaoException the dao exception
    * @see Training
    */
   void updateTrainingsInformation(int trainingId, String trainingName, String information) throws DaoException;
 
   /**
    * creating a new training
-   * @param trainingName - Training name
-   * @param mentorId - user Id
+   *
+   * @param trainingName        - Training name
+   * @param mentorId            - user Id
    * @param trainingDescription - Training information
-   * @throws DaoException
+   * @throws DaoException the dao exception
    * @see Training
    * @see User
    */
@@ -93,10 +102,11 @@ public interface TrainingDao {
 
   /**
    * checks if an user is registered for this training
-   * @param userId - User id
+   *
+   * @param userId     - User id
    * @param trainingId - Training id
-   * @return boolean
-   * @throws DaoException
+   * @return boolean boolean
+   * @throws DaoException the dao exception
    * @see Training
    * @see User
    */
@@ -104,31 +114,33 @@ public interface TrainingDao {
 
   /**
    * training removal
+   *
    * @param trainingId - Training id
-   * @return boolean
-   * @throws DaoException
+   * @return boolean boolean
+   * @throws DaoException the dao exception
    * @see Training
    */
   boolean deleteTraining(int trainingId) throws DaoException;
 
   /**
    * grade final mark
-   * @param studentId - User id
+   *
+   * @param studentId  - User id
    * @param trainingId - Training id
-   * @param grade - int ranging from 1 to 10
-   * @throws DaoException
+   * @param grade      - int ranging from 1 to 10
+   * @throws DaoException the dao exception
    * @see User
    * @see Training
-   *
    */
   void setFinalGrade(int studentId, int trainingId, int grade) throws DaoException;
 
   /**
    * finding the final student grade for this training
-   * @param studentId - User id
+   *
+   * @param studentId  - User id
    * @param trainingId - training id
    * @return int ranging from 1 to 10
-   * @throws DaoException
+   * @throws DaoException the dao exception
    * @see Training
    * @see User
    */
@@ -136,23 +148,26 @@ public interface TrainingDao {
 
   /**
    * closing the set for this training
+   *
    * @param trainingId - Training id
-   * @throws DaoException
+   * @throws DaoException the dao exception
    * @see Training
    */
   void closeReception(int trainingId) throws DaoException;
 
   /**
    * writing a review
+   *
    * @param feedback - String
-   * @throws DaoException
+   * @throws DaoException the dao exception
    */
   void giveFeedback(String feedback) throws DaoException;
 
   /**
    * search for reviews
+   *
    * @return list of String
-   * @throws DaoException
+   * @throws DaoException the dao exception
    */
   List<String> findReviews() throws DaoException;
 }

@@ -1,9 +1,10 @@
 package com.epam.tc.entity;
 
 /**
+ * The type Topic.
+ *
  * @author alex raby
- * @version 1.0
- * describes the entity of the Topic
+ * @version 1.0 describes the entity of the Topic
  */
 public class Topic {
 
@@ -26,6 +27,7 @@ public class Topic {
 
   /**
    * method to get the value of the field {@link Topic#id}
+   *
    * @return id - unique number, int
    */
   public int getId() {
@@ -34,6 +36,7 @@ public class Topic {
 
   /**
    * method to assignment value of the field{@link Topic#id}
+   *
    * @param id - unique number, int
    */
   public void setId(int id) {
@@ -42,6 +45,7 @@ public class Topic {
 
   /**
    * method to get the value of the field {@link Topic#name}
+   *
    * @return name - Topic name, String
    */
   public String getName() {
@@ -51,6 +55,7 @@ public class Topic {
   /**
    * method to assignment value of the field{@link Topic#name}
    * min size is 2 characters max 70
+   *
    * @param name - Topic name, String
    */
   public void setName(String name) {
@@ -59,6 +64,7 @@ public class Topic {
 
   /**
    * method to get the value of the field {@link Topic#topic}
+   *
    * @return task - Topic description, String
    */
   public String getTopic() {
@@ -68,6 +74,7 @@ public class Topic {
   /**
    * method to assignment value of the field{@link Topic#topic}
    * min size is 50 characters max 1000
+   *
    * @param topic - Topic description, String
    */
   public void setTopic(String topic) {

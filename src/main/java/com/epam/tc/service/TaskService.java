@@ -7,18 +7,20 @@ import com.epam.tc.entity.User;
 import java.util.List;
 
 /**
+ * The interface Task service.
+ *
  * @author alex raby
- * @version 1.0
- * contains methods for working with Task
+ * @version 1.0 contains methods for working with Task
  * @see Task
  */
 public interface TaskService {
 
   /**
    * adding Task for Training
+   *
    * @param trainingId - Training id
-   * @param taskName - Task name
-   * @param taskText - Task task
+   * @param taskName   - Task name
+   * @param taskText   - Task task
    * @throws ServiceException package Service exception
    * @see Task
    * @see Training
@@ -27,6 +29,7 @@ public interface TaskService {
 
   /**
    * finds Task for this Training
+   *
    * @param trainingId - Training id
    * @return list of Training
    * @throws ServiceException package Service exception
@@ -36,8 +39,9 @@ public interface TaskService {
 
   /**
    * finds a Task by id
+   *
    * @param taskId - Task id
-   * @return Task
+   * @return Task task
    * @throws ServiceException package Service exception
    * @see Task
    */
@@ -45,9 +49,10 @@ public interface TaskService {
 
   /**
    * updates Task  fields
-   * @param taskId - Task id
+   *
+   * @param taskId   - Task id
    * @param taskName - new Task name
-   * @param task - new Task task
+   * @param task     - new Task task
    * @throws ServiceException package Service exception
    * @see Task
    */
@@ -55,6 +60,7 @@ public interface TaskService {
 
   /**
    * checks the grade for Task for the User
+   *
    * @param userId - User id
    * @param taskId - Task id
    * @return int ranging from 1 to 10
@@ -66,6 +72,7 @@ public interface TaskService {
 
   /**
    * updating the answer field for a given User related Task
+   *
    * @param userId - User id
    * @param taskId - Task id
    * @param answer - Task answer
@@ -77,8 +84,9 @@ public interface TaskService {
 
   /**
    * finding a solution for this Task for the User
+   *
    * @param studentId - User id
-   * @param taskId - Task id
+   * @param taskId    - Task id
    * @return - Task
    * @throws ServiceException package Service exception
    * @see Task
@@ -88,9 +96,10 @@ public interface TaskService {
 
   /**
    * assessment of the Task for this User
+   *
    * @param studentId - User id
-   * @param taskId - Task id
-   * @param mark - Task mark
+   * @param taskId    - Task id
+   * @param mark      - Task mark
    * @throws ServiceException package Service exception
    * @see User
    * @see Task
@@ -99,7 +108,8 @@ public interface TaskService {
 
   /**
    * finding the average score for the tasks
-   * @param userId - User id
+   *
+   * @param userId     - User id
    * @param trainingId Training id
    * @return - int ranging from 1 to 10
    * @throws ServiceException package Service exception
@@ -110,8 +120,9 @@ public interface TaskService {
 
   /**
    * finding solved Task for User
+   *
    * @param trainingId - Training id
-   * @param studentId - User id
+   * @param studentId  - User id
    * @return list of Task
    * @throws ServiceException package Service exception
    * @see Task
@@ -122,6 +133,7 @@ public interface TaskService {
 
   /**
    * deleting a Task by id
+   *
    * @param taskId - Task id
    * @throws ServiceException package Service exception
    * @see Task

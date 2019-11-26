@@ -1,10 +1,10 @@
 package com.epam.tc.service.impl;
 
 import com.epam.tc.dao.DaoException;
-import com.epam.tc.dao.DaoFactory;
 import com.epam.tc.dao.TaskDao;
 import com.epam.tc.entity.Task;
 import com.epam.tc.service.ServiceException;
+import com.epam.tc.dao.DaoFactory;
 import com.epam.tc.service.TaskService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,10 +12,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 /**
+ * The type Task service.
+ *
  * @author alex raby
- * @version 1.0
- * this class implements interface methods TaskService {@link TaskService}
- * methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ * @version 1.0 this class implements interface methods TaskService {@link TaskService} methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
  */
 public class TaskServiceImpl implements TaskService {
 
@@ -25,8 +25,9 @@ public class TaskServiceImpl implements TaskService {
    */
   private static Logger logger = LogManager.getLogger(TaskServiceImpl.class);
 
+  /** {@inheritDoc} */
   public final void addTaskForTraining(int trainingId, String taskName,
-                                          String taskText) throws ServiceException {
+                                       String taskText) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
       taskDao.addTaskForTraining(trainingId, taskName, taskText);
@@ -36,6 +37,7 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
+  /** {@inheritDoc} */
   public final List<Task> findTasksListForTraining(int trainingId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     List<Task> tasks;
@@ -48,6 +50,7 @@ public class TaskServiceImpl implements TaskService {
     return tasks;
   }
 
+  /** {@inheritDoc} */
   @Override
   public final Task findTask(int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
@@ -62,6 +65,7 @@ public class TaskServiceImpl implements TaskService {
   }
 
 
+  /** {@inheritDoc} */
   public final void updateTask(int taskId, String taskName, String task) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
@@ -72,6 +76,7 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
+  /** {@inheritDoc} */
   public final int checkTaskStatus(int userId, int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
@@ -82,6 +87,7 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
+  /** {@inheritDoc} */
   public final void sendSolution(int userId, int taskId, String answer) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
@@ -92,6 +98,7 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
+  /** {@inheritDoc} */
   public final Task findTaskSolution(int studentId, int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     Task task;
@@ -104,6 +111,7 @@ public class TaskServiceImpl implements TaskService {
     return task;
   }
 
+  /** {@inheritDoc} */
   public final void gradeTask(int studentId, int taskId, int mark) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
@@ -114,6 +122,7 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public final int findAvgMarkForTasks(int userId, int trainingId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
@@ -125,6 +134,7 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
+  /** {@inheritDoc} */
   public final List<Task> findCompletedTasks(int trainingId, int studentId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
@@ -135,6 +145,7 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void deleteTask(int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();

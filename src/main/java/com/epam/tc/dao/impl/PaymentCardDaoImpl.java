@@ -1,15 +1,17 @@
 package com.epam.tc.dao.impl;
 
-import com.epam.tc.connectionpool.ConnectionPool;
 import com.epam.tc.connectionpool.ConnectionPoolException;
-import static com.epam.tc.dao.SqlQuery.*;
 import com.epam.tc.dao.DaoException;
 import com.epam.tc.dao.PaymentCardDao;
+import com.epam.tc.dao.SqlColumn;
 import com.epam.tc.entity.PaymentCard;
+import com.epam.tc.connectionpool.ConnectionPool;
+
+import static com.epam.tc.dao.SqlQuery.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.epam.tc.dao.SqlColumn.*;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,10 +20,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Payment card dao.
+ */
 public class PaymentCardDaoImpl implements PaymentCardDao {
 
   private static Logger logger = LogManager.getLogger(PaymentCardDaoImpl.class);
 
+  /** {@inheritDoc} */
   @Override
   public boolean addPaymentCard(int userId, long cardNumber) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -66,6 +72,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public List<PaymentCard> findUsersCard(int userId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -80,9 +87,9 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         PaymentCard paymentCard = new PaymentCard();
-        paymentCard.setId(resultSet.getInt(SQL_CARD_ID));
-        paymentCard.setNumber(resultSet.getLong(SQL_CARD_NUMBER));
-        paymentCard.setScore(resultSet.getBigDecimal(SQL_CARD_SCORE));
+        paymentCard.setId(resultSet.getInt(SqlColumn.SQL_CARD_ID));
+        paymentCard.setNumber(resultSet.getLong(SqlColumn.SQL_CARD_NUMBER));
+        paymentCard.setScore(resultSet.getBigDecimal(SqlColumn.SQL_CARD_SCORE));
         paymentCards.add(paymentCard);
       }
       return paymentCards;
@@ -101,6 +108,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void replenishCard(int cardId, BigDecimal sum) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -121,6 +129,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean transferMoneyCardToCard(int cardDonor, int cardRecipient, BigDecimal sum) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -149,6 +158,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
     return (check > 0 ? true : false);
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean paymentConsultation(int cardId,  int consultationId, int userId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();

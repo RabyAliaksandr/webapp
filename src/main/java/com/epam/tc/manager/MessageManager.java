@@ -3,11 +3,10 @@ package com.epam.tc.manager;
 import java.util.ResourceBundle;
 
 /**
+ * The type Message manager.
+ *
  * @author alex raby
- * @version 1.0
- *this class returns a message from
- * the properties file depending on the localization
- * <a href="file:../PathPropertiesFiles.PATH_LOCAL/> {@link PathPropertiesFiles#PATH_LOCAL}
+ * @version 1.0 this class returns a message from the properties file depending on the localization <a href="file:../PathPropertiesFiles.PATH_LOCAL/> {@link PathPropertiesFiles#PATH_LOCAL}
  */
 public class MessageManager {
 
@@ -19,8 +18,9 @@ public class MessageManager {
 
   /**
    * method for getting a String {@link String} by parameter
+   *
    * @param key - String message name
-   * @return String
+   * @return String property
    */
   public static String getProperty(String key) {
     return resourceBundle.getString(key);

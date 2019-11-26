@@ -1,11 +1,10 @@
 package com.epam.tc.entity;
 
-import com.epam.tc.validator.RegEx;
-
 /**
+ * The type Task.
+ *
  * @author alex raby
- * @version 1.0
- * class describes the essence of the task
+ * @version 1.0 class describes the essence of the task
  */
 public class Task {
 
@@ -39,6 +38,7 @@ public class Task {
 
   /**
    * function to get the value of the field {@link Task#id}
+   *
    * @return id - unique number, int
    */
   public int getId() {
@@ -46,7 +46,8 @@ public class Task {
   }
 
   /**
-   *function to assignment value of the field{@link Task#id}
+   * function to assignment value of the field{@link Task#id}
+   *
    * @param id - unique number, int
    */
   public void setId(int id) {
@@ -55,6 +56,7 @@ public class Task {
 
   /**
    * function to get the value of the field {@link Task#name}
+   *
    * @return name - Task name, String
    */
   public String getName() {
@@ -62,8 +64,9 @@ public class Task {
   }
 
   /**
-   *function to assignment value of the field{@link Task#name}
+   * function to assignment value of the field{@link Task#name}
    * min size is 2 characters max 70
+   *
    * @param name - Task name, String
    */
   public void setName(String name) {
@@ -72,6 +75,7 @@ public class Task {
 
   /**
    * function to get the value of the field {@link Task#task}
+   *
    * @return task - Task description, String
    */
   public String getTask() {
@@ -79,8 +83,9 @@ public class Task {
   }
 
   /**
-   *function to assignment value of the field{@link Task#task}
+   * function to assignment value of the field{@link Task#task}
    * min size is 50 characters max 1000
+   *
    * @param task - Task description, String
    */
   public void setTask(String task) {
@@ -89,6 +94,7 @@ public class Task {
 
   /**
    * function to get the value of the field {@link Task#mark}
+   *
    * @return int from 1 to 10
    */
   public int getMark() {
@@ -96,7 +102,8 @@ public class Task {
   }
 
   /**
-   *function to assignment value of the field{@link Task#mark}
+   * function to assignment value of the field{@link Task#mark}
+   *
    * @param mark - int form 1 to 10
    */
   public void setMark(int mark) {
@@ -104,8 +111,9 @@ public class Task {
   }
 
   /**
-   *function to assignment value of the field{@link Task#answer}
+   * function to assignment value of the field{@link Task#answer}
    * min size is 50 characters max 1000
+   *
    * @param answer - Task answer, String
    */
   public void setAnswer(String answer) {

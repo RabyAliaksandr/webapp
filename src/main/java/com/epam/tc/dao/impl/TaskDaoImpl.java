@@ -3,6 +3,7 @@ package com.epam.tc.dao.impl;
 import com.epam.tc.connectionpool.ConnectionPool;
 import com.epam.tc.connectionpool.ConnectionPoolException;
 import com.epam.tc.dao.DaoException;
+import com.epam.tc.dao.SqlColumn;
 import com.epam.tc.dao.TaskDao;
 import com.epam.tc.entity.Task;
 import org.apache.logging.log4j.LogManager;
@@ -15,15 +16,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.tc.dao.SqlColumn.*;
 import static com.epam.tc.dao.SqlQuery.*;
 
+/**
+ * The type Task dao.
+ */
 public class TaskDaoImpl implements TaskDao {
 
   private static Logger logger = LogManager.getLogger(TaskDaoImpl.class);
 
+  /** {@inheritDoc} */
   @Override
-  public boolean addTaskForTraining(int trainingId, String taskName, String taskText) throws DaoException {
+  public void addTaskForTraining(int trainingId, String taskName, String taskText) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -34,7 +38,6 @@ public class TaskDaoImpl implements TaskDao {
       preparedStatement.setString(2, taskName);
       preparedStatement.setString(3, taskText);
       preparedStatement.executeUpdate();
-      return true;
     } catch (SQLException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
@@ -50,6 +53,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public List<Task> findTasksListForTraining(int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -64,9 +68,9 @@ public class TaskDaoImpl implements TaskDao {
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Task task = new Task();
-        task.setId(resultSet.getInt(SQL_TASK_ID));
-        task.setName(resultSet.getString(SQL_TASK_NAME));
-        task.setTask(resultSet.getString(SQL_TASK));
+        task.setId(resultSet.getInt(SqlColumn.SQL_TASK_ID));
+        task.setName(resultSet.getString(SqlColumn.SQL_TASK_NAME));
+        task.setTask(resultSet.getString(SqlColumn.SQL_TASK));
         tasks.add(task);
       }
       return tasks;
@@ -85,6 +89,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public Task findTask(int taskId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -98,9 +103,9 @@ public class TaskDaoImpl implements TaskDao {
       preparedStatement.setInt(1, taskId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
-        task.setId(resultSet.getInt(SQL_TASK_ID));
-        task.setTask(resultSet.getString(SQL_TASK));
-        task.setName(resultSet.getString(SQL_TASK_NAME));
+        task.setId(resultSet.getInt(SqlColumn.SQL_TASK_ID));
+        task.setTask(resultSet.getString(SqlColumn.SQL_TASK));
+        task.setName(resultSet.getString(SqlColumn.SQL_TASK_NAME));
       }
       return task;
     } catch (SQLException e) {
@@ -118,6 +123,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean updateTask(int taskId, String taskName, String task) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -146,6 +152,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public int checkTaskStatus(int userId, int taskId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -178,6 +185,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean sendSolution(int userId, int taskId, String answer) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -206,6 +214,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public Task findTaskSolution(int studentId, int taskId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -221,8 +230,8 @@ public class TaskDaoImpl implements TaskDao {
       preparedStatement.setInt(2, taskId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
-        task.setMark(resultSet.getInt(SQL_MARK));
-        task.setAnswer(resultSet.getString(SQL_ANSWER));
+        task.setMark(resultSet.getInt(SqlColumn.SQL_MARK));
+        task.setAnswer(resultSet.getString(SqlColumn.SQL_ANSWER));
       }
       return task;
     } catch (SQLException e) {
@@ -240,6 +249,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean gradeTask(int studentId, int taskId, int mark) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -269,6 +279,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public int avgMarkForTask(int userId, int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -301,6 +312,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public List<Task> findCompletedTasks(int trainingId, int studentId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -316,8 +328,8 @@ public class TaskDaoImpl implements TaskDao {
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Task task = new Task();
-        task.setId(resultSet.getInt(SQL_TASK_ID));
-        task.setName(resultSet.getString(SQL_TASK_NAME));
+        task.setId(resultSet.getInt(SqlColumn.SQL_TASK_ID));
+        task.setName(resultSet.getString(SqlColumn.SQL_TASK_NAME));
         tasks.add(task);
       }
       return tasks;
@@ -336,6 +348,7 @@ public class TaskDaoImpl implements TaskDao {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void deleteTask(int taskId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();

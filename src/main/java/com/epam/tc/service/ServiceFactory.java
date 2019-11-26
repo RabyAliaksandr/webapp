@@ -3,9 +3,10 @@ package com.epam.tc.service;
 import com.epam.tc.service.impl.*;
 
 /**
+ * The type Service factory.
+ *
  * @author alex raby
- * @version 1.0
- * this class is Factory design pattern for service package classes
+ * @version 1.0 this class is Factory design pattern for service package classes
  * @see TrainingsServiceImpl
  * @see UserServiceImpl
  * @see ConsultationServiceImpl
@@ -15,6 +16,7 @@ import com.epam.tc.service.impl.*;
  */
 public class ServiceFactory {
 
+  /** Do not instantiate ServiceFactory. */
   private ServiceFactory(){}
 
   /**
@@ -61,7 +63,8 @@ public class ServiceFactory {
 
   /**
    * this method to get the field trainingService {@link ServiceFactory#trainingService}
-   * @return TrainingService
+   *
+   * @return TrainingService training service
    * @see TrainingService
    */
   public static TrainingService getTrainingService() {
@@ -70,7 +73,8 @@ public class ServiceFactory {
 
   /**
    * this method to get the field userService {@link ServiceFactory#userService}
-   * @return UserService
+   *
+   * @return UserService user service
    * @see UserService
    */
   public static UserService getUserService() {
@@ -79,7 +83,8 @@ public class ServiceFactory {
 
   /**
    * this method to get the field consultationService {@link ServiceFactory#consultationService}
-   * @return ConsultationService
+   *
+   * @return ConsultationService consultation service
    * @see ConsultationService
    */
   public static ConsultationService getConsultationService() {
@@ -88,7 +93,8 @@ public class ServiceFactory {
 
   /**
    * this method to get the field paymentCardService{@link ServiceFactory#paymentCardService}
-   * @return PaymentCardService
+   *
+   * @return PaymentCardService payment card service
    * @see PaymentCardService
    */
   public static PaymentCardService getPaymentCardService() {
@@ -97,7 +103,8 @@ public class ServiceFactory {
 
   /**
    * this method to get the field taskService {@link ServiceFactory#taskService}
-   * @return TaskService
+   *
+   * @return TaskService task service
    * @see TaskService
    */
   public static TaskService getTaskService() {
@@ -106,7 +113,8 @@ public class ServiceFactory {
 
   /**
    * this method to get the field topicService {@link ServiceFactory#topicService}
-   * @return TopicService
+   *
+   * @return TopicService topic service
    * @see TopicService
    */
   public static TopicService getTopicService() {

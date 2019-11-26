@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.regex.Pattern;
 
 /**
+ * The type Xss request wrapper.
+ *
  * @author alex raby
- * @version 1.0
- * request processing class
- * used in XssProtectionFilter {@link XssProtectionFilter}
+ * @version 1.0 request processing class used in XssProtectionFilter {@link XssProtectionFilter}
  */
 public class XssRequestWrapper extends HttpServletRequestWrapper {
 
@@ -22,8 +22,8 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
 
   /**
    * class constructor
-   * @param request - object HttpServletRequest
-   * class field inputDataValidation {@link XssRequestWrapper#inputDataValidation}
+   *
+   * @param request - object HttpServletRequest class field inputDataValidation {@link XssRequestWrapper#inputDataValidation}
    */
   XssRequestWrapper(HttpServletRequest request) {
     super(request);
@@ -72,6 +72,7 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
   }
 
   /**
+   * Strip xss string.
    *
    * @param value String for to clear unwanted strings
    * @return cleared string

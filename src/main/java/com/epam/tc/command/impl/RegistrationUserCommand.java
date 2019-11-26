@@ -1,10 +1,10 @@
 package com.epam.tc.command.impl;
 
+import com.epam.tc.command.PageName;
 import com.epam.tc.command.Command;
 import com.epam.tc.command.CommandException;
 import com.epam.tc.command.MessageName;
 import com.epam.tc.command.VariableName;
-import com.epam.tc.command.PageName;
 import com.epam.tc.encoder.PassEncoder;
 import com.epam.tc.entity.User;
 import com.epam.tc.manager.ConfigurationManager;
@@ -21,9 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * The type Registration user command.
+ *
  * @author alex raby
- * @version 1.0
- * new User registration
+ * @version 1.0 new User registration
  */
 public class RegistrationUserCommand implements Command {
 
@@ -33,6 +34,7 @@ public class RegistrationUserCommand implements Command {
    */
   private static final Logger logger = LogManager.getLogger(RegistrationUserCommand.class);
 
+  /** {@inheritDoc} */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
     try {

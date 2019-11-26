@@ -1,19 +1,21 @@
 package com.epam.tc.service.impl;
 
-import com.epam.tc.dao.*;
-import com.epam.tc.entity.*;
-import com.epam.tc.service.TrainingService;
+import com.epam.tc.dao.DaoException;
+import com.epam.tc.dao.DaoFactory;
+import com.epam.tc.dao.TrainingDao;
+import com.epam.tc.entity.Training;
 import com.epam.tc.service.ServiceException;
+import com.epam.tc.service.TrainingService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 /**
+ * The type Trainings service.
+ *
  * @author alex raby
- * @version 1.0
- * this class implements interface methods TrainingService {@link TrainingService}
- * methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ * @version 1.0 this class implements interface methods TrainingService {@link TrainingService} methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
  */
 public class TrainingsServiceImpl implements TrainingService {
 
@@ -23,6 +25,7 @@ public class TrainingsServiceImpl implements TrainingService {
    */
   private static Logger logger = LogManager.getLogger(TrainingsServiceImpl.class);
 
+  /** {@inheritDoc} */
   public Training findTrainingByIdTraining(int trainingId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
     try {
@@ -33,6 +36,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   public final List<Training> findCompletedTrainingForStudent(int studentId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
     try {
@@ -44,6 +48,7 @@ public class TrainingsServiceImpl implements TrainingService {
   }
 
 
+  /** {@inheritDoc} */
   public final List<Training> findAllTrainingsForStudent(int studentId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
     try {
@@ -54,6 +59,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   public final List<Training> findAllTrainings() throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
     try {
@@ -64,6 +70,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   public final void addTrainingToStudent(int idStudent, int idTraining) throws ServiceException {
     TrainingDao operationDao = DaoFactory.getTrainingDao();
     try {
@@ -74,6 +81,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   public final List<Training> findTrainingForMentor(int mentorId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
     try {
@@ -84,8 +92,9 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   public final void updateTrainingsInformation(int trainingId, String trainingName,
-                                            String information) throws ServiceException {
+                                               String information) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
     try {
       trainingDao.updateTrainingsInformation(trainingId, trainingName, information);
@@ -95,8 +104,9 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   public final void createTraining(String trainingName, int mentorId,
-                                      String trainingDescription) throws ServiceException {
+                                   String trainingDescription) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
     try {
        trainingDao.createTraining(trainingName, mentorId, trainingDescription);
@@ -106,6 +116,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void giveFeedback(String feedback) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
@@ -117,6 +128,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public List<String> findReviews() throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
@@ -128,6 +140,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   public final boolean checkTrainingStatusForStudent(int userId, int trainingId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
     try {
@@ -138,6 +151,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean deleteTraining(int trainingId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
@@ -149,6 +163,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void setFinalGrade(int studentId, int trainingId, int grade) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
@@ -160,6 +175,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public void closeReception(int trainingId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();
@@ -171,6 +187,7 @@ public class TrainingsServiceImpl implements TrainingService {
     }
   }
 
+  /** {@inheritDoc} */
   @Override
   public int findFinalGrade(int studentId, int trainingId) throws ServiceException {
     TrainingDao trainingDao = DaoFactory.getTrainingDao();

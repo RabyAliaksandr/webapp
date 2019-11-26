@@ -15,9 +15,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * The type Add payment card command.
+ *
  * @author alex raby
- * @version 1.0
- * adding a PaymentCard {@link PaymentCard} for a User {@link User}
+ * @version 1.0 adding a PaymentCard {@link PaymentCard} for a User {@link User}
  */
 public class AddPaymentCardCommand implements Command {
 
