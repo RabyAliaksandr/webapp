@@ -1,28 +1,28 @@
+import com.epam.tc.connectionpool.ConnectionPool;
 import com.epam.tc.connectionpool.ConnectionPoolException;
-import com.epam.tc.connectionpool.DataBaseManager;
 import com.epam.tc.dao.DaoException;
-import com.epam.tc.encoder.PassEncoder;
-import com.epam.tc.entity.User;
+import com.epam.tc.entity.Consultation;
+import com.epam.tc.entity.PaymentCard;
+import com.epam.tc.entity.Task;
+import com.epam.tc.service.ConsultationService;
 import com.epam.tc.service.PaymentCardService;
-import com.epam.tc.service.ServiceFactory;
-import com.epam.tc.service.UserService;
-import com.epam.tc.entity.UserType;
-import com.epam.tc.service.impl.TopicServiceImpl;
-import com.epam.tc.validator.InputDataValidation;
+import com.epam.tc.service.TaskService;
+import com.epam.tc.service.impl.ConsultationServiceImpl;
+import com.epam.tc.service.impl.PaymentCardServiceImpl;
+import com.epam.tc.service.impl.TaskServiceImpl;
 import com.google.protobuf.ServiceException;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.regex.Pattern;
+import java.util.*;
+import java.util.function.Predicate;
 
 
 /**
  * The type Delete this.
  */
 public class deleteTHIS {
-
   /**
    * The entry point of application.
    *
@@ -32,14 +32,19 @@ public class deleteTHIS {
    * @throws ServiceException        the service exception
    * @throws ServiceException        the service exception
    * @throws DaoException            the dao exception
+   * @throws IOException             the io exception
    */
   public static void main(String[] args) throws ConnectionPoolException, ParseException, ServiceException, com.epam.tc.service.ServiceException, DaoException, IOException {
-    TopicServiceImpl topicService= new TopicServiceImpl();
-    topicService.findTopicsForTraining(1);
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection1 = connectionPool.takeConnection();
+    Connection connection2 = connectionPool.takeConnection();
+    Connection connection3 = connectionPool.takeConnection();
+    Connection connection4 = connectionPool.takeConnection();
+    Connection connection5 = connectionPool.takeConnection();
 
-      Properties properties = new Properties();
-
-      properties.load(DataBaseManager.class.getClassLoader()
-              .getResourceAsStream("C:\\IdeaProjects\\webapp\\src\\test\\com\\epam\\tc\\resource\\testDataBaseConnection.properties"));
+    System.out.println(connection1.getClass());
+    Connection actual = connectionPool.takeConnection();
+    System.out.println(actual.getClass());
+    System.out.println("dsdd");
   }
 }

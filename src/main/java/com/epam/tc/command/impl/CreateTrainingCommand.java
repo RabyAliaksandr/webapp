@@ -59,14 +59,13 @@ public class CreateTrainingCommand implements Command {
               MessageManager.getProperty(MessageName.MESSAGE_TEXTAREA_SIZE));
       return ConfigurationManager.getProperty(PageName.CREATE_TEXT_PAGE);
     }
-
-
     try {
        trainingsService.createTraining(trainingName, mentorId, trainingDescription);
     } catch (ServiceException e) {
       logger.error(e);
       throw new CommandException("Error access service", e);
     }
+    request.getSession().setAttribute(VariableName.REDIRECT_TO_PAGE, VariableName.TRAINING_INFORMATION);
       request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
               MessageManager.getProperty(MessageName.MESSAGE_CHANGES_SAVED));
       return ConfigurationManager.getProperty(PageName.TRAININGS_PAGE);

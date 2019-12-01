@@ -13,6 +13,16 @@ public class DaoFactory {
   private static ConsultationDao consultationDao = new ConsultationDaoImpl();
   private static TaskDao taskDao = new TaskDaoImpl();
   private static TopicDao topicDao = new TopicDaoImpl();
+  private static PaymentDao paymentDao = new PaymentDaoImpl();
+
+  /**
+   * Getter for property 'paymentDao'.
+   *
+   * @return Value for property 'paymentDao'.
+   */
+  public static PaymentDao getPaymentDao() {
+    return paymentDao;
+  }
 
   /**
    * Gets consultation dao.

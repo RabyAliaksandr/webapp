@@ -24,7 +24,7 @@ public interface UserService {
    * @see Training
    * @see UserType
    */
-  Map<Training, User> findAllMentors() throws ServiceException;
+  Map<Training, User> findMentorsAndTrainings() throws ServiceException;
 
   /**
    * checks if the user with the given login and password
@@ -138,4 +138,12 @@ public interface UserService {
    * @see User
    */
   void deleteUser(int userId) throws ServiceException;
+
+  /**
+   * Find all mentors list.
+   *
+   * @return the list
+   * @throws ServiceException the service exception
+   */
+  List<User> findAllMentors() throws ServiceException;
 }

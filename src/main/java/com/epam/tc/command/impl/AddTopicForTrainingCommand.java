@@ -70,6 +70,7 @@ public class AddTopicForTrainingCommand implements Command {
       logger.error(e);
       throw new CommandException("Error access service", e);
     }
+    request.getSession().setAttribute(VariableName.REDIRECT_TO_PAGE, request.getParameter(VariableName.PAGE_NAME));
       request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
               MessageManager.getProperty(MessageName.MESSAGE_CHANGES_SAVED));
       return ConfigurationManager.getProperty(PageName.TRAININGS_INFORMATION_PAGE);

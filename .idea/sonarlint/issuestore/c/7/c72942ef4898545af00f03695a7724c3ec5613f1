@@ -1,0 +1,17 @@
+
+º%squid:RedundantThrowsDeclarationCheck"}Remove the declaration of thrown exception 'com.epam.tc.service.ServiceException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
+V
+squid:S106"9Replace this use of System.out or System.err by a logger.(æ±¸ä8âÔÆàë-
+\squid:UselessImportCheck"1Remove this unused import 'java.util.Comparator'.(î¹ó¹8çï„¾ë-
+[squid:UselessImportCheck
+"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8„«í½ë-
+º%squid:RedundantThrowsDeclarationCheck"}Remove the declaration of thrown exception 'com.google.protobuf.ServiceException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
+[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8„«í½ë-
+©%squid:RedundantThrowsDeclarationCheck"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
+psquid:S4276"RRefactor this code to use the more specialised Functional Interface 'IntPredicate'(ô°Ò¼8¤œËàë-
+®%squid:RedundantThrowsDeclarationCheck"qRemove the declaration of thrown exception 'java.text.ParseException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
+Vsquid:UselessImportCheck	"+Remove this unused import 'java.util.Date'.(¸…¼ü8ùÉĞ¹ë-
+²%squid:RedundantThrowsDeclarationCheck"uRemove the declaration of thrown exception 'com.epam.tc.dao.DaoException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
+lsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(Ö·Î­8øü©ãë-
+qsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¯Œüùÿÿÿÿ8Ö÷‰óê-
+É%squid:RedundantThrowsDeclarationCheck"‹Remove the declaration of thrown exception 'com.epam.tc.connectionpool.ConnectionPoolException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-

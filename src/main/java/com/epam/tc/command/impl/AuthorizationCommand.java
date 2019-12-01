@@ -41,7 +41,6 @@ public class AuthorizationCommand implements Command {
       user = userService.checkLogin(request.getParameter(VariableName.LOGIN),
               passEncoder.md5Apache(request.getParameter(VariableName.PASSWORD)));
       request.getSession().setAttribute(VariableName.USER, user);
-      request.setAttribute(VariableName.USER, user);
       if (user != null) {
         return ConfigurationManager.getProperty(PageName.CABINET_PAGE);
       } else {

@@ -377,6 +377,15 @@ public enum CommandEnum {
     {
       this.command = new ReviewsCommand();
     }
+  },
+
+  /**
+   * The Center score.
+   */
+  CENTER_SCORE {
+    {
+      this.command = new CenterScoreCommand();
+    }
   };
 
   /**

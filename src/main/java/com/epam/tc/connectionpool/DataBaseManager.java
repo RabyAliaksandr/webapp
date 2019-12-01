@@ -18,26 +18,23 @@ public final class DataBaseManager {
   private static String username = null;
   private static String password = null;
   private static int poolSize = 0;
-  private static String propertiesPath = null;
+  private static DataBaseManager instance;
 
-  /**
-   * Instantiates a new Data base manager.
-   */
-  DataBaseManager() {
-    if (propertiesPath == null) {
-      this.propertiesPath = ConnectName.PROPERTIES_FILE;
-      init(propertiesPath);
-    }
+  private DataBaseManager(String propertiesPath) {
+    init(propertiesPath);
   }
 
   /**
-   * Instantiates a new Data base manager.
+   * Gets instance.
    *
    * @param propertiesPath the properties path
+   * @return the instance
    */
-  public DataBaseManager(String propertiesPath) {
-    this.propertiesPath = propertiesPath;
-    init(propertiesPath);
+  public static DataBaseManager getInstance(String propertiesPath) {
+    if (instance == null) {
+      instance = new DataBaseManager(propertiesPath);
+    }
+    return instance;
   }
 
 

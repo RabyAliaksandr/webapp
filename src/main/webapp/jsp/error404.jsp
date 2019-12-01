@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Страницы нет мудило</title>
+    <title>404</title>
 </head>
 <body>
-
+Are you trying to hack us?
 </body>
 </html>

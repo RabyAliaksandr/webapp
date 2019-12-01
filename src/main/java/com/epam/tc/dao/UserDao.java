@@ -99,7 +99,7 @@ public interface UserDao {
    * @see Training
    * @see UserType
    */
-  Map<Training, User> findAllMentors() throws DaoException;
+  Map<Training, User> findMentorsAndTrainings() throws DaoException;
 
 
   /**
@@ -136,4 +136,12 @@ public interface UserDao {
    * @throws DaoException the dao exception
    */
   List<User> findStudentsByIdTraining(int trainingId) throws DaoException;
+
+  /**
+   * Find all mentors list.
+   *
+   * @return the list
+   * @throws DaoException the dao exception
+   */
+  List<User> findAllMentors() throws DaoException;
 }

@@ -143,7 +143,7 @@ public class Training {
   }
 
   /**
-   * method to assignment value of the field{@link Training#name}
+   * method to assignment value of the field{@link  Training#name}
    * min size is 50 characters max 1000
    *
    * @param name the name

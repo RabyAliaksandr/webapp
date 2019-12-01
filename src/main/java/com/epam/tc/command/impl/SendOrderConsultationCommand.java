@@ -37,11 +37,8 @@ public class SendOrderConsultationCommand implements Command {
   public String execute(HttpServletRequest request) throws CommandException {
     boolean done;
     int userId = Integer.parseInt (request.getParameter(VariableName.USER_ID));
-    System.out.println(userId + " its userId");
     int consultationId = Integer.parseInt(request.getParameter(VariableName.CONSULTATION_ID));
-    System.out.println(consultationId + "consult id");
     int cardId = Integer.parseInt(request.getParameter(VariableName.CARD_ID));
-    System.out.println(cardId + "cardId");
     PaymentCardService paymentCardService = ServiceFactory.getPaymentCardService();
     try {
       done = paymentCardService.paymentConsultation(cardId, consultationId, userId);

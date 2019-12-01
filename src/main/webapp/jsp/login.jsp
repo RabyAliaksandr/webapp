@@ -48,12 +48,12 @@
             <br/>
         </form>
         <hr/>
-        <form name="redirectToRegister" method="POST" action="controller">
-            <input type="hidden" name="command" value="registration_page"/>
-            <input type="submit" value="Sign Up"/>
-            <br/>
-        </form>
-        <hr/>
+<%--        <form name="redirectToRegister" method="POST" action="controller">--%>
+<%--            <input type="hidden" name="command" value="registration_page"/>--%>
+<%--            <input type="submit" value="Sign Up"/>--%>
+<%--            <br/>--%>
+<%--        </form>--%>
+<%--        <hr/>--%>
     </div>
     </body>
     </html>

@@ -48,6 +48,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="controller?command=center_score">
+                        <fmt:message key="centerScore"/>
+                    </a>
+                </li>
+                <li>
                     <a href="controller?command=log_out"><fmt:message key="logout"/>
                     </a>
                 </li>

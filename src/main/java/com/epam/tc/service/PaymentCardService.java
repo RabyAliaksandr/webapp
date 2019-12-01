@@ -73,4 +73,6 @@ public interface PaymentCardService {
    * @see User
    */
   boolean addPaymentCard(int userId, long cardNumber) throws ServiceException;
+
+
 }

@@ -59,4 +59,6 @@ public interface PaymentCardDao {
    * @throws DaoException the dao exception
    */
   boolean addPaymentCard(int userId, long cardNumber) throws DaoException;
+
+
 }

@@ -28,11 +28,22 @@ public class UserServiceImpl implements UserService {
    */
   public final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
-  /** {@inheritDoc} */
-  public final Map<Training, User> findAllMentors() throws ServiceException {
+  @Override
+  public List<User> findAllMentors() throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
     try {
       return userDao.findAllMentors();
+    } catch (DaoException e) {
+      logger.error(e);
+      throw new ServiceException(e);
+    }
+  }
+
+  /** {@inheritDoc} */
+  public final Map<Training, User> findMentorsAndTrainings() throws ServiceException {
+    UserDao userDao = DaoFactory.getUserDao();
+    try {
+      return userDao.findMentorsAndTrainings();
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException(e);

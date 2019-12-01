@@ -130,4 +130,8 @@ public class PageName {
    * The constant INDEX_PATH_NAME.
    */
   public static final String INDEX_PATH_NAME = "INDEX_PATH";
+  /**
+   * The constant CENTER_SCORE.
+   */
+  public static final String CENTER_SCORE = "path.page.centerScore";
 }

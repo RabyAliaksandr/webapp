@@ -119,4 +119,13 @@ public class Task {
   public void setAnswer(String answer) {
     this.answer = answer;
   }
+
+  /**
+   * Getter for property 'answer'.
+   *
+   * @return Value for property 'answer'.
+   */
+  public String getAnswer() {
+    return answer;
+  }
 }

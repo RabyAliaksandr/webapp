@@ -138,6 +138,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/command/VariableName.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/command/impl/AddPaymentCardCommand.java">
           <value>
             <set />
@@ -169,6 +174,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/command/impl/CardManagementCommand.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/command/impl/CenterScoreCommand.java">
           <value>
             <set />
           </value>
@@ -373,7 +383,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/connectionpool/ConnectName.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/connectionpool/ConnectionPool.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/connectionpool/ConnectionPoolException.java">
           <value>
             <set />
           </value>
@@ -409,6 +429,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/dao/PaymentCardDao.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/dao/PaymentDao.java">
           <value>
             <set />
           </value>
@@ -453,6 +478,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/dao/impl/PaymentDaoImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/dao/impl/TaskDaoImpl.java">
           <value>
             <set />
@@ -489,6 +519,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/entity/Consultation.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/entity/Payment.java">
           <value>
             <set />
           </value>
@@ -583,6 +618,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/service/PaymentService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/service/ServiceException.java">
           <value>
             <set />
@@ -623,6 +663,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/service/impl/PaymentImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/service/impl/TaskServiceImpl.java">
           <value>
             <set />
@@ -639,6 +684,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/service/impl/UserServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/tag/ScoreTableTag.java">
           <value>
             <set />
           </value>
@@ -983,6 +1033,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/deleteTHIS.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/webapp/WEB-INF/tld/currentDate.tld">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/webapp/WEB-INF/tld/tableTag.tld">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/webapp/WEB-INF/urlewrite.xml">
           <value>
             <set />
@@ -1013,6 +1078,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/webapp/jsp/centerScore.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/webapp/jsp/consultationManagement.jsp">
           <value>
             <set />
@@ -1024,6 +1094,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/webapp/jsp/error.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/webapp/jsp/error404.jsp">
           <value>
             <set />
           </value>
@@ -1108,7 +1183,37 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/test/com/epam/tc/connectionpool/ConnectionPoolTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/com/epam/tc/controller/ControolerTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/com/epam/tc/dao/PaymentCardDaoImplTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/com/epam/tc/dao/TestQuery.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/com/epam/tc/dao/TrainingDaoImplTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/test/com/epam/tc/dao/UserDaoImplTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/com/epam/tc/validator/InputDataValidationTest.java">
           <value>
             <set />
           </value>

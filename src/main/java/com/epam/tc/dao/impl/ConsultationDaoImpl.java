@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,19 +28,17 @@ public class ConsultationDaoImpl implements ConsultationDao {
 
   private final static Logger logger = LogManager.getLogger(ConsultationDaoImpl.class);
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<Consultation> findConsultationsForTraining(int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-//    Connection connection = null;
-//    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     List<Consultation> consultations = new ArrayList<>();
     try (Connection connection = connectionPool.takeConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTATIONS_FOR_TRAINING);
     ) {
-//      connection = connectionPool.takeConnection();
-//      preparedStatement = connection.prepareStatement(SQL_CONSULTATIONS_FOR_TRAINING);
       preparedStatement.setInt(1, trainingId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
@@ -56,25 +55,20 @@ public class ConsultationDaoImpl implements ConsultationDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(resultSet);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
-                                       List<Integer> topicIds) throws DaoException {
+                                    List<Integer> topicIds) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_TASKS_FOR_CONSULTATION);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_TASKS_FOR_CONSULTATION);
+         PreparedStatement preparedStatementTopics = connection.prepareStatement(SQL_TOPICS_FOR_CONSULTATION);
+    ) {
       for (Integer id : taskIds) {
         preparedStatement.setInt(1, consultationId);
         preparedStatement.setInt(2, studentId);
@@ -82,38 +76,31 @@ public class ConsultationDaoImpl implements ConsultationDao {
         preparedStatement.addBatch();
       }
       preparedStatement.executeBatch();
-      preparedStatement = connection.prepareStatement(SQL_TOPICS_FOR_CONSULTATION);
+
       for (Integer id : topicIds) {
-        preparedStatement.setInt(1, consultationId);
-        preparedStatement.setInt(2, studentId);
-        preparedStatement.setInt(3, id);
-        preparedStatement.addBatch();
+        preparedStatementTopics.setInt(1, consultationId);
+        preparedStatementTopics.setInt(2, studentId);
+        preparedStatementTopics.setInt(3, id);
+        preparedStatementTopics.addBatch();
       }
-      preparedStatement.executeUpdate();
+      preparedStatementTopics.executeUpdate();
     } catch (SQLException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_OFFER_CONSULTATION);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_OFFER_CONSULTATION)) {
       preparedStatement.setInt(1, trainingId);
       preparedStatement.setString(2, date.toString());
       preparedStatement.setBigDecimal(3, price);
@@ -127,26 +114,20 @@ public class ConsultationDaoImpl implements ConsultationDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Map<Training, Date> findConsultationsOffer(int mentorId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     Map<Training, Date> consultations = new HashMap<>();
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_CONSULTATION_OFFER);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTATION_OFFER);
+    ) {
       preparedStatement.setInt(1, mentorId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
@@ -163,24 +144,18 @@ public class ConsultationDaoImpl implements ConsultationDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement, resultSet);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean sendAgreement(int trainingId, Date date, boolean mark) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = connectionPool.takeConnection();
-      preparedStatement = connection.prepareStatement(SQL_SEND_AGREEMENT);
+    try (Connection connection = connectionPool.takeConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SEND_AGREEMENT);
+    ) {
       preparedStatement.setBoolean(1, mark);
       preparedStatement.setInt(2, trainingId);
       preparedStatement.setString(3, date.toString());
@@ -192,12 +167,6 @@ public class ConsultationDaoImpl implements ConsultationDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-    } finally {
-      try {
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 }

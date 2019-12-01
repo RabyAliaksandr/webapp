@@ -21,7 +21,7 @@
     <head><title><fmt:message key="informationAboutTraining"/></title></head>
     </head>
     <body>
-    <c:set var="trainingId" value="${sessionScope.trainingId}"/>
+    <c:set var="trainingId" value="${trainingId}"/>
     <jsp:useBean id="trainingService" class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
     <jsp:useBean id="userService" class="com.epam.tc.service.impl.UserServiceImpl"/>
     <c:set var="training" value="${trainingService.findTrainingByIdTraining(trainingId)}" scope="session"/>
@@ -115,55 +115,56 @@
     <br/>
     <br/>
     <div class="container-fluid">
-    <c:if test="${messageCloseReception != null}">
-        <div class="alert alert-danger" role="alert">
-                ${messageCloseReception}
-            <c:set var="changesSavedMessage" value="${null}"/>
-        </div>
-    </c:if>
+        <c:if test="${messageCloseReception != null}">
+            <div class="alert alert-danger" role="alert">
+                    ${messageCloseReception}
+                <c:set var="changesSavedMessage" value="${null}"/>
+            </div>
+        </c:if>
 
-    <c:if test="${messageFeedback != null}">
-        <div class="alert alert-danger" role="alert">
-                ${messageFeedback}
-            <c:set var="messageFeedback" value="${null}"/>
-        </div>
-    </c:if>
+        <c:if test="${messageFeedback != null}">
+            <div class="alert alert-danger" role="alert">
+                    ${messageFeedback}
+                <c:set var="messageFeedback" value="${null}"/>
+            </div>
+        </c:if>
 
-        <%--            message about edit changes --%>
+            <%--            message about edit changes --%>
 
-    <c:if test="${changesSavedMessage != null}">
-        <div class="alert alert-danger" role="alert">
-                ${changesSavedMessage}
-            <c:set var="changesSavedMessage" value="${null}"/>
-        </div>
-    </c:if>
-    <section class="a">
-        <div class="container-fluid">
-            <h1><fmt:message key="informationAboutTraining"/></h1>
-            <br/>
-                ${training.information}
-            <br/>
-            <c:if test="${training.status == false}">
-                <label><font color="red"><fmt:message key="receptionIsClose"/></font></label>
-            </c:if>
-            <br/>
-            <c:if test="${sessionScope.user.type == 'STUDENT' && training.status == true && user.status == 'UNBLOCKED'}">
-                <c:if test="${userService.checkEnrolled(user.id, trainingId) == false}">
-                    <form name="addTrainingToStudent" method="POST" action="controller">
-                        <input type="hidden" name="redirectTo" value="true"/>
-                        <input type="hidden" name="command" value="add_training_to_student"/>
-                        <input type="hidden" name="userId" value="${user.id}"/>
-                        <input type="hidden" name="trainingId" value="${trainingId}"/>
-                        <input type="submit" value=<fmt:message key="addTraining"></fmt:message>/>
-                    </form>
+
+        <c:if test="${changesSavedMessage != null}">
+            <div class="alert alert-danger" role="alert">
+                    ${changesSavedMessage}
+                <c:set var="changesSavedMessage" value="${null}"/>
+            </div>
+        </c:if>
+        <section class="a">
+            <div class="container-fluid">
+                <h1><fmt:message key="informationAboutTraining"/></h1>
+                <br/>
+                    ${training.information}
+                <br/>
+                <c:if test="${training.status == false}">
+                    <label><font color="red"><fmt:message key="receptionIsClose"/></font></label>
                 </c:if>
-                <c:if test="${userService.checkEnrolled(user.id, trainingId) == true}">
-                    <fmt:message key="enrolledTraining"/>
+                <br/>
+                <c:if test="${sessionScope.user.type == 'STUDENT' && training.status == true && user.status == 'UNBLOCKED'}">
+                    <c:if test="${userService.checkEnrolled(user.id, trainingId) == false}">
+                        <form name="addTrainingToStudent" method="POST" action="controller">
+                            <input type="hidden" name="redirectTo" value="true"/>
+                            <input type="hidden" name="command" value="add_training_to_student"/>
+                            <input type="hidden" name="userId" value="${user.id}"/>
+                            <input type="hidden" name="trainingId" value="${trainingId}"/>
+                            <input type="submit" value=<fmt:message key="addTraining"></fmt:message>/>
+                        </form>
+                    </c:if>
+                    <c:if test="${userService.checkEnrolled(user.id, trainingId) == true}">
+                        <fmt:message key="enrolledTraining"/>
+                    </c:if>
                 </c:if>
-            </c:if>
-        </div>
-    </section>
-    <br/>
+            </div>
+        </section>
+        <br/>
     </div>
     <div class="col-lg-6 col-md-6">
 

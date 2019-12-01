@@ -25,10 +25,12 @@ import java.io.IOException;
  * The type Controller.
  */
 @WebServlet("/controller")
-public class  Controller extends HttpServlet {
+public class Controller extends HttpServlet {
   private static final Logger logger = LogManager.getLogger(Controller.class);
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
@@ -40,7 +42,9 @@ public class  Controller extends HttpServlet {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
@@ -59,13 +63,19 @@ public class  Controller extends HttpServlet {
     Command command = client.defineCommand(request);
     page = command.execute(request);
     if (page != null) {
-      if (request.getParameter(VariableName.REDIRECT_TO) == null) {
+      if (request.getParameter(VariableName.REDIRECT_TO) == null && request.getSession().getAttribute(VariableName.REDIRECT_TO_PAGE) == null) {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);
-      } else {
+      }
+      if (request.getParameter(VariableName.REDIRECT_TO) != null) {
         response.sendRedirect(VariableName.CONTROLLER + request.getHeader(VariableName.REFERER)
                 .replace(request.getRequestURL(), ""));
         request.getSession().setAttribute(VariableName.REDIRECT_TO, null);
+      }
+      if (request.getSession().getAttribute(VariableName.REDIRECT_TO_PAGE) != null) {
+        response.sendRedirect(request.getContextPath() + VariableName.CONTROLLER_COMMAND +
+                request.getSession().getAttribute(VariableName.REDIRECT_TO_PAGE));
+        request.getSession().setAttribute((VariableName.REDIRECT_TO_PAGE), null);
       }
     } else {
       page = ConfigurationManager.getProperty(PageName.INDEX_PAGE);
@@ -75,7 +85,9 @@ public class  Controller extends HttpServlet {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void destroy() {
     ConnectionPool connectionPool = ConnectionPool.getInstance();

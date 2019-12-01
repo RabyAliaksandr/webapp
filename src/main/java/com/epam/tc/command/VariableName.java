@@ -212,4 +212,28 @@ public class VariableName {
    * The constant TEXT.
    */
   public static final String TEXT = "text";
+  /**
+   * The constant REDIRECT_TO_PAGE.
+   */
+  public static final String REDIRECT_TO_PAGE = "redirectToPage";
+  /**
+   * The constant CONTROLLER_COMMAND.
+   */
+  public static final String CONTROLLER_COMMAND = "/controller?command=";
+  /**
+   * The constant CABINET.
+   */
+  public static final String CABINET = "cabinet";
+  /**
+   * The constant TRAINING_INFORMATION.
+   */
+  public static final String TRAINING_INFORMATION = "trainings_information_page";
+  /**
+   * The constant TRAININGS.
+   */
+  public static final String TRAININGS = "trainings_page";
+  /**
+   * The constant PAGE_NAME.
+   */
+  public static final String PAGE_NAME = "pageName";
 }

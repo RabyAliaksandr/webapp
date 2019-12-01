@@ -1,0 +1,35 @@
+<taglib>
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>2.0</jsp-version>
+  <short-name>Current Date</short-name>
+<tag>
+  <name>tableTag</name>
+  <tag-class>com.epam.tc.tag.ScoreTableTag</tag-class>
+  <body-content>scriptless</body-content>
+  <attribute>
+    <name>name</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+  </attribute>
+  <attribute>
+    <name>surName</name>
+<!--    <required>false</required>-->
+<!--    <rtexprvalue>true</rtexprvalue>-->
+  </attribute>
+  <attribute>
+    <name>date</name>
+<!--    <required>false</required>-->
+<!--    <rtexprvalue>true</rtexprvalue>-->
+  </attribute>
+  <attribute>
+    <name>price</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+  </attribute>
+  <attribute>
+    <name>cardNumber</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+  </attribute>
+</tag>
+</taglib>

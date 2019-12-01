@@ -212,7 +212,7 @@
                 <div class="form-group">
                     <fmt:message key="choose_mentor"/>
                     <select id="chooseMentor" class="form-control" name="trainingId" required>
-                        <c:forEach var="mentor" items="${service.findAllMentors()}">
+                        <c:forEach var="mentor" items="${service.findMentorsAndTrainings()}">
                             <option value="${mentor.key.id}">${mentor.key.name} ${mentor.value.name} ${mentor.value.surname}</option>
                         </c:forEach>
                     </select>

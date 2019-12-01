@@ -39,7 +39,7 @@
     <div class="container-fluid">
         <form name="registration" method="POST" action="controller">
             <input name="command" type="hidden" value="registration"/>
-            <input type="hidden" name="redirectTo" value="true"/>
+<%--            <input type="hidden" name="redirectToPage" value="cabinet"/>--%>
 
             <div class="col-md-4 mb-3">
                 <label><fmt:message key="userName"/> </label>

@@ -44,6 +44,7 @@ public class DeleteTaskCommand implements Command {
       logger.error(e);
       throw new CommandException(e);
     }
+    request.getSession().setAttribute(VariableName.REDIRECT_TO_PAGE, VariableName.TRAINING_INFORMATION);
     return ConfigurationManager.getProperty(PageName.TRAININGS_INFORMATION_PAGE);
   }
 }

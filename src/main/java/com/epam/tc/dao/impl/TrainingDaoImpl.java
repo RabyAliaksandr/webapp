@@ -72,12 +72,6 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(resultSet);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
@@ -105,12 +99,6 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(resultSet);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
@@ -143,12 +131,6 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(resultSet);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
@@ -177,12 +159,6 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(resultSet);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
@@ -211,12 +187,6 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException("Error access database", e);
-    } finally {
-      try {
-        connectionPool.closeConnection(resultSet);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
   }
 
@@ -296,28 +266,28 @@ public class TrainingDaoImpl implements TrainingDao {
   @Override
   public boolean deleteTraining(int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
     ResultSet resultSet;
     int checkUser = 0;
-    try {
-      connection = connectionPool.takeConnection();
+    try (Connection connection = connectionPool.takeConnection();
+    PreparedStatement preparedStatementCheck = connection.prepareStatement(SQL_CHECK_USERS_ON_TRAINING);
+    PreparedStatement preparedStatementDelete = connection.prepareStatement(SQL_DELETE_TRAINING);
+    ) {
       connection.setAutoCommit(false);
-      preparedStatement = connection.prepareStatement(SQL_CHECK_USERS_ON_TRAINING);
-      preparedStatement.setInt(1, trainingId);
-      resultSet = preparedStatement.executeQuery();
+      preparedStatementCheck.setInt(1, trainingId);
+      resultSet = preparedStatementCheck.executeQuery();
       while (resultSet.next()) {
         checkUser = resultSet.getInt(1);
       }
       if (checkUser == 0) {
-        preparedStatement = connection.prepareStatement(SQL_DELETE_TRAINING);
-        preparedStatement.setInt(1, trainingId);
-        preparedStatement.executeUpdate();
+        preparedStatementDelete.setInt(1, trainingId);
+        preparedStatementDelete.executeUpdate();
         connection.commit();
         logger.debug("was deleted training");
+        connection.setAutoCommit(true);
         return true;
       } else {
         connection.rollback();
+
       }
     } catch (SQLException e) {
       logger.error(e);
@@ -325,15 +295,6 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-    } finally {
-      try {
-        if (connection != null) {
-          connection.setAutoCommit(true);
-        }
-        connectionPool.closeConnection(connection, preparedStatement);
-      } catch (ConnectionPoolException | SQLException e) {
-        logger.error(e);
-      }
     }
     return false;
   }
@@ -381,12 +342,6 @@ public class TrainingDaoImpl implements TrainingDao {
     } catch (ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
-    } finally {
-      try {
-        connectionPool.closeConnection(resultSet);
-      } catch (ConnectionPoolException e) {
-        logger.error(e);
-      }
     }
     return grade;
   }

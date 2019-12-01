@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${sessionScope.local}" scope="session"/>
 <fmt:bundle basename="local" prefix="label.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -75,6 +76,7 @@
                 <input type="hidden" name="command" value="update_information_about_training"
                        id="name" required/>
                 <input type="text" name="trainingName" value="${name != null ? name : trainingName}" required maxlength="70"/>
+                <input type="hidden" name="pageName" value="trainings_information_page&trainingId=${trainingId}&editor=true">
                 <input type="hidden" name="trainingId" value="${trainingId}"/>
                 <textarea id="qweqwe" required maxlength="1000" form="www"
                           name="information">
@@ -91,7 +93,8 @@
             <form id="addTopic" method="post" action="controller">
                 <div class="form-group">
                     <label for="form"><fmt:message key="topicsName"/></label>
-                    <input type="hidden" name="redirectTo" value="true"/>
+<%--                    <input type="hidden" name="redirectTo" value="true"/>--%>
+                    <input type="hidden" name="pageName" value="trainings_information_page&trainingId=${trainingId}&editor=true">
                     <input type="text" class="form-control" id="form"
                            placeholder="min 5 max 70" name="topicsName" maxlength="70"
                            value="${name}" required>
@@ -107,8 +110,9 @@
         <c:if test="${typeOperation == 'addTask'}">
             <hr/>
             <form id="addTopic" method="post" action="controller">
-                <input type="hidden" name="redirectTo" value="true"/>
-                <div class="form-group">
+<%--                <input type="hidden" name="redirectTo" value="true"/>--%>
+    <input type="hidden" name="pageName" value="trainings_information_page&trainingId=${trainingId}&editor=true">
+    <div class="form-group">
                     <label><fmt:message key="topicsName"/></label>
                     <input type="text" placeholder="min - 5 max - 70" class="form-control" name="taskName"
                           value="${name}" maxlength="70" required>
@@ -125,7 +129,7 @@
             <hr/>
             <form id="addTraining" method="post" action="controller">
                 <input type="hidden" name="command" value="create_training"/>
-                <input type="hidden" name="redirectTo" value="true"/>
+                <input type="hidden" name="pageName" value="trainings_information_page&trainingId=${trainingId}&editor=true">
                 <div class="form-group">
                     <label><fmt:message key="name"/> </label>
                     <input type="text" class="form-control" name="trainingName"
@@ -140,9 +144,9 @@
                             key="choose_mentor"/></label>
                     <div class="col-sm-6 col-md-4">
 
-                        <select id="company" class="form-control" name="mentorId">
+                        <select id="company" class="form-control" name="mentorId" required>
                             <c:forEach var="mentor" items="${userService.findAllMentors()}">
-                                <option value=${mentor.value.id}>${mentor.value.name} ${mentor.value.surname}</option>
+                                <option value=${mentor.id}>${mentor.name} ${mentor.surname}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -156,7 +160,7 @@
             <hr/>
             <form id="editTopic" method="post" action="controller">
                 <input type="hidden" name="topicId" value="${topicId}"/>
-                <input type="hidden" name="redirectTo" value="true"/>
+                <input type="hidden" name="pageName" value="trainings_information_page&trainingId=${trainingId}&editor=true">
                 <div class="form-group">
                     <label><fmt:message key="topicsName"/></label>
                     <input type="text" class="form-control" name="topicName"
@@ -176,8 +180,8 @@
             <c:set var="task" value="${taskService.findTask(taskId)}"/>
             <hr/>
             <form id="editTask" method="post" action="controller">
-                <input type="hidden" name="redirectTo" value="true"/>
-                <div class="form-group">
+                <input type="hidden" name="pageName" value="trainings_information_page&trainingId=${trainingId}&editor=true">
+ta                <div class="form-group">
                     <label><fmt:message key="tasksName"/></label>
                     <input type="text" class="form-control" name="taskName" maxlength="70"
                            value="${name == null ? task.name : name}"

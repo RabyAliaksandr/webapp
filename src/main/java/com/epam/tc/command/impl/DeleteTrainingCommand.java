@@ -49,6 +49,7 @@ public class DeleteTrainingCommand implements Command {
       request.getSession().setAttribute(MessageName.DELETE_TRAINING,
               MessageManager.getProperty(MessageName.DELETE_TRAINING_MESSAGE_WRONG));
     }
+    request.getSession().setAttribute(VariableName.REDIRECT_TO_PAGE, VariableName.TRAININGS);
     return ConfigurationManager.getProperty(PageName.TRAININGS_PAGE);
   }
 }

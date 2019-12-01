@@ -73,6 +73,7 @@ public class AddTaskForTrainingCommand implements Command {
     }
     request.getSession().setAttribute(MessageName.MESSAGE_ABOUT_CHANGES,
             MessageManager.getProperty(MessageName.MESSAGE_CHANGES_SAVED));
+    request.getSession().setAttribute(VariableName.REDIRECT_TO_PAGE, request.getParameter(VariableName.PAGE_NAME));
     return ConfigurationManager.getProperty(PageName.TRAINING_PAGE);
 
   }

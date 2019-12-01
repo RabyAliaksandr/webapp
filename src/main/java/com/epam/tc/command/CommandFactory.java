@@ -16,6 +16,7 @@ public class CommandFactory {
   /**
    * method returning implementing class depending on request
    * if this command does not exist returns EmptyCommand {@link EmptyCommand}
+   *
    * @param request - object HttpServletRequest {@link HttpServletRequest}
    * @return implementing class Command
    */

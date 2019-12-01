@@ -1,5 +1,7 @@
 package com.epam.tc.dao;
 
+import java.sql.PreparedStatement;
+
 /**
  * The type Sql query.
  */
@@ -64,8 +66,8 @@ public class SqlQuery {
    * The constant SQL_COMPLETED_TRAININGS_FOR_STUDENTS.
    */
   public static final String SQL_COMPLETED_TRAININGS_FOR_STUDENTS = "SELECT * FROM trainings  " +
-          "join trainingbystudents using (trainingid) where (trainingbystudents.userid = ? and " +
-          "trainingbystudents.grade_for_training = 0)";
+          "join training_by_students using (training_id) where (training_by_students.user_id = ? and " +
+          "training_by_students.grade_for_training = 0)";
   /**
    * The constant SQL_CREATE_TRAINING.
    */
@@ -135,7 +137,7 @@ public class SqlQuery {
    * The constant SQL_COMPLETED_TASKS_FOR_STUDENT.
    */
   public static final String SQL_COMPLETED_TASKS_FOR_STUDENT = "SELECT task_id, task_name FROM student_task JOIN" +
-          " tasks USING (task_id) WHERE user_id = ? AND training_id = ? AND mark > 0";
+          " tasks USING (task_id) WHERE user_id = ? AND training_id = ?";
   /**
    * The constant SQL_LEARNED_TOPICS.
    */
@@ -176,8 +178,8 @@ public class SqlQuery {
   /**
    * The constant SQL_REMOVAL_MONEY.
    */
-  public static final String SQL_REMOVAL_MONEY = "update trainings_center.payment_cards," +
-          " trainings_center.trainings_center_score set card_score = card_score -(SELECT price FROM consultations " +
+  public static final String SQL_REMOVAL_MONEY = "update payment_cards," +
+          " trainings_center_score set card_score = card_score -(SELECT price FROM consultations " +
           "WHERE consultations.consultation_id = ?) WHERE payment_cards.card_id = ? AND card_score > " +
           "(SELECT price FROM consultations WHERE consultations.consultation_id = ?)";
   /**
@@ -194,7 +196,7 @@ public class SqlQuery {
   /**
    * The constant SQL_ADD_COURSE_TO_STUDENT.
    */
-  public static final String SQL_ADD_COURSE_TO_STUDENT = "INSERT INTO trainingbystudents (userid, trainingid) " +
+  public static final String SQL_ADD_COURSE_TO_STUDENT = "INSERT INTO training_by_students (user_id, training_id) " +
           "VALUES (?, ?);";
   /**
    * The constant SQL_NEW_USER.
@@ -209,7 +211,7 @@ public class SqlQuery {
   /**
    * The constant SQL_GRADE.
    */
-  public static final String SQL_GRADE = "UPDATE trainingbystudents SET grade_for_training = ? WHERE " +
+  public static final String SQL_GRADE = "UPDATE training_by_students SET grade_for_training = ? WHERE " +
           "(user_id = ? and training_id = ?)";
   /**
    * The constant SQL_ADD_TRAINING_TO_STUDENT.
@@ -329,4 +331,13 @@ public class SqlQuery {
    * The constant SQL_FIND_REVIEWS.
    */
   public static final String SQL_FIND_REVIEWS = "SELECT review_text FROM reviews";
+  /**
+   * The constant FIND_ALL_PAYMENTS.
+   */
+  public static final String FIND_ALL_PAYMENTS = "SELECT name, surname,payment_date, sum AS price, card_number " +
+          " FROM trainings_center_score LEFT JOIN users USING (user_id) LEFT JOIN payment_cards USING (card_id)";
+  /**
+   * The constant FIND_ALL_MENTORS.
+   */
+  public static final String FIND_ALL_MENTORS = "SELECT user_id, name, surname FROM users WHERE type = 'mentor'";
 }

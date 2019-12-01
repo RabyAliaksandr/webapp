@@ -145,4 +145,12 @@ public class SqlColumn {
    * The constant SQL_REVIEW.
    */
   public static final String SQL_REVIEW = "review_text";
+  /**
+   * The constant SQL_PAYMENT_ID.
+   */
+  public static final String SQL_PAYMENT_ID = "payment_id";
+  /**
+   * The constant SQL_PAYMENT_DATE.
+   */
+  public static final String SQL_PAYMENT_DATE = "payment_date";
 }

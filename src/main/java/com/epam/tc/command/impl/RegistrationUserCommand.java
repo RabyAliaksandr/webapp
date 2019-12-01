@@ -11,6 +11,7 @@ import com.epam.tc.manager.ConfigurationManager;
 import com.epam.tc.manager.MessageManager;
 import com.epam.tc.service.ServiceFactory;
 import com.epam.tc.service.UserService;
+import com.epam.tc.service.impl.UserServiceImpl;
 import com.epam.tc.validator.UserFieldsValidation;
 import com.google.protobuf.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -34,9 +35,12 @@ public class RegistrationUserCommand implements Command {
    */
   private static final Logger logger = LogManager.getLogger(RegistrationUserCommand.class);
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String execute(HttpServletRequest request) throws CommandException {
+    User user = new User();
     try {
       String name = request.getParameter(VariableName.NAME);
       String surName = request.getParameter(VariableName.SURNAME);
@@ -55,6 +59,7 @@ public class RegistrationUserCommand implements Command {
       UserService userService = ServiceFactory.getUserService();
       boolean loginIsExist = userService.checkLogin(login);
       boolean emailIsExist = userService.checkEmail(email);
+      request.getSession().setAttribute(VariableName.REDIRECT_TO_PAGE,  request.getParameter(VariableName.REDIRECT_TO_PAGE));
       if (checkName) {
         userFields.put(VariableName.NAME, name);
       } else {
@@ -79,7 +84,7 @@ public class RegistrationUserCommand implements Command {
         request.getSession().setAttribute(MessageName.VALIDATION_EMAIL,
                 MessageManager.getProperty(MessageName.VALIDATION_EMAIL_WRONG));
       }
-      if (!checkPassword)  {
+      if (!checkPassword) {
         request.getSession().setAttribute(MessageName.VALIDATION_PASSWORD,
                 MessageManager.getProperty(MessageName.VALIDATION_PASSWORD_WRONG));
       }
@@ -97,10 +102,9 @@ public class RegistrationUserCommand implements Command {
       }
       request.getSession().setAttribute(VariableName.USER_FIELDS, userFields);
       if (!checkEmail || !checkLogin || !checkName || !checkPassword || !checkSurName || !checkRepeatPassword
-      || loginIsExist || emailIsExist) {
+              || loginIsExist || emailIsExist) {
         return ConfigurationManager.getProperty(PageName.REGISTRATION_PAGE);
       }
-      User user = new User();
       user.setLogin(login);
       user.setEmail(email);
       user.setSurname(surName);
@@ -112,6 +116,18 @@ public class RegistrationUserCommand implements Command {
       logger.error(e);
       throw new CommandException("Error access service", e);
     }
-    return ConfigurationManager.getProperty(PageName.MAIN_PAGE);
+    request.getSession().setAttribute(VariableName.USER, user);
+    UserService userService = new UserServiceImpl();
+    PassEncoder passEncoder = new PassEncoder();
+    try {
+      user = userService.checkLogin(request.getParameter(VariableName.LOGIN),
+              passEncoder.md5Apache(request.getParameter(VariableName.PASSWORD)));
+    } catch (ServiceException e) {
+      logger.error(e);
+      throw new CommandException("Error access service", e);
+    }
+    request.getSession().setAttribute(VariableName.USER, user);
+    request.getSession().setAttribute(VariableName.REDIRECT_TO_PAGE, VariableName.CABINET);
+    return ConfigurationManager.getProperty(PageName.CABINET_PAGE);
   }
 }

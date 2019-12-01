@@ -26,6 +26,8 @@ public class ServiceFactory {
    */
   private static TrainingService trainingService = new TrainingsServiceImpl();
 
+  private static PaymentService paymentService = new PaymentImpl();
+
   /**
    * this field is a object UserServiceImpl
    * @see UserService
@@ -119,5 +121,14 @@ public class ServiceFactory {
    */
   public static TopicService getTopicService() {
     return topicService;
+  }
+
+  /**
+   * Getter for property 'paymentService'.
+   *
+   * @return Value for property 'paymentService'.
+   */
+  public static PaymentService getPaymentService() {
+    return paymentService;
   }
 }

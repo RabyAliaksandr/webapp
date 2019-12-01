@@ -29,4 +29,8 @@ public class ConnectName {
    * The constant SIZE.
    */
   public static final String SIZE = "jdbc.poolSize";
+  /**
+   * The constant TEST_PROPERTIES_PATH.
+   */
+  public static final String TEST_PROPERTIES_PATH = "testDataBaseConnection.properties";
 }
