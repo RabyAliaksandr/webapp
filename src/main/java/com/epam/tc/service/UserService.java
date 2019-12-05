@@ -8,7 +8,6 @@ import java.util.Map;
 
 /**
  * The interface User service.
- *
  * @author alex raby
  * @version 1.0 this interface contains methods for working with User
  * @see User
@@ -17,7 +16,6 @@ public interface UserService {
 
   /**
    * finding all users who have type 'mentor' {@link UserType#MENTOR}
-   *
    * @return object Map<Training, User>
    * @throws ServiceException package Service exception
    * @see User

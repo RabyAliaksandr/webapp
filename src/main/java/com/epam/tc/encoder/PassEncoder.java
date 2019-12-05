@@ -6,7 +6,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  * The type Pass encoder.
  *
  * @author alex raby
- * @version 1.0 class containing a method for encrypting data
+ * @version 1.0 class containing a method for encrypting String line
  */
 public class PassEncoder {
 

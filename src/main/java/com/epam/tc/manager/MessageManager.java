@@ -4,9 +4,10 @@ import java.util.ResourceBundle;
 
 /**
  * The type Message manager.
- *
+ * this class returns a message from the properties file depending on the localization
+ *{@link PathPropertiesFiles#PATH_LOCAL}
  * @author alex raby
- * @version 1.0 this class returns a message from the properties file depending on the localization <a href="file:../PathPropertiesFiles.PATH_LOCAL/> {@link PathPropertiesFiles#PATH_LOCAL}
+ * @version 1.0
  */
 public class MessageManager {
 
@@ -17,10 +18,10 @@ public class MessageManager {
   private final static ResourceBundle resourceBundle = ResourceBundle.getBundle(PathPropertiesFiles.PATH_LOCAL);
 
   /**
-   * method for getting a String {@link String} by parameter
+   * method for getting a String message by parameter
    *
    * @param key - String message name
-   * @return String property
+   * @return message
    */
   public static String getProperty(String key) {
     return resourceBundle.getString(key);

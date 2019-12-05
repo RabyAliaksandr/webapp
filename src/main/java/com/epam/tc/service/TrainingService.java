@@ -7,9 +7,9 @@ import java.util.List;
 
 /**
  * The interface Training service.
- *
+ * this interface contains methods for working with Training
  * @author alex raby
- * @version 1.0 this interface contains methods for working with Training
+ * @version 1.0
  * @see Training
  */
 public interface TrainingService {
@@ -17,7 +17,7 @@ public interface TrainingService {
   /**
    * finds training on training id
    *
-   * @param trainingId - Training id
+   * @param trainingId - Training id which will looking
    * @return Training training
    * @throws ServiceException package Service exception
    * @see Training
@@ -27,7 +27,7 @@ public interface TrainingService {
   /**
    * finds trainings for a student with a grade
    *
-   * @param studentId - User id
+   * @param studentId - User id which will looking
    * @return list of Training
    * @throws ServiceException package Service exception
    * @see Training
@@ -38,7 +38,7 @@ public interface TrainingService {
   /**
    * finds trainings for which is recorded
    *
-   * @param studentId - User id
+   * @param studentId - User id which will looking
    * @return list of Training
    * @throws ServiceException package Service exception
    * @see User
@@ -58,8 +58,8 @@ public interface TrainingService {
   /**
    * adding training to user
    *
-   * @param idStudent  - User id
-   * @param idTraining - Training id
+   * @param idStudent  - User id for which to adding
+   * @param idTraining - Training id which will be adding
    * @throws ServiceException package Service exception
    * @see User
    * @see Training
@@ -69,7 +69,7 @@ public interface TrainingService {
   /**
    * finds all the trainings that this mentor oversees
    *
-   * @param mentorId - User id
+   * @param mentorId - User id for which to look
    * @return list of Training
    * @throws ServiceException package Service exception
    * @see User
@@ -81,8 +81,8 @@ public interface TrainingService {
    * changes the values of the training fields
    *
    * @param trainingId   - Training id
-   * @param trainingName - Training name
-   * @param information  - Training information
+   * @param trainingName - Training name to be changed
+   * @param information  - Training information to be changed
    * @throws ServiceException package Service exception
    * @see Training
    */
@@ -92,7 +92,7 @@ public interface TrainingService {
    * creating a new training
    *
    * @param trainingName        - Training name
-   * @param mentorId            - user Id
+   * @param mentorId            - user Id who will be mentor
    * @param trainingDescription - Training information
    * @throws ServiceException package Service exception
    * @see Training
@@ -103,8 +103,8 @@ public interface TrainingService {
   /**
    * checks if an user is registered for this training
    *
-   * @param userId     - User id
-   * @param trainingId - Training id
+   * @param userId     - User id for whom is looking
+   * @param trainingId - Training id for whom is looking
    * @return boolean boolean
    * @throws ServiceException package Service exception
    * @see Training
@@ -115,8 +115,8 @@ public interface TrainingService {
   /**
    * grade final mark
    *
-   * @param studentId  - User id
-   * @param trainingId - Training id
+   * @param studentId  - User id which will be marked
+   * @param trainingId - Training id which will be marked
    * @param grade      - int ranging from 1 to 10
    * @throws ServiceException package Service exception
    * @see User
@@ -127,8 +127,8 @@ public interface TrainingService {
   /**
    * finding the final student grade for this training
    *
-   * @param studentId  - User id
-   * @param trainingId - training id
+   * @param studentId  - User id for whom is looking
+   * @param trainingId - training id for whom is looking
    * @return int ranging from 1 to 10
    * @throws ServiceException package Service exception
    * @see Training
@@ -139,7 +139,7 @@ public interface TrainingService {
   /**
    * closing the set for this training
    *
-   * @param trainingId - Training id
+   * @param trainingId - Training id which will be closing
    * @throws ServiceException package Service exception
    * @see Training
    */
@@ -148,8 +148,8 @@ public interface TrainingService {
   /**
    * training removal
    *
-   * @param trainingId - Training id
-   * @return boolean boolean
+   * @param trainingId - Training id which will be deleted
+   * @return boolean done or no
    * @throws ServiceException package Service exception
    * @see Training
    */
@@ -158,7 +158,7 @@ public interface TrainingService {
   /**
    * writing a review
    *
-   * @param feedback - String
+   * @param feedback - String it is review
    * @throws ServiceException package Service exception
    */
   void giveFeedback(String feedback) throws ServiceException;

@@ -6,75 +6,75 @@ package com.epam.tc.validator;
 public class RegEx {
 
   /**
-   * The constant EMAIL_PATTERN.
+   * The constant Regex for Email.
    */
   public static final String EMAIL_PATTERN = "^[-\\w.]{6,30}+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
   /**
-   * The constant NAME_PATTERN.
+   * The constant Regex for Name.
    */
   public static final String NAME_PATTERN = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$";
   /**
-   * The constant SURNAME_PATTERN.
+   * The constant Regex for Surname.
    */
   public static final String SURNAME_PATTERN = "^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$";
   /**
-   * The constant LOGIN_PATTERN.
+   * The constant Regex for Login.
    */
   public static final String LOGIN_PATTERN = "^([A-Z]?[a-z]{6,23})$";
   /**
-   * The constant PASSWORD_PATTERN.
+   * The constant Regex for Password.
    */
   public static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])\\S{8,15}";
   /**
-   * The constant PATTERN_SCRIPT.
+   * The constant Regex for script.
    */
   public static final String PATTERN_SCRIPT = "<script>(.*?)</script>";
   /**
-   * The constant PATTERN_SRC_APOSTROPHE.
+   * The constant Regex for src.
    */
   public static final String PATTERN_SRC_APOSTROPHE = "src[\r\n]*=[\r\n]*\\\'(.*?)\\\'";
   /**
-   * The constant PATTERN_SRC_QUOTATION_MARKS.
+   * The constant Regex for src.
    */
   public static final String PATTERN_SRC_QUOTATION_MARKS ="src[\r\n]*=[\r\n]*\\\"(.*?)\\\"";
   /**
-   * The constant PATTERN_CLOSE_SCRIPT.
+   * The constant Regex for closing tag script.
    */
   public static final String PATTERN_CLOSE_SCRIPT ="</script>";
   /**
-   * The constant PATTERN_SCRIPT_ANY.
+   * The constant Regex for tag script with some body.
    */
   public static final String PATTERN_SCRIPT_ANY ="<script(.*?)>";
   /**
-   * The constant PATTERN_EVAL.
+   * The constant Regex for eval.
    */
   public static final String PATTERN_EVAL ="eval\\((.*?)\\)";
   /**
-   * The constant PATTERN_EXPRESSION.
+   * The constant Regex for expression.
    */
   public static final String PATTERN_EXPRESSION ="expression\\((.*?)\\)";
   /**
-   * The constant PATTERN_JAVASCRIPT.
+   * The constant Regex for javascript.
    */
   public static final String PATTERN_JAVASCRIPT ="javascript:";
   /**
-   * The constant PATTERN_VB_SCRIPT.
+   * The constant Regex for vb script.
    */
   public static final String PATTERN_VB_SCRIPT ="vbscript:";
   /**
-   * The constant PATTERN_ONLOAD.
+   * The constant Regex for onload.
    */
   public static final String PATTERN_ONLOAD ="onload(.*?)=";
   /**
-   * The constant PATTERN_MONEY.
+   * The constant Regex for price value.
    */
   public static final String PATTERN_MONEY = "(0\\.((0[1-9]{1})|([1-9]{1}([0-9]{1})?)))|(([1-9]+[0-9]*)(\\.([0-9]{1,2}))?)";
   /**
-   * The constant PATTERN_CARD_NUMBER.
+   * The constant Regex for credit card number.
    */
   public static final String PATTERN_CARD_NUMBER = "\\d{16}";
   /**
-   * The constant PATTERN_EXCESSIVE_SPACES.
+   * The constant Regex for many spaces.
    */
   public static final String PATTERN_EXCESSIVE_SPACES = "\\s+";
 }

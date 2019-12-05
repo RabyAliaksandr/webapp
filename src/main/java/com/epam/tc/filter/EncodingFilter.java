@@ -6,9 +6,9 @@ import java.io.IOException;
 
 /**
  * The type Encoding filter.
- *
+ * class implementing interface Filter {@link Filter} sets the encoding of the request and response
  * @author alex raby
- * @version 1.0 class implementing interface Filter {@link Filter} sets the encoding of the request and response
+ * @version 1.0
  */
 public class EncodingFilter implements Filter {
 
@@ -18,12 +18,7 @@ public class EncodingFilter implements Filter {
   }
 
   /**
-   * sets the encoding of the request and response
-   * @param servletRequest - object ServletRequest
-   * @param servletResponse - object ServletResponse
-   * @param filterChain - object FilterChain
-   * @throws IOException standard exception {@link IOException}
-   * @throws ServletException standard exception {@link ServletException}
+   * {@inheritDoc}
    */
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

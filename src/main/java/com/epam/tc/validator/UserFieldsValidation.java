@@ -5,14 +5,16 @@ import java.util.regex.Pattern;
 
 /**
  * The type User fields validation.
+ * @author alex raby
+ * @version 1.0
  */
 public class UserFieldsValidation {
 
   /**
-   * Is email valid boolean.
-   *
-   * @param email the email
-   * @return the boolean
+   * Is email validation by RegEx
+   * @see RegEx#EMAIL_PATTERN
+   * @param email String
+   * @return the boolean conformity RegEx
    */
   public boolean isEmailValid(String email) {
     Pattern pattern = Pattern.compile(RegEx.EMAIL_PATTERN);
@@ -21,10 +23,10 @@ public class UserFieldsValidation {
   }
 
   /**
-   * Is name valid boolean.
-   *
-   * @param name the name
-   * @return the boolean
+   * Is name validation by by Regex
+   * @see RegEx#NAME_PATTERN
+   * @param name String
+   * @return the boolean conformity RegEx
    */
   public boolean isNameValid(String name) {
     Pattern pattern = Pattern.compile(RegEx.NAME_PATTERN);
@@ -33,10 +35,10 @@ public class UserFieldsValidation {
   }
 
   /**
-   * Is sur name valid boolean.
-   *
-   * @param surName the sur name
-   * @return the boolean
+   * Is surname validation by RegEx
+   * @see RegEx#SURNAME_PATTERN
+   * @param surName String
+   * @return the boolean conformity RegEx
    */
   public boolean isSurNameValid(String surName) {
     Pattern pattern = Pattern.compile(RegEx.SURNAME_PATTERN);
@@ -45,10 +47,10 @@ public class UserFieldsValidation {
   }
 
   /**
-   * Is login valid boolean.
-   *
-   * @param login the login
-   * @return the boolean
+   * Is login validation by RegEx
+   * @see RegEx#LOGIN_PATTERN
+   * @param login String
+   * @return the boolean conformity RegEx
    */
   public boolean isLoginValid(String login) {
     Pattern pattern = Pattern.compile(RegEx.LOGIN_PATTERN);
@@ -57,10 +59,10 @@ public class UserFieldsValidation {
   }
 
   /**
-   * Is password valid boolean.
-   *
-   * @param password the password
-   * @return the boolean
+   * Is password validation by RegEx
+   * @see RegEx#PASSWORD_PATTERN
+   * @param password String
+   * @return the boolean conformity RegEx
    */
   public boolean isPasswordValid(String password) {
     Pattern pattern = Pattern.compile(RegEx.PASSWORD_PATTERN);

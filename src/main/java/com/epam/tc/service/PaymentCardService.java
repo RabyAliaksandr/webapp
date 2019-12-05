@@ -18,7 +18,7 @@ public interface PaymentCardService {
   /**
    * finds all PaymentCard owned by the User
    *
-   * @param userId - User id
+   * @param userId - User id for which to look
    * @return lit of PaymentCard
    * @throws ServiceException package Service exception
    * @see User
@@ -29,7 +29,7 @@ public interface PaymentCardService {
   /**
    * PaymentCard score replenishment
    *
-   * @param cardId - PaymentCard id
+   * @param cardId - PaymentCard id to be replenished
    * @param sum    - balance value. class object {@link BigDecimal}
    * @throws ServiceException package Service exception
    * @see PaymentCard
@@ -42,7 +42,7 @@ public interface PaymentCardService {
    * @param cardDonor     - PaymentCard id with which the amount is debited
    * @param cardRecipient - PaymentCard id on which the amount is written
    * @param sum           - amount by which the account is replenished. class object {@link BigDecimal}
-   * @return - boolean
+   * @return - boolean done or no
    * @throws ServiceException package Service exception
    */
   boolean transferMoneyCardToCard(int cardDonor, int cardRecipient, BigDecimal sum) throws ServiceException;
@@ -51,10 +51,10 @@ public interface PaymentCardService {
    * payment Consultation
    * the amount of the payment is taken from the database. Consultation table contains price
    *
-   * @param cardId         - PaymentCard id
-   * @param consultationId - Consultation id
-   * @param userId         - User id
-   * @return boolean boolean
+   * @param cardId         - PaymentCard id with which the amount will be debited
+   * @param consultationId - Consultation id for which payment will be made
+   * @param userId         - User id who made the payment
+   * @return boolean
    * @throws ServiceException package Service exception
    * @see PaymentCard
    * @see User
@@ -65,14 +65,12 @@ public interface PaymentCardService {
   /**
    * add PaymentCard
    *
-   * @param userId     - User id
-   * @param cardNumber - PaymentCard number
+   * @param userId     - User id which will be added
+   * @param cardNumber - PaymentCard number which will be added
    * @return - boolean
    * @throws ServiceException package Service exception
    * @see PaymentCard
    * @see User
    */
   boolean addPaymentCard(int userId, long cardNumber) throws ServiceException;
-
-
 }

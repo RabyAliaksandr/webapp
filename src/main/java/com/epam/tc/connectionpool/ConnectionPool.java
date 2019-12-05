@@ -15,6 +15,8 @@ import java.util.concurrent.Executor;
 
 /**
  * The type Connection pool.
+ * @author alex raby
+ * @version 1.0
  */
 public class ConnectionPool {
 

@@ -234,7 +234,7 @@ public class User {
   @Override
   public int hashCode() {
     int result = 17;
-    result = 37 * result + (id);
+    result = 37 * (id);
     result = 37 * result + (name == null ? 0 : name.hashCode());
     result = 37 * result + (surname == null ? 0 : surname.hashCode());
     result = 37 * result + (status == null ? 0: status.hashCode());

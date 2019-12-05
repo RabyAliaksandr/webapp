@@ -30,7 +30,7 @@ public class ConsultationServiceImpl implements ConsultationService {
   private static Logger logger = LogManager.getLogger(ConsultationServiceImpl.class);
 
   /** {@inheritDoc} */
-  public final List<Consultation> findConsultationsForTraining(int trainingId) throws ServiceException {
+  public  List<Consultation> findConsultationsForTraining(int trainingId) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
       return consultationDao.findConsultationsForTraining(trainingId);
@@ -41,7 +41,7 @@ public class ConsultationServiceImpl implements ConsultationService {
   }
 
   /** {@inheritDoc} */
-  public final void sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
+  public  void sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
                                           List<Integer> topicIds) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
@@ -53,7 +53,7 @@ public class ConsultationServiceImpl implements ConsultationService {
   }
 
   /** {@inheritDoc} */
-  public final void sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws ServiceException {
+  public  void sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
       consultationDao.sendOfferConsultations(trainingId, date, price);
@@ -63,7 +63,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
   }
   /** {@inheritDoc} */
-  public final Map<Training, Date> findConsultationsOffer(int mentorId) throws ServiceException {
+  public  Map<Training, Date> findConsultationsOffer(int mentorId) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     Map<Training, Date> consultations;
     try {
@@ -76,7 +76,7 @@ public class ConsultationServiceImpl implements ConsultationService {
   }
 
   /** {@inheritDoc} */
-  public final void sendAgreement(int trainingId, Date date, boolean mark) throws ServiceException {
+  public  void sendAgreement(int trainingId, Date date, boolean mark) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
       consultationDao.sendAgreement(trainingId, date, mark);

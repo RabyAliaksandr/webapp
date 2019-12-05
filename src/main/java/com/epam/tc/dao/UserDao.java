@@ -1,7 +1,6 @@
 package com.epam.tc.dao;
 
 import com.epam.tc.entity.*;
-import com.google.protobuf.ServiceException;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,7 @@ public interface UserDao {
    * Authorization user.
    *
    * @param user the user
-   * @return the user
+   * @return the user if such exists on the given login and password or will return empty
    * @throws DaoException the dao exception
    */
   User authorization(User user) throws DaoException;
@@ -28,7 +27,7 @@ public interface UserDao {
    * Registration user.
    *
    * @param user the user
-   * @return the user
+   * @return the user to log in
    * @throws DaoException the dao exception
    */
   User registration(User user) throws DaoException;
@@ -36,8 +35,8 @@ public interface UserDao {
   /**
    * Grade.
    *
-   * @param assessment the assessment
-   * @param userId     the user id
+   * @param assessment the assessment from 1 to 10
+   * @param userId     the user id who to mark
    * @param trainingId the training id
    * @throws DaoException the dao exception
    */

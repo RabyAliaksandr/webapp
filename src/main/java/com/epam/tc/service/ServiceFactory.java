@@ -94,7 +94,7 @@ public class ServiceFactory {
   }
 
   /**
-   * this method to get the field paymentCardService{@link ServiceFactory#paymentCardService}
+   * this method to get the field paymentCardService {@link ServiceFactory#paymentCardService}
    *
    * @return PaymentCardService payment card service
    * @see PaymentCardService
@@ -127,6 +127,7 @@ public class ServiceFactory {
    * Getter for property 'paymentService'.
    *
    * @return Value for property 'paymentService'.
+   * @see PaymentService
    */
   public static PaymentService getPaymentService() {
     return paymentService;

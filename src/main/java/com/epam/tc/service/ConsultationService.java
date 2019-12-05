@@ -18,7 +18,7 @@ public interface ConsultationService {
   /**
    * the interface contains methods for working with objects
    *
-   * @param trainingId - Training id
+   * @param trainingId - Training id which will to look
    * @return - list of Training
    * @throws ServiceException package Service exception package Service exception package Service exception
    * @see Training
@@ -29,10 +29,10 @@ public interface ConsultationService {
    * sends an order for a Consultation from a User for this
    * Training with a list of Topic studied and Task solved
    *
-   * @param consultationId - Consultation id
-   * @param studentId      - User id {@link User}
-   * @param taskIds        - Task id {@link Task}
-   * @param topicIds       - Topic id {@link Topic}
+   * @param consultationId - Consultation id for which the order will be sent
+   * @param studentId      - User id {@link User} who will to send
+   * @param taskIds        - Task id {@link Task} list of studied Tasks
+   * @param topicIds       - Topic id {@link Topic} list of studied Topics
    * @throws ServiceException package Service exception package Service exception
    */
   void sendOrderConsultation(int consultationId, int studentId,
@@ -41,7 +41,7 @@ public interface ConsultationService {
   /**
    * sends a consultation offer to the Mentor {@link UserType#MENTOR}
    *
-   * @param trainingId - Training id {@link Training}
+   * @param trainingId - Training id {@link Training} what training will the consultation be for
    * @param date       - Date {@link Date}
    * @param price      - price of Consultation object {@link BigDecimal}
    * @throws ServiceException package Service exception {@link ServiceException}
@@ -51,8 +51,8 @@ public interface ConsultationService {
   /**
    * finds consultations suggested by the Administrator {@link UserType#ADMIN}
    *
-   * @param mentorId - User id {@link User}
-   * @return - object Map <Training, Date> {@link Training} {@link Date}
+   * @param mentorId - User id {@link User} for which will to look
+   * @return - object Map <Training, Date> {@link Training} {@link Date} when will be Consultation and on what Training
    * @throws ServiceException package Service exception {@link ServiceException}
    */
   Map<Training, Date> findConsultationsOffer(int mentorId) throws ServiceException;
@@ -60,9 +60,9 @@ public interface ConsultationService {
   /**
    * sends the agreement or refusal of the mentor from consultation
    *
-   * @param trainingId - Training id {@link Training}
-   * @param date       - Date {@link Date}
-   * @param mark       - answer, boolean {@link Boolean}
+   * @param trainingId - Training id {@link Training} for which Training
+   * @param date       - Date {@link Date} when will be Consultation
+   * @param mark       - answer, boolean
    * @throws ServiceException package Service exception {@link ServiceException}
    */
   void sendAgreement(int trainingId, Date date, boolean mark) throws ServiceException;

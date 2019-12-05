@@ -75,6 +75,8 @@
     </nav>
     <br/>
     <body>
+    <fmt:message key="paymentDate"/>
+    <fmt:message key="cardNumbers"/>
 
     </body>
     <ctg:currentDate/>

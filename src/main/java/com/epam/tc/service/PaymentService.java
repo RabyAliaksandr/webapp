@@ -6,6 +6,9 @@ import java.util.List;
 
 /**
  * The interface Payment service.
+ * @author alex raby
+ * @version 1.0
+ * @see Payment
  */
 public interface PaymentService {
 
@@ -14,6 +17,7 @@ public interface PaymentService {
    *
    * @return the list
    * @throws ServiceException the service exception
+   * @see Payment
    */
   List<Payment> findAllPayments() throws ServiceException;
 }

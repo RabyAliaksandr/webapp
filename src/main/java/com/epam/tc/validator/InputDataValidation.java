@@ -5,14 +5,15 @@ import java.util.regex.Pattern;
 
 /**
  * The type Input data validation.
+ * @author alex raby
+ * @version 1.0
  */
 public class InputDataValidation {
 
   /**
    * Strip xss string.
-   *
    * @param value the value
-   * @return the string
+   * @return the string without XSS expression
    */
   public String stripXSS(String value) {
     if (value != null) {
@@ -41,10 +42,11 @@ public class InputDataValidation {
   }
 
   /**
-   * Check money field boolean.
+   * Check money field.
    *
-   * @param sum the sum
-   * @return the boolean
+   * @param sum String
+   * @see RegEx#PATTERN_MONEY
+   * @return the boolean conformity RegEx
    */
   public boolean checkMoneyField(String sum) {
     Pattern pattern = Pattern.compile(RegEx.PATTERN_MONEY);
@@ -54,9 +56,9 @@ public class InputDataValidation {
 
   /**
    * Check card number boolean.
-   *
-   * @param number the number
-   * @return the boolean
+   * @see RegEx#PATTERN_CARD_NUMBER
+   * @param number the number String
+   * @return the boolean conformity RegEx
    */
   public boolean checkCardNumber(String number) {
     Pattern pattern = Pattern.compile(RegEx.PATTERN_CARD_NUMBER);
@@ -66,11 +68,10 @@ public class InputDataValidation {
 
   /**
    * Check size text area boolean.
-   *
-   * @param text    the text
-   * @param minSize the min size
-   * @param maxSize the max size
-   * @return the boolean
+   * @param text the text - String
+   * @param minSize the min size text
+   * @param maxSize the max size text
+   * @return the boolean conformity text min and max size
    */
   public boolean checkSizeTextArea(String text, int minSize, int maxSize) {
     if (text.isEmpty()) {
@@ -81,9 +82,8 @@ public class InputDataValidation {
 
   /**
    * Delete excessive space string.
-   *
    * @param text the text
-   * @return the string
+   * @return the string without excessive spaces
    */
   public String deleteExcessiveSpace(String text) {
     text = text.replaceAll(RegEx.PATTERN_EXCESSIVE_SPACES, " ");
@@ -91,10 +91,9 @@ public class InputDataValidation {
   }
 
   /**
-   * Check grade boolean.
-   *
-   * @param grade the grade
-   * @return the boolean
+   * Check grade int
+   * @param grade the grade int
+   * @return the boolean grade excessive grade min and max value
    */
   public boolean checkGrade(int grade) {
     return grade >= 1 && grade <= 10;

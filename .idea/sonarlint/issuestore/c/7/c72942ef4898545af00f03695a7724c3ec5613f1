@@ -1,17 +1,32 @@
 
-º%squid:RedundantThrowsDeclarationCheck"}Remove the declaration of thrown exception 'com.epam.tc.service.ServiceException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
+­%squid:RedundantThrowsDeclarationCheck"uRemove the declaration of thrown exception 'com.epam.tc.dao.DaoException', as it cannot be thrown from method's body.(óÈÒ¹8Ûúó®í-
+©%squid:RedundantThrowsDeclarationCheck"qRemove the declaration of thrown exception 'java.text.ParseException', as it cannot be thrown from method's body.(óÈÒ¹8Ûúó®í-
+psquid:UselessImportCheck"ERemove this unused import 'com.epam.tc.service.impl.TaskServiceImpl'.(£ûÓ¡8áòÚí-
+[
+squid:S106"9Replace this use of System.out or System.err by a logger.(¯€¡¼ùÿÿÿÿ8Ûúó®í-
+psquid:S00114,"QRename this interface name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(§¢”˜8ë·â”í-
+tsquid:UselessImportCheck"DRemove this unused import 'com.epam.tc.service.ConsultationService'.(§·ñ¸øÿÿÿÿ8áòÚí-
+psquid:S00114/"QRename this interface name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(Ãæ¬Ñ8È‰ã”í-
+usquid:S001142"QRename this interface name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(›ıìåùÿÿÿÿ8ë·â”í-
+xsquid:UselessImportCheck"MRemove this unused import 'com.epam.tc.service.impl.ConsultationServiceImpl'.(İñÕ8áòÚí-
+vsquid:UselessImportCheck"FRemove this unused import 'com.epam.tc.connectionpool.ConnectionPool'.(¼ÿçúÿÿÿÿ8Ö•›‘í-
+qsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ŠŸÑÏıÿÿÿÿ8áòÚí-
+±%squid:RedundantThrowsDeclarationCheck"yRemove the declaration of thrown exception 'java.lang.ClassNotFoundException', as it cannot be thrown from method's body.(óÈÒ¹8Ûúó®í-
+ksquid:UselessImportCheck";Remove this unused import 'com.epam.tc.entity.PaymentCard'.(ââşŠÿÿÿÿÿ8áòÚí-
+dsquid:UselessImportCheck"9Remove this unused import 'java.util.function.Predicate'.(ïÍ–¶8áòÚí-
+lsquid:UselessImportCheck
+"<Remove this unused import 'com.epam.tc.service.TaskService'.(äÇ¶øÿÿÿÿ8áòÚí-
+Ä%squid:RedundantThrowsDeclarationCheck"‹Remove the declaration of thrown exception 'com.epam.tc.connectionpool.ConnectionPoolException', as it cannot be thrown from method's body.(óÈÒ¹8Ûúó®í-
+µ%squid:RedundantThrowsDeclarationCheck"}Remove the declaration of thrown exception 'com.epam.tc.service.ServiceException', as it cannot be thrown from method's body.(óÈÒ¹8Ûúó®í-
+usquid:S00114)"QRename this interface name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ò«¦ôúÿÿÿÿ8ë·â”í-
+nsquid:UselessImportCheck	"CRemove this unused import 'com.epam.tc.service.PaymentCardService'.(ªªğ£8áòÚí-
+µ%squid:RedundantThrowsDeclarationCheck"}Remove the declaration of thrown exception 'com.google.protobuf.ServiceException', as it cannot be thrown from method's body.(óÈÒ¹8Ûúó®í-
+wsquid:UselessImportCheck"LRemove this unused import 'com.epam.tc.service.impl.PaymentCardServiceImpl'.(­»“û8áòÚí-
 V
-squid:S106"9Replace this use of System.out or System.err by a logger.(æ±¸ä8âÔÆàë-
-\squid:UselessImportCheck"1Remove this unused import 'java.util.Comparator'.(î¹ó¹8çï„¾ë-
-[squid:UselessImportCheck
-"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8„«í½ë-
-º%squid:RedundantThrowsDeclarationCheck"}Remove the declaration of thrown exception 'com.google.protobuf.ServiceException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
-[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8„«í½ë-
-©%squid:RedundantThrowsDeclarationCheck"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
-psquid:S4276"RRefactor this code to use the more specialised Functional Interface 'IntPredicate'(ô°Ò¼8¤œËàë-
-®%squid:RedundantThrowsDeclarationCheck"qRemove the declaration of thrown exception 'java.text.ParseException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
-Vsquid:UselessImportCheck	"+Remove this unused import 'java.util.Date'.(¸…¼ü8ùÉĞ¹ë-
-²%squid:RedundantThrowsDeclarationCheck"uRemove the declaration of thrown exception 'com.epam.tc.dao.DaoException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
-lsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(Ö·Î­8øü©ãë-
-qsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¯Œüùÿÿÿÿ8Ö÷‰óê-
-É%squid:RedundantThrowsDeclarationCheck"‹Remove the declaration of thrown exception 'com.epam.tc.connectionpool.ConnectionPoolException', as it cannot be thrown from method's body.(®ˆâêøÿÿÿÿ8¤œËàë-
+squid:S106""9Replace this use of System.out or System.err by a logger.(ş¹©ó8ÃŒç”í-
+Csquid:S3457""%String contains no format specifiers.(ş¹©ó8ÃŒç”í-
+_squid:UselessImportCheck"4Remove this unused import 'com.epam.tc.entity.Task'.(ÔÈİ8áòÚí-
+¤%squid:RedundantThrowsDeclarationCheck"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(óÈÒ¹8Ûúó®í-
+lsquid:UselessImportCheck"<Remove this unused import 'com.epam.tc.entity.Consultation'.( ¼äÿÿÿÿÿ8áòÚí-
+[squid:UselessImportCheck"0Remove this unused import 'java.sql.Connection'.(¥ËôÖ8Ö•›‘í-
+lsquid:UselessImportCheck"<Remove this unused import 'com.epam.tc.tag.ScoreTableLocal'.(±¼úËıÿÿÿÿ8¤™î®í-

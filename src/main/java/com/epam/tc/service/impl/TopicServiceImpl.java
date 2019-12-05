@@ -26,7 +26,7 @@ public class TopicServiceImpl implements TopicService {
   private static Logger logger = LogManager.getLogger(TopicServiceImpl.class);
 
   /** {@inheritDoc} */
-  public final List<Topic> findTopicsForTraining(int trainingId) throws ServiceException {
+  public  List<Topic> findTopicsForTraining(int trainingId) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     List<Topic> topics;
     try {
@@ -40,7 +40,7 @@ public class TopicServiceImpl implements TopicService {
 
   /** {@inheritDoc} */
   @Override
-  public final Topic findTopic(int topicId) throws ServiceException {
+  public  Topic findTopic(int topicId) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     try {
       return topicDao.findTopic(topicId);
@@ -51,7 +51,7 @@ public class TopicServiceImpl implements TopicService {
   }
   /** {@inheritDoc} */
   @Override
-  public final void addTopicForTraining(int trainingId, String topicsName,
+  public  void addTopicForTraining(int trainingId, String topicsName,
                                            String topicsText) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     try {
@@ -63,7 +63,7 @@ public class TopicServiceImpl implements TopicService {
   }
   /** {@inheritDoc} */
   @Override
-  public final void updateTrainingsTopic(int topicId, String topicName, String topic) throws ServiceException {
+  public  void updateTrainingsTopic(int topicId, String topicName, String topic) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     try {
         topicDao.updateTrainingsTopic(topicId, topicName, topic);
@@ -74,7 +74,7 @@ public class TopicServiceImpl implements TopicService {
   }
   /** {@inheritDoc} */
   @Override
-  public final boolean checkTopicStatus(int userId, int topicId) throws ServiceException {
+  public  boolean checkTopicStatus(int userId, int topicId) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     try {
       return topicDao.checkTopicStatus(userId, topicId);
@@ -86,7 +86,7 @@ public class TopicServiceImpl implements TopicService {
 
   /** {@inheritDoc} */
   @Override
-  public final void markTopic(int userId, int topicId) throws ServiceException {
+  public  void markTopic(int userId, int topicId) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     try {
         topicDao.markTopic(userId, topicId);
@@ -98,7 +98,7 @@ public class TopicServiceImpl implements TopicService {
 
   /** {@inheritDoc} */
   @Override
-  public final List<Topic> findLearnedTopics(int studentId, int trainingId) throws ServiceException {
+  public  List<Topic> findLearnedTopics(int studentId, int trainingId) throws ServiceException {
     TopicDao topicDao = DaoFactory.getTopicDao();
     try {
       return topicDao.findLearnedTopics(studentId, trainingId);

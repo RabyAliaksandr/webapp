@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
- * The type Current date tag.
+ * @author alex raby
+ * @version 1.0
+ * The type Current date custom tag.
  */
 public class CurrentDateTag extends SimpleTagSupport {
 

@@ -7,27 +7,7 @@
   <tag-class>com.epam.tc.tag.ScoreTableTag</tag-class>
   <body-content>scriptless</body-content>
   <attribute>
-    <name>name</name>
-    <required>false</required>
-    <rtexprvalue>true</rtexprvalue>
-  </attribute>
-  <attribute>
-    <name>surName</name>
-<!--    <required>false</required>-->
-<!--    <rtexprvalue>true</rtexprvalue>-->
-  </attribute>
-  <attribute>
-    <name>date</name>
-<!--    <required>false</required>-->
-<!--    <rtexprvalue>true</rtexprvalue>-->
-  </attribute>
-  <attribute>
-    <name>price</name>
-    <required>false</required>
-    <rtexprvalue>true</rtexprvalue>
-  </attribute>
-  <attribute>
-    <name>cardNumber</name>
+    <name>local</name>
     <required>false</required>
     <rtexprvalue>true</rtexprvalue>
   </attribute>

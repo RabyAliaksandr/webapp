@@ -14,9 +14,10 @@ import java.util.List;
 
 /**
  * The type Payment card service.
- *
+ * this class implements interface methods PaymentCardService {@link PaymentCardService}
+ * methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
  * @author alex raby
- * @version 1.0 this class implements interface methods PaymentCardService {@link PaymentCardService} methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ * @version 1.0
  */
 public class PaymentCardServiceImpl implements PaymentCardService {
 

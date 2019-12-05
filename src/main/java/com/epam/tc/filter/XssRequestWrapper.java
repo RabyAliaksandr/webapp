@@ -39,7 +39,7 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
   public String[] getParameterValues(String parameter) {
     String[] values = super.getParameterValues(parameter);
     if (values == null) {
-      return null;
+      return values;
     }
     int count = values.length;
     String[] encodedValues = new String[count];
@@ -63,7 +63,7 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
   /**
    * override method
    * @param name - by which get the header
-   * @return
+   * @return string without xss
    */
   @Override
   public String getHeader(String name) {

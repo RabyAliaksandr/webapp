@@ -4,9 +4,10 @@ import java.util.ResourceBundle;
 
 /**
  * The type Configuration manager.
- *
+ * this class returns a message from the properties file depending on the localization
+ * {@link PathPropertiesFiles#PATH_CONFIG}
  * @author alex raby
- * @version 1.0 this class returns a message from the properties file depending on the localization <a href="file:../PathPropertiesFiles.PATH_CONFIG/> {@link PathPropertiesFiles#PATH_CONFIG}
+ * @version 1.0
  */
 public class ConfigurationManager {
 
@@ -17,10 +18,10 @@ public class ConfigurationManager {
   private final static ResourceBundle resourceBundle = ResourceBundle.getBundle(PathPropertiesFiles.PATH_CONFIG);
 
   /**
-   * method for getting a String {@link String} by parameter
+   * method for getting a String message {@link String} by parameter
    *
    * @param key - String message name
-   * @return String property
+   * @return String message
    */
   public static String getProperty(String key) {
     return resourceBundle.getString(key);

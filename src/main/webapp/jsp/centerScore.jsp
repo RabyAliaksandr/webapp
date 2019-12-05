@@ -73,7 +73,13 @@
     <br/>
 <div class="container-fluid">
 
-    <ctg:tableTag surName="Surname" name="Name" cardNumber="Card Number" date="Date" price="Sum"/>
+
+    <ctg:tableTag local="${local}">
+
+    </ctg:tableTag>
+
+    <fmt:message key="hello"/>
+    <fmt:message key="paymentDate"/>
 
 </div>
     </body>

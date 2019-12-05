@@ -688,6 +688,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/tag/CurrentDateTag.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/tag/ScoreTableTag.java">
           <value>
             <set />
@@ -704,6 +709,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/validator/RegEx.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/epam/tc/validator/UserFieldsValidation.java">
           <value>
             <set />
           </value>
