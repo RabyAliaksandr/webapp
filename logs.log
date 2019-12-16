@@ -1,0 +1,57 @@
+22:04:14.172 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+22:04:14.416 [main] ERROR com.epam.tc.connectionpool.ConnectionPool - Error closing connection.
+java.sql.SQLDataException: Attempting to close closed connection.
+	at com.epam.tc.connectionpool.ConnectionPool$PooledConnection.close(ConnectionPool.java:261) ~[classes/:?]
+	at com.epam.tc.connectionpool.ConnectionPool.closeConnection(ConnectionPool.java:152) [classes/:?]
+	at com.epam.tc.dao.UserDaoImplTest.destroy(UserDaoImplTest.java:37) [test-classes/:?]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[?:?]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47) [junit-4.11.jar:?]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.11.jar:?]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44) [junit-4.11.jar:?]
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:33) [junit-4.11.jar:?]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309) [junit-4.11.jar:?]
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:160) [junit-4.11.jar:?]
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68) [junit-rt.jar:?]
+	at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47) [junit-rt.jar:?]
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242) [junit-rt.jar:?]
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70) [junit-rt.jar:?]
+22:04:50.645 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+00:09:53.721 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+19:39:56.264 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+17:29:49.220 [main] ERROR com.epam.tc.dao.impl.ConsultationDaoImpl - java.sql.SQLSyntaxErrorException: Unknown column 'date' in 'field list'
+17:29:49.223 [main] ERROR com.epam.tc.service.impl.ConsultationServiceImpl - com.epam.tc.dao.DaoException: Error access database
+19:03:19.288 [main] ERROR com.epam.tc.dao.impl.PaymentCardDaoImpl - com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'card_number' at row 1
+19:03:19.290 [main] ERROR com.epam.tc.service.impl.PaymentCardServiceImpl - com.epam.tc.dao.DaoException: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column 'card_number' at row 1
+19:08:26.896 [main] ERROR com.epam.tc.dao.impl.PaymentCardDaoImpl - java.sql.SQLException: Field 'card_score' doesn't have a default value
+19:08:26.897 [main] ERROR com.epam.tc.service.impl.PaymentCardServiceImpl - com.epam.tc.dao.DaoException: java.sql.SQLException: Field 'card_score' doesn't have a default value
+21:38:41.820 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+21:39:11.532 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+21:39:11.876 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+21:39:49.116 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+21:39:49.401 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+21:41:08.403 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+21:41:08.733 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+22:01:45.733 [main] ERROR com.epam.tc.dao.impl.PaymentCardDaoImpl - java.sql.SQLSyntaxErrorException: Table 'test_trainings_center.trainings_center_score' doesn't exist
+22:30:24.177 [main] DEBUG com.epam.tc.dao.impl.PaymentCardDaoImpl - payment was made for consultation
+22:31:13.360 [main] DEBUG com.epam.tc.dao.impl.PaymentCardDaoImpl - payment was made for consultation
+22:36:17.405 [main] DEBUG com.epam.tc.dao.impl.PaymentCardDaoImpl - payment was made for consultation
+22:36:45.094 [main] DEBUG com.epam.tc.dao.impl.PaymentCardDaoImpl - payment was made for consultation
+22:37:14.879 [main] DEBUG com.epam.tc.dao.impl.PaymentCardDaoImpl - payment was made for consultation
+22:48:58.560 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+22:48:58.853 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+22:49:17.337 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+22:49:17.566 [main] DEBUG com.epam.tc.dao.impl.UserDaoImpl - was created new user
+23:41:23.745 [Thread-0] ERROR com.epam.tc.connectionpool.ConnectionPool - java.lang.InterruptedException
+23:42:11.097 [Thread-0] ERROR com.epam.tc.connectionpool.ConnectionPool - java.lang.InterruptedException
+23:42:38.983 [Thread-0] ERROR com.epam.tc.connectionpool.ConnectionPool - java.lang.InterruptedException
+23:45:07.617 [Thread-0] ERROR com.epam.tc.connectionpool.ConnectionPool - java.lang.InterruptedException
+00:48:17.002 [main] DEBUG com.epam.tc.dao.impl.TrainingDaoImpl - was deleted training
+00:48:17.697 [main] DEBUG com.epam.tc.dao.impl.TrainingDaoImpl - was deleted training
+00:49:11.768 [main] DEBUG com.epam.tc.dao.impl.TrainingDaoImpl - was deleted training
+00:50:49.788 [main] DEBUG com.epam.tc.dao.impl.TrainingDaoImpl - was deleted training
+00:52:43.759 [main] DEBUG com.epam.tc.dao.impl.TrainingDaoImpl - was deleted training
+00:54:16.644 [main] DEBUG com.epam.tc.dao.impl.TrainingDaoImpl - was deleted training
+00:55:01.622 [main] DEBUG com.epam.tc.dao.impl.TrainingDaoImpl - was deleted training
