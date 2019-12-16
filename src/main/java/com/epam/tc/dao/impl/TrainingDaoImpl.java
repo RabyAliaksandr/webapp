@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Training dao.
+ * implements TrainingDao {@link TrainingDao}
+ * connects with DataBase
+ * connection takes in ConnectionPool {@link ConnectionPool}
  */
 public class TrainingDaoImpl implements TrainingDao {
 
@@ -38,10 +40,7 @@ public class TrainingDaoImpl implements TrainingDao {
       preparedStatement.setInt(2, idTraining);
       preparedStatement.executeUpdate();
       logger.info("student added training");
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -66,12 +65,9 @@ public class TrainingDaoImpl implements TrainingDao {
         trainings.add(training);
       }
       return trainings;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -93,12 +89,9 @@ public class TrainingDaoImpl implements TrainingDao {
         trainings.add(training);
       }
       return trainings;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -125,12 +118,9 @@ public class TrainingDaoImpl implements TrainingDao {
         trainings.add(training);
       }
       return trainings;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -143,7 +133,7 @@ public class TrainingDaoImpl implements TrainingDao {
     ResultSet resultSet = null;
     List<Training> trainings = new ArrayList<>();
     try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_COMPLETED_TRAININGS_FOR_MENTOR)) {
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CURRENT_TRAININGS_FOR_MENTOR)) {
       preparedStatement.setInt(1, mentorId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
@@ -153,12 +143,9 @@ public class TrainingDaoImpl implements TrainingDao {
         trainings.add(training);
       }
       return trainings;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -181,12 +168,9 @@ public class TrainingDaoImpl implements TrainingDao {
         training.setStatus(resultSet.getBoolean(SQL_TRAINING_STATUS));
       }
       return training;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -202,12 +186,9 @@ public class TrainingDaoImpl implements TrainingDao {
       preparedStatement.setString(2, trainingName);
       preparedStatement.setInt(3, trainingId);
       preparedStatement.executeUpdate();
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -224,12 +205,9 @@ public class TrainingDaoImpl implements TrainingDao {
       preparedStatement.setString(3, trainingDescription);
       preparedStatement.executeUpdate();
       logger.info("was created new training");
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -250,12 +228,9 @@ public class TrainingDaoImpl implements TrainingDao {
         done = resultSet.getBoolean(1);
       }
       return done;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
 
   }
@@ -270,7 +245,7 @@ public class TrainingDaoImpl implements TrainingDao {
     int checkUser = 0;
     try (Connection connection = connectionPool.takeConnection();
     PreparedStatement preparedStatementCheck = connection.prepareStatement(SQL_CHECK_USERS_ON_TRAINING);
-    PreparedStatement preparedStatementDelete = connection.prepareStatement(SQL_DELETE_TRAINING);
+    PreparedStatement preparedStatementDelete = connection.prepareStatement(SQL_DELETE_TRAINING)
     ) {
       connection.setAutoCommit(false);
       preparedStatementCheck.setInt(1, trainingId);
@@ -287,12 +262,9 @@ public class TrainingDaoImpl implements TrainingDao {
         return true;
       } else {
         connection.rollback();
-
+        connection.setAutoCommit(true);
       }
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -311,10 +283,7 @@ public class TrainingDaoImpl implements TrainingDao {
       preparedStatement.setInt(2, studentId);
       preparedStatement.setInt(3, trainingId);
       preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -336,10 +305,7 @@ public class TrainingDaoImpl implements TrainingDao {
       while (resultSet.next()) {
         grade = resultSet.getInt(SQL_GRADE_FOR_TRAINING);
       }
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -357,10 +323,7 @@ public class TrainingDaoImpl implements TrainingDao {
       preparedStatement.setInt(1, trainingId);
       preparedStatement.executeUpdate();
       logger.info("was closed reception to training");
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -376,40 +339,11 @@ public class TrainingDaoImpl implements TrainingDao {
          PreparedStatement preparedStatement = connection.prepareStatement(SQL_GIVE_FEEDBACK)) {
       preparedStatement.setString(1, feedback);
       preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
   }
-
-//  @Override
-//  public void addTrainingToStudent(int userId, int trainingId) throws DaoException {
-//    ConnectionPool connectionPool = ConnectionPool.getInstance();
-//    Connection connection = null;
-//    PreparedStatement preparedStatement = null;
-//    try {
-//      connection = connectionPool.takeConnection();
-//      preparedStatement = connection.prepareStatement(SQL_ADD_TRAINING_TO_STUDENT);
-//      preparedStatement.setInt(1, userId);
-//      preparedStatement.setInt(2, trainingId);
-//      preparedStatement.executeUpdate();
-//    } catch (SQLException e) {
-//      logger.error(e);
-//      throw new DaoException(e);
-//    } catch (ConnectionPoolException e) {
-//      logger.error(e);
-//      throw new DaoException(e);
-//    } finally {
-//      try {
-//        connectionPool.closeConnection(connection, preparedStatement);
-//      } catch (ConnectionPoolException e) {
-//        logger.error(e);
-//      }
-//    }
-//  }
 
   /**
    * {@inheritDoc}
@@ -427,10 +361,7 @@ public class TrainingDaoImpl implements TrainingDao {
         reviews.add(review);
       }
       return reviews;
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }

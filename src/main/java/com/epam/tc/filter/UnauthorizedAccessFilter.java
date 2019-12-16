@@ -15,13 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * The type Unauthorized access filter.
+ * class implementing interface Filter {@link Filter} the class is used to protect against direct access to the jsp
+ * pages urlPatterns - indicates which parameters for filter operation initParams -
+ * indicates what will be installed after filtering
  *
  * @author alex raby
- * @version 1.0 class implementing interface Filter {@link Filter} the class is used to protect against direct access to the jsp pages urlPatterns - indicates which parameters for filter operation initParams - indicates what will be installed after filtering
+ * @version 1.0
  */
 @WebFilter(urlPatterns = {"/jsp/*"},
-        initParams = {@WebInitParam(name = PageName.INDEX_PATH_NAME, value = PageName.PATH_INDEX_PAGE)})
+        initParams = {@WebInitParam(name = PageName.INDEX_PATH_NAME, value = "/index.jsp")})
 public class UnauthorizedAccessFilter implements Filter {
 
   /**

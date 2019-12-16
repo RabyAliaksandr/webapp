@@ -12,10 +12,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 /**
- * The type Task service.
+ * this class implements interface methods TaskService {@link TaskService} methods of this class
+ * catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
  *
  * @author alex raby
- * @version 1.0 this class implements interface methods TaskService {@link TaskService} methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ * @version 1.0
  */
 public class TaskServiceImpl implements TaskService {
 
@@ -25,9 +26,11 @@ public class TaskServiceImpl implements TaskService {
    */
   private static Logger logger = LogManager.getLogger(TaskServiceImpl.class);
 
-  /** {@inheritDoc} */
-  public  void addTaskForTraining(int trainingId, String taskName,
-                                       String taskText) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public void addTaskForTraining(int trainingId, String taskName,
+                                 String taskText) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
       taskDao.addTaskForTraining(trainingId, taskName, taskText);
@@ -37,8 +40,10 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  List<Task> findTasksListForTraining(int trainingId) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public List<Task> findTasksListForTraining(int trainingId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     List<Task> tasks;
     try {
@@ -50,9 +55,11 @@ public class TaskServiceImpl implements TaskService {
     return tasks;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public  Task findTask(int taskId) throws ServiceException {
+  public Task findTask(int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     Task task;
     try {
@@ -65,8 +72,10 @@ public class TaskServiceImpl implements TaskService {
   }
 
 
-  /** {@inheritDoc} */
-  public  void updateTask(int taskId, String taskName, String task) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public void updateTask(int taskId, String taskName, String task) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
       taskDao.updateTask(taskId, taskName, task);
@@ -76,8 +85,10 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  int checkTaskStatus(int userId, int taskId) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public int checkTaskStatus(int userId, int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
       return taskDao.checkTaskStatus(userId, taskId);
@@ -87,8 +98,10 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  void sendSolution(int userId, int taskId, String answer) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public void sendSolution(int userId, int taskId, String answer) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
       taskDao.sendSolution(userId, taskId, answer);
@@ -98,8 +111,10 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  Task findTaskSolution(int studentId, int taskId) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public Task findTaskSolution(int studentId, int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     Task task;
     try {
@@ -111,8 +126,10 @@ public class TaskServiceImpl implements TaskService {
     return task;
   }
 
-  /** {@inheritDoc} */
-  public  void gradeTask(int studentId, int taskId, int mark) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public void gradeTask(int studentId, int taskId, int mark) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
       taskDao.gradeTask(studentId, taskId, mark);
@@ -122,9 +139,11 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public  int findAvgMarkForTasks(int userId, int trainingId) throws ServiceException {
+  public int findAvgMarkForTasks(int userId, int trainingId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
       return taskDao.avgMarkForTask(userId, trainingId);
@@ -134,8 +153,10 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  List<Task> findCompletedTasks(int trainingId, int studentId) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public List<Task> findCompletedTasks(int trainingId, int studentId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();
     try {
       return taskDao.findCompletedTasks(trainingId, studentId);
@@ -145,7 +166,9 @@ public class TaskServiceImpl implements TaskService {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void deleteTask(int taskId) throws ServiceException {
     TaskDao taskDao = DaoFactory.getTaskDao();

@@ -185,6 +185,11 @@
                     </button>
                 </c:if>
             </div>
+            <div>
+                <h5 align="center">
+                    <c:import url="footer.jsp"/>
+                </h5>
+            </div>
 
             <script>
                 function sub() {

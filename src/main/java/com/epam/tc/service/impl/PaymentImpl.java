@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * The type Payment implements interface Payment {@link PaymentService}
+ *
  * @author alex raby
  * @version 1.0
  */
@@ -24,12 +25,14 @@ public class PaymentImpl implements PaymentService {
    */
   private static Logger logger = LogManager.getLogger(PaymentImpl.class);
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<Payment> findAllPayments() throws ServiceException {
     PaymentDao paymentDao = DaoFactory.getPaymentDao();
     try {
-     return paymentDao.findAllPayments();
+      return paymentDao.findAllPayments();
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException(e);

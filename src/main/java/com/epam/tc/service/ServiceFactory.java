@@ -16,11 +16,15 @@ import com.epam.tc.service.impl.*;
  */
 public class ServiceFactory {
 
-  /** Do not instantiate ServiceFactory. */
-  private ServiceFactory(){}
+  /**
+   * Do not instantiate ServiceFactory.
+   */
+  private ServiceFactory() {
+  }
 
   /**
    * this field is a object TraTrainingsServiceImpl
+   *
    * @see TrainingsServiceImpl
    * @see TrainingService
    */
@@ -30,6 +34,7 @@ public class ServiceFactory {
 
   /**
    * this field is a object UserServiceImpl
+   *
    * @see UserService
    * @see UserServiceImpl
    */
@@ -37,6 +42,7 @@ public class ServiceFactory {
 
   /**
    * this field is a object ConsultationServiceImpl
+   *
    * @see ConsultationService
    * @see ConsultationServiceImpl
    */
@@ -44,6 +50,7 @@ public class ServiceFactory {
 
   /**
    * this field is a object PaymentCardServiceImpl
+   *
    * @see PaymentCardService
    * @see PaymentCardServiceImpl
    */
@@ -51,6 +58,7 @@ public class ServiceFactory {
 
   /**
    * this field is a object TaskServiceImpl
+   *
    * @see TaskService
    * @see TaskServiceImpl
    */
@@ -58,6 +66,7 @@ public class ServiceFactory {
 
   /**
    * this field is a object TopicServiceImpl
+   *
    * @see TopicService
    * @see TopicServiceImpl
    */

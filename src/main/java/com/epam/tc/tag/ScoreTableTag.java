@@ -16,13 +16,14 @@ import java.util.List;
 
 /**
  * The type Score table custom tag.
+ *
  * @author alex raby
  * @version 1.0
  * extends {@link TagSupport}
  */
 public class ScoreTableTag extends TagSupport {
 
-private String local;
+  private String local;
 
   /**
    * Getter for property 'local'.
@@ -57,8 +58,8 @@ private String local;
       out.write("<th>" + scoreTableLocal.getLocalName("label.userName") + "</th>" +
               "<th>" + scoreTableLocal.getLocalName("label.userSurname") + "</th>" +
               "<th>" + scoreTableLocal.getLocalName("label.price") + "</th>" +
-              "<th>" + scoreTableLocal.getLocalName("label.firstName") + "</th>" +
-              "<th>" + scoreTableLocal.getLocalName("label.lastName") + "</th>" + "</tr>");
+              "<th>" + scoreTableLocal.getLocalName("label.paymentDate") + "</th>" +
+              "<th>" + scoreTableLocal.getLocalName("label.cardNumbers") + "</th>" + "</tr>");
       out.write("<tbody>");
       PaymentService paymentService = ServiceFactory.getPaymentService();
       List<Payment> payments = paymentService.findAllPayments();
@@ -76,6 +77,7 @@ private String local;
         out.write(String.valueOf(payment.getConsultation().getDate()));
         out.write("</td><td>");
         out.write(String.valueOf(payment.getPaymentCard().getNumber()));
+        count++;
       }
     } catch (IOException e) {
       throw new JspTagException(e.getMessage());

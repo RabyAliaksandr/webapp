@@ -92,26 +92,26 @@
                 </thead>
                 <tbody>
                 <c:forEach var="student" items="${userService.findStudentsForTraining(trainingId)}">
-                   <c:if test="${student.grade == 0}">
+                   <c:if test="${student.value == 0}">
                        <tr>
                            <td>
-                               <a href="controller?command=mentoring&studentId=${student.id}&trainingId=${trainingId}">
+                               <a href="controller?command=mentoring&studentId=${student.key.id}&trainingId=${trainingId}">
                                        ${count}
                                </a>
                            </td>
                            <td>
-                               <a href="controller?command=mentoring&studentId=${student.id}&trainingId=${trainingId}">
-                                       ${student.name}
+                               <a href="controller?command=mentoring&studentId=${student.key.id}&trainingId=${trainingId}">
+                                       ${student.key.name}
                                </a>
                            </td>
                            <td>
-                               <a href="controller?command=mentoring&studentId=${student.id}&trainingId=${trainingId}">
-                                       ${student.surname}
+                               <a href="controller?command=mentoring&studentId=${student.key.id}&trainingId=${trainingId}">
+                                       ${student.key.surname}
                                </a>
                            </td>
-                           <td>${taskService.findAvgMarkForTasks(student.id, trainingId)}</td>
+                           <td>${taskService.findAvgMarkForTasks(student.key.id, trainingId)}</td>
                            <c:forEach var="task"
-                                      items="${userService.findStudentsMarkForTrainingsTask(student.id, trainingId)}">
+                                      items="${userService.findStudentsMarkForTrainingsTask(student.key.id, trainingId)}">
                                <td>
                                        ${task.mark}
                                </td>
@@ -123,6 +123,11 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
     </div>
     </body>
     <script>

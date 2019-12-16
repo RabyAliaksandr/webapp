@@ -58,6 +58,7 @@
                         <fmt:message key="logout"/>
                     </a>
                 </li>
+            </ul>
 
                 <form id="xxx" method="post" action="controller">
                     <input type="hidden" name="command" value="set_local"/>
@@ -67,7 +68,6 @@
                             ${local == 'en' ? 'Ru' : 'En'}
                     </button>
                 </form>
-            </ul>
         </div>
     </nav>
     <br/>
@@ -121,6 +121,11 @@
         </c:choose>
     </c:if>
     <c:set var="markDoneMessage" value="${null}"/>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
+    </div>
     </body>
     </html>
 </fmt:bundle>

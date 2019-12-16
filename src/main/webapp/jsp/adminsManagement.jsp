@@ -73,177 +73,181 @@
     <div class="container-fluid">
             <%--        block Traininngs Management--%>
         <c:if test="${typeOperation == 'trainingManagement'}">
-        <div class="col-xs-1">
-            <jsp:useBean id="gettrainings"
-                         class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
-            <c:set var="count" value="1"/>
-            <div class="container">
-                <h2><fmt:message key="currentTrainings"/></h2>
+            <div class="col-xs-1">
+                <jsp:useBean id="gettrainings"
+                             class="com.epam.tc.service.impl.TrainingsServiceImpl"/>
+                <c:set var="count" value="1"/>
+                <div class="container">
+                    <h2><fmt:message key="currentTrainings"/></h2>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th><fmt:message key="name"/></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="training"
+                                   items="${gettrainings.findAllTrainings()}">
+                            <tr>
+                                <td>${count}</td>
+                                <td>
+                                    <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">
+                                            ${training.name}
+                                    </a>
+                                </td>
+                            </tr>
+                            <c:set var="count"
+                                   value="${count + 1}" scope="page"/>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </c:if>
+            <%--        block Users Management--%>
+        <c:if test="${typeOperation == 'usersManagement'}">
+            <div class="container-fluid">
+                <jsp:useBean id="userService"
+                             class="com.epam.tc.service.impl.UserServiceImpl"/>
+                <h1><fmt:message key="usersManagement"/></h1>
+                    <%--Message about saved changes--%>
+                <c:if test="${changesSavedMessage != null}">
+                    <div class="alert alert-danger" role="alert">
+                            ${changesSavedMessage}
+                        <c:set var="changesSavedMessage" value="${null}"/>
+                    </div>
+                </c:if>
+                <c:if test="${messageDeleteUser != null}">
+                    <div class="alert alert-danger" role="alert">
+                            ${messageDeleteUser}
+                        <c:set var="messageDeleteUser" value="${null}"/>
+                    </div>
+                </c:if>
+                    <%--users table--%>
                 <table>
                     <thead>
                     <tr>
                         <th>No</th>
-                        <th><fmt:message key="name"/></th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Login</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th></th>
+                        <th>Status</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="training"
-                               items="${gettrainings.findAllTrainings()}">
-                        <tr>
-                            <td>${count}</td>
-                            <td>
-                                <a href="controller?command=trainings_information_page&trainingId=${training.id}&editor=true">
-                                        ${training.name}
-                                </a>
-                            </td>
-                        </tr>
-                        <c:set var="count"
-                               value="${count + 1}" scope="page"/>
+                    <c:set var="count" value="${1}"/>
+                    <c:forEach var="users" items="${userService.allUser}">
+                        <c:if test="${users.id != user.id}">
+                            <tr>
+                                <td>${count}</td>
+                                <td>${users.name}</td>
+                                <td>${users.surname}</td>
+                                <td>${users.login}</td>
+                                <td>${users.email}</td>
+                                <td>${fn:toLowerCase(users.type)}</td>
+                                    <%--form for changing users type--%>
+                                <td>
+                                    <form class="form-inline" method="post" action="controller">
+                                        <input type="hidden" name="redirectTo" value="true"/>
+                                        <input type="hidden" name="command" value="update_user_type"/>
+                                        <input type="hidden" name="userId" value="${users.id}"/>
+                                        <div class="form-group">
+                                            <select id="company" class="form-control" name="type" required>
+                                                <option>${fn:toLowerCase(users.type)}</option>
+                                                <c:forEach var="type" items="${userService.usersType()}">
+                                                    <option>${fn:toLowerCase(type)}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                            <%--                block change user status             --%>
+                                </td>
+                                <td>${users.status}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <select id="changeType" class="form-control" name="status">
+                                            <option>${users.status}</option>
+                                            <c:forEach var="status" items="${userService.userStatuses()}">
+                                                <option>${fn:toLowerCase(status)}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                <td>
+                                    <button type="submit" class="btn btn-warning">
+                                        <fmt:message key="change"/>
+                                    </button>
+                                </td>
+                                </form>
+                                </td>
+                            </tr>
+                            <c:set var="count" value="${count + 1}"/>
+                        </c:if>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
-        </div>
-        </c:if>
-            <%--        block Users Management--%>
-        <c:if test="${typeOperation == 'usersManagement'}">
-        <div class="container-fluid">
-            <jsp:useBean id="userService"
-                         class="com.epam.tc.service.impl.UserServiceImpl"/>
-            <h1><fmt:message key="usersManagement"/></h1>
-                <%--Message about saved changes--%>
-            <c:if test="${changesSavedMessage != null}">
-                <div class="alert alert-danger" role="alert">
-                        ${changesSavedMessage}
-                    <c:set var="changesSavedMessage" value="${null}"/>
-                </div>
-            </c:if>
-            <c:if test="${messageDeleteUser != null}">
-                <div class="alert alert-danger" role="alert">
-                        ${messageDeleteUser}
-                    <c:set var="messageDeleteUser" value="${null}"/>
-                </div>
-            </c:if>
-                <%--users table--%>
-            <table>
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Login</th>
-                    <th>Email</th>
-                    <th>Type</th>
-                    <th></th>
-                    <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:set var="count" value="${1}"/>
-                <c:forEach var="users" items="${userService.allUser}">
-                    <c:if test="${users.id != user.id}">
-                        <tr>
-                            <td>${count}</td>
-                            <td>${users.name}</td>
-                            <td>${users.surname}</td>
-                            <td>${users.login}</td>
-                            <td>${users.email}</td>
-                            <td>${fn:toLowerCase(users.type)}</td>
-                                <%--form for changing users type--%>
-                            <td>
-                                <form class="form-inline" method="post" action="controller">
-                                    <input type="hidden" name="redirectTo" value="true"/>
-                                    <input type="hidden" name="command" value="update_user_type"/>
-                                    <input type="hidden" name="userId" value="${users.id}"/>
-                                    <div class="form-group">
-                                        <select id="company" class="form-control" name="type" required>
-                                            <option>${fn:toLowerCase(users.type)}</option>
-                                            <c:forEach var="type" items="${userService.usersType()}">
-                                                <option>${fn:toLowerCase(type)}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                        <%--                block change user status             --%>
-                            </td>
-                            <td>${users.status}</td>
-                            <td>
-                                <div class="form-group">
-                                    <select id="changeType" class="form-control" name="status">
-                                        <option>${users.status}</option>
-                                        <c:forEach var="status" items="${userService.userStatuses()}">
-                                            <option>${fn:toLowerCase(status)}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            <td>
-                                <button type="submit" class="btn btn-warning">
-                                    <fmt:message key="change"/>
-                                </button>
-                            </td>
-                            </form>
-                            </td>
-                        </tr>
-                        <c:set var="count" value="${count + 1}"/>
-                    </c:if>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
         </c:if>
         <c:if test="${typeOperation == 'consultationManagement'}">
             <%--                    <jsp:useBean id="userService" class="UserServiceImpl"/>--%>
 
-        <c:if test="${messageOfferSent != null}">
-        <div class="alert alert-danger" role="alert">
-                ${messageOfferSent}
-            <c:set var="messageOfferSent" value="${null}"/>
-        </div>
-        </c:if>
-        <label><fmt:message key="offerToMentor"/> </label>
-        <br/>
-        <form action="controller" method="post">
-            <input type="hidden" name="redirectTo" value="true"/>
-            <input type="hidden" name="command" value="offer_date"/>
-            <p><fmt:message key="chooseDate"/>:
-                <input type="text" id="datepicker" name="date" required></p>
-            <div class="form-group">
-                <jsp:useBean id="service"
-                             class="com.epam.tc.service.impl.UserServiceImpl"/>
-                <div class="form-group">
-                    <fmt:message key="choose_mentor"/>
-                    <select id="chooseMentor" class="form-control" name="trainingId" required>
-                        <c:forEach var="mentor" items="${service.findMentorsAndTrainings()}">
-                            <option value="${mentor.key.id}">${mentor.key.name} ${mentor.value.name} ${mentor.value.surname}</option>
-                        </c:forEach>
-                    </select>
+            <c:if test="${messageOfferSent != null}">
+                <div class="alert alert-danger" role="alert">
+                        ${messageOfferSent}
+                    <c:set var="messageOfferSent" value="${null}"/>
                 </div>
-            </div>
-            <label><fmt:message key="priceConsultation"/></label>
-            <input type="text"
-                   name="price"
-                   pattern="(0\.((0[1-9]{1})|([1-9]{1}([0-9]{1})?)))|(([1-9]+[0-9]*)(\.([0-9]{1,2}))?)"
-                   maxlength="6"
-                   class="form-control" placeholder="100.00" required>
-            <button type="submit" class="btn-primary"><fmt:message key="send"/></button>
-            <form>
-                </c:if>
-                <br/>
-                <fmt:bundle basename="local" prefix="footer.">
-                    <fmt:message key="copyright"/>
-                </fmt:bundle>
-                <script>
-                    $(document).ready(function () {
-                        $('table').DataTable({
-                            "sDom": '<"top"i>rt<"bottom"lp><"clear">',
-                            "info": false
-                        });
-                    });
-                </script>
-                <script>
-                    $(function () {
-                        $("#datepicker").datepicker();
-                    });
-                </script>
+            </c:if>
+            <label><fmt:message key="offerToMentor"/> </label>
+            <br/>
+            <form action="controller" method="post">
+                <input type="hidden" name="redirectTo" value="true"/>
+                <input type="hidden" name="command" value="offer_date"/>
+                <p><fmt:message key="chooseDate"/>:
+                    <input type="text" id="datepicker" name="date" required></p>
+                <div class="container-fluid">
+                    <jsp:useBean id="service"
+                                 class="com.epam.tc.service.impl.UserServiceImpl"/>
+                    <div class="form-group">
+                        <fmt:message key="choose_mentor"/>
+                        <select id="chooseMentor" class="form-control" name="trainingId" required>
+                            <c:forEach var="mentor" items="${service.findMentorsAndTrainings()}">
+                                <option value="${mentor.key.id}">${mentor.key.name} ${mentor.value.name} ${mentor.value.surname}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <label><fmt:message key="priceConsultation"/></label>
+                <input type="text"
+                       name="price"
+                       pattern="(0\.((0[1-9]{1})|([1-9]{1}([0-9]{1})?)))|(([1-9]+[0-9]*)(\.([0-9]{1,2}))?)"
+                       maxlength="6"
+                       class="form-control" placeholder="100.00" required/>
+                <button type="submit" class="btn-primary"><fmt:message key="send"/></button>
+            </form>
+        </c:if>
+        <br/>
+
+        <script>
+            $(document).ready(function () {
+                $('table').DataTable({
+                    "sDom": '<"top"i>rt<"bottom"lp><"clear">',
+                    "info": false
+                });
+            });
+        </script>
+        <script>
+            $(function () {
+                $("#datepicker").datepicker();
+            });
+        </script>
+    </div>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
+    </div>
     </body>
     </html>
 </fmt:bundle>

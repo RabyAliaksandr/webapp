@@ -123,6 +123,11 @@
         </table>
     </div>
     <br/>
-    <c:import url="footer.jsp"/></body>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
+    </div>
+    </body>
     </html>
 </fmt:bundle>

@@ -21,18 +21,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Payment dao.
+ * implements PaymentDao {@link PaymentDao}
+ * connects with DataBase
+ * takes Connection in ConnectionPool {@link ConnectionPool}
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class PaymentDaoImpl implements PaymentDao {
 
   private static Logger logger = LogManager.getLogger(PaymentDaoImpl.class);
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<Payment> findAllPayments() throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     ResultSet resultSet;
     List<Payment> payments = new ArrayList<>();
-
     try (Connection connection = connectionPool.takeConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(SqlQuery.FIND_ALL_PAYMENTS)) {
       resultSet = preparedStatement.executeQuery();
@@ -52,10 +59,7 @@ public class PaymentDaoImpl implements PaymentDao {
         payments.add(payment);
       }
       return payments;
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }

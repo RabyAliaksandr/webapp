@@ -1,7 +1,10 @@
 package com.epam.tc.dao;
 
 /**
- * The type Dao exception.
+ * Dao Exception extends Exception {@link Exception}
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class DaoException extends Exception {
 

@@ -20,7 +20,7 @@ public class CommandFactory {
    * @param request - object HttpServletRequest {@link HttpServletRequest}
    * @return implementing class Command
    */
-  public Command defineCommand(HttpServletRequest request) {
+  public static Command defineCommand(HttpServletRequest request) {
     Command current;
     String action = request.getParameter(VariableName.COMMAND);
     if (action == null || action.isEmpty()) {
@@ -33,6 +33,7 @@ public class CommandFactory {
       current = new EmptyCommand();
       request.setAttribute(MessageName.WRONG_ACTION,
               action + " " + MessageManager.getProperty(MessageName.MESSAGE_WRONG_ACTION));
+      request.getSession().invalidate();
     }
     return current;
   }

@@ -40,20 +40,21 @@
             <br/>
               <label><font color="red">${errorLoginPassMessage}</font> </label>
             <br/>
-            <label><font color="red"> ${wrongAction}</font> </label>
+<%--            <label><font color="red"> ${wrongAction}</font> </label>--%>
             <br/>
-            <label><font color="red"> ${nullPage}</font> </label>
+            <c:if test="${wrongAction != null}">
+            <label><font color="red"><fmt:message key="hack"/></font> </label>
+            </c:if>
             <br/>
             <input type="submit" value=<fmt:message key="login"/>>
             <br/>
         </form>
         <hr/>
-<%--        <form name="redirectToRegister" method="POST" action="controller">--%>
-<%--            <input type="hidden" name="command" value="registration_page"/>--%>
-<%--            <input type="submit" value="Sign Up"/>--%>
-<%--            <br/>--%>
-<%--        </form>--%>
-<%--        <hr/>--%>
+    </div>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
     </div>
     </body>
     </html>

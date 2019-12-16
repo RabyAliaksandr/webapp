@@ -20,7 +20,12 @@ import static com.epam.tc.dao.SqlColumn.*;
 import static com.epam.tc.dao.SqlQuery.*;
 
 /**
- * The type Topic dao.
+ * implements TopicDao {@link TopicDao}
+ * connects with DataBase
+ * takes Connection in ConnectionPool {@link ConnectionPool}
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class TopicDaoImpl implements TopicDao {
 
@@ -46,12 +51,9 @@ public class TopicDaoImpl implements TopicDao {
         topics.add(topic);
       }
       return topics;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -73,12 +75,9 @@ public class TopicDaoImpl implements TopicDao {
         topic.setTopic(resultSet.getString(SQL_TOPIC));
       }
       return topic;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -94,12 +93,9 @@ public class TopicDaoImpl implements TopicDao {
       preparedStatement.setString(2, topicsName);
       preparedStatement.setString(3, topicsText);
       preparedStatement.executeUpdate();
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -115,12 +111,9 @@ public class TopicDaoImpl implements TopicDao {
       preparedStatement.setString(2, topic);
       preparedStatement.setInt(3, topicId);
       preparedStatement.executeUpdate();
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -140,12 +133,9 @@ public class TopicDaoImpl implements TopicDao {
       while (resultSet.next()) {
         check = resultSet.getBoolean(SQL_TOPIC_STATUS);
       }
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
     return check;
   }
@@ -157,17 +147,13 @@ public class TopicDaoImpl implements TopicDao {
   public void markTopic(int userId, int topicId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SET_MARK_TOPIC);
-    ) {
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SET_MARK_TOPIC)) {
       preparedStatement.setInt(1, userId);
       preparedStatement.setInt(2, topicId);
       preparedStatement.executeUpdate();
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -180,8 +166,7 @@ public class TopicDaoImpl implements TopicDao {
     ResultSet resultSet = null;
     List<Topic> topics = new ArrayList<>();
     try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_LEARNED_TOPICS);
-    ) {
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_LEARNED_TOPICS)) {
       preparedStatement.setInt(1, studentId);
       preparedStatement.setInt(2, trainingId);
       resultSet = preparedStatement.executeQuery();
@@ -192,12 +177,9 @@ public class TopicDaoImpl implements TopicDao {
         topics.add(topic);
       }
       return topics;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -211,10 +193,7 @@ public class TopicDaoImpl implements TopicDao {
          PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_TOPIC)) {
       preparedStatement.setInt(1, topicId);
       preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }

@@ -157,6 +157,11 @@
     </c:if>
         <%--    nullify the message about sent solution --%>
     <c:set var="sendSolutionMessage" value="${null}"/>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
+    </div>
     </body>
     </html>
 </fmt:bundle>

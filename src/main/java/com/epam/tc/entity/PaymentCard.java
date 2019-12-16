@@ -8,7 +8,8 @@ import java.math.BigDecimal;
  * The type Payment card.
  *
  * @author alex raby
- * @version 1.0 PaymentCard class this class describes PaymentCards this class has fields id - unique number number - payment card number score - payment card score
+ * @version 1.0 PaymentCard class this class describes PaymentCards this class has fields id -
+ * unique number number - payment card number score - payment card score
  */
 public class PaymentCard {
 

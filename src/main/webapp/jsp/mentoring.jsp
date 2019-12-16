@@ -112,6 +112,11 @@
             </c:choose>
 
         </div>
+        <div>
+            <h5 align="center">
+                <c:import url="footer.jsp"/>
+            </h5>
+        </div>
         <script>
             $(document).ready( function () {
                 $('table').DataTable({

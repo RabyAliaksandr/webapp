@@ -1,12 +1,32 @@
 package com.epam.tc.entity;
 
 /**
- * The type Payment.
+ * stores information about the cash payment,
+ * namely who made the payment for which consultation and with which card
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class Payment {
+
+  /**
+   * unique number of PaymentCard
+   */
   private int id;
+
+  /**
+   * object Consultation {@link Consultation}
+   */
   private Consultation consultation;
+
+  /**
+   * object User {@link User}
+   */
   private User user;
+
+  /**
+   * object PaymentCard {@link PaymentCard}
+   */
   private PaymentCard paymentCard;
 
   /**

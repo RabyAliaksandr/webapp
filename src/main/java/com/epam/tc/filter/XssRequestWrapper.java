@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.regex.Pattern;
 
 /**
- * The type Xss request wrapper.
+ * request processing class used in XssProtectionFilter {@link XssProtectionFilter}
  *
  * @author alex raby
- * @version 1.0 request processing class used in XssProtectionFilter {@link XssProtectionFilter}
+ * @version 1.0
  */
 public class XssRequestWrapper extends HttpServletRequestWrapper {
 
@@ -32,6 +32,7 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
 
   /**
    * override method
+   *
    * @param parameter - parameter by which we obtain data from the request
    * @return filtered data
    */
@@ -51,6 +52,7 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
 
   /**
    * override method
+   *
    * @param parameter - parameter by which get data from the request
    * @return filtered data
    */
@@ -62,6 +64,7 @@ public class XssRequestWrapper extends HttpServletRequestWrapper {
 
   /**
    * override method
+   *
    * @param name - by which get the header
    * @return string without xss
    */

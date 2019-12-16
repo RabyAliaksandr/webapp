@@ -14,7 +14,11 @@ import java.util.concurrent.Executor;
 
 
 /**
- * The type Connection pool.
+ * creates a pool of database connections and queues them. when accessing the class,
+ * it gives a connection. has an inner class that creates a database connection.
+ * when the connection returns, it checks the auto commit and set true.
+ * accepts connections to return only objects of the inner class
+ *
  * @author alex raby
  * @version 1.0
  */
@@ -35,7 +39,7 @@ public class ConnectionPool {
     try {
       initPool();
     } catch (ConnectionPoolException e) {
-      logger.error(e);
+      logger.fatal(e);
       throw new RuntimeException(e);
     }
   }
@@ -51,6 +55,7 @@ public class ConnectionPool {
 
   /**
    * Do not instantiate ConnectionPool.
+   * @see DataBaseManager
    */
   private ConnectionPool() {
     DataBaseManager dataBaseManager = DataBaseManager.getInstance(ConnectName.PROPERTIES_FILE);
@@ -74,19 +79,16 @@ public class ConnectionPool {
         PooledConnection pooledConnection = new PooledConnection(connection);
         connectionQueue.add(pooledConnection);
       }
-    } catch (ClassNotFoundException e) {
-      logger.error(e);
-      throw new ConnectionPoolException(e);
-    } catch (SQLException e) {
-      logger.error(e);
+    } catch (ClassNotFoundException | SQLException e) {
+      logger.fatal(e);
       throw new ConnectionPoolException(e);
     }
   }
 
   /**
-   * Take connection connection.
+   * gives connection.
    *
-   * @return the connection
+   * @return the connection {@link PooledConnection}
    * @throws ConnectionPoolException the connection pool exception
    */
   public Connection takeConnection() throws ConnectionPoolException {
@@ -110,10 +112,7 @@ public class ConnectionPool {
     for (int i = 0; i < sizePool; i++) {
       try {
         ((PooledConnection) connectionQueue.take()).reallyClose();
-      } catch (InterruptedException e) {
-        logger.error(e);
-        throw new ConnectionPoolException(e);
-      } catch (SQLException e) {
+      } catch (InterruptedException | SQLException e) {
         logger.error(e);
         throw new ConnectionPoolException(e);
       }
@@ -121,6 +120,10 @@ public class ConnectionPool {
     deregisterDrivers();
   }
 
+  /**
+   * closes driver registration
+   * @see DriverManager
+   */
   private void deregisterDrivers() {
     Enumeration<Driver> drivers = DriverManager.getDrivers();
     while (drivers.hasMoreElements()) {
@@ -133,7 +136,8 @@ public class ConnectionPool {
   }
 
   /**
-   * clear connection queue
+   * checks the connection, if it matches this type, returns back to the queue.
+   * and removes the object from the wait queue
    */
   private void releaseConnection(Connection connection) throws ConnectionPoolException {
     if (connection.getClass() == PooledConnection.class) {
@@ -501,7 +505,7 @@ public class ConnectionPool {
      * {@inheritDoc}
      */
     @Override
-    public SQLXML createSQLXML()  {
+    public SQLXML createSQLXML() {
       return createSQLXML();
     }
 

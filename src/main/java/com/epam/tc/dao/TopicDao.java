@@ -3,14 +3,15 @@ package com.epam.tc.dao;
 import com.epam.tc.entity.Topic;
 import com.epam.tc.entity.Training;
 import com.epam.tc.entity.User;
+import com.epam.tc.entity.UserType;
 
 import java.util.List;
 
 /**
- * The interface Topic dao.
+ * This interface contains methods for working with DataBase with Topic
  *
  * @author alex raby
- * @version 1.0 this interface contains methods for working with DataBase with Topic
+ * @version 1.0
  * @see Topic
  */
 public interface TopicDao {
@@ -18,7 +19,7 @@ public interface TopicDao {
   /**
    * search topics for this training
    *
-   * @param trainingId - Training id
+   * @param trainingId - Training id for which we are looking
    * @return list of Topic
    * @throws DaoException the dao exception
    * @see Training
@@ -50,9 +51,9 @@ public interface TopicDao {
   /**
    * updates the fields of the Topic
    *
-   * @param topicId   - Topic id
-   * @param topicName - Topic name
-   * @param topic     - Topic topic
+   * @param topicId   - Topic id to be added
+   * @param topicName - Topic name to be added
+   * @param topic     - Topic topic to be added
    * @throws DaoException the dao exception
    * @see Topic
    * @see Training
@@ -62,9 +63,9 @@ public interface TopicDao {
   /**
    * checks the status of the Topic for User
    *
-   * @param userId  - User id
-   * @param topicId - Topic id
-   * @return - boolean
+   * @param userId  - User id which we will update
+   * @param topicId - Topic id which we will update
+   * @return true if Topic is learned
    * @throws DaoException the dao exception
    * @see User
    * @see Topic
@@ -74,8 +75,8 @@ public interface TopicDao {
   /**
    * adds a topic to the list of Topic for User with the status 'true'
    *
-   * @param userId  - User id
-   * @param topicId - Topic id
+   * @param userId  - User id for which we will put a mark
+   * @param topicId - Topic id for which we will put a mark
    * @throws DaoException the dao exception
    * @see Topic
    * @see User
@@ -85,12 +86,13 @@ public interface TopicDao {
   /**
    * finds Topic with status 'true' for the User enrolled in this Training
    *
-   * @param studentId  - User id
-   * @param trainingId - Training id
+   * @param studentId  - User id for which we will put a mark
+   * @param trainingId - Training id for which we will put a mark
    * @return - list of Topic
    * @throws DaoException the dao exception
    * @see Topic
    * @see User
+   * @see UserType#STUDENT
    * @see Training
    */
   List<Topic> findLearnedTopics(int studentId, int trainingId) throws DaoException;

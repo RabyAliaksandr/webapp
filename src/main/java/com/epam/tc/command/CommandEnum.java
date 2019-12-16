@@ -142,7 +142,7 @@ public enum CommandEnum {
    * The Create training.
    */
   CREATE_TRAINING {
-    {
+     {
       this.command = new CreateTrainingCommand();
     }
   },

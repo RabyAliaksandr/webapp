@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
  * The type Configuration manager.
  * this class returns a message from the properties file depending on the localization
  * {@link PathPropertiesFiles#PATH_CONFIG}
+ *
  * @author alex raby
  * @version 1.0
  */

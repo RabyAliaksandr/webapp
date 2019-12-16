@@ -1,7 +1,10 @@
 package com.epam.tc.controller;
 
 /**
- * The type Controller exception.
+ * Controller Exception extends Exception {@link Exception}
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class ControllerException extends Exception {
 

@@ -1,7 +1,10 @@
 package com.epam.tc.connectionpool;
 
 /**
- * The type Connection pool exception.
+ * Connection pool exception.
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class ConnectionPoolException extends Exception {
 

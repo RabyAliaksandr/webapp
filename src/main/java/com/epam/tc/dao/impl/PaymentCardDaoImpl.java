@@ -21,7 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Payment card dao.
+ * implements PaymentCard{@link PaymentCardDao}
+ * connects with DataBase
+ * takes Connection in ConnectionPool {@link ConnectionPool}
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class PaymentCardDaoImpl implements PaymentCardDao {
 
@@ -35,14 +40,12 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     try (Connection connection = connectionPool.takeConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_PAYMENT_CARD);
-         PreparedStatement preparedStatementAdd = connection.prepareStatement(SQL_ADD_PAYMENT_CARD_TO_USER);
-    ) {
+         PreparedStatement preparedStatementAdd = connection.prepareStatement(SQL_ADD_PAYMENT_CARD_TO_USER)) {
       connection.setAutoCommit(false);
       preparedStatement.setLong(1, cardNumber);
       preparedStatement.setLong(2, cardNumber);
       int check = preparedStatement.executeUpdate();
       if (check > 0) {
-        preparedStatement.close();
         preparedStatementAdd.setInt(1, userId);
         preparedStatementAdd.setLong(2, cardNumber);
         preparedStatementAdd.executeUpdate();
@@ -54,10 +57,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
         connection.setAutoCommit(true);
         return false;
       }
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -72,8 +72,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
     ResultSet resultSet = null;
     List<PaymentCard> paymentCards = new ArrayList<>();
     try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USERS_CARD);
-    ) {
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USERS_CARD)) {
       preparedStatement.setInt(1, userId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
@@ -84,10 +83,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
         paymentCards.add(paymentCard);
       }
       return paymentCards;
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -105,10 +101,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
       preparedStatement.setInt(2, cardId);
       preparedStatement.executeUpdate();
       logger.info("card account was replenished");
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -133,10 +126,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
       preparedStatement.setInt(8, cardRecipient);
       check = preparedStatement.executeUpdate();
       logger.info("money was transferred from card to card");
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -172,10 +162,7 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
       }
       connection.commit();
       connection.setAutoCommit(true);
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }

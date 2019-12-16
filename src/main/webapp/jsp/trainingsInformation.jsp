@@ -41,11 +41,6 @@
                         </a>
                     </li>
                 </c:if>
-                <li>
-                    <a href="controller?command=trainings_page">
-                        <fmt:message key="currentTrainings"/>
-                    </a>
-                </li>
                     <%--    if mark editor is true then user can edit training--%>
                 <c:if test="${editor == true}">
                     <li>
@@ -134,7 +129,9 @@
 
         <c:if test="${changesSavedMessage != null}">
             <div class="alert alert-danger" role="alert">
-                    ${changesSavedMessage}
+                <fmt:bundle basename="local" prefix="message.">
+                    <fmt:message key="changesSaved"/>
+                </fmt:bundle>
                 <c:set var="changesSavedMessage" value="${null}"/>
             </div>
         </c:if>
@@ -248,14 +245,22 @@
         </div>
     </div>
     <c:set var="markDoneMessage" value="${null}"/>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
+    </div>
     </body>
     <script>
-        $(document).ready(function () {
+        $(document).ready( function () {
             $('table').DataTable({
                 "sDom": '<"top"i>rt<"bottom"lp><"clear">',
-                "info": false
+                "info":false,
+                "language": {
+                    "emptyTable": "Задания в процессе разработки"
+                }
             });
-        });
+        } );
     </script>
     </html>
 </fmt:bundle>

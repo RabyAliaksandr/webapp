@@ -108,12 +108,20 @@
             </tbody>
         </table>
     </div>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
+    </div>
     </body>
     <script>
         $(document).ready( function () {
             $('table').DataTable({
                 "sDom": '<"top"i>rt<"bottom"lp><"clear">',
-                "info":false
+                "info":false,
+                "language": {
+                    "emptyTable": "No data available in table"
+                }
             });
         } );
     </script>

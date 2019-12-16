@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * The interface Payment service.
+ *
  * @author alex raby
  * @version 1.0
  * @see Payment

@@ -15,10 +15,11 @@ import java.sql.Date;
 import java.util.*;
 
 /**
- * The type User service.
+ * this class implements interface methods UserService {@link UserService} methods of this class
+ * catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
  *
  * @author alex raby
- * @version 1.0 this class implements interface methods UserService {@link UserService} methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ * @version 1.0
  */
 public class UserServiceImpl implements UserService {
 
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
    * class object Logger {@link Logger}
    * writes important events to a log file
    */
-  public  Logger logger = LogManager.getLogger(UserServiceImpl.class);
+  private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
   @Override
   public List<User> findAllMentors() throws ServiceException {
@@ -39,8 +40,10 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  Map<Training, User> findMentorsAndTrainings() throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public Map<Training, User> findMentorsAndTrainings() throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
     try {
       return userDao.findMentorsAndTrainings();
@@ -50,7 +53,9 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void deleteUser(int userId) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
@@ -62,26 +67,26 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  User checkLogin(String login, String password) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public User checkLogin(String login, String password) throws ServiceException {
     User user = new User();
     user.setLogin(login);
     user.setPassword(password);
     UserDao authorizationUserDAOImpl = DaoFactory.getUserDao();
     try {
       user = authorizationUserDAOImpl.authorization(user);
-      if (user != null) {
-        return user;
-      } else {
-        return user;
-      }
+      return user;
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException(e);
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void registration(User user) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
@@ -93,7 +98,9 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean checkLogin(String login) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
@@ -105,7 +112,9 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean checkEmail(String email) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
@@ -139,8 +148,10 @@ public class UserServiceImpl implements UserService {
 //    }
 //  }
 
-  /** {@inheritDoc} */
-  public  boolean checkEnrolled(int userId, int trainingId) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public boolean checkEnrolled(int userId, int trainingId) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
     try {
       return userDao.checkEnrolled(userId, trainingId);
@@ -150,8 +161,10 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  List<User> getAllUser() throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public List<User> getAllUser() throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
     List<User> users;
     try {
@@ -163,18 +176,24 @@ public class UserServiceImpl implements UserService {
     return users;
   }
 
-  /** {@inheritDoc} */
-  public  UserType[] usersType() {
+  /**
+   * {@inheritDoc}
+   */
+  public UserType[] usersType() {
     return UserType.values();
   }
 
-  /** {@inheritDoc} */
-  public  UserStatus[] userStatuses() {
+  /**
+   * {@inheritDoc}
+   */
+  public UserStatus[] userStatuses() {
     return UserStatus.values();
   }
 
-  /** {@inheritDoc} */
-  public  void updateUserType(int userId, UserType type, UserStatus status) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public void updateUserType(int userId, UserType type, UserStatus status) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
     try {
       userDao.updateUserType(userId, type, status);
@@ -184,21 +203,23 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  List<User> findStudentsForTraining(int trainingId) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public Map<User, Integer> findStudentsForTraining(int trainingId) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
-    List<User> students;
     try {
-      students = userDao.findStudentsForTraining(trainingId);
+      return userDao.findStudentsForTraining(trainingId);
     } catch (DaoException e) {
       logger.error(e);
       throw new ServiceException(e);
     }
-    return students;
   }
 
-  /** {@inheritDoc} */
-  public  List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws ServiceException {
     UserDao userDao = DaoFactory.getUserDao();
     List<Task> tasks;
     try {
@@ -210,8 +231,10 @@ public class UserServiceImpl implements UserService {
     return tasks;
   }
 
-  /** {@inheritDoc} */
-  public  boolean sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public boolean sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
       return consultationDao.sendOfferConsultations(trainingId, date, price);
@@ -221,8 +244,10 @@ public class UserServiceImpl implements UserService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  Map<Training, Date> findConsultationsOffer(int mentorId) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public Map<Training, Date> findConsultationsOffer(int mentorId) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     Map<Training, Date> consultations;
     try {
@@ -234,8 +259,10 @@ public class UserServiceImpl implements UserService {
     return consultations;
   }
 
-  /** {@inheritDoc} */
-  public  boolean sendAgreement(int trainingId, Date date, boolean mark) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public boolean sendAgreement(int trainingId, Date date, boolean mark) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
       return consultationDao.sendAgreement(trainingId, date, mark);

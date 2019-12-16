@@ -65,7 +65,6 @@
                 </div>
 
                 <label><fmt:message key="userLogin"/> </label>
-                <label><fmt:message key="correctPassword"/> </label>
                 <div class="input-group">
                     <input type="text" name="login" value="${userFields.login}" class="form-control"
                            pattern="^([A-Z]?[a-z]{6,23})$"
@@ -76,7 +75,10 @@
                         <p><font color="red">${messageLoginIsExist}</font></p>
                     </div>
                 </div>
+                <br/>
                 <label><fmt:message key="userPassword"/> </label>
+                <label><fmt:message key="correctPassword"/> </label>
+
                 <div class="input-group">
                     <input type="password" name="password" class="form-control" required
                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])\S{8,15}"
@@ -110,6 +112,11 @@
                 <button type="submit" class="btn-success"><fmt:message key="send"/></button>
         </form>
     </div>
+    </div>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
     </div>
     </body>
     </html>

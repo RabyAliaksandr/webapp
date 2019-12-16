@@ -16,12 +16,11 @@ import java.util.Map;
 public interface ConsultationService {
 
   /**
-   * the interface contains methods for working with objects
+   * finds available consultations for this training
    *
    * @param trainingId - Training id which will to look
-   * @return - list of Training
+   * @return - list of Consultation {@link Consultation}
    * @throws ServiceException package Service exception package Service exception package Service exception
-   * @see Training
    */
   List<Consultation> findConsultationsForTraining(int trainingId) throws ServiceException;
 
@@ -36,7 +35,7 @@ public interface ConsultationService {
    * @throws ServiceException package Service exception package Service exception
    */
   void sendOrderConsultation(int consultationId, int studentId,
-                                List<Integer> taskIds, List<Integer> topicIds) throws ServiceException;
+                             List<Integer> taskIds, List<Integer> topicIds) throws ServiceException;
 
   /**
    * sends a consultation offer to the Mentor {@link UserType#MENTOR}

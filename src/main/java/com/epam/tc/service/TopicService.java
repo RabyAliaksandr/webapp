@@ -64,7 +64,7 @@ public interface TopicService {
    *
    * @param userId  - User id which we will update
    * @param topicId - Topic id which we will update
-   * @return the boolean done
+   * @return true if Topic is learned
    * @throws ServiceException package Service exception
    * @see User
    * @see Topic

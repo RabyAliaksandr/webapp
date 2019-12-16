@@ -36,16 +36,6 @@ Q
 !src/resources/local_ru.properties,e\d\edf376d1f795826a694d6d0d125903e07098e908
 H
 src/resources/log4j2.xml,7\e\7e390cdc7be6aacb4e09ddabe4c086c5c5d14352
-R
-"target/webapp/META-INF/MANIFEST.MF,9\6\9680385cb2f9025e097fa9ac9ab2190199f4812f
-_
-/target/webapp/WEB-INF/classes/config.properties,a\2\a204fabaebe7611db0c1d0c621ccdcd8a5b5c8f5
-a
-1target/webapp/WEB-INF/classes/local_en.properties,a\3\a3ca5f983179cc734061e5aa397880cadfc6b97e
-a
-1target/webapp/WEB-INF/classes/local_ru.properties,7\9\793e985730e59c884a661a72eab167e29eef95af
-X
-(target/webapp/WEB-INF/classes/log4j2.xml,e\8\e840cc9f4c68006a0e9d50073841d26cda9d7a09
 T
 $src/main/webapp/jsp/adminCabinet.jsp,9\a\9ae3c21e235c24020e5108e040df57c116e5b7fd
 O
@@ -238,8 +228,6 @@ d
 4src/main/java/com/epam/tc/filter/EncodingFilter.java,d\7\d7111abf8529896e364e60c8cf5ba8614c1c5863
 h
 8src/main/java/com/epam/tc/command/impl/EmptyCommand.java,4\0\407ae978d96f074455f878a9c4d518402c984ce6
-o
-?src/main/java/com/epam/tc/controller/SessionRequestContent.java,f\b\fb7e951c0cbbf05caab54df61ded6d5c1af52b87
 m
 =src/main/java/com/epam/tc/controller/ControllerException.java,c\5\c50890da9746732ca4a33334497b8a453f197a5c
 e
@@ -344,3 +332,9 @@ S
 #src/main/webapp/jsp/centerScore.jsp,a\3\a3d72305c708af551a61123c4eaa4d943a37be31
 X
 (src/main/webapp/WEB-INF/tld/tableTag.tld,f\5\f54490474bda63f49243b36c69c09377325918ea
+n
+>src/main/java/com/epam/tc/command/impl/CenterScoreCommand.java,7\f\7fb7aa9e44d834a9545a15a1afd521cb839a6ce2
+]
+-src/main/java/com/epam/tc/entity/Payment.java,d\c\dc467257db2e4e1d3f8e5b46cd42d873395c8c2f
+f
+6src/main/java/com/epam/tc/dao/impl/PaymentDaoImpl.java,e\4\e4f4ce6c0f9df8bf2b1616e19fab2c1bf382d73a

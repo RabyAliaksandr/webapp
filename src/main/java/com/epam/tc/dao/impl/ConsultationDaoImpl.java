@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.net.ConnectException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +21,12 @@ import static com.epam.tc.dao.SqlQuery.*;
 import static com.epam.tc.dao.SqlQuery.SQL_TOPICS_FOR_CONSULTATION;
 
 /**
- * The type Consultation dao.
+ * implements ConsultationDao {@link ConsultationDao}
+ * connects with DataBase
+ * takes Connection in DataBase
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class ConsultationDaoImpl implements ConsultationDao {
 
@@ -37,24 +41,20 @@ public class ConsultationDaoImpl implements ConsultationDao {
     ResultSet resultSet = null;
     List<Consultation> consultations = new ArrayList<>();
     try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTATIONS_FOR_TRAINING);
-    ) {
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTATIONS_FOR_TRAINING)) {
       preparedStatement.setInt(1, trainingId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Consultation consultation = new Consultation();
         consultation.setId(resultSet.getInt(SqlColumn.SQL_CONSULTATION_ID));
-        consultation.setDate(resultSet.getDate(SQL_DATE));
+        consultation.setDate(resultSet.getDate(SqlColumn.SQL_DATE));
         consultation.setPrice(resultSet.getInt(SqlColumn.SQL_PRICE));
         consultations.add(consultation);
       }
       return consultations;
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -67,8 +67,7 @@ public class ConsultationDaoImpl implements ConsultationDao {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     try (Connection connection = connectionPool.takeConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(SQL_TASKS_FOR_CONSULTATION);
-         PreparedStatement preparedStatementTopics = connection.prepareStatement(SQL_TOPICS_FOR_CONSULTATION);
-    ) {
+         PreparedStatement preparedStatementTopics = connection.prepareStatement(SQL_TOPICS_FOR_CONSULTATION)) {
       for (Integer id : taskIds) {
         preparedStatement.setInt(1, consultationId);
         preparedStatement.setInt(2, studentId);
@@ -76,7 +75,6 @@ public class ConsultationDaoImpl implements ConsultationDao {
         preparedStatement.addBatch();
       }
       preparedStatement.executeBatch();
-
       for (Integer id : topicIds) {
         preparedStatementTopics.setInt(1, consultationId);
         preparedStatementTopics.setInt(2, studentId);
@@ -84,12 +82,9 @@ public class ConsultationDaoImpl implements ConsultationDao {
         preparedStatementTopics.addBatch();
       }
       preparedStatementTopics.executeUpdate();
-    } catch (SQLException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
-      throw new DaoException("Error access database", e);
-    } catch (ConnectionPoolException e) {
-      logger.error(e);
-      throw new DaoException("Error access database", e);
+      throw new DaoException(e);
     }
   }
 
@@ -100,7 +95,7 @@ public class ConsultationDaoImpl implements ConsultationDao {
   public boolean sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_OFFER_CONSULTATION)) {
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_NEW_CONSULTATION)) {
       preparedStatement.setInt(1, trainingId);
       preparedStatement.setString(2, date.toString());
       preparedStatement.setBigDecimal(3, price);
@@ -108,10 +103,7 @@ public class ConsultationDaoImpl implements ConsultationDao {
       preparedStatement.setString(5, date.toString());
       preparedStatement.executeUpdate();
       return true;
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -126,22 +118,18 @@ public class ConsultationDaoImpl implements ConsultationDao {
     ResultSet resultSet = null;
     Map<Training, Date> consultations = new HashMap<>();
     try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTATION_OFFER);
-    ) {
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTATION_OFFER)) {
       preparedStatement.setInt(1, mentorId);
       resultSet = preparedStatement.executeQuery();
       while (resultSet.next()) {
         Training training = new Training();
         training.setId(resultSet.getInt(SqlColumn.SQL_TRAINING_ID));
-        training.setName(resultSet.getString(SQL_TRAINING_NAME_AS));
-        Date date = resultSet.getDate(SQL_DATE);
+        training.setName(resultSet.getString(SqlColumn.SQL_TRAINING_NAME_AS));
+        Date date = resultSet.getDate(SqlColumn.SQL_DATE);
         consultations.put(training, date);
       }
       return consultations;
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }
@@ -154,17 +142,13 @@ public class ConsultationDaoImpl implements ConsultationDao {
   public boolean sendAgreement(int trainingId, Date date, boolean mark) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SEND_AGREEMENT);
-    ) {
+         PreparedStatement preparedStatement = connection.prepareStatement(SQL_SEND_AGREEMENT)) {
       preparedStatement.setBoolean(1, mark);
       preparedStatement.setInt(2, trainingId);
       preparedStatement.setString(3, date.toString());
       preparedStatement.executeUpdate();
       return true;
-    } catch (SQLException e) {
-      logger.error(e);
-      throw new DaoException(e);
-    } catch (ConnectionPoolException e) {
+    } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
     }

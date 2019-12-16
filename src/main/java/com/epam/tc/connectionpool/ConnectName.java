@@ -1,36 +1,39 @@
 package com.epam.tc.connectionpool;
 
 /**
- * The type Connect name.
+ * contains constant names of properties variable
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class ConnectName {
 
   /**
-   * The constant PROPERTIES_FILE.
+   * path to properties file
    */
   public static final String PROPERTIES_FILE = "dataBaseConnection.properties";
   /**
-   * The constant DRIVER.
+   * driver
    */
   public static final String DRIVER = "jdbc.drivers";
   /**
-   * The constant URL.
+   * url
    */
   public static final String URL = "jdbc.url";
   /**
-   * The constant NAME.
+   * name
    */
   public static final String NAME = "jdbc.username";
   /**
-   * The constant PASSWORD.
+   * password
    */
   public static final String PASSWORD = "jdbc.password";
   /**
-   * The constant SIZE.
+   * ConnectionPool size
    */
   public static final String SIZE = "jdbc.poolSize";
   /**
-   * The constant TEST_PROPERTIES_PATH.
+   * path to test properties. For Tests.
    */
   public static final String TEST_PROPERTIES_PATH = "testDataBaseConnection.properties";
 }

@@ -75,10 +75,27 @@
     </nav>
     <br/>
     <body>
-    <fmt:message key="paymentDate"/>
-    <fmt:message key="cardNumbers"/>
-
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/>
+    <div>
+        <h5 align="center">
+            <c:import url="/jsp/footer.jsp"/>
+        </h5>
+    </div>
     </body>
-    <ctg:currentDate/>
+
     <html></html>
 </fmt:bundle>

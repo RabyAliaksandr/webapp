@@ -2,14 +2,15 @@ package com.epam.tc.dao;
 
 import com.epam.tc.entity.Training;
 import com.epam.tc.entity.User;
+import com.epam.tc.entity.UserType;
 
 import java.util.List;
 
 /**
- * The interface Training dao.
+ * this interface contains methods for working with DataBase with Training
  *
  * @author alex raby
- * @version 1.0 this interface contains methods for working with DataBase with Training
+ * @version 1.0
  * @see Training
  */
 public interface TrainingDao {
@@ -17,9 +18,10 @@ public interface TrainingDao {
   /**
    * adding training to user
    *
-   * @param idStudent  - User id
-   * @param idTraining - Training id
+   * @param idStudent  - User id for which to adding
+   * @param idTraining - Training id which will be adding
    * @throws DaoException service package exception
+   * @see UserType#STUDENT
    * @see User
    * @see Training
    */
@@ -35,12 +37,13 @@ public interface TrainingDao {
   List<Training> findTraining() throws DaoException;
 
   /**
-   * finds trainings for which is recorded
+   * finds trainings for Student
    *
-   * @param id - User id
+   * @param id - User id for which to look
    * @return list of Training
    * @throws DaoException the dao exception
    * @see User
+   * @see UserType#STUDENT
    * @see Training
    */
   List<Training> findTrainingsForStudent(int id) throws DaoException;
@@ -48,10 +51,11 @@ public interface TrainingDao {
   /**
    * finds trainings for a student with a grade
    *
-   * @param studentId - User id
+   * @param studentId - User id for which to look
    * @return list of Training
    * @throws DaoException the dao exception
    * @see Training
+   * @see UserType#STUDENT
    * @see User
    */
   List<Training> findCompletedTrainingForStudent(int studentId) throws DaoException;
@@ -63,12 +67,13 @@ public interface TrainingDao {
    * @return list of Training
    * @throws DaoException the dao exception
    * @see User
+   * @see UserType#MENTOR
    * @see Training
    */
   List<Training> findTrainingForMentor(int mentorId) throws DaoException;
 
   /**
-   * finds training on training id
+   * finds training by training id
    *
    * @param trainingId - Training id
    * @return Training training
@@ -96,6 +101,7 @@ public interface TrainingDao {
    * @param trainingDescription - Training information
    * @throws DaoException the dao exception
    * @see Training
+   * @see UserType#MENTOR
    * @see User
    */
   void createTraining(String trainingName, int mentorId, String trainingDescription) throws DaoException;
@@ -103,9 +109,9 @@ public interface TrainingDao {
   /**
    * checks if an user is registered for this training
    *
-   * @param userId     - User id
-   * @param trainingId - Training id
-   * @return boolean boolean
+   * @param userId     - User id for whom is looking
+   * @param trainingId - Training id for whom is looking
+   * @return boolean true if Student finished this Training
    * @throws DaoException the dao exception
    * @see Training
    * @see User
@@ -125,8 +131,8 @@ public interface TrainingDao {
   /**
    * grade final mark
    *
-   * @param studentId  - User id
-   * @param trainingId - Training id
+   * @param studentId  - User id which will be marked
+   * @param trainingId - Training id which will be marked
    * @param grade      - int ranging from 1 to 10
    * @throws DaoException the dao exception
    * @see User
@@ -137,8 +143,8 @@ public interface TrainingDao {
   /**
    * finding the final student grade for this training
    *
-   * @param studentId  - User id
-   * @param trainingId - training id
+   * @param studentId  - User id for whom is looking
+   * @param trainingId - training id for whom is looking
    * @return int ranging from 1 to 10
    * @throws DaoException the dao exception
    * @see Training
@@ -149,7 +155,7 @@ public interface TrainingDao {
   /**
    * closing the set for this training
    *
-   * @param trainingId - Training id
+   * @param trainingId - Training id for which will be closed
    * @throws DaoException the dao exception
    * @see Training
    */

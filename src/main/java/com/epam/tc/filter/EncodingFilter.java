@@ -7,12 +7,15 @@ import java.io.IOException;
 /**
  * The type Encoding filter.
  * class implementing interface Filter {@link Filter} sets the encoding of the request and response
+ *
  * @author alex raby
  * @version 1.0
  */
 public class EncodingFilter implements Filter {
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void init(FilterConfig filterConfig) {
   }
@@ -27,7 +30,9 @@ public class EncodingFilter implements Filter {
     filterChain.doFilter(servletRequest, servletResponse);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void destroy() {
   }

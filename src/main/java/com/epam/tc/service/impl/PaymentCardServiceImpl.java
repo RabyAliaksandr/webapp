@@ -16,6 +16,7 @@ import java.util.List;
  * The type Payment card service.
  * this class implements interface methods PaymentCardService {@link PaymentCardService}
  * methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ *
  * @author alex raby
  * @version 1.0
  */
@@ -27,7 +28,9 @@ public class PaymentCardServiceImpl implements PaymentCardService {
    */
   private static Logger logger = LogManager.getLogger(PaymentCardServiceImpl.class);
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean addPaymentCard(int userId, long cardNumber) throws ServiceException {
     PaymentCardDao paymentCardDao = DaoFactory.getPaymentCardDao();
@@ -39,7 +42,9 @@ public class PaymentCardServiceImpl implements PaymentCardService {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public List<PaymentCard> findUsersCard(int userId) throws ServiceException {
     PaymentCardDao paymentCardDao = DaoFactory.getPaymentCardDao();
@@ -51,7 +56,9 @@ public class PaymentCardServiceImpl implements PaymentCardService {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void replenishCard(int cardId, BigDecimal sum) throws ServiceException {
     PaymentCardDao paymentCardDao = DaoFactory.getPaymentCardDao();
@@ -63,7 +70,9 @@ public class PaymentCardServiceImpl implements PaymentCardService {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean transferMoneyCardToCard(int cardDonor, int cardRecipient, BigDecimal sum) throws ServiceException {
     PaymentCardDao paymentCardDao = DaoFactory.getPaymentCardDao();
@@ -75,7 +84,9 @@ public class PaymentCardServiceImpl implements PaymentCardService {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean paymentConsultation(int cardId, int consultationId, int userId) throws ServiceException {
     PaymentCardDao paymentCardDao = DaoFactory.getPaymentCardDao();

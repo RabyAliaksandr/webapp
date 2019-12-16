@@ -68,9 +68,11 @@
 
     </nav>
     <br/>
-    <fmt:bundle basename="local" prefix="footer.">
-        <fmt:message key="copyright"/>
-    </fmt:bundle>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
+    </div>
     </body>
     </html>
 </fmt:bundle>

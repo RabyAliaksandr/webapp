@@ -72,16 +72,13 @@
     </nav>
     <br/>
 <div class="container-fluid">
-
-
-    <ctg:tableTag local="${local}">
-
-    </ctg:tableTag>
-
-    <fmt:message key="hello"/>
-    <fmt:message key="paymentDate"/>
-
+    <ctg:tableTag local="${local}"/>
 </div>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
+    </div>
     </body>
     <script>
         $(document).ready(function () {
@@ -91,10 +88,5 @@
             });
         });
     </script>
-<%--    <script>--%>
-<%--        $(function () {--%>
-<%--            $("#datepicker").datepicker();--%>
-<%--        });--%>
-<%--    </script>--%>
     </html>
 </fmt:bundle>

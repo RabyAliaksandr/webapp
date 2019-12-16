@@ -16,10 +16,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The type Consultation service.
+ * this class implements interface methods ConsultationService {@link ConsultationService} methods of this class
+ * catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
  *
  * @author alex raby
- * @version 1.0 this class implements interface methods ConsultationService {@link ConsultationService} methods of this class catch DaoException {@link DaoException} and throw ServiceException {@link ServiceException}
+ * @version 1.0
  */
 public class ConsultationServiceImpl implements ConsultationService {
 
@@ -29,8 +30,10 @@ public class ConsultationServiceImpl implements ConsultationService {
    */
   private static Logger logger = LogManager.getLogger(ConsultationServiceImpl.class);
 
-  /** {@inheritDoc} */
-  public  List<Consultation> findConsultationsForTraining(int trainingId) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public List<Consultation> findConsultationsForTraining(int trainingId) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
       return consultationDao.findConsultationsForTraining(trainingId);
@@ -40,9 +43,11 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  void sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
-                                          List<Integer> topicIds) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public void sendOrderConsultation(int consultationId, int studentId, List<Integer> taskIds,
+                                    List<Integer> topicIds) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
       consultationDao.sendOrderConsultation(consultationId, studentId, taskIds, topicIds);
@@ -52,8 +57,10 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
   }
 
-  /** {@inheritDoc} */
-  public  void sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public void sendOfferConsultations(int trainingId, Date date, BigDecimal price) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
       consultationDao.sendOfferConsultations(trainingId, date, price);
@@ -62,8 +69,11 @@ public class ConsultationServiceImpl implements ConsultationService {
       throw new ServiceException("Error access database", e);
     }
   }
-  /** {@inheritDoc} */
-  public  Map<Training, Date> findConsultationsOffer(int mentorId) throws ServiceException {
+
+  /**
+   * {@inheritDoc}
+   */
+  public Map<Training, Date> findConsultationsOffer(int mentorId) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     Map<Training, Date> consultations;
     try {
@@ -75,8 +85,10 @@ public class ConsultationServiceImpl implements ConsultationService {
     return consultations;
   }
 
-  /** {@inheritDoc} */
-  public  void sendAgreement(int trainingId, Date date, boolean mark) throws ServiceException {
+  /**
+   * {@inheritDoc}
+   */
+  public void sendAgreement(int trainingId, Date date, boolean mark) throws ServiceException {
     ConsultationDao consultationDao = DaoFactory.getConsultationDao();
     try {
       consultationDao.sendAgreement(trainingId, date, mark);

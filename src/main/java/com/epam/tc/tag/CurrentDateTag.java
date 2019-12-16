@@ -12,7 +12,9 @@ import java.util.Date;
  */
 public class CurrentDateTag extends SimpleTagSupport {
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void doTag() throws IOException {
     final JspWriter out = getJspContext().getOut();

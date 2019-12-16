@@ -5,10 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * The type Xss protection filter.
+ * class for filtering attempts of XSS attacks
  *
  * @author alex raby
- * @version 1.0 class for filtering attempts of XSS attacks
+ * @version 1.0
  */
 public class XssProtectionFilter implements Filter {
 
@@ -17,7 +17,7 @@ public class XssProtectionFilter implements Filter {
    * {@inheritDoc}
    */
   @Override
-  public void init(FilterConfig filterConfig)  {
+  public void init(FilterConfig filterConfig) {
   }
 
   /**
@@ -27,7 +27,7 @@ public class XssProtectionFilter implements Filter {
   public void destroy() {
   }
 
-   /**
+  /**
    * {@inheritDoc}
    */
   @Override

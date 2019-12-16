@@ -3,16 +3,54 @@ package com.epam.tc.dao;
 import com.epam.tc.dao.impl.*;
 
 /**
- * The type Dao factory.
+ * Factory Dao.
+ * creates singular objects
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class DaoFactory {
 
+  /**
+   * @see UserDao
+   * @see UserDaoImpl
+   */
   private static UserDao userDao = new UserDaoImpl();
+
+  /**
+   * @see TrainingDao
+   * @see TrainingDaoImpl
+   */
   private static TrainingDao trainingDao = new TrainingDaoImpl();
+
+  /**
+   * @see PaymentCardDao
+   * @see PaymentCardDaoImpl
+   */
   private static PaymentCardDao paymentCardDao = new PaymentCardDaoImpl();
+
+  /**
+   * @see ConsultationDao
+   * @see ConsultationDaoImpl
+   */
   private static ConsultationDao consultationDao = new ConsultationDaoImpl();
+
+  /**
+   * @see TaskDao
+   * @see TaskDaoImpl
+   */
   private static TaskDao taskDao = new TaskDaoImpl();
+
+  /**
+   * @see TopicDao
+   * @see TopicDaoImpl
+   */
   private static TopicDao topicDao = new TopicDaoImpl();
+
+  /**
+   * @see PaymentDao
+   * @see PaymentDaoImpl
+   */
   private static PaymentDao paymentDao = new PaymentDaoImpl();
 
   /**

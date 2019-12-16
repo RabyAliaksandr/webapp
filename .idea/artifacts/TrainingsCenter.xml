@@ -1,0 +1,35 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="TrainingsCenter">
+    <output-path>$PROJECT_DIR$/out/artifacts/TrainingsCenter</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="webapp" />
+          <element id="library" level="application" name="bootstrap" />
+          <element id="library" level="application" name="bootstrap-table" />
+          <element id="library" level="application" name="bootstrap-table-zh-CN" />
+          <element id="library" level="application" name="jquery.dataTables" />
+          <element id="library" level="application" name="popper" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-api:5.1.1" />
+          <element id="library" level="project" name="Maven: org.apiguardian:apiguardian-api:1.0.0" />
+          <element id="library" level="project" name="Maven: org.opentest4j:opentest4j:1.0.0" />
+          <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-commons:1.1.1" />
+          <element id="library" level="project" name="Maven: org.tuckey:urlrewritefilter:4.0.3" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-api:2.1" />
+          <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-core:2.1" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.18" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter:5.6.0-M1" />
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-params:5.6.0-M1" />
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.6.0-M1" />
+          <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-engine:1.6.0-M1" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="webapp/web/Web" />
+    </root>
+  </artifact>
+</component>

@@ -1,9 +1,15 @@
 package com.epam.tc.validator;
 
 /**
- * The type Reg ex.
+ * contains regular expression constants
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public class RegEx {
+
+  private RegEx() {
+  }
 
   /**
    * The constant Regex for Email.
@@ -32,39 +38,39 @@ public class RegEx {
   /**
    * The constant Regex for src.
    */
-  public static final String PATTERN_SRC_APOSTROPHE = "src[\r\n]*=[\r\n]*\\\'(.*?)\\\'";
+  public static final String PATTERN_SRC_APOSTROPHE = "src[\r\n]*=[\r\n]*\\'(.*?)\\'";
   /**
    * The constant Regex for src.
    */
-  public static final String PATTERN_SRC_QUOTATION_MARKS ="src[\r\n]*=[\r\n]*\\\"(.*?)\\\"";
+  public static final String PATTERN_SRC_QUOTATION_MARKS = "src[\r\n]*=[\r\n]*\\\"(.*?)\\\"";
   /**
    * The constant Regex for closing tag script.
    */
-  public static final String PATTERN_CLOSE_SCRIPT ="</script>";
+  public static final String PATTERN_CLOSE_SCRIPT = "</script>";
   /**
    * The constant Regex for tag script with some body.
    */
-  public static final String PATTERN_SCRIPT_ANY ="<script(.*?)>";
+  public static final String PATTERN_SCRIPT_ANY = "<script(.*?)>";
   /**
    * The constant Regex for eval.
    */
-  public static final String PATTERN_EVAL ="eval\\((.*?)\\)";
+  public static final String PATTERN_EVAL = "eval\\((.*?)\\)";
   /**
    * The constant Regex for expression.
    */
-  public static final String PATTERN_EXPRESSION ="expression\\((.*?)\\)";
+  public static final String PATTERN_EXPRESSION = "expression\\((.*?)\\)";
   /**
    * The constant Regex for javascript.
    */
-  public static final String PATTERN_JAVASCRIPT ="javascript:";
+  public static final String PATTERN_JAVASCRIPT = "javascript:";
   /**
    * The constant Regex for vb script.
    */
-  public static final String PATTERN_VB_SCRIPT ="vbscript:";
+  public static final String PATTERN_VB_SCRIPT = "vbscript:";
   /**
    * The constant Regex for onload.
    */
-  public static final String PATTERN_ONLOAD ="onload(.*?)=";
+  public static final String PATTERN_ONLOAD = "onload(.*?)=";
   /**
    * The constant Regex for price value.
    */
@@ -77,4 +83,9 @@ public class RegEx {
    * The constant Regex for many spaces.
    */
   public static final String PATTERN_EXCESSIVE_SPACES = "\\s+";
+
+  /**
+   * The constant Regex for right input
+   */
+  public static final String PATTERN_INPUT = "input";
 }

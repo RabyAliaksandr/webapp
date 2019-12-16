@@ -15,6 +15,7 @@
     <hr/>
     <fmt:message key="copyright"/>
     </body>
+
     </html>
 
 </fmt:bundle>

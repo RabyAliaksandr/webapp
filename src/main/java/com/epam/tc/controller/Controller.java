@@ -15,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * The type Controller.
+ * servlet
+ *
+ * @author alex raby
+ * @version 1.0
  */
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
@@ -56,11 +61,22 @@ public class Controller extends HttpServlet {
     }
   }
 
+  /**
+   * processes the user's request, executes commands and issues a response.
+   * there is also a redirect check in this method. if the redirect attribute is set,
+   * then redirects to the current page or to the specified page. throws exceptions to store
+   * information about incoming exceptions from lower methods.
+   * @param request {@link HttpServletRequest}
+   * @param response {@link HttpServletResponse}
+   * @throws ServletException service Exception
+   * @throws IOException maybe throws {@link RequestDispatcher#forward(ServletRequest, ServletResponse)}
+   * @throws CommandException CommandException
+   */
   private void processRequest(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException, CommandException {
+
     String page;
-    CommandFactory client = new CommandFactory();
-    Command command = client.defineCommand(request);
+    Command command = CommandFactory.defineCommand(request);
     page = command.execute(request);
     if (page != null) {
       if (request.getParameter(VariableName.REDIRECT_TO) == null && request.getSession().getAttribute(VariableName.REDIRECT_TO_PAGE) == null) {

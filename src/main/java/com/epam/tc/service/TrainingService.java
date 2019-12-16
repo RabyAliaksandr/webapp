@@ -2,12 +2,15 @@ package com.epam.tc.service;
 
 import com.epam.tc.entity.Training;
 import com.epam.tc.entity.User;
+import com.epam.tc.entity.UserStatus;
+import com.epam.tc.entity.UserType;
 
 import java.util.List;
 
 /**
  * The interface Training service.
  * this interface contains methods for working with Training
+ *
  * @author alex raby
  * @version 1.0
  * @see Training
@@ -105,9 +108,10 @@ public interface TrainingService {
    *
    * @param userId     - User id for whom is looking
    * @param trainingId - Training id for whom is looking
-   * @return boolean boolean
+   * @return boolean true if Student finished this Training
    * @throws ServiceException package Service exception
    * @see Training
+   * @see UserType#STUDENT
    * @see User
    */
   boolean checkTrainingStatusForStudent(int userId, int trainingId) throws ServiceException;

@@ -7,7 +7,11 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * The type Data base manager.
+ * reading data to connect to the database from properties file
+ * for ConnectionPool {@link ConnectionPool}
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public final class DataBaseManager {
 
@@ -28,7 +32,7 @@ public final class DataBaseManager {
    * Gets instance.
    *
    * @param propertiesPath the properties path
-   * @return the instance
+   * @return the this object
    */
   public static DataBaseManager getInstance(String propertiesPath) {
     if (instance == null) {
@@ -47,11 +51,11 @@ public final class DataBaseManager {
       logger.fatal(e);
       throw new RuntimeException(e);
     }
-    this.drivers = properties.getProperty(ConnectName.DRIVER);
-    this.connectionURL = properties.getProperty(ConnectName.URL);
-    this.username = properties.getProperty(ConnectName.NAME);
-    this.password = properties.getProperty(ConnectName.PASSWORD);
-    this.poolSize = Integer.parseInt(properties.getProperty(ConnectName.SIZE));
+    drivers = properties.getProperty(ConnectName.DRIVER);
+    connectionURL = properties.getProperty(ConnectName.URL);
+    username = properties.getProperty(ConnectName.NAME);
+    password = properties.getProperty(ConnectName.PASSWORD);
+    poolSize = Integer.parseInt(properties.getProperty(ConnectName.SIZE));
   }
 
   /**
@@ -69,7 +73,7 @@ public final class DataBaseManager {
    * @param properties the properties
    */
   public void setProperties(Properties properties) {
-    this.properties = properties;
+    DataBaseManager.properties = properties;
   }
 
   /**
@@ -114,7 +118,7 @@ public final class DataBaseManager {
    * @param password the password
    */
   public void setPassword(String password) {
-    this.password = password;
+    DataBaseManager.password = password;
   }
 
   /**

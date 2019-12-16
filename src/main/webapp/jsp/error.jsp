@@ -82,11 +82,17 @@
 
     <c:if test="${exception != null}">
         <h4>${exception}</h4>
+        StackTrace
         <c:forEach var="stackTraceElem" items="${exception.stackTrace}">
             <c:out value="${stackTraceElem}"/><br/>
         </c:forEach>
     </c:if>
 </ul>
+<div>
+    <h5 align="center">
+        <c:import url="footer.jsp"/>
+    </h5>
+</div>
 </body>
 </html>
 </fmt:bundle>

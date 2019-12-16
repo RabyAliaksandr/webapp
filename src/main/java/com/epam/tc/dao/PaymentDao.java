@@ -5,14 +5,18 @@ import com.epam.tc.entity.Payment;
 import java.util.List;
 
 /**
- * The interface Payment dao.
+ * contains methods for object Payment
+ *
+ * @author alex raby
+ * @version 1.0
  */
 public interface PaymentDao {
+
   /**
-   * Find all payments list.
+   * Find all Payments
    *
-   * @return the list
+   * @return the list Payment {@link Payment}
    * @throws DaoException the dao exception
    */
-  public List<Payment> findAllPayments() throws DaoException;
+   List<Payment> findAllPayments() throws DaoException;
 }

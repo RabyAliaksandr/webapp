@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * The interface User service.
+ *
  * @author alex raby
  * @version 1.0 this interface contains methods for working with User
  * @see User
@@ -16,7 +17,8 @@ public interface UserService {
 
   /**
    * finding all users who have type 'mentor' {@link UserType#MENTOR}
-   * @return object Map<Training, User>
+   *
+   * @return object Map Training and Mentor for this Training
    * @throws ServiceException package Service exception
    * @see User
    * @see Training
@@ -29,7 +31,7 @@ public interface UserService {
    *
    * @param login    - User login
    * @param password - User password
-   * @return object User {@link User}
+   * @return true if login and password is in DataBase
    * @throws ServiceException the service exception
    */
   User checkLogin(String login, String password) throws ServiceException;
@@ -39,7 +41,7 @@ public interface UserService {
    *
    * @param userId     - students id
    * @param trainingId - trainings id
-   * @return boolean boolean
+   * @return boolean true if Student attends this Training
    * @throws ServiceException package Service exception
    * @see Training
    * @see User
@@ -49,53 +51,49 @@ public interface UserService {
   /**
    * returns an array of user types
    *
-   * @return array user type [ ]
-   * @see UserType
+   * @return array user type [] {@link UserType}
    */
   UserType[] usersType();
 
   /**
    * returns an array of user status
    *
-   * @return array user status [ ]
-   * @see UserStatus
+   * @return array user status [] {@link UserStatus}
    */
   UserStatus[] userStatuses();
 
   /**
    * update user status and user type
    *
-   * @param userId - user id
-   * @param type   - new user type
-   * @param status - new user status
+   * @param userId - user id who needs to change
+   * @param type   - new user type {@link UserType}
+   * @param status - new user status {@link UserStatus}
    * @throws ServiceException package Service exception
    * @see User
-   * @see UserType
-   * @see UserStatus
    */
   void updateUserType(int userId, UserType type, UserStatus status) throws ServiceException;
 
   /**
    * finds users who are enrolled in this training
    *
-   * @param trainingId - training id
-   * @return list of users
+   * @param trainingId - training id for which to look
+   * @return object Map User and Integer - final grade for Training
    * @throws ServiceException package Service exception
    * @see User
    * @see Training
    */
-  List<User> findStudentsForTraining(int trainingId) throws ServiceException;
+  Map<User, Integer> findStudentsForTraining(int trainingId) throws ServiceException;
 
   /**
    * finds users grades for tasks for this training
    *
-   * @param studentId  - student id
-   * @param trainingId - training id
+   * @param studentId  - student id for which to look
+   * @param trainingId - training id for which to look
    * @return list of task
    * @throws ServiceException package Service exception
    * @see User
    * @see Task
-   * @see Training@
+   * @see Training
    */
   List<Task> findStudentsMarkForTrainingsTask(int studentId, int trainingId) throws ServiceException;
 
@@ -103,7 +101,7 @@ public interface UserService {
    * checks if a given login
    *
    * @param login - user login
-   * @return boolean boolean
+   * @return boolean true if matches the expression
    * @throws ServiceException package Service exception
    * @see User
    */
@@ -113,7 +111,7 @@ public interface UserService {
    * checks if a given email
    *
    * @param email - user email
-   * @return boolean boolean
+   * @return boolean true if matches the expression
    * @throws ServiceException package Service exception
    * @see User
    */

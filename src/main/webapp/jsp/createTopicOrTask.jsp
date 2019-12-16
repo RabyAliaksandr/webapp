@@ -207,6 +207,11 @@ ta                <div class="form-group">
             </c:if>
         </div>
     </div>
+    <div>
+        <h5 align="center">
+            <c:import url="footer.jsp"/>
+        </h5>
+    </div>
     </body>
             <script type="text/javascript">
                 $(document).ready(function () {
