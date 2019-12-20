@@ -242,11 +242,14 @@ public class TrainingDaoImpl implements TrainingDao {
   public boolean deleteTraining(int trainingId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
     ResultSet resultSet;
+    Connection connection = null;
+    PreparedStatement preparedStatementCheck = null;
+    PreparedStatement preparedStatementDelete = null;
     int checkUser = 0;
-    try (Connection connection = connectionPool.takeConnection();
-    PreparedStatement preparedStatementCheck = connection.prepareStatement(SQL_CHECK_USERS_ON_TRAINING);
-    PreparedStatement preparedStatementDelete = connection.prepareStatement(SQL_DELETE_TRAINING)
-    ) {
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatementCheck = connection.prepareStatement(SQL_CHECK_USERS_ON_TRAINING);
+      preparedStatementDelete = connection.prepareStatement(SQL_DELETE_TRAINING);
       connection.setAutoCommit(false);
       preparedStatementCheck.setInt(1, trainingId);
       resultSet = preparedStatementCheck.executeQuery();
@@ -258,15 +261,28 @@ public class TrainingDaoImpl implements TrainingDao {
         preparedStatementDelete.executeUpdate();
         connection.commit();
         logger.debug("was deleted training");
-        connection.setAutoCommit(true);
         return true;
       } else {
         connection.rollback();
-        connection.setAutoCommit(true);
       }
     } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
+    } finally {
+      try {
+        if (preparedStatementCheck != null) {
+          preparedStatementCheck.close();
+        }
+        if (preparedStatementDelete != null) {
+          preparedStatementDelete.close();
+        }
+        if (connection != null) {
+          connection.setAutoCommit(true);
+          connection.close();
+        }
+      } catch (SQLException e) {
+        logger.error(e);
+      }
     }
     return false;
   }

@@ -37,9 +37,13 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
   @Override
   public boolean addPaymentCard(int userId, long cardNumber) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_PAYMENT_CARD);
-         PreparedStatement preparedStatementAdd = connection.prepareStatement(SQL_ADD_PAYMENT_CARD_TO_USER)) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    PreparedStatement preparedStatementAdd = null;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_ADD_PAYMENT_CARD);
+      preparedStatementAdd = connection.prepareStatement(SQL_ADD_PAYMENT_CARD_TO_USER);
       connection.setAutoCommit(false);
       preparedStatement.setLong(1, cardNumber);
       preparedStatement.setLong(2, cardNumber);
@@ -49,16 +53,29 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
         preparedStatementAdd.setLong(2, cardNumber);
         preparedStatementAdd.executeUpdate();
         connection.commit();
-        connection.setAutoCommit(true);
         return true;
       } else {
         connection.rollback();
-        connection.setAutoCommit(true);
         return false;
       }
     } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+        if (preparedStatementAdd != null) {
+          preparedStatementAdd.close();
+        }
+        if (connection != null) {
+          connection.setAutoCommit(true);
+          connection.close();
+        }
+      } catch (SQLException e) {
+        logger.error(e);
+      }
     }
   }
 
@@ -138,9 +155,13 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
   @Override
   public boolean paymentConsultation(int cardId, int consultationId, int userId) throws DaoException {
     ConnectionPool connectionPool = ConnectionPool.getInstance();
-    try (Connection connection = connectionPool.takeConnection();
-         PreparedStatement preparedStatement = connection.prepareStatement(SQL_PUT_MONEY);
-         PreparedStatement preparedStatementRemoval = connection.prepareStatement(SQL_REMOVAL_MONEY)) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    PreparedStatement preparedStatementRemoval = null;
+    try {
+      connection = connectionPool.takeConnection();
+      preparedStatement = connection.prepareStatement(SQL_PUT_MONEY);
+      preparedStatementRemoval = connection.prepareStatement(SQL_REMOVAL_MONEY);
       connection.setAutoCommit(false);
       preparedStatement.setInt(1, consultationId);
       preparedStatement.setInt(2, consultationId);
@@ -156,14 +177,27 @@ public class PaymentCardDaoImpl implements PaymentCardDao {
       }
       if (checkPut == 0 || checkRemoval == 0) {
         connection.rollback();
-        connection.setAutoCommit(true);
         return false;
       }
       connection.commit();
-      connection.setAutoCommit(true);
     } catch (SQLException | ConnectionPoolException e) {
       logger.error(e);
       throw new DaoException(e);
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+        if (preparedStatementRemoval != null) {
+          preparedStatementRemoval.close();
+        }
+        if (connection != null) {
+          connection.setAutoCommit(true);
+          connection.close();
+        }
+      } catch (SQLException e) {
+        logger.error(e);
+      }
     }
     logger.debug("payment was made for consultation");
     return true;
