@@ -26,7 +26,6 @@ import java.util.List;
  * takes Connection in ConnectionPool {@link ConnectionPool}
  *
  * @author alex raby
- * @version 1.0
  */
 public class PaymentCardDaoImpl implements PaymentCardDao {
 

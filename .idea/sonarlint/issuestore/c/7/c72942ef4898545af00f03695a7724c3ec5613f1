@@ -1,10 +1,0 @@
-
-¹%squid:RedundantThrowsDeclarationCheck
-"€Remove the declaration of thrown exception 'java.util.concurrent.ExecutionException', as it cannot be thrown from method's body.(­Ëê8„”ÏÈğ-
-qsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(¯Œüùÿÿÿÿ8ş¦Çµí-
-Zsquid:UselessImportCheck"*Remove this unused import 'java.util.Set'.(ö²„¤şÿÿÿÿ8¬ªÈğ-
-[squid:UselessImportCheck"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8¬ªÈğ-
-¯%squid:RedundantThrowsDeclarationCheck
-"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(­Ëê8ŒõĞÈğ-
-Vsquid:UselessImportCheck"+Remove this unused import 'java.util.Date'.(¸…¼ü8ìÒ¾¬ğ-
-[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8¬ªÈğ-

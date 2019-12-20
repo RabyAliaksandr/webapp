@@ -70,8 +70,6 @@ $src/main/webapp/jsp/js/table_sort.js,8\f\8f1b9bd5a8b4e86588ab83d5481dfb2672d01
 .src/main/webapp/jsp/consultationManagement.jsp,9\4\946e11d2bf7e5a23466f3e99e3b7a25d2651f765
 Y
 )src/main/webapp/jsp/orderConsultation.jsp,8\0\80017f9ba6684ba73f4bd2b0fff823e702824d6a
-[
-+src/main/webapp/WEB-INF/tld/currentDate.tld,9\e\9ef0d2ebbe8331e4f4767b96a320f311355337b3
 P
  src/main/webapp/jsp/error404.jsp,7\0\704847ffb8605b55338e2b07ee02d93060fe9445
 V
@@ -222,8 +220,6 @@ e
 5src/main/java/com/epam/tc/service/ServiceFactory.java,d\7\d7c3fff2b8dac48e14e2af6983cf986daa2e9270
 c
 3src/main/java/com/epam/tc/service/TopicService.java,3\0\3008d8d9b9b258b8196898fc718a9bf2e08e97c8
-a
-1src/main/java/com/epam/tc/tag/CurrentDateTag.java,4\3\4374dc34b3f2f1726e7cc9aac4a6d015c741ad1c
 d
 4src/main/java/com/epam/tc/filter/EncodingFilter.java,d\7\d7111abf8529896e364e60c8cf5ba8614c1c5863
 h
@@ -310,8 +306,6 @@ c
 -src/test/com/epam/tc/dao/UserDaoImplTest.java,e\5\e56b7b31298eb338cd4e06378dcb5018d199b71c
 _
 /src/resources/testDataBaseConnection.properties,0\1\01066dffe1f5536c6df19ac10977f6a266ef83e3
-M
-src/main/java/deleteTHIS.java,c\7\c72942ef4898545af00f03695a7724c3ec5613f1
 c
 3src/test/com/epam/tc/controller/ControolerTest.java,4\c\4c6e9cd77982ed3f9e7c2f9c8a8ef70c2ce2e708
 k
