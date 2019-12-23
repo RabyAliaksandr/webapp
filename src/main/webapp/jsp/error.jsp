@@ -9,7 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="ctg" uri="/WEB-INF/tld/currentDate.tld" %>
 <fmt:setLocale value="${sessionScope.local}"/>
 <fmt:bundle basename="local" prefix="label.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -82,10 +81,10 @@
 
     <c:if test="${exception != null}">
         <h4>${exception}</h4>
-        StackTrace
-        <c:forEach var="stackTraceElem" items="${exception.stackTrace}">
-            <c:out value="${stackTraceElem}"/><br/>
-        </c:forEach>
+<%--        StackTrace--%>
+<%--        <c:forEach var="stackTraceElem" items="${exception.stackTrace}">--%>
+<%--            <c:out value="${stackTraceElem}"/><br/>--%>
+<%--        </c:forEach>--%>
     </c:if>
 </ul>
 <div>

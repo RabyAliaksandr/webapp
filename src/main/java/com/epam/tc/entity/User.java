@@ -233,15 +233,16 @@ public class User {
 
   @Override
   public int hashCode() {
-    int result = 17;
-    result = 37 * (id);
-    result = 37 * result + (name == null ? 0 : name.hashCode());
-    result = 37 * result + (surname == null ? 0 : surname.hashCode());
-    result = 37 * result + (status == null ? 0: status.hashCode());
-    result = 37 * result + (type == null ? 0 : type.hashCode());
-    result = 37 * result + (login == null ? 0 : login.hashCode());
-    result = 37 * result + (password == null ? 0 : password.hashCode());
-    result = 37 * result + (email ==null ? 0 : email.hashCode());
+    final int prime = 17;
+    int result = 1;
+    result = prime + (id);
+    result = prime * result + (name == null ? 0 : name.hashCode());
+    result = prime * result  + (surname == null ? 0 : surname.hashCode());
+    result = prime * result  + (status == null ? 0: status.hashCode());
+    result = prime * result  + (type == null ? 0 : type.hashCode());
+    result = prime * result  + (login == null ? 0 : login.hashCode());
+    result = prime * result  + (password == null ? 0 : password.hashCode());
+    result = prime * result  + (email ==null ? 0 : email.hashCode());
     return result;
   }
 
